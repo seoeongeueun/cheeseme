@@ -1,18 +1,204 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: 'nanum';
+  src: local('nanum'), url(./fonts/nanum.ttf) format('truetype');
+}
+* {
+  font-family: 'nanum';
+}
+
+html {
+  font-size: 62.5%; /* 10px = 1rem */
+  box-sizing: border-box;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 5rem 1fr min-content; /*header body footer*/
+  height: 100%
 }
 
 header {
-  background-color: #FFFFFF;
   padding: 1rem;
+  font-size: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 header a {
   color: #000000;
   text-decoration: none;
+  margin-right: 3rem;
 }
+
+/* search bar */
+
+.searchbar {
+  display: flex;
+  flex-direction: row;
+}
+
+main {
+  height: 80vh;
+  font-size: 2rem;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  padding: 5rem 10rem 0rem 10rem;
+}
+
+.mainLeft {
+  width: 50%;
+  border-left: 1px solid #000000;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-right: 0.25px solid #000000;
+  border-radius: 24px;
+  padding: 1.5rem 0rem 1.5rem 1.5rem;
+}
+
+.mainRight {
+  width: 50%;
+  border-left: 0.25px solid #000000;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-radius: 24px;
+  padding: 1.5rem 1.5rem 1.5rem 0rem;
+}
+
+/* Left content */
+
+.leftContent {
+  background-color: #FFFFFF;
+  border-left: 1px solid #000000;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-right: 0.25px solid #000000;
+  border-radius: 24px;
+  height: 100%;
+}
+
+/* Right content */
+
+.rightInnerBorder {
+  background-color: #FFFFFF;
+  border-left: 0.25px solid #000000;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-radius: 24px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.rightContent {
+  padding: 2rem 5rem 2rem 5rem;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.rightHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.rightBody {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.rightBodyHeader {
+  margin-bottom: 1rem;
+
+}
+
+.profileArea {
+  height: 5rem;
+  width: 5rem;
+  background-color: #c4c4c4;
+  border-radius: 50%;
+  opacity: 0.3;
+  border: 1px solid #a4a4a4;
+  display: inline-block;
+}
+
+.rightBodyMain {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+.postImageArea {
+  width: 100%;
+  height: 50%;
+  background-color: #c4c4c4;
+  opacity: 0.3;
+  border: 1px solid #a4a4a4;
+  display: inline-block;
+}
+
+.postButtons {
+  display: flex;
+  flex-direction: row;
+}
+
+.postInput {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.postInput textarea{
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: 1px solid #a4a4a4
+}
+
+.inputButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.inputButtons button{
+  margin-right: 1rem;
+}
+
+.inputButtons button:hover {
+  cursor: pointer;
+}
+
+
+.save {
+  background-color: #F9D876;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+}
+
+.cancel {
+  color: #000000;
+  background-color: #c4c4c4;
+  border: none;
+  border-radius: 5px;
+}
+
+.rightFooter {
+
+}
+
+.footer {
+  background-color: #928173;
+}
+
