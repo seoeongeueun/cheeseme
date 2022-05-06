@@ -5,6 +5,7 @@
 * {
   font-family: 'nanum';
 }
+@import "./css/calendarCss.css";
 
 html {
   font-size: 62.5%; /* 10px = 1rem */
@@ -19,11 +20,13 @@ html {
 }
 
 header {
-  padding: 1rem;
+  padding: 3rem 0rem 0rem 0rem;
   font-size: 3rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
+  z-index: 1;
 }
 
 header a {
@@ -32,11 +35,42 @@ header a {
   margin-right: 3rem;
 }
 
+/* checkbox setting */
+
+
 /* search bar */
 
 .searchbar {
   display: flex;
   flex-direction: row;
+}
+
+.searchbar input{
+  width: 30rem;
+  border: 1px solid #000000;
+}
+
+.searchbar input:focus{
+  outline: none;
+  box-shadow: 0px 0px 0px 1px #F9D876;
+}
+
+.searchbar button{
+  background-color: #F9D876;
+  color: #000000;
+  border: none;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+}
+
+/* Grid Line */
+
+.grid-area {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  display: flex;
 }
 
 main {
@@ -69,15 +103,23 @@ main {
 }
 
 /* Left content */
-
-.leftContent {
+.leftInnerBorder {
   background-color: #FFFFFF;
-  border-left: 1px solid #000000;
+  border-right: 0.25px solid #000000;
   border-top: 1px solid #000000;
   border-bottom: 1px solid #000000;
-  border-right: 0.25px solid #000000;
+  border-left: 1px solid #000000;
   border-radius: 24px;
   height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.leftContent {
+  padding: 2rem 5rem 2rem 5rem;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 
 /* Right content */
@@ -95,7 +137,7 @@ main {
 }
 
 .rightContent {
-  padding: 2rem 5rem 2rem 5rem;
+  padding: 0rem 5rem 2rem 5rem;
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -112,6 +154,7 @@ main {
   flex-direction: column;
   height: 100%;
   width: 100%;
+
 }
 
 .rightBodyHeader {
@@ -120,11 +163,10 @@ main {
 }
 
 .profileArea {
-  height: 5rem;
-  width: 5rem;
-  background-color: #c4c4c4;
+  height: 4rem;
+  width: 4rem;
+  background-color: #e9e9e9;
   border-radius: 50%;
-  opacity: 0.3;
   border: 1px solid #a4a4a4;
   display: inline-block;
 }
@@ -140,8 +182,7 @@ main {
 .postImageArea {
   width: 100%;
   height: 50%;
-  background-color: #c4c4c4;
-  opacity: 0.3;
+  background-color: #e9e9e9;
   border: 1px solid #a4a4a4;
   display: inline-block;
 }
@@ -149,6 +190,10 @@ main {
 .postButtons {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  padding: 1rem;
 }
 
 .postInput {
@@ -169,6 +214,7 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 1rem;
 }
 
 .inputButtons button{
@@ -189,7 +235,7 @@ main {
 
 .cancel {
   color: #000000;
-  background-color: #c4c4c4;
+  background-color: #e9e9e9;
   border: none;
   border-radius: 5px;
 }
@@ -202,3 +248,46 @@ main {
   background-color: #928173;
 }
 
+/* Settings */
+.settingsbox {
+  width: max-content;
+  height: max-content;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  z-index: 1;
+  position: fixed;
+  background-color: #FFFFFF;
+}
+
+.settingsbox p1{
+  margin-bottom: 1rem;
+}
+
+.checkboxButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkboxlist {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Todo widget */
+.todoWidget {
+  display: flex;
+  flex-direction: column;
+}
+
+.todoList {
+  display: flex;
+  flex-direction: column;
+}
+
+/* qull editor */
+.ql-editor {
+  width: auto;
+  height: auto;
+}
