@@ -116,10 +116,11 @@ main {
 }
 
 .leftContent {
-  padding: 2rem 5rem 2rem 5rem;
+  padding: 0rem 5rem 0rem 5rem;
   display: flex;
   width: 100%;
   flex-direction: column;
+  height: 100%;
 }
 
 /* Right content */
@@ -137,10 +138,11 @@ main {
 }
 
 .rightContent {
-  padding: 0rem 5rem 2rem 5rem;
+  padding: 0rem 5rem 0rem 5rem;
   display: flex;
   width: 100%;
   flex-direction: column;
+  height: 100%;
 }
 
 .rightHeader {
@@ -153,7 +155,6 @@ main {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
 
 }
 
@@ -287,7 +288,23 @@ main {
 }
 
 /* qull editor */
-.ql-editor {
-  width: auto;
-  height: auto;
+.plainPostArea {
+  border: 1px solid #a4a4a4;
+  border-radius: 5px;
+}
+
+.quill {
+  display: flex;
+  flex-direction: column;
+  height: 80% !important;
+  background-color: #FFFFFF;
+}
+
+.ql-container {
+  font-size: inherit !important
+}
+
+.plainRightButtons {
+  display: flex;
+  flex-direction: row;
 }

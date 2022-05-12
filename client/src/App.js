@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="container">
       <header>
-        <a href="/">Cheese Me</a>
+        <a href="/">WIP WebApp</a>
         <div className="searchbar">
           <input type="text" id="searchWord" name="searchWord" placeholder="Search"/>
           <button>.</button>

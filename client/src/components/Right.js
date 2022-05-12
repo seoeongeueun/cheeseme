@@ -47,7 +47,7 @@ function Right(){
                                 </div>
                             </div>
                         </div>
-                    </div> : <PlainRight/>}
+                    </div> : <PlainRight grid={grid} setGrid={setGrid} sns={sns} setSns={setSns}/>}
                     <div className="rightFooter">
 
                     </div>
@@ -84,7 +84,7 @@ function Right(){
                                 </div>
                             </div>
                         </div>
-                    </div> : <PlainRight/>}
+                    </div> : <PlainRight grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
                     <div className="rightFooter">
 
                     </div>
