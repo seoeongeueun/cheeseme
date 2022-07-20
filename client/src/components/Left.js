@@ -4,6 +4,9 @@ import DisplaySettingsLeft from '../modals/DisplaySettingsLeft';
 import WidgetSettingsLeft from '../modals/WidgetSettingsLeft';
 import Todo from '../widgets/Todo';
 import CalendarWidget from '../widgets/Calendar';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
+import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 
 
 function Left(){
@@ -40,9 +43,9 @@ function Left(){
                         {calendar && <CalendarWidget/>}
                     </div>
                     <div className="leftFooter">
-                        <button onClick={()=> setShowWidgetSettings(!showWidgetSettings)}>widgets</button>
+                        <button onClick={()=> setShowWidgetSettings(!showWidgetSettings)}><DashboardCustomizeOutlinedIcon sx={{fontSize: "3rem"}}/></button>
                         {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar}/>}
-                        <button onClick={()=> setShowSettings(!showSettings)}>settings</button>
+                        <button onClick={()=> setShowSettings(!showSettings)}><SettingsOutlinedIcon sx={{fontSize: "3rem"}}/></button>
                         {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
                     </div>
                 </div>}
