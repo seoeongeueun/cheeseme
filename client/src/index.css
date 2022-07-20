@@ -1,9 +1,9 @@
 @font-face {
-  font-family: 'nanum';
-  src: local('nanum'), url(./fonts/nanum.ttf) format('truetype');
+  font-family: 'school';
+  src: local('school'), url(./fonts/school.ttf) format('truetype');
 }
 * {
-  font-family: 'nanum';
+  font-family: 'school';
 }
 @import "./css/calendarCss.css";
 
@@ -75,7 +75,7 @@ header a {
 
 main {
   height: 80vh;
-  font-size: 2rem;
+  font-size: 2.5rem;
   background-color: #FFFFFF;
   display: flex;
   flex-direction: row;
