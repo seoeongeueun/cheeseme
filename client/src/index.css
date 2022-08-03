@@ -168,6 +168,10 @@ main {
 }
 
 .rightContent span{
+  margin: 2rem 0rem 0rem 0rem;
+}
+
+.rightHeader span{
   margin: 2rem 0 2rem 0;
   max-height: 10%;
 }
@@ -185,12 +189,15 @@ main {
 .rightBody {
   display: flex;
   flex-direction: column;
-  max-height: 90%;
+  max-height: 80%;
 }
 
 .rightBodyHeader {
   margin-bottom: 1rem;
+}
 
+.rightBodyHeader span{
+  margin: 0rem;
 }
 
 .profileArea {
@@ -271,6 +278,10 @@ main {
   overflow-y: hidden;
 }
 
+.postInput2 span{
+  margin: 0;
+}
+
 .postInput2:hover {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -292,7 +303,7 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  max-height: 10%;
+  margin-top: 1rem;
 }
 
 .inputButtons button{

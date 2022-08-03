@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import Left from './components/Left';
 import Right from './components/Right';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
         <a href="/">WIP WebApp</a>
         <div className="searchbar">
           <input type="text" id="searchWord" name="searchWord" placeholder="Search"/>
-          <button>.</button>
+          <button><SearchRoundedIcon sx={{fontSize: "21px"}}/></button>
         </div>
       </header>
       <main>
