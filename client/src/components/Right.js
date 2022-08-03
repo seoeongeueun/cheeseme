@@ -31,15 +31,21 @@ function Right(){
     const [open, setOpen] = useState(false);
 
     const [postImage, setPostImage] = useState(false);
+    const [selectedImage, setSelectedImage] = useState();
+
+    const [title, setTitle] = useState("제목이에요");
+    const [edit, setEdit] = useState(false);
+    const [body, setBody] = useState();
     
 
     useEffect(() => {
+        console.log('edit: ', edit)
 
-    }, [showSettings, grid, sns]);
+    }, [showSettings, grid, sns, edit]);
 
     useEffect(() => {
 
-    }, [heart])
+    }, [heart, postImage])
 
     const onClickHeart = () => {
         if (heart) {
@@ -65,31 +71,47 @@ function Right(){
       setOpen(false);
     };
 
+    const onUploadImage = (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setSelectedImage(e.target.files[0]);
+            setPostImage(true)
+          }
+    };
+
+    const handleSave = () => {
+        setEdit(false);
+    }
+
+    const handleCancel = () => {
+        setEdit(false);
+    }
+
     return(
         <div className="rightInnerBorder">
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#e5e5e5"} lineColor2={"#efefef"}>
                 <div className="rightContent">
-                    <div className="rightHeader">
-                        <p>Some Random Title To Fill Up Some Space</p>
-                    </div>
+                    {edit ? <div className="rightHeader">
+                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                    </div> : <span style={{textAlign: 'center'}}>{title}</span>}
                     {sns ? 
                     <div className="rightBody">
                         <div className="rightBodyHeader">
                             <span className="profileArea"/>
                         </div>
                         <div className="rightBodyMain">
-                            {postImage ? <div className='postImageArea'/> :
-                                <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
-                                    <input hidden accept="image/*" type="file" />
-                                    <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>
-                                </IconButton>}
+                            {postImage ?
+                                <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                    <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
+                                    <img src={URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                </IconButton>
+                                : <div className='postImageArea'/>}
                             <div className="postButtons">
                                 <div className="postButtonsLeft">
                                     <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                 </div>
                                 <div className="postButtonsRight">
-                                    <button><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                    <button onClick={() => setEdit(!edit)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                     <button onClick={handleClickOpen}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                         <DialogTitle >{"Delete this post?"}</DialogTitle>
@@ -105,42 +127,44 @@ function Right(){
                                     {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
                                 </div>
                             </div>
+                            {edit ? 
                             <div className="postInput">
-                                <textarea id="text" name="text" rows="12" cols="50"></textarea>
+                                <textarea id="text" name="text" rows="12" cols="50" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
                                 <div className="inputButtons">
-                                    <button className="save">Save</button>
-                                    <button className="cancel">Cancel</button>
+                                    <button className="save" onClick={handleSave}>Save</button>
+                                    <button className="cancel" onClick={handleCancel}>Cancel</button>
                                 </div>
-                            </div>
+                            </div> : <div className='postInput2'><span>{body}</span></div>}
                         </div>
-                    </div> : <PlainRight grid={grid} setGrid={setGrid} sns={sns} setSns={setSns}/>}
-                    <div className="rightFooter">
-
-                    </div>
+                    </div> : <PlainRight grid={grid} setGrid={setGrid} sns={sns} setSns={setSns} edit={edit} setEdit={setEdit}/>}
                 </div>
             </GridLines> :
             <div className="rightContent">
-                    <div className="rightHeader">
-                        <p>Some Random Title To Fill Up Some Space</p>
-                    </div>
+                    {edit ? <div className="rightHeader">
+                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                    </div> : <span style={{textAlign: 'center'}}>{title}</span>}
                     {sns ? 
                     <div className="rightBody">
                         <div className="rightBodyHeader">
                             <span className="profileArea"/>
                         </div>
                         <div className="rightBodyMain">
-                            {postImage ? <div className='postImageArea'/> :
-                            <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
-                                <input hidden accept="image/*" type="file" />
-                                <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>
-                            </IconButton>}
+                            {postImage ?
+                                <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                    <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
+                                    <img src={URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                </IconButton>
+                                :   <IconButton className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                        <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
+                                        <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>
+                                    </IconButton>}
                             <div className="postButtons">
                                 <div className="postButtonsLeft">
                                     <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                 </div>
                                 <div className="postButtonsRight">
-                                    <button><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                    <button onClick={() => setEdit(true)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                     <button onClick={handleClickOpen}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                         <DialogTitle>{"Delete this post?"}</DialogTitle>
@@ -152,22 +176,20 @@ function Right(){
                                             <Button onClick={handleClose} autoFocus>Cancel</Button>
                                         </DialogActions>
                                     </Dialog>
-                                    <button onClick={()=> setShowSettings(!showSettings)}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                    <button onClick={()=> setShowSettings(!showSettings)}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
                                 </div>
                             </div>
+                            {edit ? 
                             <div className="postInput">
-                                <textarea id="text" name="text" rows="12" cols="50"></textarea>
+                                <textarea id="text" name="text" rows="12" cols="50" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
                                 <div className="inputButtons">
-                                    <button className="save">Save</button>
-                                    <button className="cancel">Cancel</button>
+                                    <button className="save" onClick={handleSave}>Save</button>
+                                    <button className="cancel" onClick={handleCancel}>Cancel</button>
                                 </div>
-                            </div>
+                            </div> : <div className='postInput2'><span>{body}</span></div>}
                         </div>
-                    </div> : <PlainRight grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
-                    <div className="rightFooter">
-
-                    </div>
+                    </div> : <PlainRight grid={grid} setGrid={setGrid} setSns={setSns} sns={sns} edit={edit} setEdit={setEdit}/>}
                 </div>}
         </div>
     );

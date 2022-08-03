@@ -21,7 +21,7 @@ function DisplaySettings(props){
     return(
         <div className="settingsbox">
             <div className="checkboxlist">
-                <p1>Display Settings</p1>
+                <p1 style={{textAlign: "left"}}>Display Settings</p1>
                 <div className="checkboxButton">
                     <input type="checkbox" name="checkSNS" onChange={handleSnsClick} checked={props.sns}/>
                     <label>Social Network Style</label>
