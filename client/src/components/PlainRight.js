@@ -35,8 +35,9 @@ function PlainRight(props) {
                     readOnly={closeQuill}
                     style={closeQuill ? {border: "none"} : {border: "none"}}
                     modules={closeQuill ? PlainRight.modules2 : PlainRight.modules}
+                    formats={PlainRight.formats}
                 >
-                    <div className="ql-container" style={props.edit ? null : {height: "100%"}}/>
+                    <div className="ql-container" style={props.edit ? {height: '70%'} : {height: "100%"}}/>
                 </ReactQuill>
             </div>
             {!closeQuill ? 
@@ -59,24 +60,11 @@ function PlainRight(props) {
 
 PlainRight.modules = {
     toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-        ['blockquote', 'code-block'],
-
-        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-        [{ 'direction': 'rtl' }],                         // text direction
-
-        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-        [{ 'font': [] }],
-        [{ 'align': [] }],
-
-        ['clean']                                         // remove formatting button
-    ]
+      [{ 'header': [1, 2, false] }],
+      ['bold', 'italic', 'underline','strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image']
+    ],
 };
 
 PlainRight.modules2 = {
