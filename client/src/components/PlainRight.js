@@ -37,7 +37,7 @@ function PlainRight(props) {
                     modules={closeQuill ? PlainRight.modules2 : PlainRight.modules}
                     formats={PlainRight.formats}
                 >
-                    <div className="ql-container" style={props.edit ? {height: '70%'} : {height: "100%"}}/>
+                    <div className="ql-container" style={props.edit ? {height: '70%'} : {}}/>
                 </ReactQuill>
             </div>
             {!closeQuill ? 
