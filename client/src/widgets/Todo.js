@@ -5,10 +5,11 @@ import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 function Todo(){
     const [count, setCount] = useState(1);
     const [goals, setGoals] = useState(['cse323', 'eat']);
+    const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
 
-    }, [goals, count])
+    }, [goals, count, editMode])
 
     const handleAddTodo = () => {
         goals.push('')
@@ -30,11 +31,15 @@ function Todo(){
             <div className="todoHeader">
                 <p>To Do</p>
                 <button onClick={handleAddTodo}><AddRoundedIcon sx={{size: '20px'}}/></button>
+                <button onClick={() => setEditMode(true)}><RemoveRoundedIcon sx={{size: '20px'}}/></button>
             </div>
             <div className="todoList">
-                {goals.map((value, key) => (<div className="checkboxButton">
+                {!editMode ? goals.map((value, key) => (<div className="checkboxButton">
                     <input type="checkbox" name={key}/>
                     {value==='' ? <input onChange={(e) => handleEditTodo(key, e.target.value)} onKeyPress={handleKeyPress}/> : <label>{value}</label>}
+                </div>)) : goals.map((value, key) => (<div className='checkboxButton'>
+                    <input type="checkbox" name={key}/>
+                    <input placeholder={value} onChange={(e) => handleEditTodo(key, e.target.value)}/>
                 </div>))}
             </div>
         </div>
