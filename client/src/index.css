@@ -378,6 +378,16 @@ main {
   align-items: center;
 }
 
+.checkboxButton button {
+  border: none;
+  background-color: transparent;
+  font-size: 2.2rem;
+}
+
+.checkboxButton input {
+  font-size: 2rem;
+}
+
 .checkboxlist {
   padding: 1rem;
   display: flex;
@@ -388,6 +398,25 @@ main {
 .todoWidget {
   display: flex;
   flex-direction: column;
+}
+
+.todoHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.todoHeader button {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .todoList {
