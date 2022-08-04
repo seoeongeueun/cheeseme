@@ -215,6 +215,11 @@ main {
   cursor: pointer;
 }
 
+.faceMood img {
+  width: 2rem;
+  height: 2rem;
+}
+
 .profileArea {
   height: 4rem;
   width: 4rem;
@@ -398,6 +403,7 @@ main {
 .todoWidget {
   display: flex;
   flex-direction: column;
+  padding: 1rem;
 }
 
 .todoHeader {
@@ -422,6 +428,11 @@ main {
 .todoList {
   display: flex;
   flex-direction: column;
+}
+
+input.todoElem::placeholder {
+  color: #929292;
+  opacity: 1;
 }
 
 /* qull editor */
