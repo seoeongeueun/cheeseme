@@ -136,12 +136,28 @@ main {
   width: 100%;
   flex-direction: column;
   height: 100%;
+  justify-content: space-between;
+}
+
+.leftBody {
+}
+
+.leftFooter {
+  margin-bottom: 1rem;
+  margin-right: -2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .leftFooter button{
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.leftWidget {
+  display: block;
 }
 
 /* Right content */
@@ -512,6 +528,7 @@ input.todoElem::placeholder {
   flex-direction: row;
   justify-content: space-between;
   margin-top: 1rem;
+  margin-right: -4rem;
 }
 
 .settingsSet {

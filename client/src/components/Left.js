@@ -39,14 +39,18 @@ function Left(){
             </GridLines> :
             <div className="leftContent">
                     <div className="leftBody">
-                        {todo && <Todo/>}
                         {calendar && <CalendarWidget/>}
+                        {todo && <Todo/>} 
                     </div>
                     <div className="leftFooter">
-                        <button onClick={()=> setShowWidgetSettings(!showWidgetSettings)}><DashboardCustomizeOutlinedIcon sx={{fontSize: "3rem"}}/></button>
-                        {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar}/>}
-                        <button onClick={()=> setShowSettings(!showSettings)}><SettingsOutlinedIcon sx={{fontSize: "3rem"}}/></button>
-                        {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
+                        <div className="leftWidget">
+                            <button onClick={()=> setShowWidgetSettings(!showWidgetSettings)}><DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                            {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar}/>}
+                        </div>
+                        <div className="leftWidget">
+                            <button onClick={()=> setShowSettings(!showSettings)}><SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                            {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
+                        </div>
                     </div>
                 </div>}
         </div>
