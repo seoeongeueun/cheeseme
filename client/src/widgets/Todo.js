@@ -31,6 +31,7 @@ function Todo(){
 
     const handleAddTodo = () => {
         goals.push({id: '', check: false})
+        setHappy(false)
         setCount(count+1)
     }
 
@@ -56,8 +57,10 @@ function Todo(){
         <div className="todoWidget">
             <div className="todoHeader">
                 <span>To Do</span>
-                <button onClick={handleAddTodo}><AddRoundedIcon sx={{size: '20px'}}/></button>
-                <button onClick={() => setEditMode(!editMode)}><RemoveRoundedIcon sx={editMode ? {size: '20px', color: "#F9D876"} : {size: '20px'}}/></button>
+                <div className="todoHeaderButtons">
+                    <button onClick={handleAddTodo}><AddRoundedIcon sx={{size: '20px'}}/></button>
+                    <button onClick={() => setEditMode(!editMode)}><RemoveRoundedIcon sx={editMode ? {size: '20px', color: "#F9D876"} : {size: '20px'}}/></button>
+                </div>
             </div>
             <div className="todoList">
                 {!editMode ? goals.map((value, key) => (<div className="checkboxButton">
@@ -68,7 +71,7 @@ function Todo(){
                     <input className='todoElem' placeholder={value.id} onChange={(e) => handleEditTodo(key, e.target.value)}/>
                 </div>))}
             </div>
-            <div className='faceMood'>
+            <div className='faceMoodTodo'>
                 <img src={happy ? HappyColor : HappyPlain} alt="happy" style={happy ? {width: '2.1rem', height: '2.1rem'} : null}/>
                 <img src={!happy ? SadColor : SadPlain} alt="sad" style={!happy ? {width: '2.1rem', height: '2.1rem'} : null}/>
             </div>

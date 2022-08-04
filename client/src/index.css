@@ -380,7 +380,12 @@ main {
 .checkboxButton {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+.checkboxButton label {
+  margin-top: -6px;
 }
 
 .checkboxButton button {
@@ -404,12 +409,16 @@ main {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  width: 20rem;
+  border: 1px solid #d2d2d2;
 }
 
 .todoHeader {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .todoHeader button {
@@ -425,14 +434,32 @@ main {
   cursor: pointer;
 }
 
+.todoHeaderButtons {
+  display: flex;
+  flex-direction: row;
+}
+
 .todoList {
   display: flex;
   flex-direction: column;
+  margin: 0 0.5rem 1rem 0.5rem;
 }
 
 input.todoElem::placeholder {
-  color: #929292;
+  color: black;
   opacity: 1;
+}
+
+.faceMoodTodo img {
+  width: 2rem;
+  height: 2rem;
+  margin-left: 1rem;
+}
+
+.faceMoodTodo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 /* qull editor */
