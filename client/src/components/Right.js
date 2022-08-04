@@ -19,6 +19,10 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import SadColor from '../icons/sad.png';
+import HappyColor from '../icons/happy.png';
+import SadPlain from '../icons/sad (1).png';
+import HappyPlain from '../icons/happy (1).png';
 
 function Right(){
     const [showSettings, setShowSettings] = useState(false);
@@ -36,7 +40,16 @@ function Right(){
     const [title, setTitle] = useState("제목이에요");
     const [edit, setEdit] = useState(false);
     const [body, setBody] = useState();
+    const [newPost, setNewPost] = useState(true);
+    const [date, setDate] = useState();
+    const [happy, setHappy] = useState(true);
     
+    useEffect(() => {
+        if (newPost){
+            const current = new Date();
+            setDate(`${current.getMonth()+1}.${current.getDate()}.${current.getFullYear()}`)
+        }
+    }, [])
 
     useEffect(() => {
         console.log('edit: ', edit)
@@ -86,6 +99,8 @@ function Right(){
         setEdit(false);
     }
 
+    /*<span className="profileArea"/>*/
+
     return(
         <div className="rightInnerBorder">
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#e5e5e5"} lineColor2={"#efefef"}>
@@ -104,7 +119,10 @@ function Right(){
                                     <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
                                     <img src={URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                 </IconButton>
-                                : <div className='postImageArea'/>}
+                                :   <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                        <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
+                                        <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>
+                                    </IconButton>}
                             <div className="postButtons">
                                 <div className="postButtonsLeft">
                                     <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
@@ -136,7 +154,7 @@ function Right(){
                                 </div>
                             </div> : <div className='postInput2'><span>{body}</span></div>}
                         </div>
-                    </div> : <PlainRight grid={grid} setGrid={setGrid} sns={sns} setSns={setSns} edit={edit} setEdit={setEdit}/>}
+                    </div> : <PlainRight grid={grid} setGrid={setGrid} sns={sns} setSns={setSns} edit={edit} setEdit={setEdit} date={date}/>}
                 </div>
             </GridLines> :
             <div className="rightContent">
@@ -146,7 +164,11 @@ function Right(){
                     {sns ? 
                     <div className="rightBody">
                         <div className="rightBodyHeader">
-                            <span className="profileArea"/>
+                            <div className='faceMood'>
+                                <button onClick={() => setHappy(true)}><img src={happy ? HappyColor : HappyPlain} style={happy ? {width: '2.1rem', height: '2.1rem'} : null}/></button>
+                                <button onClick={() => setHappy(false)}><img src={!happy ? SadColor : SadPlain} style={!happy ? {width: '2.1rem', height: '2.1rem'} : null}/></button>
+                            </div>
+                            <span>{date}</span>
                         </div>
                         <div className="rightBodyMain">
                             {postImage ?
@@ -154,18 +176,18 @@ function Right(){
                                     <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
                                     <img src={URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                 </IconButton>
-                                :   <IconButton className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                :   <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
                                         <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>
                                     </IconButton>}
                             <div className="postButtons">
                                 <div className="postButtonsLeft">
-                                    <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                    <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                    <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                 </div>
                                 <div className="postButtonsRight">
                                     <button onClick={() => setEdit(true)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
-                                    <button onClick={handleClickOpen}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                    <button onClick={handleClickOpen}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                     <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                         <DialogTitle>{"Delete this post?"}</DialogTitle>
                                         <DialogContent>
@@ -187,9 +209,11 @@ function Right(){
                                     <button className="save" onClick={handleSave}>Save</button>
                                     <button className="cancel" onClick={handleCancel}>Cancel</button>
                                 </div>
-                            </div> : <div className='postInput2'><span>{body}</span></div>}
+                            </div> : <div className='postInput2'>
+                                        <span>{body}</span>
+                                    </div>}
                         </div>
-                    </div> : <PlainRight grid={grid} setGrid={setGrid} setSns={setSns} sns={sns} edit={edit} setEdit={setEdit}/>}
+                    </div> : <PlainRight grid={grid} setGrid={setGrid} setSns={setSns} sns={sns} edit={edit} setEdit={setEdit} date={date}/>}
                 </div>}
         </div>
     );
