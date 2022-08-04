@@ -507,17 +507,15 @@ input.todoElem::placeholder {
   width: 100%;
   tab-size: 3;
   font-size: 2rem;
+  margin-left: 1px;
 }
 
-.notesContent .ql-container ul, ol {
-  tab-size: 1;
-  -moz-tab-size: 1;
-  -o-tab-size:  1;
+.notesContent .ql-editor ol {
+  padding-left: 0rem;
 }
 
-.notesContent .ql-indent-1 {
-  padding-left: 1rem;
-  tab-size: 1;
+.notesContent .ql-editor ul {
+  padding-left: 0rem;
 }
 
 /* end of notes widget */
