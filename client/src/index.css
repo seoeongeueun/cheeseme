@@ -209,7 +209,7 @@ main {
 }
 
 .rightBodyHeader {
-  margin-bottom: 1rem;
+  margin: 1rem 0 1rem 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -225,15 +225,15 @@ main {
   font-size: 2.2rem;
 }
 
-.faceMood button{
+.weatherMood button{
   border: none;
   background-color: transparent;
   cursor: pointer;
 }
 
-.faceMood img {
-  width: 2rem;
-  height: 2rem;
+.weatherMood img {
+  width: 2.2rem;
+  height: 2.2rem;
 }
 
 .profileArea {
@@ -312,6 +312,7 @@ main {
   flex-direction: column;
   align-items: space-between;
   overflow-y: hidden;
+  white-space: pre-line;
 }
 
 .postInput2 span{
@@ -477,6 +478,49 @@ input.todoElem::placeholder {
   flex-direction: row;
   justify-content: center;
 }
+
+/* start of notes widget */
+.notesWidget {
+  width: 20rem;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
+}
+
+.notesHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #F9D876;
+  color: black;
+  align-items: center;
+  height: 2rem;
+}
+
+.notesHeader button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.notesContent .ql-editor{
+  width: 100%;
+  tab-size: 3;
+  font-size: 2rem;
+}
+
+.notesContent .ql-container ul, ol {
+  tab-size: 1;
+  -moz-tab-size: 1;
+  -o-tab-size:  1;
+}
+
+.notesContent .ql-indent-1 {
+  padding-left: 1rem;
+  tab-size: 1;
+}
+
+/* end of notes widget */
 
 /* qull editor */
 .plainRight {

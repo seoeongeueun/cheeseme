@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 
 function WidgetSettingsLeft(props){
     const [todo, setTodo] = useState(props.todo);
-    const [calendar, setCalendar] = useState(props.calendar)
+    const [calendar, setCalendar] = useState(props.calendar);
+    const [notes, setNotes] = useState(props.notes);
+
     
     const handleTodoClick = () => {
         setTodo(!todo)
@@ -14,10 +16,19 @@ function WidgetSettingsLeft(props){
         props.setCalendar(!calendar)
     }
 
+    const handleNotesClick = () => {
+        setNotes(!notes);
+        props.setNotes(!notes);
+    }
+
     return(
         <div className="settingsbox">
             <div class="checkboxlist">
                 <p1>Widget Settings</p1>
+                <div className="checkboxButton">
+                    <input type="checkbox" name="checkTodo" checked={props.notes} onClick={() => handleNotesClick()}/>
+                    <label>Notes</label>
+                </div>
                 <div className="checkboxButton">
                     <input type="checkbox" name="checkTodo" checked={props.todo} onClick={() => handleTodoClick()}/>
                     <label>To Do List</label>

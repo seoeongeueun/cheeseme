@@ -5,21 +5,27 @@ import DisplaySettings from '../modals/DisplaySettings';
 import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-import SadColor from '../icons/sad.png';
-import HappyColor from '../icons/happy.png';
-import SadPlain from '../icons/sad (1).png';
-import HappyPlain from '../icons/happy (1).png';
+import CloudColor from '../icons/cloud (1).png';
+import CloudPlain from '../icons/cloud.png';
+import UmbPlain from '../icons/umbrella (1).png';
+import UmbColor from '../icons/umbrella.png';
+import SunColor from '../icons/sunny (1).png';
+import SunPlain from '../icons/sunny.png';
+import SnowPlain from '../icons/snowman (1).png';
+import SnowColor from '../icons/snowman.png';
+
+
 
 function PlainRight(props) {
     const [body, setBody] = useState("")
     const [showSettings, setShowSettings] = useState(false);
     const [closeQuill, setCloseQuill] = useState(true);
     const [date, setDate] = useState(props.date);
-    const [happy, setHappy] = useState();
+    const [weather, setWeather] = useState('');
     
     useEffect(()=> {
 
-    }, [showSettings, props.grid, props.sns, closeQuill, props.edit, happy]);
+    }, [showSettings, props.grid, props.sns, closeQuill, props.edit, weather]);
 
     const handleBody = (e) => {
         setBody(e);
@@ -38,11 +44,13 @@ function PlainRight(props) {
         <div className='plainRight'>
             <div className="rightBody">
                 <div className="rightBodyHeader">
-                    <div className='faceMood'>
-                        <button onClick={() => setHappy(true)}><img src={happy ? HappyColor : HappyPlain} style={happy ? {width: '2.1rem', height: '2.1rem'} : null}/></button>
-                        <button onClick={() => setHappy(false)}><img src={!happy ? SadColor : SadPlain} style={!happy ? {width: '2.1rem', height: '2.1rem'} : null}/></button>
-                    </div>
                     <span>{date}</span>
+                    <div className='weatherMood'>
+                        <button onClick={() => setWeather('sunny')}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
+                        <button onClick={() => setWeather('cloud')}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
+                        <button onClick={() => setWeather('rainy')}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
+                        <button onClick={() => setWeather('snowy')}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
+                    </div>
                 </div>
                 <ReactQuill
                     readOnly={closeQuill}

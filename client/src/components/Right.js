@@ -29,6 +29,8 @@ import UmbPlain from '../icons/umbrella (1).png';
 import UmbColor from '../icons/umbrella.png';
 import SunColor from '../icons/sunny (1).png';
 import SunPlain from '../icons/sunny.png';
+import SnowPlain from '../icons/snowman (1).png';
+import SnowColor from '../icons/snowman.png';
 
 
 
@@ -177,11 +179,11 @@ function Right(){
                     <div className="rightBody">
                         <div className="rightBodyHeader">
                             <span>{date}</span>
-                            <div className='faceMood'>
+                            <div className='weatherMood'>
                                 <button onClick={() => setWeather('sunny')}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
                                 <button onClick={() => setWeather('cloud')}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
                                 <button onClick={() => setWeather('rainy')}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
-
+                                <button onClick={() => setWeather('snowy')}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
                             </div>
                         </div>
                         <div className="rightBodyMain">

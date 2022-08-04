@@ -3,6 +3,7 @@ import GridLines from 'react-gridlines';
 import DisplaySettingsLeft from '../modals/DisplaySettingsLeft';
 import WidgetSettingsLeft from '../modals/WidgetSettingsLeft';
 import Todo from '../widgets/Todo';
+import Notes from '../widgets/Notes';
 import CalendarWidget from '../widgets/Calendar';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
@@ -17,6 +18,7 @@ function Left(){
 
     const [todo, setTodo] = useState(true);
     const [calendar, setCalendar] = useState(true);
+    const [notes, setNotes] = useState(true);
 
     useEffect(() => {
 
@@ -41,11 +43,12 @@ function Left(){
                     <div className="leftBody">
                         {calendar && <CalendarWidget/>}
                         {todo && <Todo/>} 
+                        {notes && <Notes/>}
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
                             <button onClick={()=> setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                            {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar}/>}
+                            {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={()=> setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
