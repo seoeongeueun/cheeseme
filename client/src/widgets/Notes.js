@@ -16,7 +16,7 @@ function Notes(){
         <div className="notesWidget">
             <div className='notesHeader'>
                 <span>Notes</span>
-                <button onClick={() => setCloseQuill(!closeQuill)}>{closeQuill ? <EditOutlinedIcon sx={{size: '25px'}}/> : <CheckRoundedIcon sx={{size: '25px'}}/>}</button>
+                <button onClick={() => setCloseQuill(!closeQuill)}>{closeQuill ? <EditOutlinedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px'}}/>}</button>
             </div>
             <div className="notesContent">
                 <ReactQuill

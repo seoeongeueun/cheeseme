@@ -140,6 +140,7 @@ main {
 }
 
 .leftBody {
+  max-height: 90%;
 }
 
 .leftFooter {
@@ -321,7 +322,7 @@ main {
 }
 
 .postInput2:hover {
-  overflow-y: scroll;
+  overflow-y: overlay;
   overflow-x: hidden;
 }
 
@@ -484,6 +485,8 @@ input.todoElem::placeholder {
   width: 20rem;
   border: 1px solid #d2d2d2;
   border-radius: 5px;
+  max-height: 33%;
+  overflow-y: overlay;
 }
 
 .notesHeader {
@@ -501,13 +504,18 @@ input.todoElem::placeholder {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.notesContent {
 }
 
 .notesContent .ql-editor{
   width: 100%;
   tab-size: 3;
   font-size: 2rem;
-  margin-left: 1px;
 }
 
 .notesContent .ql-editor ol {
