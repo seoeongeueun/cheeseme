@@ -9,6 +9,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 import Draggable from 'react-draggable';
+import OpenWithRoundedIcon from '@mui/icons-material/OpenWithRounded';
 
 
 function Left(){
@@ -25,19 +26,19 @@ function Left(){
     const [left, setLeft] = useState(0);
     const [height, setHeight] = useState(0);
 
+    const [editMode, setEditMode] = useState(false);
+
     useEffect(() => {
-        console.log("eee")
         const bodyRef = document.getElementById("leftContent");
         if (bodyRef){
             setHeight(bodyRef.offsetHeight)
             setWidth(bodyRef.offsetWidth)
-            console.log(bodyRef.offsetHeight)
-            console.log(bodyRef.offsetWidth)
-
         }
-        //bounds={{top: -height, left: -width, right: width, bottom: height}}
     }, []);
 
+    useEffect(() => {
+        
+    }, [editMode])
 
     return(
         <div className="leftInnerBorder">
@@ -50,16 +51,20 @@ function Left(){
                         {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo}/>}
                         <button onClick={()=> setShowSettings(!showSettings)}>settings</button>
                         {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
+                        <button onClick={() => setEditMode(!editMode)}><OpenWithRoundedIcon sx={{fontSize: '20px'}}/></button>
                     </div>
                 </div>
             </GridLines> :
             <div className="leftContent" id="leftContent">
                     <div className="leftBody">
                         {calendar && <Draggable><div><CalendarWidget/></div></Draggable>}
-                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-240}}><div><Todo/></div></Draggable>} 
+                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-240}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
                         {notes && <Draggable><div><Notes/></div></Draggable>}
                     </div>
                     <div className="leftFooter">
+                        <div className="leftWidget">
+                            <button onClick={() => setEditMode(!editMode)}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
+                        </div>
                         <div className="leftWidget">
                             <button onClick={()=> setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                             {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes}/>}

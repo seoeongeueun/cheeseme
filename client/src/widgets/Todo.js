@@ -6,9 +6,10 @@ import HappyColor from '../icons/happy.png';
 import SadPlain from '../icons/sad (1).png';
 import HappyPlain from '../icons/happy (1).png';
 import Draggable from 'react-draggable';
+import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 
 
-function Todo(){
+function Todo(props){
     const [count, setCount] = useState(1);
     const [goals, setGoals] = useState([{id: 'cse323', check: false}, {id: 'eat', check: false}]);
     const [editMode, setEditMode] = useState(false);
@@ -28,8 +29,8 @@ function Todo(){
     }, [count])
 
     useEffect(() => {
-
-    }, [goals, count, editMode, happy])
+        
+    }, [goals, count, editMode, happy, props.move])
 
     const handleAddTodo = () => {
         goals.push({id: '', check: false})
@@ -57,6 +58,7 @@ function Todo(){
 
     return (
         <div className="todoWidget">
+            {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
             <div className="todoHeader">
                 <span>To Do</span>
                 <div className="todoHeaderButtons">
