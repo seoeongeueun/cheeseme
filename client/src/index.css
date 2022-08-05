@@ -334,7 +334,7 @@ main {
 .postInput textarea{
   border: 1px solid #a4a4a4;
   font-size: 2rem;
-  overflow-y: scroll;
+  overflow-y: overlay;
   overflow-x: hidden;
 }
 
