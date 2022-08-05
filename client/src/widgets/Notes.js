@@ -3,17 +3,19 @@ import ReactQuill from 'react-quill';
 import "../../node_modules/quill/dist/quill.snow.css";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 
-function Notes(){
+function Notes(props){
     const [body, setBody] = useState("");
     const [closeQuill, setCloseQuill] = useState(true);
 
     useEffect(() => {
 
-    }, [closeQuill])
+    }, [closeQuill, props.move])
 
     return (
         <div className="notesWidget">
+            {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
             <div className='notesHeader'>
                 <span>Notes</span>
                 <button onClick={() => setCloseQuill(!closeQuill)}>{closeQuill ? <EditOutlinedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px'}}/>}</button>

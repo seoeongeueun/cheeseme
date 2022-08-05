@@ -139,6 +139,15 @@ main {
   justify-content: space-between;
 }
 
+.leftContent strong{
+  cursor: pointer;
+  color: #F9D876;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .leftBody {
   max-height: 90%;
 }
@@ -492,14 +501,6 @@ input.todoElem::placeholder {
   justify-content: center;
 }
 
-.todoWidget strong{
-  cursor: pointer;
-  color: #F9D876;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 /* end of todo widget */
 
 /* start of notes widget */
@@ -507,10 +508,12 @@ input.todoElem::placeholder {
   width: 20rem;
   border: 1px solid #d2d2d2;
   border-radius: 5px;
-  max-height: 33%;
+  max-height: 25rem;
   overflow-y: overlay;
   position: absolute;
-  top: 0px;
+  top: 2rem;
+  max-height: 17rem;
+  background-color: white;
 }
 
 .notesHeader {

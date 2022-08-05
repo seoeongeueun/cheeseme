@@ -37,7 +37,7 @@ function Left(){
     }, []);
 
     useEffect(() => {
-        
+
     }, [editMode])
 
     return(
@@ -59,7 +59,7 @@ function Left(){
                     <div className="leftBody">
                         {calendar && <Draggable><div><CalendarWidget/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-240}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
-                        {notes && <Draggable><div><Notes/></div></Draggable>}
+                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-272}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
