@@ -422,6 +422,13 @@ main {
   flex-direction: column;
 }
 
+/* start of calendar widget */
+.calendarWidget {
+  position: absolute;
+  top: 0px;
+}
+/* end of calendar widget */
+
 /* Todo widget */
 .todoWidget {
   display: flex;
@@ -429,6 +436,9 @@ main {
   padding: 1rem;
   width: 20rem;
   border: 1px solid #d2d2d2;
+  position: absolute;
+  top: 2rem;
+  max-height: 17rem;
 }
 
 .todoHeader {
@@ -461,6 +471,7 @@ main {
   display: flex;
   flex-direction: column;
   margin: 0 0.5rem 1rem 0.5rem;
+  overflow-y: overlay;
 }
 
 input.todoElem::placeholder {
@@ -487,6 +498,8 @@ input.todoElem::placeholder {
   border-radius: 5px;
   max-height: 33%;
   overflow-y: overlay;
+  position: absolute;
+  top: 0px;
 }
 
 .notesHeader {

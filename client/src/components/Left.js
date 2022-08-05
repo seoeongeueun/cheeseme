@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import GridLines from 'react-gridlines';
 import DisplaySettingsLeft from '../modals/DisplaySettingsLeft';
 import WidgetSettingsLeft from '../modals/WidgetSettingsLeft';
@@ -8,6 +8,7 @@ import CalendarWidget from '../widgets/Calendar';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
+import Draggable from 'react-draggable';
 
 
 function Left(){
@@ -19,17 +20,30 @@ function Left(){
     const [todo, setTodo] = useState(true);
     const [calendar, setCalendar] = useState(true);
     const [notes, setNotes] = useState(true);
+    const [top, setTop] = useState(0);
+    const [width, setWidth] = useState(0);
+    const [left, setLeft] = useState(0);
+    const [height, setHeight] = useState(0);
 
     useEffect(() => {
+        console.log("eee")
+        const bodyRef = document.getElementById("leftContent");
+        if (bodyRef){
+            setHeight(bodyRef.offsetHeight)
+            setWidth(bodyRef.offsetWidth)
+            console.log(bodyRef.offsetHeight)
+            console.log(bodyRef.offsetWidth)
 
-    });
+        }
+        //bounds={{top: -height, left: -width, right: width, bottom: height}}
+    }, []);
+
 
     return(
         <div className="leftInnerBorder">
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12}>
                 <div className="leftContent">
                     <div className="leftBody">
-
                     </div>
                     <div className="leftFooter">
                         <button onClick={()=> setShowWidgetSettings(!showWidgetSettings)}>widgets</button>
@@ -39,11 +53,11 @@ function Left(){
                     </div>
                 </div>
             </GridLines> :
-            <div className="leftContent">
+            <div className="leftContent" id="leftContent">
                     <div className="leftBody">
-                        {calendar && <CalendarWidget/>}
-                        {todo && <Todo/>} 
-                        {notes && <Notes/>}
+                        {calendar && <Draggable><div><CalendarWidget/></div></Draggable>}
+                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-240}}><div><Todo/></div></Draggable>} 
+                        {notes && <Draggable><div><Notes/></div></Draggable>}
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
