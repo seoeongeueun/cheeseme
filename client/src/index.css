@@ -139,6 +139,15 @@ main {
   justify-content: space-between;
 }
 
+.leftContent strong{
+  cursor: pointer;
+  color: #F9D876;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .leftBody {
   max-height: 90%;
 }
@@ -442,15 +451,6 @@ main {
   background-color: white;
 }
 
-.todoWidget strong{
-  cursor: pointer;
-  color: #F9D876;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .todoHeader {
   display: flex;
   flex-direction: row;
@@ -513,16 +513,8 @@ input.todoElem::placeholder {
   position: absolute;
   top: 2rem;
   max-height: 17rem;
+  left: 0rem;
   background-color: white;
-}
-
-.notesWidget strong{
-  cursor: pointer;
-  color: #F9D876;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .notesHeader {

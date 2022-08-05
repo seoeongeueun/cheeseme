@@ -19,7 +19,6 @@ function Notes(props){
                 <span>Notes</span>
                 <button onClick={() => setCloseQuill(!closeQuill)}>{closeQuill ? <EditOutlinedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px'}}/>}</button>
             </div>
-            {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
             <div className="notesContent">
                 <ReactQuill
                     readOnly={closeQuill}
@@ -30,6 +29,7 @@ function Notes(props){
                     <div className="ql-container"/>
                 </ReactQuill>
             </div>
+            {props.move && <strong ><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
         </div>
     )
 

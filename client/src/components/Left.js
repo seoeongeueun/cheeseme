@@ -10,6 +10,7 @@ import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomiz
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 import Draggable from 'react-draggable';
 import OpenWithRoundedIcon from '@mui/icons-material/OpenWithRounded';
+import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 
 
 function Left(){
@@ -57,9 +58,9 @@ function Left(){
             </GridLines> :
             <div className="leftContent" id="leftContent">
                     <div className="leftBody">
-                        {calendar && <Draggable><div><CalendarWidget/></div></Draggable>}
-                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-240}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
-                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-272}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
+                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-464}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
+                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
+                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
