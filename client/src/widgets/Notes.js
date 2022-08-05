@@ -15,11 +15,11 @@ function Notes(props){
 
     return (
         <div className="notesWidget">
-            {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
             <div className='notesHeader'>
                 <span>Notes</span>
                 <button onClick={() => setCloseQuill(!closeQuill)}>{closeQuill ? <EditOutlinedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px'}}/>}</button>
             </div>
+            {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
             <div className="notesContent">
                 <ReactQuill
                     readOnly={closeQuill}
