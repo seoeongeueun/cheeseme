@@ -431,6 +431,25 @@ main {
   flex-direction: column;
 }
 
+/* start of addpicsettings */
+.stickerUpload {
+  height: 40rem;
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stickerUpload img {
+}
+
+.uploadIconMini {
+  width: 10rem;
+  height: 10rem;
+}
+
+/* end of addpicsettings */
+
 /* start of calendar widget */
 .calendarWidget {
   position: absolute;

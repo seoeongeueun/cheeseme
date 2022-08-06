@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import GridLines from 'react-gridlines';
 import DisplaySettingsLeft from '../modals/DisplaySettingsLeft';
+import AddPicSettings from '../modals/AddPicSettings';
 import WidgetSettingsLeft from '../modals/WidgetSettingsLeft';
 import Todo from '../widgets/Todo';
 import Notes from '../widgets/Notes';
@@ -11,6 +12,7 @@ import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomi
 import Draggable from 'react-draggable';
 import OpenWithRoundedIcon from '@mui/icons-material/OpenWithRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
+import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 
 
 function Left(){
@@ -28,6 +30,7 @@ function Left(){
     const [height, setHeight] = useState(0);
 
     const [editMode, setEditMode] = useState(false);
+    const [addPic, setAddPic] = useState(false);
 
     useEffect(() => {
         const bodyRef = document.getElementById("leftContent");
@@ -64,14 +67,18 @@ function Left(){
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
+                            <button onClick={() => setAddPic(!addPic)}><AddPhotoAlternateOutlinedIcon sx={{fontSize: '2.3rem'}}/></button>
+                            {addPic && <AddPicSettings/>}
+                        </div>
+                        <div className="leftWidget">
                             <button onClick={() => setEditMode(!editMode)}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                         </div>
                         <div className="leftWidget">
-                            <button onClick={()=> setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                            <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                             {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes}/>}
                         </div>
                         <div className="leftWidget">
-                            <button onClick={()=> setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                            <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                             {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
                         </div>
                     </div>
