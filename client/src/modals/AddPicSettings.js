@@ -132,4 +132,14 @@ const Demo = ({ classes }) => {
     )
 }
 
+function readFile(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.addEventListener('load', () => resolve(reader.result), false)
+    reader.readAsDataURL(file)
+  })
+}
+
+const AddPicSettings = withStyles(styles)(Demo);
+
 export default AddPicSettings;
