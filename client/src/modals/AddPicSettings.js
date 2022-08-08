@@ -1,47 +1,135 @@
-import { useEffect, useState } from 'react'
-import ReactCrop from 'react-image-crop'
-import Crop from 'react-image-crop'
-import PixelCrop from 'react-image-crop';
-import { PercentCrop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css'
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import React, { useState, useCallback } from 'react'
+import ReactDOM from 'react-dom'
+import Cropper from 'react-easy-crop'
+import Slider from '@material-ui/core/Slider'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import { getOrientation } from 'get-orientation/browser'
+import ImgDialog from './ImgDialog'
+import { getCroppedImg, getRotatedImage } from './canvasUtils'
+import { styles } from './styles'
 
-function AddPicSettings(){
-    const [selectedImage, setSelectedImage] = useState();
-    const [postImage, setPostImage] = useState(false);
-    const [completedCrop, setCompletedCrop] = useState();
-    const [crop, setCrop] = useState<PercentCrop>({
-        unit: '%',
-    });
+const ORIENTATION_TO_ANGLE = {
+  '3': 180,
+  '6': 90,
+  '8': -90,
+}
 
-    useEffect(() => {
-        console.log('c: ', crop);
+const Demo = ({ classes }) => {
+    const [imageSrc, setImageSrc] = React.useState(null)
+    const [crop, setCrop] = useState({ x: 0, y: 0 })
+    const [rotation, setRotation] = useState(0)
+    const [zoom, setZoom] = useState(1)
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+    const [croppedImage, setCroppedImage] = useState(null)
 
-    }, [postImage, crop, selectedImage, completedCrop]);
+    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+      setCroppedAreaPixels(croppedAreaPixels)
+    }, [])
 
-    const onUploadImage = (e) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setSelectedImage(e.target.files[0]);
-            setPostImage(true);
-          }
-    };
+    const showCroppedImage = useCallback(async () => {
+      try {
+        const croppedImage = await getCroppedImg(
+          imageSrc,
+          croppedAreaPixels,
+          rotation
+        )
+        console.log('donee', { croppedImage })
+        setCroppedImage(croppedImage)
+      } catch (e) {
+        console.error(e)
+      }
+    }, [imageSrc, croppedAreaPixels, rotation])
 
-    return(
-        <div className="settingsbox">
-            <div className="checkboxlist">
-                <p1 style={{textAlign: "left"}}>Add Sticker</p1>
-                <div className="stickerUpload">
-                    <IconButton className="uploadIconMini" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
-                        <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
-                        <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>
-                    </IconButton>
-                    {postImage && <ReactCrop crop={crop} onChange={(c) => setCrop(c)} onComplete={(c) => setCompletedCrop(c)}><img src={URL.createObjectURL(selectedImage)} alt="Thumb"/></ReactCrop>}
-                    {completedCrop && <div style={{border: '1px solid black', width: completedCrop.width, height: completedCrop.height}}><img src={URL.createObjectURL(selectedImage)} style={{objectFit: 'contain'}}/></div>}
-                </div>
+    const onClose = useCallback(() => {
+      setCroppedImage(null)
+    }, [])
+
+    const onFileChange = async (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        const file = e.target.files[0]
+        let imageDataUrl = await readFile(file)
+      
+        // apply rotation if needed
+        const orientation = await getOrientation(file)
+        const rotation = ORIENTATION_TO_ANGLE[orientation]
+        if (rotation) {
+          imageDataUrl = await getRotatedImage(imageDataUrl, rotation)
+        }
+    
+        setImageSrc(imageDataUrl)
+      }
+    }
+
+    return (
+      <div>
+        {imageSrc ? (
+          <React.Fragment>
+            <div className={classes.cropContainer}>
+              <Cropper
+                image={imageSrc}
+                crop={crop}
+                rotation={rotation}
+                zoom={zoom}
+                aspect={4 / 3}
+                onCropChange={setCrop}
+                onRotationChange={setRotation}
+                onCropComplete={onCropComplete}
+                onZoomChange={setZoom}
+              />
             </div>
-        </div>
-    );
+            <div className={classes.controls}>
+              <div className={classes.sliderContainer}>
+                <Typography
+                  variant="overline"
+                  classes={{ root: classes.sliderLabel }}
+                >
+                  Zoom
+                </Typography>
+                <Slider
+                  value={zoom}
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  aria-labelledby="Zoom"
+                  classes={{ root: classes.slider }}
+                  onChange={(e, zoom) => setZoom(zoom)}
+                />
+              </div>
+              <div className={classes.sliderContainer}>
+                <Typography
+                  variant="overline"
+                  classes={{ root: classes.sliderLabel }}
+                >
+                  Rotation
+                </Typography>
+                <Slider
+                  value={rotation}
+                  min={0}
+                  max={360}
+                  step={1}
+                  aria-labelledby="Rotation"
+                  classes={{ root: classes.slider }}
+                  onChange={(e, rotation) => setRotation(rotation)}
+                />
+              </div>
+              <Button
+                onClick={showCroppedImage}
+                variant="contained"
+                color="primary"
+                classes={{ root: classes.cropButton }}
+              >
+                Show Result
+              </Button>
+            </div>
+            <ImgDialog img={croppedImage} onClose={onClose} />
+          </React.Fragment>
+        ) : (
+          <input type="file" onChange={onFileChange} accept="image/*" />
+        )}
+      </div>
+    )
 }
 
 export default AddPicSettings;
