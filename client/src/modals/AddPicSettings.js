@@ -35,7 +35,7 @@ const Demo = ({ classes }) => {
           croppedAreaPixels,
           rotation
         )
-        console.log('donee', { croppedImage })
+        console.log('done', { croppedImage })
         setCroppedImage(croppedImage)
       } catch (e) {
         console.error(e)
@@ -114,14 +114,7 @@ const Demo = ({ classes }) => {
                   onChange={(e, rotation) => setRotation(rotation)}
                 />
               </div>
-              <Button
-                onClick={showCroppedImage}
-                variant="contained"
-                color="primary"
-                classes={{ root: classes.cropButton }}
-              >
-                Show Result
-              </Button>
+              <button onClick={showCroppedImage}>Done</button>
             </div>
             <ImgDialog img={croppedImage} onClose={onClose} />
           </React.Fragment>

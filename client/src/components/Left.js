@@ -42,7 +42,7 @@ function Left(){
 
     useEffect(() => {
 
-    }, [editMode])
+    }, [editMode]);
 
     return(
         <div className="leftInnerBorder">
