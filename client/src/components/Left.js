@@ -29,9 +29,7 @@ function Left(){
     const [todo, setTodo] = useState(true);
     const [calendar, setCalendar] = useState(true);
     const [notes, setNotes] = useState(true);
-    const [top, setTop] = useState(0);
     const [width, setWidth] = useState(0);
-    const [left, setLeft] = useState(0);
     const [height, setHeight] = useState(0);
 
     const [editMode, setEditMode] = useState(false);
@@ -40,8 +38,7 @@ function Left(){
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [rotation, setRotation] = useState(0)
     const [zoom, setZoom] = useState(1)
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-    const [croppedImage, setCroppedImage] = useState(null);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [stickerList, setStickerList] = useState([]);
     const [stickersOn, setStickersOn] = useState([]);
 
@@ -114,12 +111,6 @@ function Left(){
             setImageSrc(imageDataUrl)
         }
     }
-
-
-    /*{calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-464}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
-                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
-                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
-                        */
 
     return(
         <div className="leftInnerBorder">

@@ -5,11 +5,6 @@ function WidgetSettingsLeft(props){
     const [calendar, setCalendar] = useState(props.calendar);
     const [notes, setNotes] = useState(props.notes);
     const [stickersOn, setStickersOn] = useState(props.stickersOn);
-
-    useEffect = (() => {
-
-    }, [stickersOn])
-
     
     const handleTodoClick = () => {
         setTodo(!todo)
@@ -27,11 +22,15 @@ function WidgetSettingsLeft(props){
     }
 
     const handleStickerClick = (index) => {
-        stickersOn[index] = !stickersOn[index];
         let tmp = [...stickersOn];
-        tmp[index] = !tmp[index];
-        setStickersOn({ tmp });
-        props.setStickersOn({ tmp });
+        if (tmp[index]){
+            tmp[index] = false;
+        }
+        else{
+            tmp[index] = true;
+        }
+        setStickersOn( tmp );
+        props.setStickersOn( tmp );
     }
 
     return(
@@ -50,12 +49,12 @@ function WidgetSettingsLeft(props){
                     <input type="checkbox" name="checkTodo" checked={props.calendar} onClick={() => handleCalendarClick()}/>
                     <label>Calendar</label>
                 </div>
-                {stickersOn.foreach((value, index) => {
+                {stickersOn?.length > 0 && props.stickersOn.map((value, index) => 
                     <div className="checkboxButton">
                         <input type="checkbox" name="checkTodo" checked={stickersOn[index]} onClick={() => handleStickerClick(index)}/>
-                        <label>Sticker {index}</label>
+                        <label>Sticker {index + 1}</label>
                     </div>
-                })}
+                )}
             </div>
         </div>
     );
