@@ -20,8 +20,9 @@ import Typography from '@material-ui/core/Typography';
 import { getCroppedImg, getRotatedImage } from '../modals/cropImage';
 import { getOrientation } from 'get-orientation/browser'
 import CropSquareRoundedIcon from '@mui/icons-material/CropSquareRounded';
-import CropPortraitRoundedIcon from '@mui/icons-material/CropPortraitRounded';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import CropPortraitSharpIcon from '@mui/icons-material/CropPortraitSharp';
+import CropSquareSharpIcon from '@mui/icons-material/CropSquareSharp';
 
 function Left(){
     const [showSettings, setShowSettings] = useState(false);
@@ -47,7 +48,7 @@ function Left(){
     const [roundStickers, setRoundStickers] = useState([]);
 
     const [square, setSquare] = useState(false);
-    const [rect, setRect] = useState(false);
+    const [rect, setRect] = useState(true);
     const [circle, setCircle] = useState(false);
 
     const [imgSrc, setImageSrc] = useState();
@@ -206,17 +207,18 @@ function Left(){
                                     </div>
                                 </div>
                                 <div className="stickersShaper">
-                                    <p>Crop Shape</p>
+                                    <Typography variant="overline" classes='sliderLabel'>Crop Shape</Typography>
                                     <div className="stickerShape">
-                                        <button onClick={() => {setCircle(!circle); setSquare(false); setRect(false);}}>{circle ? <CircleOutlinedIcon sx={{size: "30px", color: "yellow"}}/> : <CircleOutlinedIcon sx={{size: "30px"}}/>}</button>
-                                        <button onClick={() => {setSquare(!square); setCircle(false); setRect(false);}}>{square ? <CropSquareRoundedIcon sx={{size: "30px", color: "yellow"}}/> : <CropSquareRoundedIcon sx={{size: "30px"}}/>}</button>
-                                        <button onClick={() => {setRect(!rect); setSquare(false); setCircle(false);}}>{rect ? <CropPortraitRoundedIcon sx={{size: "30px", color: "yellow"}}/> : <CropPortraitRoundedIcon sx={{size: "30px"}}/>}</button>
+                                        <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(!circle); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                        <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(!square); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                        <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(!rect); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
                                     </div>
                                 </div>
                                 <Button
                                   onClick={showCroppedImage}
                                   variant="contained"
-                                  color="primary">
+                                  color="primary"
+                                  style={{fontSize: "1.5rem"}}>
                                   Done
                                 </Button>
                               </div>
@@ -225,7 +227,7 @@ function Left(){
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
-                            <button onClick={() => setAddPic(!addPic)}><AddPhotoAlternateOutlinedIcon sx={{fontSize: '2.3rem'}}/></button>
+                            <button onClick={() => setAddPic(!addPic)}><AddPhotoAlternateOutlinedIcon sx={ addPic ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                             {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
                         </div>
                         <div className="leftWidget">
