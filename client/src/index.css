@@ -462,8 +462,15 @@ main {
 /* end of addpicsettings */
 
 /* start of stickerWidget */
+.stickers {
+  display: flex;
+  flex-direction: row;
+}
+
 .stickerWidget img {
-  width: 10rem;
+  width: 7rem;
+  object-fit: contain;
+
 }
 /* end of stickerWidget */
 

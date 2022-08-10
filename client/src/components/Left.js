@@ -17,7 +17,8 @@ import Cropper from 'react-easy-crop';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import getCroppedImg from '../modals/cropImage';
+import { getCroppedImg, getRotatedImage } from '../modals/cropImage';
+import { getOrientation } from 'get-orientation/browser'
 
 function Left(){
     const [showSettings, setShowSettings] = useState(false);
@@ -44,9 +45,13 @@ function Left(){
     const [stickerList, setStickerList] = useState([]);
     const [stickersOn, setStickersOn] = useState([]);
 
-    const dogImg =
-        'https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000'
-
+    const [imgSrc, setImageSrc] = useState();
+    
+    const ORIENTATION_TO_ANGLE = {
+        '3': 180,
+        '6': 90,
+        '8': -90,
+    }
 
     useEffect(() => {
         const bodyRef = document.getElementById("leftContent");
@@ -61,9 +66,8 @@ function Left(){
     }, [editMode, addPic]);
 
     useEffect(() => {
-        console.log('sl: ', stickerList)
-        console.log('so: ', stickersOn)
-    }, [stickerList, stickersOn]);
+
+    }, [stickerList, stickersOn, imgSrc]);
 
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
@@ -73,7 +77,7 @@ function Left(){
     const showCroppedImage = useCallback(async () => {
         try {
             const croppedImage = await getCroppedImg(
-                dogImg,
+                imgSrc,
                 croppedAreaPixels,
                 rotation
             )
@@ -81,10 +85,36 @@ function Left(){
             await setStickerList([...stickerList, croppedImage])
             await setStickersOn([...stickersOn, true]);
             setAddPic(false);
+            setImageSrc(null);
         } catch (e) {
           console.error(e)
         }
     }, [croppedAreaPixels, rotation])
+
+    function readFile(file) {
+        return new Promise((resolve) => {
+            const reader = new FileReader()
+            reader.addEventListener('load', () => resolve(reader.result), false)
+            reader.readAsDataURL(file)
+        })
+    }
+
+    const onFileChange = async (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0]
+            let imageDataUrl = await readFile(file)
+      
+            // apply rotation if needed
+            const orientation = await getOrientation(file)
+            const rotation = ORIENTATION_TO_ANGLE[orientation]
+            if (rotation) {
+            imageDataUrl = await getRotatedImage(imageDataUrl, rotation)
+            }
+    
+            setImageSrc(imageDataUrl)
+        }
+    }
+
 
     /*{calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-464}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
@@ -108,36 +138,41 @@ function Left(){
             </GridLines> :
             <div className="leftContent" id="leftContent">
                     <div className="leftBody">
-                        {stickerList?.length > 0 &&
-                            stickerList.map((value, index) => {
-                                console.log(value)
-                                if (stickersOn[index]) {
-                                    return (
-                                        <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong">
-                                            <div className="stickerWidget">
-                                                <img alt={"sticker" + index} src={value}/>
-                                                {editMode && <strong>
-                                                    <OpenWithSharpIcon sx={{fontSize: '2rem'}}/>
-                                                </strong>}
-                                            </div>
-                                        </Draggable>
-                                    )
-                                }
-                                return null }
-                            )
-                        }
+                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-464}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
+                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
+                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
+                        <div className="stickers">
+                            {stickerList?.length > 0 &&
+                                stickerList.map((value, index) => {
+                                    if (stickersOn[index]) {
+                                        return (
+                                            <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong">
+                                                <div className="stickerWidget">
+                                                    <img alt={"sticker" + index} src={value}/>
+                                                    {editMode && <strong>
+                                                        <OpenWithSharpIcon sx={{fontSize: '7rem'}}/>
+                                                    </strong>}
+                                                </div>
+                                            </Draggable>
+                                        )
+                                    }
+                                    return null }
+                                )
+                            }
+                        </div>
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
                             <button onClick={() => setAddPic(!addPic)}><AddPhotoAlternateOutlinedIcon sx={{fontSize: '2.3rem'}}/></button>
-                            {addPic && <div className='stickerMakerBox'>
+                            {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
+                            {(addPic && imgSrc) && <div className='stickerMakerBox'>
                                 <div className='stickerMaker'>
                                     <Cropper
-                                      image={dogImg}
+                                      image={imgSrc}
                                       crop={crop}
                                       rotation={rotation}
                                       zoom={zoom}
-                                      aspect={4 / 3}
+                                      aspect={1 / 1}
                                       onCropChange={setCrop}
                                       onRotationChange={setRotation}
                                       onCropComplete={onCropComplete}
@@ -152,7 +187,7 @@ function Left(){
                                       <Slider
                                         value={zoom}
                                         min={1}
-                                        max={3}
+                                        max={5}
                                         step={0.1}
                                         aria-labelledby="Zoom"
                                         onChange={(e, zoom) => setZoom(zoom)}
