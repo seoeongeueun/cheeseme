@@ -449,16 +449,8 @@ main {
 }
 
 .stickerMakerBox {
-  width: 20rem;
-  height: 20rem;
+  background: chartreuse;
 }
-.stickerMaker {
-  position: 'relative';
-  width: 100%;
-  height: 100px;
-  background: '#333';
-}
-
 /* end of addpicsettings */
 
 /* start of stickerWidget */
@@ -470,14 +462,41 @@ main {
 .stickerWidget img {
   width: 7rem;
   object-fit: contain;
+}
 
+.stickerMakerSettings {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid black;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 0px;
+  width: 30rem;
+  align-items: center;
+  left: 50%;
+  bottom: 0px;
+  transform: translate(-50%, 0%);
+  padding: 1rem;
+}
+
+.stickerMakerBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sliders {
+  width: 30%;
 }
 /* end of stickerWidget */
 
 /* start of calendar widget */
 .calendarWidget {
   position: absolute;
-  top: 0px;
+  top: 2rem;
 }
 /* end of calendar widget */
 

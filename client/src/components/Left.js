@@ -19,6 +19,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { getCroppedImg, getRotatedImage } from '../modals/cropImage';
 import { getOrientation } from 'get-orientation/browser'
+import CropSquareRoundedIcon from '@mui/icons-material/CropSquareRounded';
+import CropPortraitRoundedIcon from '@mui/icons-material/CropPortraitRounded';
+import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 
 function Left(){
     const [showSettings, setShowSettings] = useState(false);
@@ -41,6 +44,11 @@ function Left(){
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [stickerList, setStickerList] = useState([]);
     const [stickersOn, setStickersOn] = useState([]);
+    const [roundStickers, setRoundStickers] = useState([]);
+
+    const [square, setSquare] = useState(false);
+    const [rect, setRect] = useState(false);
+    const [circle, setCircle] = useState(false);
 
     const [imgSrc, setImageSrc] = useState();
     
@@ -64,11 +72,11 @@ function Left(){
 
     useEffect(() => {
 
-    }, [stickerList, stickersOn, imgSrc]);
+    }, [stickerList, stickersOn, imgSrc, square, rect, circle]);
 
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-        setCroppedAreaPixels(croppedAreaPixels)
+        setCroppedAreaPixels(croppedAreaPixels);
     }, []);
 
     const showCroppedImage = useCallback(async () => {
@@ -81,6 +89,8 @@ function Left(){
             console.log('done', { croppedImage })
             await setStickerList([...stickerList, croppedImage])
             await setStickersOn([...stickersOn, true]);
+            await setRoundStickers([...roundStickers, circle])
+            console.log(roundStickers)
             setAddPic(false);
             setImageSrc(null);
         } catch (e) {
@@ -129,7 +139,7 @@ function Left(){
             </GridLines> :
             <div className="leftContent" id="leftContent">
                     <div className="leftBody">
-                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-464}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
+                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-350}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
                         {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
                         <div className="stickers">
@@ -137,9 +147,9 @@ function Left(){
                                 stickerList.map((value, index) => {
                                     if (stickersOn[index]) {
                                         return (
-                                            <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong">
+                                            <Draggable bounds={{top: 0, left: -112*index, right: width-112*(index+1), bottom: height-112*(index+1)}} handle="strong">
                                                 <div className="stickerWidget">
-                                                    <img alt={"sticker" + index} src={value}/>
+                                                    <img alt={"sticker" + index} src={value} style={roundStickers[index] ? {borderRadius: "50%"} : {}}/>
                                                     {editMode && <strong>
                                                         <OpenWithSharpIcon sx={{fontSize: '7rem'}}/>
                                                     </strong>}
@@ -151,26 +161,23 @@ function Left(){
                                 )
                             }
                         </div>
-                    </div>
-                    <div className="leftFooter">
-                        <div className="leftWidget">
-                            <button onClick={() => setAddPic(!addPic)}><AddPhotoAlternateOutlinedIcon sx={{fontSize: '2.3rem'}}/></button>
-                            {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
-                            {(addPic && imgSrc) && <div className='stickerMakerBox'>
-                                <div className='stickerMaker'>
-                                    <Cropper
-                                      image={imgSrc}
-                                      crop={crop}
-                                      rotation={rotation}
-                                      zoom={zoom}
-                                      aspect={1 / 1}
-                                      onCropChange={setCrop}
-                                      onRotationChange={setRotation}
-                                      onCropComplete={onCropComplete}
-                                      onZoomChange={setZoom}
-                                    />
-                                  </div>
-                                  <div className='stickerMakerSettings'>
+                        {(addPic && imgSrc) && <div className='stickerMakerBox'>
+                            <div className='stickerMaker'>
+                                <Cropper
+                                  image={imgSrc}
+                                  crop={crop}
+                                  rotation={rotation}
+                                  zoom={zoom}
+                                  aspect={(square || circle) ? 1 / 1 : 3 / 4}
+                                  onCropChange={setCrop}
+                                  onRotationChange={setRotation}
+                                  onCropComplete={onCropComplete}
+                                  onZoomChange={setZoom}
+                                  cropShape={circle ? 'round' : 'rect'}
+                                />
+                            </div>
+                            <div className='stickerMakerSettings'>
+                                <div className="sliders">
                                     <div className='stickerMakerSliders'>
                                       <Typography variant="overline">
                                         Zoom
@@ -197,15 +204,29 @@ function Left(){
                                         onChange={(e, rotation) => setRotation(rotation)}
                                       />
                                     </div>
-                                    <Button
-                                      onClick={showCroppedImage}
-                                      variant="contained"
-                                      color="primary">
-                                      Done
-                                    </Button>
-                                  </div>
                                 </div>
-                            }
+                                <div className="stickersShaper">
+                                    <p>Crop Shape</p>
+                                    <div className="stickerShape">
+                                        <button onClick={() => {setCircle(!circle); setSquare(false); setRect(false);}}>{circle ? <CircleOutlinedIcon sx={{size: "30px", color: "yellow"}}/> : <CircleOutlinedIcon sx={{size: "30px"}}/>}</button>
+                                        <button onClick={() => {setSquare(!square); setCircle(false); setRect(false);}}>{square ? <CropSquareRoundedIcon sx={{size: "30px", color: "yellow"}}/> : <CropSquareRoundedIcon sx={{size: "30px"}}/>}</button>
+                                        <button onClick={() => {setRect(!rect); setSquare(false); setCircle(false);}}>{rect ? <CropPortraitRoundedIcon sx={{size: "30px", color: "yellow"}}/> : <CropPortraitRoundedIcon sx={{size: "30px"}}/>}</button>
+                                    </div>
+                                </div>
+                                <Button
+                                  onClick={showCroppedImage}
+                                  variant="contained"
+                                  color="primary">
+                                  Done
+                                </Button>
+                              </div>
+                            </div>
+                        }
+                    </div>
+                    <div className="leftFooter">
+                        <div className="leftWidget">
+                            <button onClick={() => setAddPic(!addPic)}><AddPhotoAlternateOutlinedIcon sx={{fontSize: '2.3rem'}}/></button>
+                            {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setEditMode(!editMode)}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
