@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import GridLines from 'react-gridlines';
 import DisplaySettingsLeft from '../modals/DisplaySettingsLeft';
 import AddPicSettings from '../modals/AddPicSettings';
@@ -13,7 +13,11 @@ import Draggable from 'react-draggable';
 import OpenWithRoundedIcon from '@mui/icons-material/OpenWithRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
-
+import Cropper from 'react-easy-crop';
+import Slider from '@material-ui/core/Slider';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import getCroppedImg from '../modals/cropImage';
 
 function Left(){
     const [showSettings, setShowSettings] = useState(false);
@@ -32,6 +36,18 @@ function Left(){
     const [editMode, setEditMode] = useState(false);
     const [addPic, setAddPic] = useState(false);
 
+    const [crop, setCrop] = useState({ x: 0, y: 0 })
+    const [rotation, setRotation] = useState(0)
+    const [zoom, setZoom] = useState(1)
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+    const [croppedImage, setCroppedImage] = useState(null);
+    const [stickerList, setStickerList] = useState([]);
+    const [stickersOn, setStickersOn] = useState([]);
+
+    const dogImg =
+        'https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000'
+
+
     useEffect(() => {
         const bodyRef = document.getElementById("leftContent");
         if (bodyRef){
@@ -42,7 +58,38 @@ function Left(){
 
     useEffect(() => {
 
-    }, [editMode]);
+    }, [editMode, addPic]);
+
+    useEffect(() => {
+        console.log('sl: ', stickerList)
+        console.log('so: ', stickersOn)
+    }, [stickerList, stickersOn]);
+
+
+    const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels)
+    }, []);
+
+    const showCroppedImage = useCallback(async () => {
+        try {
+            const croppedImage = await getCroppedImg(
+                dogImg,
+                croppedAreaPixels,
+                rotation
+            )
+            console.log('done', { croppedImage })
+            await setStickerList([...stickerList, croppedImage])
+            await setStickersOn([...stickersOn, true]);
+            setAddPic(false);
+        } catch (e) {
+          console.error(e)
+        }
+    }, [croppedAreaPixels, rotation])
+
+    /*{calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-464}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
+                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
+                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
+                        */
 
     return(
         <div className="leftInnerBorder">
@@ -61,21 +108,85 @@ function Left(){
             </GridLines> :
             <div className="leftContent" id="leftContent">
                     <div className="leftBody">
-                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-464}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
-                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
-                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
+                        {stickerList?.length > 0 &&
+                            stickerList.map((value, index) => {
+                                console.log(value)
+                                if (stickersOn[index]) {
+                                    return (
+                                        <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong">
+                                            <div className="stickerWidget">
+                                                <img alt={"sticker" + index} src={value}/>
+                                                {editMode && <strong>
+                                                    <OpenWithSharpIcon sx={{fontSize: '2rem'}}/>
+                                                </strong>}
+                                            </div>
+                                        </Draggable>
+                                    )
+                                }
+                                return null }
+                            )
+                        }
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
                             <button onClick={() => setAddPic(!addPic)}><AddPhotoAlternateOutlinedIcon sx={{fontSize: '2.3rem'}}/></button>
-                            {addPic && <AddPicSettings/>}
+                            {addPic && <div className='stickerMakerBox'>
+                                <div className='stickerMaker'>
+                                    <Cropper
+                                      image={dogImg}
+                                      crop={crop}
+                                      rotation={rotation}
+                                      zoom={zoom}
+                                      aspect={4 / 3}
+                                      onCropChange={setCrop}
+                                      onRotationChange={setRotation}
+                                      onCropComplete={onCropComplete}
+                                      onZoomChange={setZoom}
+                                    />
+                                  </div>
+                                  <div className='stickerMakerSettings'>
+                                    <div className='stickerMakerSliders'>
+                                      <Typography variant="overline">
+                                        Zoom
+                                      </Typography>
+                                      <Slider
+                                        value={zoom}
+                                        min={1}
+                                        max={3}
+                                        step={0.1}
+                                        aria-labelledby="Zoom"
+                                        onChange={(e, zoom) => setZoom(zoom)}
+                                      />
+                                    </div>
+                                    <div className='stickerSliderContainer'>
+                                      <Typography variant="overline" classes='sliderLabel'>
+                                        Rotation
+                                      </Typography>
+                                      <Slider
+                                        value={rotation}
+                                        min={0}
+                                        max={360}
+                                        step={1}
+                                        aria-labelledby="Rotation"
+                                        onChange={(e, rotation) => setRotation(rotation)}
+                                      />
+                                    </div>
+                                    <Button
+                                      onClick={showCroppedImage}
+                                      variant="contained"
+                                      color="primary">
+                                      Done
+                                    </Button>
+                                  </div>
+                                </div>
+                            }
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setEditMode(!editMode)}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                            {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes}/>}
+                            {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
