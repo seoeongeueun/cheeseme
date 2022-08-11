@@ -173,8 +173,64 @@ main {
 /* start of dday widget */
 .ddayWidget {
   border: 1px solid #d2d2d2;
-  width: 20rem;
+  width: 25rem;
+  background-color: white;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
 
+}
+
+.ddayWidget span {
+  font-size: 2rem;
+}
+.datesLeft span {
+  font-weight: bold;
+  font-size: 4rem;
+}
+
+.datesLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end !important;
+}
+.endDate {
+  display: flex;
+  flex-direction: row;
+  font-size: 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.endDate span {
+  font-size: 2rem;
+  font-weight: lighter;
+}
+
+.ddayTitle {
+  display: flex;
+  flex-direction: row;
+  font-size: 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ddayTitle input{
+  font-size: 2rem;
+  width: 70%;
+}
+
+.datesLeft {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.datesLeft button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 /* end of dday widget */
 
@@ -514,7 +570,7 @@ main {
 }
 
 .react-calendar span{
-  font-size: 0.75rem;
+  font-size: 2rem;
 }
 /* end of calendar widget */
 
