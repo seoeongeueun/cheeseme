@@ -6,6 +6,7 @@ import WidgetSettingsLeft from '../modals/WidgetSettingsLeft';
 import Todo from '../widgets/Todo';
 import Notes from '../widgets/Notes';
 import CalendarWidget from '../widgets/Calendar';
+import DdayCounter from '../widgets/DdayCounter';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
@@ -52,6 +53,8 @@ function Left(){
     const [circle, setCircle] = useState(false);
 
     const [imgSrc, setImageSrc] = useState();
+
+    const [ddayCounter, setDdayCounter] = useState(true);
     
     const ORIENTATION_TO_ANGLE = {
         '3': 180,
@@ -143,6 +146,7 @@ function Left(){
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-350}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><Todo move={editMode}/></div></Draggable>} 
                         {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
+                        {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><DdayCounter move={editMode}/></div></Draggable>}
                         <div className="stickers">
                             {stickerList?.length > 0 &&
                                 stickerList.map((value, index) => {
