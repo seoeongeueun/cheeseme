@@ -20,16 +20,24 @@ function DdayCounter(props) {
 
     }, [edit, title])
 
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+          setEdit(false);
+        }
+    }
+
     return (
-        <div className="ddayWidget" style={ !edit ? {width: '20rem'} : {}}>
+        <div className="ddayWidget" style={ !edit ? {width: '16rem'} : {}}>
             <div className='datesLeft'>
                 <div className='ddayHeader'>
-                    <span style={{color: '#F9D876'}}>D - {left}</span>
-                    <span style={{fontSize: "2rem"}}> 🧀</span>
+                    <span style={{color: '#F9D876'}}>D-{left}</span>
+                    <span style={{fontSize: "1.5rem"}}> 🧀</span>
                 </div>
                 {edit ? <button onClick={() => setEdit(!edit)}><ExpandLessRoundedIcon sx={{fontSize: '30px', color: '#F9D876'}}/></button> : <button onClick={() => setEdit(!edit)}><ExpandMoreRoundedIcon sx={{fontSize: '30px', color: '#F9D876'}}/></button>}
             </div>
-            {title ? <span>{title}</span> : <span>title of your d-day!</span>}
+            <div className='displayTitle'>
+                {title ? <span>{title}</span> : <span>title of your d-day!</span>}
+            </div>
             {edit && <div>
             <div className="endDate">
                 <p>End</p>
@@ -37,7 +45,7 @@ function DdayCounter(props) {
             </div>
             <div className='ddayTitle'>
                 <p>Title</p>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="title of your d-day!"/>
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="title of your d-day!" onKeyPress={handleKeyPress}/>
             </div>
             </div>}
             {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}

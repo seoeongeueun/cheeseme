@@ -5,6 +5,8 @@ function WidgetSettingsLeft(props){
     const [calendar, setCalendar] = useState(props.calendar);
     const [notes, setNotes] = useState(props.notes);
     const [stickersOn, setStickersOn] = useState(props.stickersOn);
+    const [ddayCounter, setDdayCounter] = useState(props.ddayCounter);
+
     
     const handleTodoClick = () => {
         setTodo(!todo)
@@ -19,6 +21,11 @@ function WidgetSettingsLeft(props){
     const handleNotesClick = () => {
         setNotes(!notes);
         props.setNotes(!notes);
+    }
+
+    const handleDdayCounterClick = () => {
+        setDdayCounter(!ddayCounter);
+        props.setDdayCounter(!ddayCounter);
     }
 
     const handleStickerClick = (index) => {
@@ -48,6 +55,10 @@ function WidgetSettingsLeft(props){
                 <div className="checkboxButton">
                     <input type="checkbox" name="checkTodo" checked={props.calendar} onClick={() => handleCalendarClick()}/>
                     <label>Calendar</label>
+                </div>
+                <div className="checkboxButton">
+                    <input type="checkbox" name="checkTodo" checked={props.ddayCounter} onClick={() => handleDdayCounterClick()}/>
+                    <label>D-Day Counter</label>
                 </div>
                 {stickersOn?.length > 0 && props.stickersOn.map((value, index) => 
                     <div className="checkboxButton">
