@@ -175,7 +175,7 @@ main {
   width: 22rem;
   border: 1px solid #d2d2d2;
   background-color: white;
-  padding: 1.5rem;
+  padding: 1rem 2rem 1rem 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -189,7 +189,7 @@ main {
 }
 .datesLeft span {
   font-weight: bold;
-  font-size: 4rem;
+  font-size: 7rem;
 }
 
 .datesLeft {
@@ -235,6 +235,12 @@ main {
 
 .displayTitle {
   margin-bottom: 0.5rem;
+}
+
+.ddayfooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 /* end of dday widget */
 
@@ -647,7 +653,7 @@ input.todoElem::placeholder {
 .notesWidget {
   width: 20rem;
   border: 1px solid #d2d2d2;
-  max-height: 25rem;
+  height: 25rem;
   overflow-y: overlay;
   position: absolute;
   top: 2rem;

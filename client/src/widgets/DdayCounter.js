@@ -14,11 +14,12 @@ function DdayCounter(props) {
     useEffect(() => {
         let start = new Date();
         setLeft(Math.round(Math.abs(end-start) / (1000 * 60 * 60 * 24)));
+        console.log(end)
     }, [start, end])
 
     useEffect(() => {
 
-    }, [edit, title])
+    }, [edit, title, left])
 
     const handleKeyPress = (event) => {
         if(event.key === 'Enter'){
@@ -27,16 +28,21 @@ function DdayCounter(props) {
     }
 
     return (
-        <div className="ddayWidget" style={ !edit ? {width: '16rem'} : {}}>
+        <div className="ddayWidget">
             <div className='datesLeft'>
                 <div className='ddayHeader'>
-                    <span style={{color: '#F9D876'}}>D-{left}</span>
-                    <span style={{fontSize: "1.5rem"}}> 🧀</span>
+                    <span style={{color: '#F9D876', '-webkit-text-stroke': '1px solid black'}}>D-{left}</span>
+                    <span style={{fontSize: "2.2rem"}}> 🧀</span>
                 </div>
                 {edit ? <button onClick={() => setEdit(!edit)}><ExpandLessRoundedIcon sx={{fontSize: '30px', color: '#F9D876'}}/></button> : <button onClick={() => setEdit(!edit)}><ExpandMoreRoundedIcon sx={{fontSize: '30px', color: '#F9D876'}}/></button>}
             </div>
-            <div className='displayTitle'>
-                {title ? <span>{title}</span> : <span>title of your d-day!</span>}
+            <div className='ddayfooter'>
+                <div className='displayTitle'>
+                    {title ? <span>{title}</span> : <span>title of your d-day!</span>}
+                </div>
+                <div className='displayDate'>
+                    <span style={{color: "#929292"}}>{end.getMonth()+1}/{end.getDate()}/{end.getFullYear()}</span>
+                </div>
             </div>
             {edit && <div>
             <div className="endDate">
