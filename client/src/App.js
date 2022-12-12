@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import Left from './components/Left';
+// import Left from './components/Left';
+import EditModeLeftContainer from './containers/EditModeLeftContainer';
 import Right from './components/Right';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
@@ -16,7 +17,7 @@ function App() {
       </header>
       <main>
           <div className="mainLeft">
-            <Left/>
+            <EditModeLeftContainer/>
           </div>
           <div className="mainRight">
             <Right/>

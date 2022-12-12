@@ -25,7 +25,7 @@ import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import CropPortraitSharpIcon from '@mui/icons-material/CropPortraitSharp';
 import CropSquareSharpIcon from '@mui/icons-material/CropSquareSharp';
 
-function Left(){
+function Left({editMode, setEditMode}){
     const [showSettings, setShowSettings] = useState(false);
     const [showWidgetSettings, setShowWidgetSettings] = useState(false);
 
@@ -37,7 +37,7 @@ function Left(){
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
-    const [editMode, setEditMode] = useState(false);
+    // const [editMode, setEditMode] = useState(false);
     const [addPic, setAddPic] = useState(false);
 
     const [crop, setCrop] = useState({ x: 0, y: 0 })
@@ -137,7 +137,7 @@ function Left(){
                         {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo}/>}
                         <button onClick={()=> setShowSettings(!showSettings)}>settings</button>
                         {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
-                        <button onClick={() => setEditMode(!editMode)}><OpenWithRoundedIcon sx={{fontSize: '20px'}}/></button>
+                        <button onClick={() => setEditMode()}><OpenWithRoundedIcon sx={{fontSize: '20px'}}/></button>
                     </div>
                 </div>
             </GridLines> :
@@ -235,7 +235,7 @@ function Left(){
                             {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
                         </div>
                         <div className="leftWidget">
-                            <button onClick={() => setEditMode(!editMode)}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
+                            <button onClick={() => setEditMode()}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
