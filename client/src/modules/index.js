@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import goals from './goals';
 import editMode from './editMode';
+import notes from './notes';
 
 const rootReducer = combineReducers({
     goals,
-    editMode
+    editMode,
+    notes
     //add more reducers
 });
 

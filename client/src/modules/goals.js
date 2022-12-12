@@ -1,7 +1,7 @@
-const ADD_GOAL = 'todos/ADD_GOAL';
-const TOGGLE_GOAL = 'todos/TOGGLE_GOAL';
-const EDIT_GOAL = 'todos/EDIT_GOAL';
-const DELETE_GOAL = 'todos/DELETE_GOAL';
+const ADD_GOAL = 'goals/ADD_GOAL';
+const TOGGLE_GOAL = 'goals/TOGGLE_GOAL';
+const EDIT_GOAL = 'goals/EDIT_GOAL';
+const DELETE_GOAL = 'goals/DELETE_GOAL';
 
 let nextId = 1;
 export const addGoal = text => ({

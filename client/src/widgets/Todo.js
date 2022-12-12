@@ -17,7 +17,6 @@ function Todo({move, goals, onCreate, onToggle, onDelete}){
     const [happy, setHappy] = useState(false);
 
     useEffect(() => {
-        console.log('jhjhjjhjhj: ', goals)
         let c = 0;
         goals.forEach(g => {
             if (g.check){

@@ -1,26 +1,37 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import "../../node_modules/quill/dist/quill.snow.css";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 
-function Notes(props){
-    const [body, setBody] = useState("");
+function Notes({move, onEdit, note}){
+    const [body, setBody] = useState(note);
     const [closeQuill, setCloseQuill] = useState(true);
-
+    const quillRef = useRef();
+    
     useEffect(() => {
 
-    }, [closeQuill, props.move])
+    }, [closeQuill, move, quillRef])
+
+    const handleEdit = async() => {
+        if (!closeQuill){
+            let tmp = quillRef.current.getEditor().getText();
+            await onEdit(tmp);
+            console.log(note)
+        }
+        setCloseQuill(!closeQuill);
+    }
 
     return (
         <div className="notesWidget">
             <div className='notesHeader'>
                 <span>Notes</span>
-                <button onClick={() => setCloseQuill(!closeQuill)}>{closeQuill ? <EditOutlinedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px'}}/>}</button>
+                <button onClick={() => handleEdit()}>{closeQuill ? <EditOutlinedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px'}}/>}</button>
             </div>
             <div className="notesContent">
                 <ReactQuill
+                    ref={quillRef}
                     readOnly={closeQuill}
                     style={closeQuill ? {border: "none"} : {border: "none"}}
                     modules={closeQuill ? Notes.modules2 : Notes.modules}
@@ -29,7 +40,7 @@ function Notes(props){
                     <div className="ql-container"/>
                 </ReactQuill>
             </div>
-            {props.move && <strong ><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
+            {move && <strong ><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
         </div>
     )
 

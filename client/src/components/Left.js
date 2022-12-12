@@ -25,6 +25,7 @@ import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import CropPortraitSharpIcon from '@mui/icons-material/CropPortraitSharp';
 import CropSquareSharpIcon from '@mui/icons-material/CropSquareSharp';
 import TodosContainer from '../containers/TodosContainer';
+import NotesContainer from '../containers/NotesContainer';
 
 function Left({editMode, setEditMode}){
     const [showSettings, setShowSettings] = useState(false);
@@ -146,7 +147,7 @@ function Left({editMode, setEditMode}){
                     <div className="leftBody">
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-350}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><TodosContainer move={editMode}/></div></Draggable>} 
-                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><Notes move={editMode}/></div></Draggable>}
+                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><NotesContainer move={editMode}/></div></Draggable>}
                         {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><DdayCounter move={editMode}/></div></Draggable>}
                         <div className="stickers">
                             {stickerList?.length > 0 &&
