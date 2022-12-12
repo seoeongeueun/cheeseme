@@ -6,16 +6,18 @@ import HappyColor from '../icons/happy.png';
 import SadPlain from '../icons/sad (1).png';
 import HappyPlain from '../icons/happy (1).png';
 import Draggable from 'react-draggable';
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 
 
-function Todo(props){
+function Todo({move, goals, onCreate, onToggle, onDelete}){
     const [count, setCount] = useState(1);
-    const [goals, setGoals] = useState([{id: 'cse323', check: false}, {id: 'eat', check: false}]);
+    // const [goals, setGoals] = useState([{id: 'cse323', check: false}, {id: 'eat', check: false}]);
     const [editMode, setEditMode] = useState(false);
     const [happy, setHappy] = useState(false);
 
     useEffect(() => {
+        console.log('jhjhjjhjhj: ', goals)
         let c = 0;
         goals.forEach(g => {
             if (g.check){
@@ -30,16 +32,17 @@ function Todo(props){
 
     useEffect(() => {
         
-    }, [goals, count, editMode, happy, props.move])
+    }, [goals, count, editMode, happy, move])
 
     const handleAddTodo = () => {
-        goals.push({id: '', check: false})
+        onCreate('')
+        // goals.push({text: '', check: false})
         setHappy(false)
         setCount(count+1)
     }
 
     const handleEditTodo = (key, value) => {
-        goals[key].id = value;
+        goals[key].text = value;
     }
 
     const handleKeyPress = (event) => {
@@ -58,7 +61,7 @@ function Todo(props){
 
     return (
         <div className="todoWidget">
-            {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
+            {move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
             <div className="todoHeader">
                 <span>To Do</span>
                 <div className="todoHeaderButtons">
@@ -69,10 +72,12 @@ function Todo(props){
             <div className="todoList">
                 {!editMode ? goals.map((value, key) => (<div className="checkboxButton">
                     <input type="checkbox" name={key} onChange={(e) => handleCheck(key, e.target.checked)} defaultChecked={value.check}/>
-                    {value.id==='' ? <input onChange={(e) => handleEditTodo(key, e.target.value)} onKeyPress={handleKeyPress}/> : <label>{value.id}</label>}
+                    {value.text==='' ? <input onChange={(e) => handleEditTodo(key, e.target.value)} onKeyPress={handleKeyPress}/>
+                    : <label>{value.text}</label>}
                 </div>)) : goals.map((value, key) => (<div className='checkboxButton'>
                     <input type="checkbox" name={key} onChange={(e) => handleCheck(key, e.target.checked)} defaultChecked={value.check}/>
-                    <input className='todoElem' placeholder={value.id} onChange={(e) => handleEditTodo(key, e.target.value)}/>
+                    <input className='todoElem' placeholder={value.text} onChange={(e) => handleEditTodo(key, e.target.value)}/>
+                    <button onClick={() => onDelete(value.id)}><ClearRoundedIcon sx={editMode ? {size: '20px', color: "red"} : {size: '20px'}}/></button>
                 </div>))}
             </div>
             <div className='faceMoodTodo'>

@@ -630,6 +630,14 @@ main {
   overflow-y: overlay;
 }
 
+.todoElem {
+  width: 90%;
+}
+
+.todoList button {
+  cursor: pointer;
+}
+
 input.todoElem::placeholder {
   color: black;
   opacity: 1;

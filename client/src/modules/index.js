@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import todos from './todos';
+import goals from './goals';
 import editMode from './editMode';
 
 const rootReducer = combineReducers({
-    todos,
+    goals,
     editMode
     //add more reducers
 });
