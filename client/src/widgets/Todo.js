@@ -8,7 +8,7 @@ import HappyPlain from '../icons/happy (1).png';
 import Draggable from 'react-draggable';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
-
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 
 function Todo({move, goals, onCreate, onToggle, onDelete}){
     const [count, setCount] = useState(1);
@@ -36,7 +36,6 @@ function Todo({move, goals, onCreate, onToggle, onDelete}){
 
     const handleAddTodo = () => {
         onCreate('')
-        // goals.push({text: '', check: false})
         setHappy(false)
         setCount(count+1)
     }
@@ -66,7 +65,7 @@ function Todo({move, goals, onCreate, onToggle, onDelete}){
                 <span>To Do</span>
                 <div className="todoHeaderButtons">
                     <button onClick={handleAddTodo}><AddRoundedIcon sx={{size: '20px'}}/></button>
-                    <button onClick={() => setEditMode(!editMode)}><RemoveRoundedIcon sx={editMode ? {size: '20px', color: "#F9D876"} : {size: '20px'}}/></button>
+                    <button onClick={() => setEditMode(!editMode)}>{editMode && goals.length > 0 ? <CheckRoundedIcon sx={{size: '20px', color: "red"}}/> : <RemoveRoundedIcon sx={{size: '20px'}}/>}</button>
                 </div>
             </div>
             <div className="todoList">

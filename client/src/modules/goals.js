@@ -12,14 +12,14 @@ export const addGoal = text => ({
     }
 });
 
-export const toggleGoal = (id, text) => ({
+export const toggleGoal = (id) => ({
     type: TOGGLE_GOAL,
     id
 });
 
-export const editGoal = id => ({
+export const editGoal = (id, text) => ({
     type: EDIT_GOAL,
-    id
+    text
 })
 
 export const deleteGoal = (id) => ({
