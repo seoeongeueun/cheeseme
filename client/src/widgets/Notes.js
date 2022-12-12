@@ -16,9 +16,9 @@ function Notes({move, onEdit, note}){
 
     const handleEdit = async() => {
         if (!closeQuill){
-            let tmp = quillRef.current.getEditor().getText();
+            //let tmp = quillRef.current.getEditor().getText();
+            let tmp = quillRef.current.editor.container.firstChild.innerHTML;
             await onEdit(tmp);
-            console.log(note)
         }
         setCloseQuill(!closeQuill);
     }
@@ -51,7 +51,7 @@ Notes.modules = {
       [{ 'header': [1, 2, false] }],
       ['bold', 'italic', 'underline','strike', 'blockquote'],
       [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      ['link', 'image']
+      ['link']
     ],
 };
 
