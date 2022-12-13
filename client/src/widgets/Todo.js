@@ -37,6 +37,7 @@ function Todo({move, goals, onCreate, onToggle, onDelete}){
         onCreate('')
         setHappy(false)
         setCount(count+1)
+        setEditMode(true)
     }
 
     const handleEditTodo = (key, value) => {

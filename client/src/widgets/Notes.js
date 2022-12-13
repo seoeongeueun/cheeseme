@@ -4,6 +4,7 @@ import "../../node_modules/quill/dist/quill.snow.css";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
 function Notes({move, onEdit, note}){
     const [body, setBody] = useState(note);
@@ -26,8 +27,8 @@ function Notes({move, onEdit, note}){
     return (
         <div className="notesWidget">
             <div className='notesHeader'>
-                <span>Notes</span>
-                <button onClick={() => handleEdit()}>{closeQuill ? <EditOutlinedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px'}}/>}</button>
+                <span style={{marginBottom: '0.4rem'}}>Notes</span>
+                <button onClick={() => handleEdit()}>{closeQuill ? <AddRoundedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px', color: 'red'}}/>}</button>
             </div>
             <div className="notesContent">
                 <ReactQuill
