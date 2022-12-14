@@ -13,8 +13,12 @@ function DdayCounter(props) {
 
     useEffect(() => {
         let s = new Date();
-        setLeft(Math.ceil(Math.abs(end-s) / (1000 * 60 * 60 * 24)));
-        console.log(end)
+        let c = Math.abs(end-s) / (1000 * 60 * 60 * 24)
+        if (c < 1) {
+            setLeft(0)
+        } else {
+            setLeft(Math.ceil(c))
+        }
     }, [start, end])
 
     useEffect(() => {

@@ -62,7 +62,7 @@ function Todo({move, goals, onCreate, onToggle, onDelete}){
         <div className="todoWidget">
             {move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
             <div className="todoHeader">
-                <span>To Do</span>
+                <span style={{marginLeft: '0.3rem'}}>To Do</span>
                 <div className="todoHeaderButtons">
                     <button onClick={handleAddTodo}><AddRoundedIcon sx={{size: '20px'}}/></button>
                     <button onClick={() => setEditMode(!editMode)}>{editMode && goals.length > 0 ? <CheckRoundedIcon sx={{size: '20px', color: "red"}}/> : <RemoveRoundedIcon sx={{size: '20px'}}/>}</button>
