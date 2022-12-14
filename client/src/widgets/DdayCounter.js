@@ -12,8 +12,8 @@ function DdayCounter(props) {
     const [edit, setEdit] = useState(true);
 
     useEffect(() => {
-        let start = new Date();
-        setLeft(Math.round(Math.abs(end-start) / (1000 * 60 * 60 * 24)));
+        let s = new Date();
+        setLeft(Math.ceil(Math.abs(end-s) / (1000 * 60 * 60 * 24)));
         console.log(end)
     }, [start, end])
 
