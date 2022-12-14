@@ -172,7 +172,7 @@ main {
 
 /* start of dday widget */
 .ddayWidget {
-  width: 22rem;
+  width: 21.3rem;
   border: 1px solid #d2d2d2;
   background-color: white;
   padding: 0rem 2rem 1rem 2rem;
@@ -197,6 +197,7 @@ main {
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
+  margin-top: -0.5rem;
 }
 
 .endDate {
@@ -205,6 +206,7 @@ main {
   font-size: 2rem;
   justify-content: space-between;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .endDate span {
@@ -218,6 +220,8 @@ main {
   font-size: 2rem;
   justify-content: space-between;
   align-items: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .ddayTitle input{
@@ -241,6 +245,12 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: -0.7rem 0.2rem 0rem 0.2rem;
+}
+
+.ddayCollapse {
+  display: flex;
+  flex-direction: column;
 }
 /* end of dday widget */
 

@@ -44,14 +44,14 @@ function DdayCounter(props) {
                     <span style={{color: "#929292"}}>{end.getMonth()+1}/{end.getDate()}/{end.getFullYear()}</span>
                 </div>
             </div>
-            {edit && <div>
+            {edit && <div className='ddayCollapse'>
             <div className="endDate">
-                <p>End</p>
+                <span>End</span>
                 <DatePicker onChange={setEnd} value={end} />
             </div>
             <div className='ddayTitle'>
-                <p>Title</p>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="title of your d-day!" onKeyPress={handleKeyPress}/>
+                <span>Title</span>
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="name your d-day!" onKeyPress={handleKeyPress}/>
             </div>
             </div>}
             {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
