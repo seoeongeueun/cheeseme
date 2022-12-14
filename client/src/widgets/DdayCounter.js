@@ -38,7 +38,7 @@ function DdayCounter(props) {
             </div>
             <div className='ddayfooter'>
                 <div className='displayTitle'>
-                    {title ? <span>{title}</span> : <span>title of your d-day!</span>}
+                    {title ? <span>{title}</span> : <span>name your d-day!</span>}
                 </div>
                 <div className='displayDate'>
                     <span style={{color: "#929292"}}>{end.getMonth()+1}/{end.getDate()}/{end.getFullYear()}</span>
