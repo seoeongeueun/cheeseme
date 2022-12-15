@@ -57,6 +57,8 @@ function Left({editMode, setEditMode}){
     const [imgSrc, setImageSrc] = useState();
 
     const [ddayCounter, setDdayCounter] = useState(true);
+
+    const [dateOnly, setDateOnly] = useState(0);
     
     const ORIENTATION_TO_ANGLE = {
         '3': 180,
@@ -70,11 +72,18 @@ function Left({editMode, setEditMode}){
             setHeight(bodyRef.offsetHeight)
             setWidth(bodyRef.offsetWidth)
         }
+        const calcDate = async() => {
+            let today = new Date();
+            let timePortion = today.getTime() % (3600 * 1000 * 24);
+            await setDateOnly(new Date(today - timePortion).getTime())
+            console.log("today: ", dateOnly)
+        }
+        calcDate();
     }, []);
 
     useEffect(() => {
 
-    }, [editMode, addPic]);
+    }, [editMode, addPic, dateOnly]);
 
     useEffect(() => {
 
@@ -147,7 +156,7 @@ function Left({editMode, setEditMode}){
                     <div className="leftBody">
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-350}} handle="strong"><div><CalendarWidget move={editMode}/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><TodosContainer move={editMode}/></div></Draggable>} 
-                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><NotesContainer move={editMode}/></div></Draggable>}
+                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><NotesContainer move={editMode} dateOnly={dateOnly}/></div></Draggable>}
                         {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><DdayCounter move={editMode}/></div></Draggable>}
                         <div className="stickers">
                             {stickerList?.length > 0 &&

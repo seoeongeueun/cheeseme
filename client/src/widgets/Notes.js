@@ -5,11 +5,29 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import axios from 'axios';
+import { FetchAPIPost } from '../utils/api.js';
 
-function Notes({move, onEdit, note}){
+function Notes({move, onEdit, note, onCreate, dateOnly}){
     const [body, setBody] = useState(note);
     const [closeQuill, setCloseQuill] = useState(true);
+    const [loading, setLoading] = useState(false);
     const quillRef = useRef();
+
+    useEffect(() => {
+        console.log(dateOnly)
+        axios.get('http://localhost:3001/api/notes/' + dateOnly)
+            .then( (res) => {
+                setLoading(true);
+                const n = res?.data;
+                setBody(n);
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading note')
+                setLoading(false);
+            })
+    }, [])
     
     useEffect(() => {
 
@@ -20,6 +38,10 @@ function Notes({move, onEdit, note}){
             //let tmp = quillRef.current.getEditor().getText();
             let tmp = quillRef.current.editor.container.firstChild.innerHTML;
             await onEdit(tmp);
+            let res = await FetchAPIPost('/api/notes/add/', {
+                date: dateOnly,
+                text: tmp  
+            });
         }
         setCloseQuill(!closeQuill);
     }

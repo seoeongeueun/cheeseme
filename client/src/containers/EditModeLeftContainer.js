@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleLeft } from '../modules/editMode';
 import Left from '../components/Left.js'
@@ -12,7 +12,7 @@ function EditModeLeftContainer() {
     const onToggleLeft = () => dispatch(toggleLeft());
 
     return (
-        <Left editMode={editMode} setEditMode={onToggleLeft}/>
+        <Left editMode={editMode} setEditMode={onToggleLeft} />
     )
 }
 

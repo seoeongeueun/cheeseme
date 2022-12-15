@@ -6,11 +6,6 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 function App() {
 
-  const today = new Date();
-  let timePortion = today.getTime() % (3600 * 1000 * 24);
-  let dateOnly = new Date(today - timePortion).getTime();
-  console.log("today: ", dateOnly)
-
   return (
     <div className="container">
       <header>

@@ -1,9 +1,15 @@
 const EDIT_NOTE = 'notes/EDIT_NOTE';
+const CREATE_NOTE = 'notes/CREATE_NOTE';
 
 export const editNote = text => ({
     type: EDIT_NOTE,
     text
 });
+
+export const createNote = (id) => ({
+    type: CREATE_NOTE,
+    id
+})
 
 const initialState = {
     id: new Date(),
@@ -16,6 +22,11 @@ export default function notes( state = initialState, action) {
             return {
                 ...state,
                 text: action.text
+            }
+        case CREATE_NOTE:
+            return {
+                id: action.id,
+                text: ''
             }
         default:
             return state;
