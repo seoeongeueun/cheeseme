@@ -6,7 +6,7 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import axios from 'axios';
-import { FetchAPIPost } from '../utils/api.js';
+import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
 function Notes({move, onEdit, note, onCreate, dateOnly}){
     const [body, setBody] = useState(note);
@@ -16,7 +16,7 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
 
     useEffect(() => {
         console.log(dateOnly)
-        axios.get('http://localhost:3001/api/notes/' + dateOnly)
+        axios.get('/api/notes/' + dateOnly)
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;
@@ -31,14 +31,14 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
     
     useEffect(() => {
 
-    }, [closeQuill, move, quillRef])
+    }, [closeQuill, move, quillRef, body])
 
     const handleEdit = async() => {
         if (!closeQuill){
             //let tmp = quillRef.current.getEditor().getText();
             let tmp = quillRef.current.editor.container.firstChild.innerHTML;
             await onEdit(tmp);
-            let res = await FetchAPIPost('/api/notes/add/', {
+            let res = await FetchAPIPost('/api/notes/update/' + dateOnly, {
                 date: dateOnly,
                 text: tmp  
             });
@@ -58,7 +58,9 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
                     readOnly={closeQuill}
                     style={closeQuill ? {border: "none"} : {border: "none"}}
                     modules={closeQuill ? Notes.modules2 : Notes.modules}
+                    value={body}
                     formats={Notes.formats}
+                    onChange={setBody}
                 >
                     <div className="ql-container"/>
                 </ReactQuill>

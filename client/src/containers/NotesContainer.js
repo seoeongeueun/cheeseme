@@ -4,14 +4,14 @@ import Notes from '../widgets/Notes';
 import { editNote, createNote } from '../modules/notes';
 
 function NotesContainer(props) {
-    const {id, text} = useSelector(state => ({
-        id: state.notes.id,
+    const {date, text} = useSelector(state => ({
+        date: state.notes.date,
         text: state.notes.text
     }));
     const dispatch = useDispatch();
 
     const onEdit = text => dispatch(editNote(text));
-    const onCreate = id => dispatch(createNote(id));
+    const onCreate = date => dispatch(createNote(date));
 
     return <Notes move={props.move} onEdit={onEdit} note={text} onCreate={onCreate} dateOnly={props.dateOnly}/>;
 }

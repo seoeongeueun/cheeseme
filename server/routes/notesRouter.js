@@ -9,28 +9,27 @@ notesRouter.get('/', asyncHandler(async(req, res) => {
     res.send(notes);
 }));
 
-notesRouter.get('/:id', asyncHandler(async(req, res) => {
-    const note = await Notes.findOne({id: req.params.id});
+notesRouter.get('/:date', asyncHandler(async(req, res) => {
+    const note = await Notes.findOne({date: req.params.date});
     res.send(note);
 }));
 
 notesRouter.post('/add', asyncHandler(async(req, res) => {
     const date = req.body.date;
     const text = req.body.text;
-
     await Notes.create({ date, text })
     res.send('Created')
 }));
 
-notesRouter.delete("/delete/:id", asyncHandler(async(req, res) => {
-    await Notes.findByIdAndDelete(req.params.id)
-    res.send('Deleted')
+notesRouter.delete("/delete/:date", asyncHandler(async(req, res) => {
+    await Notes.deleteOne({date: req.params.date});
+    res.send('Deleted');
 }));
 
-notesRouter.post('/update/:id', asyncHandler(async(req, res) => {
+notesRouter.post('/update/:date', asyncHandler(async(req, res) => {
     const text = req.body.text;
 
-    await Notes.updateOne({id: req.params.id}, {text: text});
+    await Notes.updateOne({date: req.params.date}, {text: text});
     res.send('Updated')
 }))
 
