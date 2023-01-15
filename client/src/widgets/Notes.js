@@ -13,14 +13,21 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
     const [closeQuill, setCloseQuill] = useState(true);
     const [loading, setLoading] = useState(false);
     const quillRef = useRef();
+    //change it to dateonly later
+    const [tmpDate, setTmpDate] = useState(0);
 
     useEffect(() => {
-        console.log(dateOnly)
-        axios.get('/api/notes/' + dateOnly)
+        let today = new Date();
+        let timePortion = today.getTime() % (3600 * 1000 * 24);
+        let tmp = new Date(today - timePortion).getTime()
+        setTmpDate(tmp)
+        console.log(tmp)
+        axios.get('/api/notes/' + tmp)
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;
-                setBody(n);
+                setBody(n.text);
+                setLoading(false);
                 return;
             })
             .catch( (err) => {
@@ -31,17 +38,25 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
     
     useEffect(() => {
 
-    }, [closeQuill, move, quillRef, body])
+    }, [closeQuill, move, quillRef, body, tmpDate])
 
     const handleEdit = async() => {
         if (!closeQuill){
             //let tmp = quillRef.current.getEditor().getText();
             let tmp = quillRef.current.editor.container.firstChild.innerHTML;
             await onEdit(tmp);
-            let res = await FetchAPIPost('/api/notes/update/' + dateOnly, {
-                date: dateOnly,
-                text: tmp  
-            });
+            if (loading){
+                let res = await FetchAPIPost('/api/notes/add', {
+                    date: dateOnly,
+                    text: tmp  
+                });
+            } else {
+                let res = await FetchAPIPost('/api/notes/update/' + tmpDate, {
+                    date: dateOnly,
+                    text: tmp  
+                });
+            }
+            
         }
         setCloseQuill(!closeQuill);
     }

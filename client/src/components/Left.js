@@ -76,7 +76,6 @@ function Left({editMode, setEditMode}){
             let today = new Date();
             let timePortion = today.getTime() % (3600 * 1000 * 24);
             await setDateOnly(new Date(today - timePortion).getTime())
-            console.log("today: ", dateOnly)
         }
         calcDate();
     }, []);
