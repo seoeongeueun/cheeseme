@@ -11,7 +11,7 @@ import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 function Notes({move, onEdit, note, onCreate, dateOnly}){
     const [body, setBody] = useState(note);
     const [closeQuill, setCloseQuill] = useState(true);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const quillRef = useRef();
     //change it to dateonly later
     const [tmpDate, setTmpDate] = useState(0);
@@ -20,7 +20,7 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
         let today = new Date();
         let timePortion = today.getTime() % (3600 * 1000 * 24);
         let tmp = new Date(today - timePortion).getTime()
-        setTmpDate(tmp)
+        setTmpDate(tmp);
         console.log(tmp)
         axios.get('/api/notes/' + tmp)
             .then( (res) => {
@@ -32,7 +32,6 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
             })
             .catch( (err) => {
                 console.log('Error loading note')
-                setLoading(false);
             })
     }, [])
     
@@ -51,6 +50,7 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
                     date: dateOnly,
                     text: tmp  
                 });
+                setLoading(false)
             } else {
                 let res = await FetchAPIPost('/api/notes/update/' + tmpDate, {
                     date: dateOnly,

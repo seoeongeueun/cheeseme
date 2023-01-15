@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import seedRouter from './routes/seedRoutes.js';
 import notesRouter from './routes/notesRouter.js';
+import todosRouter from './routes/todosRouter.js';
 import cors from 'cors';
 
 const app = express();
@@ -22,6 +23,7 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 
 app.use('/api/seed', seedRouter);
 app.use('/api/notes', notesRouter);
+app.use('/api/todos', todosRouter);
 
 app.listen(port, () => {
     console.log(`server at http://localhost:${port}`)

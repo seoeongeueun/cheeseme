@@ -9,12 +9,41 @@ import Draggable from 'react-draggable';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import axios from 'axios';
+import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
-function Todo({move, goals, onCreate, onToggle, onDelete}){
+function Todo({move, onCreate, onToggle, onDelete}){
     const [count, setCount] = useState(1);
     // const [goals, setGoals] = useState([{id: 'cse323', check: false}, {id: 'eat', check: false}]);
     const [editMode, setEditMode] = useState(false);
     const [happy, setHappy] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    //change it to dateonly later
+    const [tmpDate, setTmpDate] = useState(0);
+    //change to redux later
+    const [goals, setGoals] = useState([]);
+
+    useEffect(() => {
+        let today = new Date();
+        let timePortion = today.getTime() % (3600 * 1000 * 24);
+        let tmp = new Date(today - timePortion).getTime();
+        setTmpDate(tmp);
+        axios.get('/api/todos/' + tmp)
+            .then( (res) => {
+                setLoading(true);
+                const n = res?.data;
+                console.log("N: ", res)
+                if (n) {
+                    setGoals(n.goals);
+                    setLoading(false);
+                }
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading todos');
+            })
+    }, []);
 
     useEffect(() => {
         let c = 0;
@@ -31,18 +60,50 @@ function Todo({move, goals, onCreate, onToggle, onDelete}){
 
     useEffect(() => {
         
-    }, [goals, count, editMode, happy, move])
+    }, [goals, count, editMode, happy, move, tmpDate])
+
 
     const handleAddTodo = () => {
         onCreate('')
         setHappy(false)
         setCount(count+1)
-        setEditMode(true)
-    }
+        setEditMode(true);
 
-    const handleEditTodo = (key, value) => {
-        goals[key].text = value;
+        setGoals([...goals, {id: goals.length+1, text: '', check: false}])
+        
+        console.log('here: ', goals)
+    };
+
+    const handleEditTodo = async(key, value) => {
+        //goals[key].text = value;
+        const newState = goals.map(obj => {
+            if (obj.id === key+1)return {...obj, text: value};
+            return obj;
+        });
+        setGoals(newState);
+        
+    };
+
+    const handleEditMode = async() => {
+        if (editMode) {
+            if (loading){
+                console.log("?")
+                let res = await FetchAPIPost('/api/todos/add', {
+                    date: tmpDate,
+                    goals: goals  
+                });
+                setLoading(false);
+            } else {
+                console.log("!")
+                let res = await FetchAPIPost('/api/todos/update/' + tmpDate, {
+                    date: tmpDate,
+                    goals: goals
+                });
+            }
+        }
+        setEditMode(!editMode);
     }
+      
 
     const handleKeyPress = (event) => {
         if(event.key === 'Enter'){
@@ -57,7 +118,6 @@ function Todo({move, goals, onCreate, onToggle, onDelete}){
             setHappy(false);
         }
     }
-
     return (
         <div className="todoWidget">
             {move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
@@ -65,7 +125,7 @@ function Todo({move, goals, onCreate, onToggle, onDelete}){
                 <span style={{marginLeft: '0.3rem'}}>To Do</span>
                 <div className="todoHeaderButtons">
                     <button onClick={handleAddTodo}><AddRoundedIcon sx={{size: '20px'}}/></button>
-                    <button onClick={() => setEditMode(!editMode)}>{editMode && goals.length > 0 ? <CheckRoundedIcon sx={{size: '20px', color: "red"}}/> : <RemoveRoundedIcon sx={{size: '20px'}}/>}</button>
+                    <button onClick={handleEditMode}>{editMode && goals.length > 0 ? <CheckRoundedIcon sx={{size: '20px', color: "red"}}/> : <RemoveRoundedIcon sx={{size: '20px'}}/>}</button>
                 </div>
             </div>
             <div className="todoList">

@@ -28,7 +28,6 @@ notesRouter.delete("/delete/:date", asyncHandler(async(req, res) => {
 
 notesRouter.post('/update/:date', asyncHandler(async(req, res) => {
     const text = req.body.text;
-
     await Notes.updateOne({date: req.params.date}, {text: text});
     res.send('Updated')
 }))
