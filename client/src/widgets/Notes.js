@@ -44,6 +44,7 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
         if (!closeQuill){
             //let tmp = quillRef.current.getEditor().getText();
             let tmp = quillRef.current.editor.container.firstChild.innerHTML;
+            setBody(tmp);
             await onEdit(tmp);
             if (loading){
                 let res = await FetchAPIPost('/api/notes/add', {
@@ -73,9 +74,8 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
                     readOnly={closeQuill}
                     style={closeQuill ? {border: "none"} : {border: "none"}}
                     modules={closeQuill ? Notes.modules2 : Notes.modules}
-                    value={body}
+                    value={!loading && body}
                     formats={Notes.formats}
-                    onChange={setBody}
                 >
                     <div className="ql-container"/>
                 </ReactQuill>
