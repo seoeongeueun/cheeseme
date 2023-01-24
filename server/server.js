@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import seedRouter from './routes/seedRoutes.js';
 import notesRouter from './routes/notesRouter.js';
 import todosRouter from './routes/todosRouter.js';
+import ddayRouter from './routes/ddayRouter.js';
 import cors from 'cors';
 
 const app = express();
@@ -24,6 +25,7 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 app.use('/api/seed', seedRouter);
 app.use('/api/notes', notesRouter);
 app.use('/api/todos', todosRouter);
+app.use('/api/dday', ddayRouter);
 
 app.listen(port, () => {
     console.log(`server at http://localhost:${port}`)
