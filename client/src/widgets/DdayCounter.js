@@ -17,23 +17,6 @@ function DdayCounter(props) {
     //change it to dateonly later
     const [tmpDate, setTmpDate] = useState(0);
 
-    const change = async () => {
-        let res = await FetchAPIPost('/api/dday/add/', {
-            date: tmpDate,
-            text: title,
-            start: start,
-            end: end
-        });
-    }
-    const addNew = async () => {
-        let res = await FetchAPIPost('/api/dday/update/' + tmpDate, {
-            date: tmpDate,
-            text: title,
-            start: start.getTime(),
-            end: end.getTime()
-        });
-    }
-
     useEffect(() => {
         let today = new Date();
         let timePortion = today.getTime() % (3600 * 1000 * 24);
@@ -45,10 +28,20 @@ function DdayCounter(props) {
             .then( (res) => {
                 const n = res?.data;
                 if (n) {
-                    console.log("!!!", n)
                     setStart(n.start)
                     setEnd(n.end)
                     setTitle(n.text)
+                    setLoading(false);
+                }
+                else{
+                    const addNew = async () => {
+                        let res = await FetchAPIPost('/api/dday/add/', {
+                            date: tmp,
+                            text: "",
+                            start: tmp
+                        });
+                    }
+                    addNew();
                     setLoading(false);
                 }
                 return;
@@ -59,37 +52,32 @@ function DdayCounter(props) {
     }, []);
 
     useEffect(() => {
-        // let s = new Date();
-        // let c = Math.abs(end-s) / (1000 * 60 * 60 * 24)
         let c = 0
         if (end) c = end - start;
-        console.log("s ", start)
-        console.log("e ", end)
-        console.log("C ", c / (1000 * 60 * 60 * 24))
         setLeft(Math.round(c / (1000 * 60 * 60 * 24)))
-        if (loading) {
-            addNew();
-            setLoading(false);
-        }
-        else {
-            change();
-            setLoading(false);
-        }
     }, [start, end]);
 
     useEffect(() => {
-        // if (loading) {
-        //     addNew();
-        //     setLoading(false)
-        // } else {
-        //     change();
-        //     setLoading(false);
-        // }
-    }, [edit, title, left])
+        const change = async () => {
+            let res = await FetchAPIPost('/api/dday/update/' + tmpDate, {
+                date: tmpDate,
+                text: title,
+                start: start,
+                end: end
+            });
+        }
+        change()
+        setLoading(false);
+    }, [edit, end])
 
-    const handleKeyPress = (event) => {
+
+
+    const handleKeyPress = async(event) => {
         if(event.key === 'Enter'){
           setEdit(false);
+          let res = await FetchAPIPost('/api/dday/update/' + tmpDate, {
+                text: title
+            });
         }
     }
 
@@ -107,7 +95,8 @@ function DdayCounter(props) {
                     {title ? <span>{title}</span> : <span style={{color: "#929292"}}>name your d-day!</span>}
                 </div>
                 <div className='displayDate'>
-                    <span style={{color: "#929292"}}>{new Date(end).getMonth()+1}/{new Date(end).getDate()}/{new Date(end).getFullYear()}</span>
+                    {end ? <span style={{color: "#929292"}}>{new Date(end).getMonth()+1}/{new Date(end).getDate()}/{new Date(end).getFullYear()}</span>
+                    : <span style={{color: "#929292"}}>{new Date().getMonth()+1}/{new Date().getDate()}/{new Date().getFullYear()}</span>}
                 </div>
             </div>
             {edit && <div className='ddayCollapse'>
@@ -117,7 +106,7 @@ function DdayCounter(props) {
             </div>
             <div className='ddayTitle'>
                 <span>Title</span>
-                <input type="text" value={title} onChange={(e) => setTitle(e)} placeholder="name your d-day!" onKeyPress={handleKeyPress}/>
+                <input type="text" value={title ? title : ""} onChange={(e) => setTitle(e.target.value)} placeholder="name your d-day!" onKeyPress={handleKeyPress}/>
             </div>
             </div>}
             {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
