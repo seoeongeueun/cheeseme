@@ -12,24 +12,19 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import axios from 'axios';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
-function Todo({move, onCreate, onToggle, onDelete}){
+function Todo({move, onCreate, onToggle, onDelete, date}){
     const [count, setCount] = useState(1);
     // const [goals, setGoals] = useState([{id: 'cse323', check: false}, {id: 'eat', check: false}]);
     const [editMode, setEditMode] = useState(false);
     const [happy, setHappy] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    //change it to dateonly later
-    const [tmpDate, setTmpDate] = useState(0);
     //change to redux later
     const [goals, setGoals] = useState([]);
 
     useEffect(() => {
-        let today = new Date();
-        let timePortion = today.getTime() % (3600 * 1000 * 24);
-        let tmp = new Date(today - timePortion).getTime();
-        setTmpDate(tmp);
-        axios.get('/api/todos/' + tmp)
+        console.log("date: ", date)
+        axios.get('/api/todos/' + date)
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;
@@ -46,8 +41,26 @@ function Todo({move, onCreate, onToggle, onDelete}){
     }, []);
 
     useEffect(() => {
+        axios.get('/api/todos/' + date)
+            .then( (res) => {
+                setLoading(true);
+                const n = res?.data;
+                if (n) {
+                    setGoals(n.goals);
+                    setLoading(false);
+                    setHappy(n.smile);
+                }
+                else setGoals([])
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading todos');
+            })
+    }, [date])
+
+    useEffect(() => {
         
-    }, [count, editMode, move, tmpDate])
+    }, [count, editMode, move, happy, goals])
 
 
     const handleAddTodo = () => {
@@ -73,14 +86,14 @@ function Todo({move, onCreate, onToggle, onDelete}){
         if (editMode) {
             if (loading){
                 let res = await FetchAPIPost('/api/todos/add', {
-                    date: tmpDate,
+                    date: date,
                     goals: goals,
                     smile: happy
                 });
                 setLoading(false);
             } else {
-                let res = await FetchAPIPost('/api/todos/update/' + tmpDate, {
-                    date: tmpDate,
+                let res = await FetchAPIPost('/api/todos/update/' + date, {
+                    date: date,
                     goals: goals,
                     smile: happy
                 });
@@ -105,8 +118,8 @@ function Todo({move, onCreate, onToggle, onDelete}){
                 if (obj.id === key+1) return {...obj, check: false};
                 return obj;
             });
-            let res = await FetchAPIPost('/api/todos/update/' + tmpDate, {
-                date: tmpDate,
+            let res = await FetchAPIPost('/api/todos/update/' + date, {
+                date: date,
                 goals: newState,
                 smile: false,
             });
@@ -127,8 +140,8 @@ function Todo({move, onCreate, onToggle, onDelete}){
                 setHappy(true)
                 checkSmile = true;
             }
-            let res = await FetchAPIPost('/api/todos/update/' + tmpDate, {
-                date: tmpDate,
+            let res = await FetchAPIPost('/api/todos/update/' + date, {
+                date: date,
                 goals: newState,
                 smile: checkSmile
             });

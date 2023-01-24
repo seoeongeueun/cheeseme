@@ -13,7 +13,7 @@ function NotesContainer(props) {
     const onEdit = text => dispatch(editNote(text));
     const onCreate = date => dispatch(createNote(date));
 
-    return <Notes move={props.move} onEdit={onEdit} note={text} onCreate={onCreate} dateOnly={props.dateOnly}/>;
+    return <Notes move={props.move} onEdit={onEdit} note={text} onCreate={onCreate} date={props.date}/>;
 }
 
 export default NotesContainer;

@@ -2,17 +2,18 @@ import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 
-function CalendarWidget(props){
-    const [date, setDate] = useState(new Date());
+function CalendarWidget({move, onChangeDate, date}){
+    const [datePicked, setDatePicked] = useState(new Date().setHours(0, 0, 0, 0));
 
-    useEffect(() => {
-        console.log("clicked date: ", date.getTime())
-    }, [date])
+    const handleChange = (d) => {
+        onChangeDate(d.getTime());
+        setDatePicked(d.getTime());
+    }
 
     return (
         <div className="calendarWidget">
-            {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
-            <Calendar onChange={setDate} value={date}/>
+            {move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
+            <Calendar onChange={(d) => handleChange(d)} value={new Date(datePicked)}/>
         </div>
     )
 

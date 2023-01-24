@@ -14,7 +14,7 @@ function DdayCounter(props) {
     const [edit, setEdit] = useState(true);
     const [loading, setLoading] = useState(true);
 
-    //change it to dateonly later
+    //change it to today later
     const [tmpDate, setTmpDate] = useState(0);
 
     useEffect(() => {

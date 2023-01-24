@@ -12,7 +12,7 @@ function TodosContainer(props) {
     const onDelete = useCallback(id => dispatch(deleteGoal(id)), [dispatch])
     const onEdit = useCallback((id, text) => dispatch(editGoal(id, text)), [dispatch])
 
-    return <Todo move={props.move} goals={goals} onEdit={onEdit} onCreate={onCreate} onToggle={onToggle} onDelete={onDelete}/>;
+    return <Todo move={props.move} date={props.date} goals={goals} onEdit={onEdit} onCreate={onCreate} onToggle={onToggle} onDelete={onDelete}/>;
 }
 
 export default TodosContainer;

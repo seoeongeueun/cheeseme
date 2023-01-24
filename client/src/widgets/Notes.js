@@ -8,21 +8,16 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import axios from 'axios';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
-function Notes({move, onEdit, note, onCreate, dateOnly}){
+function Notes({move, onEdit, note, onCreate, date}){
     const [body, setBody] = useState(note);
     const [closeQuill, setCloseQuill] = useState(true);
     const [loading, setLoading] = useState(true);
     const quillRef = useRef();
-    //change it to dateonly later
-    const [tmpDate, setTmpDate] = useState(0);
+    //change it to today later
+    //const [tmpDate, setTmpDate] = useState(0);
 
     useEffect(() => {
-        let today = new Date();
-        let timePortion = today.getTime() % (3600 * 1000 * 24);
-        let tmp = new Date(today - timePortion).getTime()
-        setTmpDate(tmp);
-        console.log(tmp)
-        axios.get('/api/notes/' + tmp)
+        axios.get('/api/notes/' + date)
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;
@@ -36,10 +31,26 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
                 console.log('Error loading note')
             })
     }, [])
+
+    useEffect(() => {
+        axios.get('/api/notes/' + date)
+            .then( (res) => {
+                setLoading(true);
+                const n = res?.data;
+                if (n) {
+                    setBody(n.text);
+                    setLoading(false);
+                }
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading note')
+            })
+    }, [date])
     
     useEffect(() => {
 
-    }, [closeQuill, move, quillRef, body, tmpDate])
+    }, [closeQuill, move, quillRef, body])
 
     const handleEdit = async() => {
         if (!closeQuill){
@@ -49,13 +60,13 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
             await onEdit(tmp);
             if (loading){
                 let res = await FetchAPIPost('/api/notes/add', {
-                    date: dateOnly,
+                    date: date,
                     text: tmp  
                 });
                 setLoading(false)
             } else {
-                let res = await FetchAPIPost('/api/notes/update/' + tmpDate, {
-                    date: dateOnly,
+                let res = await FetchAPIPost('/api/notes/update/' + date, {
+                    date: date,
                     text: tmp  
                 });
             }
