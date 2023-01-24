@@ -26,8 +26,10 @@ function Notes({move, onEdit, note, onCreate, dateOnly}){
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;
-                setBody(n.text);
-                setLoading(false);
+                if (n) {
+                    setBody(n.text);
+                    setLoading(false);
+                }
                 return;
             })
             .catch( (err) => {
