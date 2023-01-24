@@ -33,10 +33,10 @@ function Todo({move, onCreate, onToggle, onDelete}){
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;
-                console.log("N: ", res)
                 if (n) {
                     setGoals(n.goals);
                     setLoading(false);
+                    setHappy(n.smile);
                 }
                 return;
             })
@@ -46,21 +46,8 @@ function Todo({move, onCreate, onToggle, onDelete}){
     }, []);
 
     useEffect(() => {
-        let c = 0;
-        goals.forEach(g => {
-            if (g.check){
-                c += 1
-            }
-        });
-
-        if (c === goals.length) {
-            setHappy(true)
-        }
-    }, [count])
-
-    useEffect(() => {
         
-    }, [goals, count, editMode, happy, move, tmpDate])
+    }, [count, editMode, move, tmpDate])
 
 
     const handleAddTodo = () => {
@@ -70,8 +57,6 @@ function Todo({move, onCreate, onToggle, onDelete}){
         setEditMode(true);
 
         setGoals([...goals, {id: goals.length+1, text: '', check: false}])
-        
-        console.log('here: ', goals)
     };
 
     const handleEditTodo = async(key, value) => {
@@ -87,17 +72,17 @@ function Todo({move, onCreate, onToggle, onDelete}){
     const handleEditMode = async() => {
         if (editMode) {
             if (loading){
-                console.log("?")
                 let res = await FetchAPIPost('/api/todos/add', {
                     date: tmpDate,
-                    goals: goals  
+                    goals: goals,
+                    smile: happy
                 });
                 setLoading(false);
             } else {
-                console.log("!")
                 let res = await FetchAPIPost('/api/todos/update/' + tmpDate, {
                     date: tmpDate,
-                    goals: goals
+                    goals: goals,
+                    smile: happy
                 });
             }
         }
@@ -111,13 +96,46 @@ function Todo({move, onCreate, onToggle, onDelete}){
         }
     }
 
-    const handleCheck = (key, value) => {
-        goals[key].check = value;
+    const handleCheck = async(key, value) => {
+        //goals[key].check = value;
         setCount(count+1)
         if (value === false) {
             setHappy(false);
+            const newState = goals.map(obj => {
+                if (obj.id === key+1) return {...obj, check: false};
+                return obj;
+            });
+            let res = await FetchAPIPost('/api/todos/update/' + tmpDate, {
+                date: tmpDate,
+                goals: newState,
+                smile: false,
+            });
+            setGoals(newState);
+        }
+        else {
+            let c = 0;
+            const newState = goals.map(obj => {
+                if (obj.check === false) c++;
+                if (obj.id === key+1) {
+                    if (!obj.check) c --;
+                    return {...obj, check: true};
+                }
+                return obj;
+            });
+            let checkSmile = false;
+            if (c <= 0) {
+                setHappy(true)
+                checkSmile = true;
+            }
+            let res = await FetchAPIPost('/api/todos/update/' + tmpDate, {
+                date: tmpDate,
+                goals: newState,
+                smile: checkSmile
+            });
+            setGoals(newState);
         }
     }
+
     return (
         <div className="todoWidget">
             {move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}

@@ -8,7 +8,8 @@ const todosSchema = new mongoose.Schema({
             text: String,
             check: Boolean,
         }
-    ]
+    ],
+    smile: {type: Boolean, required: true}
 });
 
 const Todos = mongoose.model("Todos", todosSchema);

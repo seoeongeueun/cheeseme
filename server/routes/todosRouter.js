@@ -17,7 +17,8 @@ todosRouter.get('/:date', asyncHandler(async(req, res) => {
 todosRouter.post('/add', asyncHandler(async(req, res) => {
     const date = req.body.date;
     const goals = req.body.goals;
-    await Todos.create({ date, goals })
+    const smile = req.body.smile;
+    await Todos.create({ date, goals, smile })
     res.send('Created')
 }));
 
@@ -27,7 +28,7 @@ todosRouter.delete("/delete/:date", asyncHandler(async(req, res) => {
 }));
 
 todosRouter.post('/update/:date', asyncHandler(async(req, res) => {
-    await Todos.updateOne({date: req.params.date}, {goals: req.body.goals});
+    await Todos.updateOne({date: req.params.date}, {goals: req.body.goals, smile: req.body.smile});
     res.send('Updated')
 }))
 
