@@ -13,36 +13,25 @@ function DdayCounter(props) {
     const [title, setTitle] = useState();
     const [edit, setEdit] = useState(true);
     const [loading, setLoading] = useState(true);
+    const [date, setDate] = useState();
 
     //change it to today later
-    const [tmpDate, setTmpDate] = useState(0);
 
     useEffect(() => {
-        let today = new Date();
-        let timePortion = today.getTime() % (3600 * 1000 * 24);
-        let tmp = new Date(today - timePortion).getTime()
-        setTmpDate(tmp);
-        setStart(tmp);
+        let tmp = new Date().setHours(0, 0, 0, 0);
+        setStart(tmp)
         setLoading(true);
         axios.get('/api/dday/' + tmp)
             .then( (res) => {
                 const n = res?.data;
                 if (n) {
-                    setStart(n.start)
+                    setDate(n.date)
                     setEnd(n.end)
                     setTitle(n.text)
                     setLoading(false);
                 }
                 else{
-                    const addNew = async () => {
-                        let res = await FetchAPIPost('/api/dday/add/', {
-                            date: tmp,
-                            text: "",
-                            start: tmp
-                        });
-                    }
-                    addNew();
-                    setLoading(false);
+                    setDate(tmp)
                 }
                 return;
             })
@@ -54,19 +43,34 @@ function DdayCounter(props) {
     useEffect(() => {
         let c = 0
         if (end) c = end - start;
-        setLeft(Math.round(c / (1000 * 60 * 60 * 24)))
+        let daysLeft = Math.round(c / (1000 * 60 * 60 * 24));
+        if (daysLeft < 0) setLeft(0)
+        else setLeft(daysLeft)
     }, [start, end]);
 
     useEffect(() => {
         const change = async () => {
-            let res = await FetchAPIPost('/api/dday/update/' + tmpDate, {
-                date: tmpDate,
+            let res = await FetchAPIPost('/api/dday/update/' + date, {
                 text: title,
-                start: start,
                 end: end
             });
         }
-        change()
+        const addNew = async () => {
+            let res = await FetchAPIPost('/api/dday/add/', {
+                date: new Date().setHours(0, 0, 0, 0),
+                start: new Date().setHours(0, 0, 0, 0),
+                text: title,
+                end: end
+            });
+        }
+        if (loading) {
+            addNew();
+            setLoading(false)
+        }
+        else {
+            change();
+            setLoading(false)
+        }
         setLoading(false);
     }, [edit, end])
 
@@ -74,10 +78,12 @@ function DdayCounter(props) {
 
     const handleKeyPress = async(event) => {
         if(event.key === 'Enter'){
-          setEdit(false);
-          let res = await FetchAPIPost('/api/dday/update/' + tmpDate, {
-                text: title
-            });
+            setEdit(false);
+            if (date) {
+                let res = await FetchAPIPost('/api/dday/update/' + date, {
+                    text: title
+                });
+            }
         }
     }
 

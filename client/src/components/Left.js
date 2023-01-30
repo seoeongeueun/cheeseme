@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import GridLines from 'react-gridlines';
 import DisplaySettingsLeft from '../modals/DisplaySettingsLeft';
 import AddPicSettings from '../modals/AddPicSettings';
@@ -60,7 +60,13 @@ function Left({editMode, setEditMode, date}){
     const [ddayCounter, setDdayCounter] = useState(true);
 
     const [today, setToday] = useState(0);
-    
+
+    const [calPosition, setCalPosition] = useState({x: 0, y: 0})
+    const [todoPosition, setTodoPosition] = useState({x: 0, y: 0})
+    const [ddayPosition, setDdayPosition] = useState({x: 0, y: 0})
+    const [notePosition, setNotePosition] = useState({x: 0, y: 0})
+
+
     const ORIENTATION_TO_ANGLE = {
         '3': 180,
         '6': 90,
@@ -68,13 +74,31 @@ function Left({editMode, setEditMode, date}){
     }
 
     useEffect(() => {
-        const bodyRef = document.getElementById("leftContent");
-        if (bodyRef){
-            setHeight(bodyRef.offsetHeight)
-            setWidth(bodyRef.offsetWidth)
-        }
+        // const bodyRef = document.getElementById("leftContent");
+        // if (bodyRef){
+        //     setHeight(bodyRef.offsetHeight)
+        //     setWidth(bodyRef.offsetWidth)
+        // }
         setToday(new Date().setHours(0, 0, 0, 0))
     }, []);
+
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver((event) => {
+            // Depending on the layout, you may need to swap inlineSize with blockSize
+            // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry/contentBoxSize
+            setWidth(event[0].contentBoxSize[0].inlineSize);
+            const bodyRef = document.getElementById("leftContent");
+            if (bodyRef){
+                setHeight(bodyRef.clientHeight)
+                console.log("height: ", bodyRef.clientHeight)
+
+            }
+            //setHeight(event[0].contentBoxSize[0].blockSize);
+            //console.log("height: ", event[0].contentBoxSize[0].blockSize)
+            console.log("width: ", event[0].contentBoxSize[0].inlineSize)
+        });
+        resizeObserver.observe(document.getElementById("leftBody"));
+    });
 
     useEffect(() => {
 
@@ -136,6 +160,13 @@ function Left({editMode, setEditMode, date}){
         }
     }
 
+    const handleDragStop = (e, position) => {
+        const {x, y} = position;
+
+        //setControlledPosition({x, y});
+        console.log("X: ", x)
+        console.log("Y: ", y)
+    };
     return(
         <div className="leftInnerBorder">
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12}>
@@ -151,9 +182,9 @@ function Left({editMode, setEditMode, date}){
                     </div>
                 </div>
             </GridLines> :
-            <div className="leftContent" id="leftContent">
-                    <div className="leftBody">
-                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-398, bottom: height-350}} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
+                <div className="leftContent" id="leftContent">
+                    <div className="leftBody" id="leftBody">
+                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(350), bottom: height-(350)}} position={calPosition} onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-320, bottom: height-224}} handle="strong"><div><TodosContainer move={editMode} date={date}/></div></Draggable>} 
                         {notes && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
                         {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: width-300, bottom: height-248}} handle="strong"><div><DdayCounter move={editMode}/></div></Draggable>}
