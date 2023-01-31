@@ -99,7 +99,6 @@ function Left({editMode, setEditMode, date}){
         axios.get('/api/position/' + "default")
             .then( (res) => {
                 const n = res?.data;
-                console.log("n: ", n)
                 setCalPosition({x: n.cal[0], y: n.cal[1]});
                 setTodoPosition({x: n.todo[0], y: n.todo[1]});
                 setDdayPosition({x: n.dday[0], y: n.dday[1]});
@@ -111,7 +110,7 @@ function Left({editMode, setEditMode, date}){
                 console.log('Error loading positions: ', err);
                 addNew();
                 setId("default");
-                console.log("position added")
+                console.log("position created")
             })
     }, [id]);
 
@@ -165,10 +164,8 @@ function Left({editMode, setEditMode, date}){
     }, [addPic, today]);
 
     useEffect(() => {
-        console.log("edit ", editMode)
-        if (!editMode) {
+        if (!editMode && id != "") {
             change();
-            console.log("position updated with id ", id)
         }
     }, [editMode]);
 
