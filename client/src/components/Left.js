@@ -27,6 +27,8 @@ import CropSquareSharpIcon from '@mui/icons-material/CropSquareSharp';
 import TodosContainer from '../containers/TodosContainer';
 import NotesContainer from '../containers/NotesContainer';
 import CalendarContainer from '../containers/CalendarContainer';
+import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
+import axios from 'axios';
 
 function Left({editMode, setEditMode, date}){
     const [showSettings, setShowSettings] = useState(false);
@@ -66,21 +68,75 @@ function Left({editMode, setEditMode, date}){
     const [ddayPosition, setDdayPosition] = useState({x: 0, y: 0})
     const [notePosition, setNotePosition] = useState({x: 0, y: 0})
 
+    const [id, setId] = useState("");
+
 
     const ORIENTATION_TO_ANGLE = {
         '3': 180,
         '6': 90,
         '8': -90,
     }
+    
+    const change = async () => {
+        let res = await FetchAPIPost('/api/position/update/' + id, {
+            cal: [Object.values(calPosition)[0], Object.values(calPosition)[1]],
+            dday: [Object.values(ddayPosition)[0], Object.values(ddayPosition)[1]],
+            note: [Object.values(notePosition)[0], Object.values(notePosition)[1]],
+            todo: [Object.values(todoPosition)[0], Object.values(todoPosition)[1]],
+        });
+    }
+    const addNew = async () => {
+        let res = await FetchAPIPost('/api/position/add/', {
+            cal: [Object.values(calPosition)[0], Object.values(calPosition)[1]],
+            dday: [Object.values(ddayPosition)[0], Object.values(ddayPosition)[1]],
+            note: [Object.values(notePosition)[0], Object.values(notePosition)[1]],
+            todo: [Object.values(todoPosition)[0], Object.values(todoPosition)[1]],
+        });
+    }
 
     useEffect(() => {
-        // const bodyRef = document.getElementById("leftContent");
-        // if (bodyRef){
-        //     setHeight(bodyRef.offsetHeight)
-        //     setWidth(bodyRef.offsetWidth)
-        // }
-        setToday(new Date().setHours(0, 0, 0, 0))
-    }, []);
+        setToday(new Date().setHours(0, 0, 0, 0));
+        axios.get('/api/position/' + "default")
+            .then( (res) => {
+                const n = res?.data;
+                console.log("n: ", n)
+                setCalPosition({x: n.cal[0], y: n.cal[1]});
+                setTodoPosition({x: n.todo[0], y: n.todo[1]});
+                setDdayPosition({x: n.dday[0], y: n.dday[1]});
+                setNotePosition({x: n.note[0], y: n.note[1]});
+                setId("default")
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading positions: ', err);
+                addNew();
+                setId("default");
+                console.log("position added")
+            })
+    }, [id]);
+
+    useEffect(() => {
+
+    }, [calPosition, todoPosition, ddayPosition, notePosition])
+
+    // useEffect(() => {
+    //     axios.get('/api/position/')
+    //         .then( (res) => {
+    //             const n = res?.data;
+    //             if (n) {
+    //                 setCalPosition({x: n.cal[0], y: n.cal[1]});
+    //                 setTodoPosition({x: n.todo[0], y: n.todo[1]});
+    //                 setDdayPosition({x: n.dday[0], y: n.dday[1]});
+    //                 setNotePosition({x: n.note[0], y: n.note[1]});
+    //                 setId("default");
+    //             }
+    //             return;
+    //         })
+    //         .catch( (err) => {
+    //             setId("")
+    //             console.log('Error loading positions');
+    //         })
+    // }, [id]);
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver((event) => {
@@ -90,12 +146,12 @@ function Left({editMode, setEditMode, date}){
             const bodyRef = document.getElementById("leftContent");
             if (bodyRef){
                 setHeight(bodyRef.clientHeight)
-                console.log("height: ", bodyRef.clientHeight)
+                //console.log("height: ", bodyRef.clientHeight)
 
             }
             //setHeight(event[0].contentBoxSize[0].blockSize);
             //console.log("height: ", event[0].contentBoxSize[0].blockSize)
-            console.log("width: ", event[0].contentBoxSize[0].inlineSize)
+            //console.log("width: ", event[0].contentBoxSize[0].inlineSize)
         });
         resizeObserver.observe(document.getElementById("leftBody"));
     });
@@ -106,7 +162,15 @@ function Left({editMode, setEditMode, date}){
 
     useEffect(() => {
 
-    }, [editMode, addPic, today]);
+    }, [addPic, today]);
+
+    useEffect(() => {
+        console.log("edit ", editMode)
+        if (!editMode) {
+            change();
+            console.log("position updated with id ", id)
+        }
+    }, [editMode]);
 
     useEffect(() => {
 

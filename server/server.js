@@ -5,6 +5,7 @@ import seedRouter from './routes/seedRoutes.js';
 import notesRouter from './routes/notesRouter.js';
 import todosRouter from './routes/todosRouter.js';
 import ddayRouter from './routes/ddayRouter.js';
+import positionRouter from './routes/positionRouter.js';
 import cors from 'cors';
 
 const app = express();
@@ -26,6 +27,7 @@ app.use('/api/seed', seedRouter);
 app.use('/api/notes', notesRouter);
 app.use('/api/todos', todosRouter);
 app.use('/api/dday', ddayRouter);
+app.use('/api/position', positionRouter);
 
 app.listen(port, () => {
     console.log(`server at http://localhost:${port}`)
