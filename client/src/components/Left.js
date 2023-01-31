@@ -192,6 +192,7 @@ function Left({editMode, setEditMode, date}){
             console.log(roundStickers)
             setAddPic(false);
             setImageSrc(null);
+            console.log("stickerlist: ", stickerList)
         } catch (e) {
           console.error(e)
         }
