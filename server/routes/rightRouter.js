@@ -36,7 +36,7 @@ rightRouter.post('/update/:date', asyncHandler(async(req, res) => {
     const like = req.body.like;
     const weather = req.body.weather;
     const bookmark = req.body.bookmark;
-    await Dday.updateOne({date: req.params.date}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark});
+    await Right.updateOne({date: req.params.date}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark});
     res.send('Updated')
 }))
 

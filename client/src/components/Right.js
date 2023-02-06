@@ -58,18 +58,28 @@ function Right({date}){
         axios.get('/api/right/' + date)
             .then( (res) => {
                 const n = res?.data;
-                setBody(n.text);
-                setHeart(n.like);
-                setBookmark(n.bookmark);
-                setTitle(n.title);
-                setWeather(n.weather);
-                setFound(true);
+                if (n){
+                    setBody(n.text);
+                    setHeart(n.like);
+                    setBookmark(n.bookmark);
+                    setTitle(n.title);
+                    setWeather(n.weather);
+                    setFound(true);
+                } else {
+                    setBody("");
+                    setHeart(false);
+                    setBookmark(false);
+                    setTitle("")
+                    setWeather("")
+                    setFound(false);
+                }
                 return;
             })
             .catch( (err) => {
                 console.log('Error loading right post: ', err);
+                setFound(false);
             })
-    }, [])
+    }, [date])
 
     useEffect(() => {
         console.log('edit: ', edit)
@@ -80,19 +90,47 @@ function Right({date}){
 
     }, [heart, postImage, weather])
 
-    const onClickHeart = () => {
+    const onClickHeart = async() => {
         if (heart) {
-            setHeart(false)
+            setHeart(false);
+            let res = await FetchAPIPost('/api/right/update/' + date, {
+                like: false,
+                bookmark: bookmark,
+                title: title,
+                text: body,
+                weather: weather
+            });
         } else {
-            setHeart(true)
+            setHeart(true);
+            let res = await FetchAPIPost('/api/right/update/' + date, {
+                like: true,
+                bookmark: bookmark,
+                title: title,
+                text: body,
+                weather: weather
+            });
         }
     }
 
-    const onClickBookmark = () => {
+    const onClickBookmark = async() => {
         if (bookmark) {
-            setBookmark(false)
+            setBookmark(false);
+            let res = await FetchAPIPost('/api/right/update/' + date, {
+                like: heart,
+                bookmark: false,
+                title: title,
+                text: body,
+                weather: weather
+            });
         } else {
-            setBookmark(true)
+            setBookmark(true);
+            let res = await FetchAPIPost('/api/right/update/' + date, {
+                like: heart,
+                bookmark: true,
+                title: title,
+                text: body,
+                weather: weather
+            });
         }
     }
 
@@ -123,6 +161,7 @@ function Right({date}){
                 weather: weather
             });
             setFound(true)
+            console.log("create")
         } else {
             let res = await FetchAPIPost('/api/right/update/' + date, {
                 like: heart,
@@ -131,11 +170,27 @@ function Right({date}){
                 text: body,
                 weather: weather
             });
+
+            console.log("update")
         }
     }
 
     const handleCancel = () => {
         setEdit(false);
+    }
+
+    const handleWeather = async(weatherOption) => {
+        if (weatherOption === 'sunny') setWeather('sunny')
+        if (weatherOption === 'cloud') setWeather('cloud')
+        if (weatherOption === 'rainy') setWeather('rainy')
+        if (weatherOption === 'snowy') setWeather('snowy')
+        let res = await FetchAPIPost('/api/right/update/' + date, {
+            like: heart,
+            bookmark: bookmark,
+            title: title,
+            text: body,
+            weather: weatherOption
+        });
     }
 
     /*<span className="profileArea"/>*/
@@ -205,10 +260,10 @@ function Right({date}){
                         <div className="rightBodyHeader">
                             <span>{new Date(date).getMonth()+1}.{new Date(date).getDate()}.{new Date(date).getFullYear()}</span>
                             <div className='weatherMood'>
-                                <button onClick={() => setWeather('sunny')}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
-                                <button onClick={() => setWeather('cloud')}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
-                                <button onClick={() => setWeather('rainy')}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
-                                <button onClick={() => setWeather('snowy')}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
+                                <button onClick={() => handleWeather('sunny')}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
+                                <button onClick={() => handleWeather('cloud')}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
+                                <button onClick={() => handleWeather('rainy')}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
+                                <button onClick={() => handleWeather('snowy')}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
                             </div>
                         </div>
                         <div className="rightBodyMain">
@@ -223,8 +278,8 @@ function Right({date}){
                                     </IconButton>}
                             <div className="postButtons">
                                 <div className="postButtonsLeft">
-                                    <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                     <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                 </div>
                                 <div className="postButtonsRight">
                                     <button onClick={() => setEdit(true)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
