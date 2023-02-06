@@ -32,7 +32,7 @@ import SunPlain from '../icons/sunny.png';
 import SnowPlain from '../icons/snowman (1).png';
 import SnowColor from '../icons/snowman.png';
 import { FetchAPIPost } from '../utils/api.js';
-
+import axios from 'axios';
 
 function Right(){
     const [showSettings, setShowSettings] = useState(false);
@@ -53,12 +53,28 @@ function Right(){
     const [newPost, setNewPost] = useState(true);
     const [date, setDate] = useState();
     const [weather, setWeather] = useState('');
+
+    const [found, setFound] = useState(false);
     
     useEffect(() => {
         if (newPost){
             const current = new Date();
             setDate(`${current.getMonth()+1}.${current.getDate()}.${current.getFullYear()}`)
         }
+        axios.get('/api/right/' + date)
+            .then( (res) => {
+                const n = res?.data;
+                setBody(n.text);
+                setHeart(n.like);
+                setBookmark(n.bookmark);
+                setTitle(n.title);
+                setWeather(n.weather);
+                setFound(true);
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading right post: ', err);
+            })
     }, [])
 
     useEffect(() => {
@@ -101,8 +117,27 @@ function Right(){
           }
     };
 
-    const handleSave = () => {
+    const handleSave = async() => {
         setEdit(false);
+        if (!found){
+            let res = await FetchAPIPost('/api/right/add/', {
+                date: date,
+                like: heart,
+                bookmark: bookmark,
+                title: title,
+                text: body,
+                weather: weather
+            });
+            setFound(true)
+        } else {
+            let res = await FetchAPIPost('/api/right/update/' + date, {
+                like: heart,
+                bookmark: bookmark,
+                title: title,
+                text: body,
+                weather: weather
+            });
+        }
     }
 
     const handleCancel = () => {
