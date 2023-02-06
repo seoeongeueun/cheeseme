@@ -34,7 +34,7 @@ import SnowColor from '../icons/snowman.png';
 import { FetchAPIPost } from '../utils/api.js';
 import axios from 'axios';
 
-function Right(){
+function Right({date}){
     const [showSettings, setShowSettings] = useState(false);
     const [grid, setGrid] = useState(false);
     const [sns, setSns] = useState(true);
@@ -47,20 +47,14 @@ function Right(){
     const [postImage, setPostImage] = useState(false);
     const [selectedImage, setSelectedImage] = useState();
 
-    const [title, setTitle] = useState("제목이에요");
+    const [title, setTitle] = useState('');
     const [edit, setEdit] = useState(false);
     const [body, setBody] = useState();
-    const [newPost, setNewPost] = useState(true);
-    const [date, setDate] = useState();
     const [weather, setWeather] = useState('');
 
     const [found, setFound] = useState(false);
     
     useEffect(() => {
-        if (newPost){
-            const current = new Date();
-            setDate(`${current.getMonth()+1}.${current.getDate()}.${current.getFullYear()}`)
-        }
         axios.get('/api/right/' + date)
             .then( (res) => {
                 const n = res?.data;
@@ -209,7 +203,7 @@ function Right(){
                     {sns ? 
                     <div className="rightBody">
                         <div className="rightBodyHeader">
-                            <span>{date}</span>
+                            <span>{new Date(date).getMonth()+1}.{new Date(date).getDate()}.{new Date(date).getFullYear()}</span>
                             <div className='weatherMood'>
                                 <button onClick={() => setWeather('sunny')}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
                                 <button onClick={() => setWeather('cloud')}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
