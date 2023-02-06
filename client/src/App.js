@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 // import Left from './components/Left';
 import EditModeLeftContainer from './containers/EditModeLeftContainer';
 import RightContainer from './containers/RightContainer';
@@ -6,23 +6,30 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import SearchResultLeft from './components/SearchResultLeft.js';
 
 function App() {
-  const [keyword, setKeyword] = useState('')
+  const [keyword, setKeyword] = useState('');
+  const [search, setSearch] = useState(false);
+  const inputRef = useRef(null);
+
+  const handleClick = () => {
+    setKeyword(inputRef.current.value);
+    setSearch(true)
+  }
 
   return (
     <div className="container">
       <header>
         <a href="/">CheeseMe!</a>
         <div className="searchbar">
-          <input type="text" id="searchWord" name="searchWord" placeholder="Search" value={keyword} onChange={(e) => setKeyword(e.target.value)}/>
-          <button><SearchRoundedIcon sx={{fontSize: "21px"}}/></button>
+          <input ref={inputRef} type="text" id="searchWord" name="searchWord" placeholder="Search"/>
+          <button onClick={handleClick}><SearchRoundedIcon sx={{fontSize: "21px"}} /></button>
         </div>
       </header>
       <main>
           <div className="mainLeft">
-            {keyword === "" ? <EditModeLeftContainer/> : <SearchResultLeft/>}
+            {search ? <SearchResultLeft keyword={keyword}/> : <EditModeLeftContainer/> }
           </div>
           <div className="mainRight">
-            {keyword === "" && <RightContainer/>}
+            {search && <RightContainer/>}
           </div>
       </main>
     </div>
