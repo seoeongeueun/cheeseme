@@ -3,24 +3,26 @@ import { useContext, useEffect, useState } from 'react';
 import EditModeLeftContainer from './containers/EditModeLeftContainer';
 import RightContainer from './containers/RightContainer';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import SearchResultLeft from './components/SearchResultLeft.js';
 
 function App() {
+  const [keyword, setKeyword] = useState('')
 
   return (
     <div className="container">
       <header>
-        <a href="/">WIP WebApp</a>
+        <a href="/">CheeseMe!</a>
         <div className="searchbar">
-          <input type="text" id="searchWord" name="searchWord" placeholder="Search"/>
+          <input type="text" id="searchWord" name="searchWord" placeholder="Search" value={keyword} onChange={(e) => setKeyword(e.target.value)}/>
           <button><SearchRoundedIcon sx={{fontSize: "21px"}}/></button>
         </div>
       </header>
       <main>
           <div className="mainLeft">
-            <EditModeLeftContainer/>
+            {keyword === "" ? <EditModeLeftContainer/> : <SearchResultLeft/>}
           </div>
           <div className="mainRight">
-            <RightContainer/>
+            {keyword === "" && <RightContainer/>}
           </div>
       </main>
     </div>
