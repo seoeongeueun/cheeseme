@@ -66,6 +66,11 @@ function Right({date}){
                     setWeather(n.weather);
                     setFound(true);
                 } else {
+                    setBody("");
+                    setHeart(false);
+                    setBookmark(false);
+                    setTitle("")
+                    setWeather("")
                     setFound(false);
                 }
                 return;
@@ -74,7 +79,7 @@ function Right({date}){
                 console.log('Error loading right post: ', err);
                 setFound(false);
             })
-    }, [])
+    }, [date])
 
     useEffect(() => {
         console.log('edit: ', edit)
