@@ -7,6 +7,7 @@ import todosRouter from './routes/todosRouter.js';
 import ddayRouter from './routes/ddayRouter.js';
 import positionRouter from './routes/positionRouter.js';
 import widgetRouter from './routes/widgetRouter.js';
+import rightRouter from './routes/rightRouter.js'
 import cors from 'cors';
 
 const app = express();
@@ -30,6 +31,7 @@ app.use('/api/todos', todosRouter);
 app.use('/api/dday', ddayRouter);
 app.use('/api/position', positionRouter);
 app.use('/api/widget', widgetRouter);
+app.use('/api/right', rightRouter);
 
 app.listen(port, () => {
     console.log(`server at http://localhost:${port}`)

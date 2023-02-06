@@ -31,11 +31,7 @@ import SunColor from '../icons/sunny (1).png';
 import SunPlain from '../icons/sunny.png';
 import SnowPlain from '../icons/snowman (1).png';
 import SnowColor from '../icons/snowman.png';
-
-
-
-
-
+import { FetchAPIPost } from '../utils/api.js';
 
 
 function Right(){
