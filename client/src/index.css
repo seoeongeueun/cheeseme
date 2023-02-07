@@ -828,4 +828,26 @@ input.todoElem::placeholder {
 .foundTodos b{
   margin-left: -1rem;
 }
+
+.searchOption {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  font-size: 2rem;
+}
+
+.searchOptionHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+.searchOptionContent {
+  display: flex;
+  flex-direction: row;
+}
+
+.searchOptionDrop {
+  display: flex;
+  flex-direction: column;
+}
 /* end of search box right */

@@ -94,7 +94,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
     return (
         <div className='leftInnerBorder'>
             <div className="leftContentSearch">
-                <p style={{textAlign: "center"}}>Search Results for <b>{keyword}</b></p>
+                <p style={{textAlign: "center"}}>Searching Widgets for <b>{keyword}</b></p>
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
                         <span>Notes </span>

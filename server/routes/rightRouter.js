@@ -12,7 +12,17 @@ rightRouter.get('/', asyncHandler(async(req, res) => {
 rightRouter.get('/:date', asyncHandler(async(req, res) => {
     const right = await Right.findOne({ date: req.params.date });
     res.send(right);
-}))
+}));
+
+rightRouter.get('/search/text/:keyword', asyncHandler(async(req, res) => {
+    const right = await Right.find({ text: {$regex : req.params.keyword}});
+    res.send(right)
+}));
+
+rightRouter.get('/search/title/:keyword', asyncHandler(async(req, res) => {
+    const right = await Right.find({ title: {$regex : req.params.keyword}});
+    res.send(right)
+}));
 
 rightRouter.post('/add', asyncHandler(async(req, res) => {
     const date = req.body.date;

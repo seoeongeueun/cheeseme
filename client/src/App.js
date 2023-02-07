@@ -4,6 +4,8 @@ import EditModeLeftContainer from './containers/EditModeLeftContainer';
 import RightContainer from './containers/RightContainer';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import SearchResultLeftContainer from './containers/SearchResultLeftContainer.js';
+import SearchResultRightContainer from './containers/SearchResultRightContainer.js';
+
 
 function App() {
   const [keyword, setKeyword] = useState('');
@@ -30,7 +32,7 @@ function App() {
             {search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> : <EditModeLeftContainer/> }
           </div>
           <div className="mainRight">
-            {search && <RightContainer/>}
+            {search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/> : <RightContainer/> }
           </div>
       </main>
     </div>
