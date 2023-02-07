@@ -782,3 +782,20 @@ input.todoElem::placeholder {
 /*start of dialog popup */
 
 /*end of dialog popup */
+
+/* start of search box left */
+.foundWidgetCategory {
+  display: flex;
+  flex-direction: column;
+}
+
+.foundSearchItem {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.foundSearchItem span {
+  margin-right: 1rem;
+}
+/* end of search box right */

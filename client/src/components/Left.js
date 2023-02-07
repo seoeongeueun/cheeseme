@@ -249,7 +249,6 @@ function Left({editMode, setEditMode, date}){
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(350), bottom: height-(350 + 45)}} position={calPosition} onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 98), bottom: height-(350 - 33)}} position={todoPosition} onStop={(e, {x, y}) => setTodoPosition({x, y})} handle="strong"><div><TodosContainer move={editMode} date={date}/></div></Draggable>} 
                         {notes && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={notePosition} onStop={(e, {x, y}) => setNotePosition({x, y})} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
-                        {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: width- (340.8 - 87.2), bottom: height - (400- 118)}} position={ddayPosition} onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode}/></div></Draggable>}
                         <div className="stickers">
                             {stickerList?.length > 0 &&
                                 stickerList.map((value, index) => {

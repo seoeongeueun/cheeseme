@@ -14,6 +14,11 @@ notesRouter.get('/:date', asyncHandler(async(req, res) => {
     res.send(note);
 }));
 
+notesRouter.get('/search/text/:keyword', asyncHandler(async(req, res) => {
+    const note = await Notes.find({text : {$regex : req.params.keyword}});
+    res.send(note);
+}));
+
 notesRouter.post('/add', asyncHandler(async(req, res) => {
     const date = req.body.date;
     const text = req.body.text;
