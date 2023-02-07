@@ -62,6 +62,7 @@ header a {
 .searchbar input{
   width: 30rem;
   border: 1px solid #000000;
+  font-size: 2rem;
 }
 
 .searchbar input:focus{
@@ -790,6 +791,11 @@ input.todoElem::placeholder {
   width: 100%;
   flex-direction: column;
   height: 100%;
+}
+
+.leftContentSearch b{
+  background-color: #F9D876;
+  font-weight: normal;
 }
 
 .foundWidgetCategory {
