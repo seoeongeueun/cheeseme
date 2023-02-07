@@ -3,7 +3,7 @@ import { useContext, useEffect, useState, useRef } from 'react';
 import EditModeLeftContainer from './containers/EditModeLeftContainer';
 import RightContainer from './containers/RightContainer';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import SearchResultLeft from './components/SearchResultLeft.js';
+import SearchResultLeftContainer from './containers/SearchResultLeftContainer.js';
 
 function App() {
   const [keyword, setKeyword] = useState('');
@@ -14,6 +14,7 @@ function App() {
     setKeyword(inputRef.current.value);
     setSearch(true)
   }
+
 
   return (
     <div className="container">
@@ -26,7 +27,7 @@ function App() {
       </header>
       <main>
           <div className="mainLeft">
-            {search ? <SearchResultLeft keyword={keyword}/> : <EditModeLeftContainer/> }
+            {search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> : <EditModeLeftContainer/> }
           </div>
           <div className="mainRight">
             {search && <RightContainer/>}

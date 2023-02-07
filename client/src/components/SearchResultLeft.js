@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-function SearchResultLeft(props){
+function SearchResultLeft({onChangeDate, keyword, setSearch}){
     const [foundNotes, setFoundNotes] = useState();
     const [foundTodos, setFoundTodos] = useState();
     const [foundDdays, setFoundDdays] = useState();
@@ -10,8 +10,8 @@ function SearchResultLeft(props){
 
 
     useEffect(() => {
-        if (props.keyword) {
-            axios.get('/api/notes/search/text/' + props.keyword)
+        if (keyword) {
+            axios.get('/api/notes/search/text/' + keyword)
             .then( (res) => {
                 const n = res?.data;
                 if (n) setFoundNotes(n);
@@ -20,7 +20,7 @@ function SearchResultLeft(props){
             .catch( (err) => {
                 console.log('Error loading notes: ', err)
             });
-            axios.get('/api/todos/search/goals/' + props.keyword)
+            axios.get('/api/todos/search/goals/' + keyword)
             .then( (res) => {
                 const n = res?.data;
                 if (n) setFoundTodos(n);
@@ -29,7 +29,7 @@ function SearchResultLeft(props){
             .catch( (err) => {
                 console.log('Error loading todos: ', err)
             })
-            axios.get('/api/dday/search/text/' + props.keyword)
+            axios.get('/api/dday/search/text/' + keyword)
             .then( (res) => {
                 const n = res?.data;
                 if (n) setFoundDdays(n);
@@ -39,7 +39,7 @@ function SearchResultLeft(props){
                 console.log('Error loading ddays: ', err)
             })
         }
-    }, [props.keyword])
+    }, [keyword])
 
     useEffect(() => {
         console.log(foundDdays)
@@ -84,14 +84,16 @@ function SearchResultLeft(props){
     }
 
     const handleClick = (date) => {
-        console.log(date)
-        setClicked(date)
+        console.log(date);
+        setClicked(date);
+        onChangeDate(date);
+        setSearch(false)
     };
 
     return (
         <div className='leftInnerBorder'>
             <div className="leftContentSearch">
-                <p style={{textAlign: "center"}}>Search Results for <b>{props.keyword}</b></p>
+                <p style={{textAlign: "center"}}>Search Results for <b>{keyword}</b></p>
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
                         <span>Notes </span>
@@ -99,7 +101,7 @@ function SearchResultLeft(props){
                     {foundNotes?.length > 0 ? foundNotes.map((note) => (
                         <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
                             <span>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
-                            <span>{cutString(note.text.toLowerCase(), props.keyword)}</span>
+                            <span>{cutString(note.text.toLowerCase(), keyword)}</span>
                         </div>
                     )) : <div className='foundSearchItem'><span>No Result</span></div>}
                 </div>
