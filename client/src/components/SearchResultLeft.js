@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Highlighter from "react-highlight-words";
 
 function SearchResultLeft({onChangeDate, keyword, setSearch}){
     const [foundNotes, setFoundNotes] = useState();
@@ -101,7 +102,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                     {foundNotes?.length > 0 ? foundNotes.map((note) => (
                         <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
                             <span>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
-                            <span>{cutString(note.text.toLowerCase(), keyword)}</span>
+                            <Highlighter autoEscape={true} searchWords={[keyword]} textToHighlight={cutString(note.text.toLowerCase(), keyword)} />
                         </div>
                     )) : <div className='foundSearchItem'><span>No Result</span></div>}
                 </div>
