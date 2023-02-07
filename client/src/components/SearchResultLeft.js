@@ -37,34 +37,32 @@ function SearchResultLeft(props){
             indexes.push(i);
         }
         
-        let result = []
+        let result = "";
         for (let i = 0; i < indexes.length; i++) {
             if (indexes[i] + val.length >= arr.length){
                 if (indexes[i] - 10 <= 0) {
                     result.push(arr.substring(0, indexes[i] + val.length))
                 } else {
-                    result.push('...' + arr.substring(indexes[i] - 20, indexes[i] + val.length))
+                    result = result + ('...' + arr.substring(indexes[i] - 20, indexes[i] + val.length))
                 }
             } else if (indexes[i] === 0){
                 if (indexes[i] + val.length + 20 >= arr.length) {
-                    result.push(arr.substring(indexes[i], arr.length))
+                    result = result + (arr.substring(indexes[i], arr.length))
                 } else {
-                    result.push(arr.substring(indexes[i], indexes[i] + val.length + 20) + '...')
+                    result = result + (arr.substring(indexes[i], indexes[i] + val.length + 20) + '...')
                 }
             }
             else {
-                result.push('...' + arr.substring(indexes[i], indexes[i] + val.length) + '...')
+                result = result + ('...' + arr.substring(indexes[i] - 10, indexes[i] + val.length + 10) + '...')
             }
             
         }
-        console.log('here')
-        console.log(result)
         return result
     }
 
     return (
         <div className='leftInnerBorder'>
-            <div className="leftContent">
+            <div className="leftContentSearch">
                 <p>Search Results for <b>{props.keyword}</b></p>
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
@@ -73,11 +71,18 @@ function SearchResultLeft(props){
                     {foundNotes?.length > 0 && foundNotes.map((note) => (
                         <div className='foundSearchItem'>
                             <span>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
-                            <span>{cutString(note.text.toLowerCase(), props.keyword).map((s) => (
-                                <div className='foundMatch'>
-                                    <span>{s}</span>
-                                </div>
-                            ))}</span>
+                            <span>{cutString(note.text.toLowerCase(), props.keyword)}</span>
+                        </div>
+                    ))}
+                </div>
+                <div className='foundWidgetCategory'>
+                    <div className='foundWidgetHeader'>
+                        <span>Todos </span>
+                    </div>
+                    {foundNotes?.length > 0 && foundNotes.map((note) => (
+                        <div className='foundSearchItem'>
+                            <span>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
+                            <span>{cutString(note.text.toLowerCase(), props.keyword)}</span>
                         </div>
                     ))}
                 </div>

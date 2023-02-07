@@ -784,15 +784,25 @@ input.todoElem::placeholder {
 /*end of dialog popup */
 
 /* start of search box left */
+.leftContentSearch {
+  padding: 0rem 5rem 0rem 5rem;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+}
+
 .foundWidgetCategory {
   display: flex;
   flex-direction: column;
+  margin-top: 2rem;
 }
 
 .foundSearchItem {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  font-size: 2rem;
 }
 
 .foundSearchItem span {
