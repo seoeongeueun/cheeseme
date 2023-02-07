@@ -23,6 +23,11 @@ ddayRouter.post('/add', asyncHandler(async(req, res) => {
     res.send('Created')
 }));
 
+ddayRouter.get('/search/text/:keyword', asyncHandler(async(req, res) => {
+    const dday = await Dday.find({ text: {$regex : req.params.keyword}});
+    res.send(dday)
+}))
+
 ddayRouter.delete("/delete/:date", asyncHandler(async(req, res) => {
     await Dday.deleteOne({date: req.params.date});
     res.send('Deleted');

@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 function SearchResultLeft(props){
     const [foundNotes, setFoundNotes] = useState();
     const [foundTodos, setFoundTodos] = useState();
+    const [foundDdays, setFoundDdays] = useState();
+    const [clicked, setClicked] = useState();
+
 
 
     useEffect(() => {
@@ -26,11 +29,21 @@ function SearchResultLeft(props){
             .catch( (err) => {
                 console.log('Error loading todos: ', err)
             })
+            axios.get('/api/dday/search/text/' + props.keyword)
+            .then( (res) => {
+                const n = res?.data;
+                if (n) setFoundDdays(n);
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading ddays: ', err)
+            })
         }
     }, [props.keyword])
 
     useEffect(() => {
-    }, [foundNotes, foundTodos])
+        console.log(foundDdays)
+    }, [foundNotes, foundTodos, foundDdays])
 
     function removeTags(str) {
         if ((str===null) || (str===''))
@@ -70,16 +83,21 @@ function SearchResultLeft(props){
         return result
     }
 
+    const handleClick = (date) => {
+        console.log(date)
+        setClicked(date)
+    };
+
     return (
         <div className='leftInnerBorder'>
             <div className="leftContentSearch">
-                <p>Search Results for <b>{props.keyword}</b></p>
+                <p style={{textAlign: "center"}}>Search Results for <b>{props.keyword}</b></p>
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
                         <span>Notes </span>
                     </div>
                     {foundNotes?.length > 0 ? foundNotes.map((note) => (
-                        <div className='foundSearchItem'>
+                        <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
                             <span>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
                             <span>{cutString(note.text.toLowerCase(), props.keyword)}</span>
                         </div>
@@ -90,13 +108,24 @@ function SearchResultLeft(props){
                         <span>Todos </span>
                     </div>
                     {foundTodos?.length > 0 ? foundTodos.map((todo) => (
-                        <div className='foundSearchItem'>
+                        <div className='foundSearchItem' onClick={() => handleClick(todo.date)}>
                             <span>{new Date(todo.date).getMonth()+1}.{new Date(todo.date).getDate()}.{new Date(todo.date).getFullYear()}</span>
                             {todo.goals.map((g) => (
                                 <div className="foundTodos">
                                     <span>{g.text}</span>
                                 </div>
                             ))}
+                        </div>
+                    )) : <div className='foundSearchItem'><span>No Result</span></div>}
+                </div>
+                <div className='foundWidgetCategory'>
+                    <div className='foundWidgetHeader'>
+                        <span>D-Day </span>
+                    </div>
+                    {foundDdays?.length > 0 ? foundDdays.map((dday) => (
+                        <div className='foundSearchItem' onClick={() => handleClick(dday.date)}>
+                            <span>{new Date(dday.date).getMonth()+1}.{new Date(dday.date).getDate()}.{new Date(dday.date).getFullYear()}</span>
+                            <span>{dday.text}</span>
                         </div>
                     )) : <div className='foundSearchItem'><span>No Result</span></div>}
                 </div>
