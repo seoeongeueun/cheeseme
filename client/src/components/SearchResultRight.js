@@ -126,6 +126,7 @@ function SearchResultRight({onChangeDate, keyword, setSearch}){
                 }
 
             }
+            return result
         }
     }
 
