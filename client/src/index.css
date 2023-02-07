@@ -821,7 +821,11 @@ input.todoElem::placeholder {
   flex-direction: row;
 }
 
-.foundTodos span{
+.foundTodos span {
   margin-right: 1rem;
+}
+
+.foundTodos b{
+  margin-left: -1rem;
 }
 /* end of search box right */

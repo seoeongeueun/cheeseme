@@ -115,7 +115,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                             <span className='foundDate'>{new Date(todo.date).getMonth()+1}.{new Date(todo.date).getDate()}.{new Date(todo.date).getFullYear()}</span>
                             {todo.goals.map((g) => (
                                 <div className="foundTodos">
-                                    <span>{g.text}</span>
+                                    <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={g.text} />
                                 </div>
                             ))}
                         </div>
@@ -128,7 +128,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                     {foundDdays?.length > 0 ? foundDdays.map((dday) => (
                         <div className='foundSearchItem' onClick={() => handleClick(dday.date)}>
                             <span className='foundDate'>{new Date(dday.date).getMonth()+1}.{new Date(dday.date).getDate()}.{new Date(dday.date).getFullYear()}</span>
-                            <span>{dday.text}</span>
+                            <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={dday.text} />
                         </div>
                     )) : <div className='foundSearchItem'><span>No Result</span></div>}
                 </div>
