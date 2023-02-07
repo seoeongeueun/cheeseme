@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 
 function SearchResultLeft(props){
     const [foundNotes, setFoundNotes] = useState();
+    const [foundTodos, setFoundTodos] = useState();
+
 
     useEffect(() => {
         if (props.keyword) {
@@ -14,13 +16,21 @@ function SearchResultLeft(props){
             })
             .catch( (err) => {
                 console.log('Error loading notes: ', err)
+            });
+            axios.get('/api/todos/search/goals/' + props.keyword)
+            .then( (res) => {
+                const n = res?.data;
+                if (n) setFoundTodos(n);
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading todos: ', err)
             })
         }
     }, [props.keyword])
 
     useEffect(() => {
-        console.log(foundNotes);
-    }, [foundNotes])
+    }, [foundNotes, foundTodos])
 
     function removeTags(str) {
         if ((str===null) || (str===''))
@@ -33,7 +43,7 @@ function SearchResultLeft(props){
     function cutString(str, val) {
         var arr = removeTags(str)
         var indexes = [], i = -1;
-        while ((i = arr.indexOf(val, i+1)) != -1){
+        while ((i = arr.indexOf(val, i+1)) !== -1){
             indexes.push(i);
         }
         
@@ -68,23 +78,27 @@ function SearchResultLeft(props){
                     <div className='foundWidgetHeader'>
                         <span>Notes </span>
                     </div>
-                    {foundNotes?.length > 0 && foundNotes.map((note) => (
+                    {foundNotes?.length > 0 ? foundNotes.map((note) => (
                         <div className='foundSearchItem'>
                             <span>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
                             <span>{cutString(note.text.toLowerCase(), props.keyword)}</span>
                         </div>
-                    ))}
+                    )) : <div className='foundSearchItem'><span>No Result</span></div>}
                 </div>
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
                         <span>Todos </span>
                     </div>
-                    {foundNotes?.length > 0 && foundNotes.map((note) => (
+                    {foundTodos?.length > 0 ? foundTodos.map((todo) => (
                         <div className='foundSearchItem'>
-                            <span>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
-                            <span>{cutString(note.text.toLowerCase(), props.keyword)}</span>
+                            <span>{new Date(todo.date).getMonth()+1}.{new Date(todo.date).getDate()}.{new Date(todo.date).getFullYear()}</span>
+                            {todo.goals.map((g) => (
+                                <div className="foundTodos">
+                                    <span>{g.text}</span>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )) : <div className='foundSearchItem'><span>No Result</span></div>}
                 </div>
                 
             </div>

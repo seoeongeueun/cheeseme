@@ -14,6 +14,11 @@ todosRouter.get('/:date', asyncHandler(async(req, res) => {
     res.send(todo);
 }));
 
+todosRouter.get('/search/goals/:keyword', asyncHandler(async(req, res) => {
+    const todo = await Todos.find({ "goals.text" : req.params.keyword});
+    res.send(todo)
+}))
+
 todosRouter.post('/add', asyncHandler(async(req, res) => {
     const date = req.body.date;
     const goals = req.body.goals;

@@ -808,4 +808,13 @@ input.todoElem::placeholder {
 .foundSearchItem span {
   margin-right: 1rem;
 }
+
+.foundTodos {
+  display: flex;
+  flex-direction: row;
+}
+
+.foundTodos span{
+  margin-right: 1rem;
+}
 /* end of search box right */
