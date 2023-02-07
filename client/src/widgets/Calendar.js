@@ -5,6 +5,11 @@ import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 function CalendarWidget({move, onChangeDate, date}){
     const [datePicked, setDatePicked] = useState(new Date().setHours(0, 0, 0, 0));
 
+
+    useEffect(() => {
+        setDatePicked(date)
+    }, [date]);
+
     const handleChange = (d) => {
         onChangeDate(d.getTime());
         setDatePicked(d.getTime());
