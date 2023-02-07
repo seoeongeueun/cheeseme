@@ -89,7 +89,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                 }
             }
             return result
-        } else if (indexes.length < 3) {
+        } else {
             let result = "";
             for (let i = 0; i < indexes.length; i++) {
                 if (indexes[i] + val.length >= arr.length){
@@ -115,28 +115,6 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                     }
                     
                 }
-            }
-            return result
-        } else {
-            let result = "";
-            for (let i = 0; i < indexes.length; i++) {
-                if (indexes[i] + val.length >= arr.length){
-                    if (indexes[i] - 25 <= 0) {
-                        result = result + (arr.substring(0, indexes[i] + val.length))
-                    } else {
-                        result = result + ('...' + arr.substring(indexes[i] - 50, indexes[i] + val.length))
-                    }
-                } else if (indexes[i] === 0){
-                    if (indexes[i] + val.length + 50 >= arr.length) {
-                        result = result + (arr.substring(indexes[i], arr.length))
-                    } else {
-                        result = result + (arr.substring(indexes[i], indexes[i] + val.length + 50) + '...')
-                    }
-                }
-                else {
-                    result = result + ('...' + arr.substring(indexes[i] - 25, indexes[i] + val.length + 25) + '...')
-                }
-
             }
             return result
         }
