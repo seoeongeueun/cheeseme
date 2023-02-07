@@ -96,9 +96,13 @@ function SearchResultRight({onChangeDate, keyword, setSearch}){
                     }
                 }
                 else {
-                    result = result + ('...' + arr.substring(indexes[i] - 50, indexes[i] + val.length + 50) + '...')
+                    if (indexes[i] - 50 <= 0) {
+                        result = result + (arr.substring(0, indexes[i] + val.length + 100) + '...')
+                    } else {
+                        result = result + ('...' + arr.substring(indexes[i] - 100, indexes[i] + val.length))
+                    }
+                    
                 }
-
             }
             return result
         } else {
@@ -166,14 +170,14 @@ function SearchResultRight({onChangeDate, keyword, setSearch}){
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
                         <span>Posts</span>
+                        <div class="line-yellow-short"/>
                     </div>
                     {foundPosts?.length > 0 ? foundPosts.map((note) => (
                         <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
                             <span className='foundDate'>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
                             <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text, keyword)} />
                         </div>
-                    )) : <div className='foundSearchItem'><span>No Result</span></div>}
-                    <div class="line-yellow"></div>
+                    )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
                 </div>
             </div>
         </div>

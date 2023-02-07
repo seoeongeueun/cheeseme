@@ -56,6 +56,12 @@ header a {
 .line-yellow {
   border-top: 1px solid #F9D876;
 }
+
+.line-yellow-short{
+  border-top: 1px solid #F9D876;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 /* end of color line */
 
 /* search bar */
@@ -799,6 +805,10 @@ input.todoElem::placeholder {
   height: 100%;
 }
 
+.foundWidgetHeader span {
+  font-size: 3rem;
+}
+
 .leftContentSearch b{
   background-color: #F9D876;
   font-weight: normal;
@@ -807,7 +817,6 @@ input.todoElem::placeholder {
 .foundWidgetCategory {
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
 }
 
 .foundSearchItem {
@@ -815,7 +824,17 @@ input.todoElem::placeholder {
   flex-direction: row;
   align-items: flex-start;
   font-size: 2rem;
+  margin-bottom: 1rem;
   cursor: pointer;
+}
+
+.foundSearchItemNotFound {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  cursor: default;
 }
 
 .foundDate {
@@ -840,6 +859,8 @@ input.todoElem::placeholder {
   display: flex;
   flex-direction: row;
   font-size: 2rem;
+  justify-content: flex-end;
+  margin-top: -2rem;
 }
 
 .searchOptionHeader {

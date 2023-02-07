@@ -122,17 +122,19 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
                         <span>Notes </span>
+                        <div class="line-yellow-short"/>
                     </div>
                     {foundNotes?.length > 0 ? foundNotes.map((note) => (
                         <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
                             <span className='foundDate'>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
                             <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text.toLowerCase(), keyword)} />
                         </div>
-                    )) : <div className='foundSearchItem'><span>No Result</span></div>}
+                    )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
                 </div>
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
                         <span>Todos </span>
+                        <div class="line-yellow-short"/>
                     </div>
                     {foundTodos?.length > 0 ? foundTodos.map((todo) => (
                         <div className='foundSearchItem' onClick={() => handleClick(todo.date)}>
@@ -143,18 +145,19 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                                 </div>
                             ))}
                         </div>
-                    )) : <div className='foundSearchItem'><span>No Result</span></div>}
+                    )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
                 </div>
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
                         <span>D-Day </span>
+                        <div class="line-yellow-short"/>
                     </div>
                     {foundDdays?.length > 0 ? foundDdays.map((dday) => (
                         <div className='foundSearchItem' onClick={() => handleClick(dday.date)}>
                             <span className='foundDate'>{new Date(dday.date).getMonth()+1}.{new Date(dday.date).getDate()}.{new Date(dday.date).getFullYear()}</span>
                             <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={dday.text} />
                         </div>
-                    )) : <div className='foundSearchItem'><span>No Result</span></div>}
+                    )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
                 </div>
                 
             </div>
