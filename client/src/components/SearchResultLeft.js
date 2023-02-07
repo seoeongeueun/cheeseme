@@ -60,28 +60,52 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
         while ((i = arr.indexOf(val, i+1)) !== -1){
             indexes.push(i);
         }
-        
-        let result = "";
+        if (indexes.length > 5 ) {
+            let result = "";
+            for (let i = 0; i < 5; i++) {
+                if (indexes[i] + val.length >= arr.length){
+                    if (indexes[i] - 15 <= 0) {
+                        result = result + (arr.substring(0, indexes[i] + val.length))
+                    } else {
+                        result = result + ('...' + arr.substring(indexes[i] - 30, indexes[i] + val.length))
+                    }
+                } else if (indexes[i] === 0){
+                    if (indexes[i] + val.length + 30 >= arr.length) {
+                        result = result + (arr.substring(indexes[i], arr.length))
+                    } else {
+                        result = result + (arr.substring(indexes[i], indexes[i] + val.length + 30) + '...')
+                    }
+                }
+                else {
+                    result = result + ('...' + arr.substring(indexes[i] - 15, indexes[i] + val.length + 15) + '...')
+                }
+
+            }
+            return result
+        } else {
+            let result = "";
         for (let i = 0; i < indexes.length; i++) {
             if (indexes[i] + val.length >= arr.length){
-                if (indexes[i] - 10 <= 0) {
-                    result.push(arr.substring(0, indexes[i] + val.length))
+                if (indexes[i] - 15 <= 0) {
+                    result = result + (arr.substring(0, indexes[i] + val.length))
                 } else {
-                    result = result + ('...' + arr.substring(indexes[i] - 20, indexes[i] + val.length))
+                    result = result + ('...' + arr.substring(indexes[i] - 30, indexes[i] + val.length))
                 }
             } else if (indexes[i] === 0){
-                if (indexes[i] + val.length + 20 >= arr.length) {
+                if (indexes[i] + val.length + 30 >= arr.length) {
                     result = result + (arr.substring(indexes[i], arr.length))
                 } else {
-                    result = result + (arr.substring(indexes[i], indexes[i] + val.length + 20) + '...')
+                    result = result + (arr.substring(indexes[i], indexes[i] + val.length + 30) + '...')
                 }
             }
             else {
-                result = result + ('...' + arr.substring(indexes[i] - 10, indexes[i] + val.length + 10) + '...')
+                result = result + ('...' + arr.substring(indexes[i] - 15, indexes[i] + val.length + 15) + '...')
             }
             
         }
         return result
+        }
+        
     }
 
     const handleClick = (date) => {

@@ -53,31 +53,76 @@ function SearchResultRight({onChangeDate, keyword, setSearch}){
     function cutString(str, val) {
         var arr = removeTags(str)
         var indexes = [], i = -1;
-        while ((i = arr.indexOf(val, i+1)) !== -1){
+        while ((i = arr.toLowerCase().indexOf(val, i+1)) !== -1){
             indexes.push(i);
         }
         
-        let result = "";
-        for (let i = 0; i < indexes.length; i++) {
-            if (indexes[i] + val.length >= arr.length){
-                if (indexes[i] - 10 <= 0) {
-                    result.push(arr.substring(0, indexes[i] + val.length))
-                } else {
-                    result = result + ('...' + arr.substring(indexes[i] - 20, indexes[i] + val.length))
+        if (indexes.length > 5 ) {
+            let result = "";
+            for (let i = 0; i < 5; i++) {
+                if (indexes[i] + val.length >= arr.length){
+                    if (indexes[i] - 20 <= 0) {
+                        result = result + (arr.substring(0, indexes[i] + val.length))
+                    } else {
+                        result = result + ('...' + arr.substring(indexes[i] - 40, indexes[i] + val.length))
+                    }
+                } else if (indexes[i] === 0){
+                    if (indexes[i] + val.length + 40 >= arr.length) {
+                        result = result + (arr.substring(indexes[i], arr.length))
+                    } else {
+                        result = result + (arr.substring(indexes[i], indexes[i] + val.length + 40) + '...')
+                    }
                 }
-            } else if (indexes[i] === 0){
-                if (indexes[i] + val.length + 20 >= arr.length) {
-                    result = result + (arr.substring(indexes[i], arr.length))
-                } else {
-                    result = result + (arr.substring(indexes[i], indexes[i] + val.length + 20) + '...')
+                else {
+                    result = result + ('...' + arr.substring(indexes[i] - 20, indexes[i] + val.length + 20) + '...')
                 }
+
             }
-            else {
-                result = result + ('...' + arr.substring(indexes[i] - 10, indexes[i] + val.length + 10) + '...')
+            return result
+        } else if (indexes.length < 3) {
+            let result = "";
+            for (let i = 0; i < indexes.length; i++) {
+                if (indexes[i] + val.length >= arr.length){
+                    if (indexes[i] - 50 <= 0) {
+                        result = result + (arr.substring(0, indexes[i] + val.length))
+                    } else {
+                        result = result + ('...' + arr.substring(indexes[i] - 100, indexes[i] + val.length))
+                    }
+                } else if (indexes[i] === 0){
+                    if (indexes[i] + val.length + 100 >= arr.length) {
+                        result = result + (arr.substring(indexes[i], arr.length))
+                    } else {
+                        result = result + (arr.substring(indexes[i], indexes[i] + val.length + 100) + '...')
+                    }
+                }
+                else {
+                    result = result + ('...' + arr.substring(indexes[i] - 50, indexes[i] + val.length + 50) + '...')
+                }
+
             }
-            
+            return result
+        } else {
+            let result = "";
+            for (let i = 0; i < indexes.length; i++) {
+                if (indexes[i] + val.length >= arr.length){
+                    if (indexes[i] - 25 <= 0) {
+                        result = result + (arr.substring(0, indexes[i] + val.length))
+                    } else {
+                        result = result + ('...' + arr.substring(indexes[i] - 50, indexes[i] + val.length))
+                    }
+                } else if (indexes[i] === 0){
+                    if (indexes[i] + val.length + 50 >= arr.length) {
+                        result = result + (arr.substring(indexes[i], arr.length))
+                    } else {
+                        result = result + (arr.substring(indexes[i], indexes[i] + val.length + 50) + '...')
+                    }
+                }
+                else {
+                    result = result + ('...' + arr.substring(indexes[i] - 25, indexes[i] + val.length + 25) + '...')
+                }
+
+            }
         }
-        return result
     }
 
     const handleClick = (date) => {
@@ -125,9 +170,10 @@ function SearchResultRight({onChangeDate, keyword, setSearch}){
                     {foundPosts?.length > 0 ? foundPosts.map((note) => (
                         <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
                             <span className='foundDate'>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
-                            <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text.toLowerCase(), keyword)} />
+                            <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text, keyword)} />
                         </div>
                     )) : <div className='foundSearchItem'><span>No Result</span></div>}
+                    <div class="line-yellow"></div>
                 </div>
             </div>
         </div>

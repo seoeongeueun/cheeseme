@@ -15,7 +15,7 @@ notesRouter.get('/:date', asyncHandler(async(req, res) => {
 }));
 
 notesRouter.get('/search/text/:keyword', asyncHandler(async(req, res) => {
-    const note = await Notes.find({text : {$regex : req.params.keyword}});
+    const note = await Notes.find({text : {$regex : req.params.keyword, '$options' : 'i'}});
     res.send(note);
 }));
 

@@ -52,6 +52,12 @@ header a {
 }
 /* end of webkit scrollbar */
 
+/* start of color line */
+.line-yellow {
+  border-top: 1px solid #F9D876;
+}
+/* end of color line */
+
 /* search bar */
 
 .searchbar {

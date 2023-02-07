@@ -15,7 +15,7 @@ todosRouter.get('/:date', asyncHandler(async(req, res) => {
 }));
 
 todosRouter.get('/search/goals/:keyword', asyncHandler(async(req, res) => {
-    const todo = await Todos.find({ "goals.text" : {$regex : req.params.keyword}});
+    const todo = await Todos.find({ "goals.text" : {$regex : req.params.keyword, '$options' : 'i'}});
     res.send(todo)
 }))
 

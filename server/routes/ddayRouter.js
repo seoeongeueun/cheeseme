@@ -24,7 +24,7 @@ ddayRouter.post('/add', asyncHandler(async(req, res) => {
 }));
 
 ddayRouter.get('/search/text/:keyword', asyncHandler(async(req, res) => {
-    const dday = await Dday.find({ text: {$regex : req.params.keyword}});
+    const dday = await Dday.find({ text: {$regex : req.params.keyword, '$options' : 'i'}});
     res.send(dday)
 }))
 

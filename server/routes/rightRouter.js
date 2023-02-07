@@ -15,12 +15,12 @@ rightRouter.get('/:date', asyncHandler(async(req, res) => {
 }));
 
 rightRouter.get('/search/text/:keyword', asyncHandler(async(req, res) => {
-    const right = await Right.find({ text: {$regex : req.params.keyword}});
+    const right = await Right.find({ text: {$regex : req.params.keyword, '$options' : 'i'}});
     res.send(right)
 }));
 
 rightRouter.get('/search/title/:keyword', asyncHandler(async(req, res) => {
-    const right = await Right.find({ title: {$regex : req.params.keyword}});
+    const right = await Right.find({ title: {$regex : req.params.keyword, '$options' : 'i'}});
     res.send(right)
 }));
 
