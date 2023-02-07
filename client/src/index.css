@@ -828,6 +828,7 @@ input.todoElem::placeholder {
   cursor: pointer;
 }
 
+
 .foundSearchItemNotFound {
   display: flex;
   flex-direction: row;
@@ -839,6 +840,11 @@ input.todoElem::placeholder {
 
 .foundDate {
   margin-right: 1rem;
+}
+
+.foundContent {
+  display: flex;
+  flex-direction: column;
 }
 
 .foundTodos {

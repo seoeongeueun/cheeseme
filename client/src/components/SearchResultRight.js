@@ -175,7 +175,11 @@ function SearchResultRight({onChangeDate, keyword, setSearch}){
                     {foundPosts?.length > 0 ? foundPosts.map((note) => (
                         <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
                             <span className='foundDate'>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
-                            <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text, keyword)} />
+                            <div className='foundContent'>
+                                {note.title.length <= 0 ? <span>제목없음</span> : <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={note.title} />}
+                                {searchBy === 'Title' ? <span>{removeTags(note.text).substring(0, 100).length >= 100 ? removeTags(note.text).substring(0, 100) + '...' : removeTags(note.text).substring(0, 100)}</span>
+                                : <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text, keyword)} />}
+                            </div>
                         </div>
                     )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
                 </div>
