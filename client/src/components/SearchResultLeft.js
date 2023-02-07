@@ -101,8 +101,8 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                     </div>
                     {foundNotes?.length > 0 ? foundNotes.map((note) => (
                         <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
-                            <span>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
-                            <Highlighter autoEscape={true} searchWords={[keyword]} textToHighlight={cutString(note.text.toLowerCase(), keyword)} />
+                            <span className='foundDate'>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
+                            <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text.toLowerCase(), keyword)} />
                         </div>
                     )) : <div className='foundSearchItem'><span>No Result</span></div>}
                 </div>
@@ -112,7 +112,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                     </div>
                     {foundTodos?.length > 0 ? foundTodos.map((todo) => (
                         <div className='foundSearchItem' onClick={() => handleClick(todo.date)}>
-                            <span>{new Date(todo.date).getMonth()+1}.{new Date(todo.date).getDate()}.{new Date(todo.date).getFullYear()}</span>
+                            <span className='foundDate'>{new Date(todo.date).getMonth()+1}.{new Date(todo.date).getDate()}.{new Date(todo.date).getFullYear()}</span>
                             {todo.goals.map((g) => (
                                 <div className="foundTodos">
                                     <span>{g.text}</span>
@@ -127,7 +127,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                     </div>
                     {foundDdays?.length > 0 ? foundDdays.map((dday) => (
                         <div className='foundSearchItem' onClick={() => handleClick(dday.date)}>
-                            <span>{new Date(dday.date).getMonth()+1}.{new Date(dday.date).getDate()}.{new Date(dday.date).getFullYear()}</span>
+                            <span className='foundDate'>{new Date(dday.date).getMonth()+1}.{new Date(dday.date).getDate()}.{new Date(dday.date).getFullYear()}</span>
                             <span>{dday.text}</span>
                         </div>
                     )) : <div className='foundSearchItem'><span>No Result</span></div>}

@@ -809,9 +809,10 @@ input.todoElem::placeholder {
   flex-direction: row;
   align-items: flex-start;
   font-size: 2rem;
+  cursor: pointer;
 }
 
-.foundSearchItem span {
+.foundDate {
   margin-right: 1rem;
 }
 
