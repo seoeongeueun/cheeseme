@@ -569,6 +569,21 @@ main {
 
 /* end of Header Modals */
 
+/* start of notification modal */
+.notification {
+  display: flex;
+  flex-direction: column;
+}
+.notification span{
+  font-size: 2rem;
+}
+
+.notificatonButtons {
+  display: flex;
+  flex-direction: row;
+}
+/* end of notification modal */
+
 /* Settings */
 .settingsbox {
   width: max-content;

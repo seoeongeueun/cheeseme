@@ -21,7 +21,17 @@ function App() {
   const [search, setSearch] = useState(false);
   const [showFriend, setShowFriend] = useState(false);
   const [showNoti, setShowNoti] = useState(false);
+  const [noti, setNoti] = useState([{_id: 1, type: 'sendRequest', from: 'sam', to: 'burgerpants', done: false}])
+  const [unRead, setUnread] = useState(false);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    console.log("noti!!! : ", noti)
+    setUnread(false);
+    noti?.map(n => (
+      n.done === false && setUnread(true)
+    ));
+  }, [noti])
 
   const handleClick = () => {
     setKeyword(inputRef.current.value);
@@ -47,8 +57,9 @@ function App() {
             : <button onClick={() => setShowFriend(true)}><AddReactionOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
             {showFriend && <Friend/>}
             {showNoti ? <button onClick={() => setShowNoti(false)}><NotificationsNoneTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
-            : <button onClick={() => setShowNoti(true)}><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-            {showNoti && <Notification/>}
+            : unRead ? <button onClick={() => setShowNoti(true)}><NotificationImportantIcon sx={{fontSize: '2rem'}}/></button>
+              : <button onClick={() => setShowNoti(true)}><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
+            {showNoti && <Notification noti={noti} setNoti={setNoti}/>}
             <button><AccountCircleOutlinedIcon sx={{fontSize: '2rem'}}/></button>
           </div>
         </div>
