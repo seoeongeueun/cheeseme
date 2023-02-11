@@ -45,7 +45,7 @@ function Friend(){
                 </div>
                 <div className='friendButton'>
                     <span onClick={() => setAddFriend(true)}><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span>
-                    {addFriend && <AddFriend setAddFriend={setAddFriend} setUsername={setUsername} myFriend={myFriends}/>}
+                    {addFriend && <AddFriend setAddFriend={setAddFriend} setUsername={setUsername} myFriends={myFriends}/>}
                     <span><RemoveRoundedIcon sx={{fontSize: '1.5rem'}}/></span>
                 </div>
             </div>
@@ -57,7 +57,7 @@ function Friend(){
                         <span onClick={() => handleClickFriend(f)}>{f}</span>
                     </div>
                 ))}
-                {username != '' && <span style={{color: "red"}}>Friend Request Sent to {username}!</span>}
+                {username != '' && <span style={{color: "red"}}>Friend Request Sent to {username}</span>}
             </div>
             : <span>Let's add new friends!</span>}
         </div>

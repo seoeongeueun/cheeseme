@@ -892,6 +892,23 @@ input.todoElem::placeholder {
 .dialogInput {
   font-size: 2rem;
 }
+
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialogContent input {
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+.dialogActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 /*end of dialog popup */
 
 /* start of search box left */
