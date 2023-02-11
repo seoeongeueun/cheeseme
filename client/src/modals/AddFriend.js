@@ -36,9 +36,11 @@ export default function AddFriend(props) {
           return
         }
       }
-      setOpen(false);
-      props.setAddFriend(false);
-      props.setUsername(name);
+      if (name != '') {
+        setOpen(false);
+        props.setAddFriend(false);
+        props.setUsername(name);
+      }
     }
     
   };

@@ -4,7 +4,7 @@ import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
-import CircleIcon from '@mui/icons-material/Circle';
+import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import AddFriend from './AddFriend.js';
 import axios from 'axios';
@@ -53,7 +53,7 @@ function Friend(){
             <div className='friendList'>
                 {myFriends.map((f) => (
                     <div className='friendItem'>
-                        <CircleOutlinedIcon sx={{fontSize: '0.5rem', marginRight: '0.5rem', marginTop: '3px'}}/>
+                        <StarOutlinedIcon sx={{fontSize: '0.8rem', marginRight: '0.5rem', marginTop: '3px'}}/>
                         <span onClick={() => handleClickFriend(f)}>{f}</span>
                     </div>
                 ))}
