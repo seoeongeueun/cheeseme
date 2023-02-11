@@ -76,6 +76,7 @@ header a {
 .title {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .headerButtonSet {
@@ -108,6 +109,7 @@ header a {
 .searchbar {
   display: flex;
   flex-direction: row;
+  height: 3rem;
 }
 
 .searchbar input{
@@ -219,9 +221,14 @@ main {
 }
 
 .leftWidget {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
+.leftWidget button {
+}
 /* start of dday widget */
 .ddayWidget {
   width: 21.3rem;
@@ -637,6 +644,7 @@ main {
   z-index: 1;
   position: fixed;
   background-color: #FFFFFF;
+  margin-bottom: 4rem;
 }
 
 .settingsbox p1{
