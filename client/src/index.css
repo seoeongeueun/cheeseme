@@ -532,6 +532,7 @@ main {
 .friendHeader {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .friendButton {
@@ -539,6 +540,10 @@ main {
   flex-direction: row;
   justify-content: flex-end;
   padding: 0;
+}
+
+.friendButton button {
+  margin: 0;
 }
 
 .friendCount span{
