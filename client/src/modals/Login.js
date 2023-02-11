@@ -26,13 +26,22 @@ function Login(){
         setLogin(true);
     }
 
+    const handleSignup = () => {
+
+    }
+
     return (
         <div className='settingsboxHeader'>
-            {login && <div className='loginHeader'>
+            {login ? <div className='loginHeader'>
                 <span>Welcome Back</span>
                 <span>{username}<img src={Happy} style={{width: '1.7rem'}} alt='happy'/></span>
-            </div>}
-            {login ? <button onClick={() => handleLogout()}><span>Logout</span></button> : <button onClick={() => handleLogin()}><span>Login</span></button>}
+            </div>
+            : <div className='loginHeader'><span>Hello!</span></div>}
+            <div className='loginButtons'>
+                {login ? <button className='cancel2' onClick={() => handleLogout()}><span>Logout</span></button> 
+                : <><button className='save2' onClick={() => handleLogin()}><span>Login</span></button><button className='cancel2' onClick={() => handleSignup()}><span>Sign Up</span></button></>}
+            </div>
+            
         </div>
     );
 }
