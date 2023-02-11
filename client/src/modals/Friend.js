@@ -41,12 +41,11 @@ function Friend(){
             <div className='friendHeader'>
                 <div className='friendCount'>
                     <span>My Friends</span>
-                    <span style={{color: "#F9D876"}}>{myFriends?.length}</span>
+                    {/* <span style={{color: "#F9D876"}}>{myFriends?.length}</span> */}
                 </div>
                 <div className='friendButton'>
-                    <span onClick={() => setAddFriend(true)}><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span>
+                    <button onClick={() => setAddFriend(true)}><span><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
                     {addFriend && <AddFriend setAddFriend={setAddFriend} setUsername={setUsername} myFriends={myFriends}/>}
-                    <span><RemoveRoundedIcon sx={{fontSize: '1.5rem'}}/></span>
                 </div>
             </div>
             {myFriends?.length > 0 ?

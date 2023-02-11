@@ -13,7 +13,8 @@ function Notification(props){
     const [user, setUser] = useState('burgerpants')
 
     useEffect(() => {
-        console.log(props.noti)
+
+        console.log('n: ', props.noti)
     }, [props.noti])
 
     const handleAccept = (id) => {
@@ -23,7 +24,7 @@ function Notification(props){
             }
             return n;
         });
-        props.setNoti([newState, {type: 'acceptRequest', from: user, to: 'sam', done: true}]);
+        props.setNoti([{type: 'acceptRequest', from: user, to: 'sam', done: true, date: new Date().setHours(0, 0, 0, 0)}, ...newState]);
     }
 
     const handleDecline = (id) => {
@@ -33,8 +34,33 @@ function Notification(props){
             }
             return n;
         });
-        props.setNoti([newState, {type: 'declineRequest', from: user, to: 'sam', done: true}]);
+        props.setNoti([{type: 'declineRequest', from: user, to: 'sam', done: true, date: new Date().setHours(0, 0, 0, 0)}, ...newState]);
     }
+
+    // {props.noti?.length > 0 ? props.noti.map((n) => (
+    //     n.type === 'sendRequest' ?
+    //         <div className='notiItem'>
+    //             <span>{n.from} sent you a friend request</span>
+    //             {n.done === false && 
+    //                 <div className='notificationButtons'>
+    //                     <button className='save' onClick={() => handleAccept(n._id)}>Accept</button>
+    //                     <button className='cancel' onClick={() => handleDecline(n._id)}>Decline</button>
+    //                 </div>
+    //             }
+    //         </div>
+    //     : n.type === 'declineRequest' ? <div className='notiItem'>
+    //         <span>You declined {n.to}'s friend request</span>
+    //         </div>
+    //         : n.type === 'acceptRequest' ? <div className='notiItem'>
+    //             <span>You and {n.to} are now friends!</span>
+    //             </div>
+    //             : <span></span>
+    // ))
+    // : <span>No Notifications</span>}
+
+    
+    // {n.type === 'acceptRequest' && <div className='notiItem'><span>You and {n.to} are now friends!</span></div>}
+    // {n.type === 'declineRequest' && <div className='notiItem'><span>You decliend {n.to}'s friend request</span></div>}
 
     return (
         <div className='settingsboxHeader'>
@@ -44,26 +70,22 @@ function Notification(props){
                 </div>
             </div>
             <div className='notification'>
-                {props.noti?.length > 0 ? props.noti.map((n) => (
-                    n.type === 'sendRequest' ?
-                        <div className='notiItem'>
-                            <span>{n.from} sent you a friend request</span>
+                {props.noti?.length > 0 && props.noti.map((n, i) => (
+                    <div className='notiItem'>
+                        <div className='notiItemContent'>
+                            <span style={{marginRight: '1rem', color: !n.done || i === 0 ? 'black' : '#a0a096'}}>{new Date(n.date).getMonth()+1}/{new Date(n.date).getDate()}/{new Date(n.date).getFullYear()}</span>
+                            {n.type === 'sendRequest' && <span style={{color: i === 0 ? 'black' : '#a0a096', color: !n.done ? 'black' : '#a0a096'}}>{n.from} sent you a friend request</span>}
+                            {n.type === 'acceptRequest' && <span style={{color: i === 0 ? 'black' : '#a0a096'}}>You and {n.to} are now friends!</span>}
+                            {n.type === 'declineRequest' && <span style={{color: i === 0 ? 'black' : '#a0a096'}}>You declined {n.to}'s friend request</span>}
+                            </div>
                             {n.done === false && 
                                 <div className='notificationButtons'>
-                                    <button className='save' onClick={() => handleAccept(n._id)}>Accept</button>
-                                    <button className='cancel' onClick={() => handleDecline(n._id)}>Decline</button>
+                                    <button className='save2' onClick={() => handleAccept(n._id)}>Accept</button>
+                                    <button className='cancel2' onClick={() => handleDecline(n._id)}>Decline</button>
                                 </div>
                             }
-                        </div>
-                    : n.type === 'declineRequest' ? <div className='notiItem'>
-                        <span>You declined {n.to}'s friend request</span>
-                        </div>
-                        : n.type === 'acceptRequest' ? <div className='notiItem'>
-                            <span>You and {n.to} are now friends!</span>
-                            </div>
-                            : <span></span>
-                ))
-                : <span>No Notifications</span>}
+                    </div>
+                ))}
             </div>
         </div>
     );

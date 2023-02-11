@@ -21,12 +21,11 @@ function App() {
   const [search, setSearch] = useState(false);
   const [showFriend, setShowFriend] = useState(false);
   const [showNoti, setShowNoti] = useState(false);
-  const [noti, setNoti] = useState([{_id: 1, type: 'sendRequest', from: 'sam', to: 'burgerpants', done: false}])
+  const [noti, setNoti] = useState([{_id: 1, type: 'declineRequest', from: 'sam', to: 'burgerpants', done: true, date: 1676127600000}, {_id: 1, type: 'sendRequest', from: 'sam', to: 'burgerpants', done: false, date: 1676127600000}])
   const [unRead, setUnread] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
-    console.log("noti!!! : ", noti)
     setUnread(false);
     noti?.map(n => (
       n.done === false && setUnread(true)
@@ -37,7 +36,6 @@ function App() {
     setKeyword(inputRef.current.value);
     setSearch(true)
   }
-
 
   return (
     <div className="container">

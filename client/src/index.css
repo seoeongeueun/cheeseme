@@ -524,14 +524,14 @@ main {
   z-index: 1;
   position: fixed;
   background-color: #FFFFFF;
-  padding: 0.5rem 1rem 1.5rem 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
   display: flex;
   flex-direction: column;
 }
 
 .friendHeader {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .friendButton {
@@ -576,11 +576,40 @@ main {
 }
 .notification span{
   font-size: 2rem;
+  color: #929292
 }
 
-.notificatonButtons {
+.notificationButtons {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.save2 {
+  background-color: #F9D876 !important;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.cancel2 {
+  color: #000000;
+  background-color: #e9e9e9 !important;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.notiItem {
+  border-radius: 5px;
+}
+
+.notiItem span {
+  color: black;
 }
 /* end of notification modal */
 
