@@ -8,7 +8,7 @@ import SearchResultRightContainer from './containers/SearchResultRightContainer.
 import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
 import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Friend from './modals/Friend.js';
 import Notification from './modals/Notification';
@@ -23,6 +23,7 @@ function App() {
   const [showNoti, setShowNoti] = useState(false);
   const [noti, setNoti] = useState([{_id: 1, type: 'declineRequest', from: 'sam', to: 'burgerpants', done: true, date: 1676127600000}, {_id: 1, type: 'sendRequest', from: 'sam', to: 'burgerpants', done: false, date: 1676127600000}])
   const [unRead, setUnread] = useState(false);
+  const [showAccount, setShowAccount] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -50,14 +51,22 @@ function App() {
             </div>
           </div>
           <div className='mainMenu'>
-            {showNoti ? <button onClick={() => setShowNoti(false)}><NotificationsNoneTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
-            : unRead ? <button onClick={() => setShowNoti(true)}><NotificationImportantIcon sx={{fontSize: '2rem'}}/></button>
-              : <button onClick={() => setShowNoti(true)}><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-            {showNoti && <Notification noti={noti} setNoti={setNoti}/>}
-            {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
-            : <button onClick={() => setShowFriend(true)}><AddReactionOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-            {showFriend && <Friend/>}
-            <button><AccountCircleOutlinedIcon sx={{fontSize: '2rem'}}/></button>
+            <div className='headerButtonSet'>
+              {showNoti ? <button onClick={() => setShowNoti(false)}><NotificationsNoneTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
+              : unRead ? <button onClick={() => setShowNoti(true)}><NotificationImportantIcon sx={{fontSize: '2rem'}}/></button>
+                : <button onClick={() => setShowNoti(true)}><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
+              {showNoti && <Notification noti={noti} setNoti={setNoti}/>}
+            </div>
+            <div className='headerButtonSet'>
+              {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
+              : <button onClick={() => setShowFriend(true)}><AddReactionOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
+              {showFriend && <Friend/>}
+            </div>
+            <div className='headerButtonSet'>
+              {showAccount ? <button onClick={() => setShowAccount(false)}><AccountCircleTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
+              : <button onClick={() => setShowAccount(true)}><AccountCircleOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
+              {/* {showAccount && <Login/>} */}
+            </div>
           </div>
         </div>
       </header>

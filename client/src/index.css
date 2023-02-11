@@ -78,11 +78,20 @@ header a {
   flex-direction: row;
 }
 
+.headerButtonSet {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
 .fill {
   
 }
 .mainMenu {
   margin-right: 10rem;
+  display: flex;
+  flex-direction: row;
 }
 
 .mainMenu button {
@@ -527,6 +536,7 @@ main {
   padding: 0.5rem 1rem 1rem 1rem;
   display: flex;
   flex-direction: column;
+  margin-top: 3rem;
 }
 
 .friendHeader {
