@@ -24,23 +24,22 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
     //change to redux later
     const [goals, setGoals] = useState([]);
 
-    useEffect(() => {
-        console.log("date: ", date)
-        axios.get('/api/todos/' + date)
-            .then( (res) => {
-                setLoading(true);
-                const n = res?.data;
-                if (n) {
-                    setGoals(n.goals);
-                    setLoading(false);
-                    setHappy(n.smile);
-                }
-                return;
-            })
-            .catch( (err) => {
-                console.log('Error loading todos');
-            })
-    }, []);
+    // useEffect(() => {
+    //     axios.get('/api/todos/' + date)
+    //         .then( (res) => {
+    //             setLoading(true);
+    //             const n = res?.data;
+    //             if (n) {
+    //                 setGoals(n.goals);
+    //                 setLoading(false);
+    //                 setHappy(n.smile);
+    //             }
+    //             return;
+    //         })
+    //         .catch( (err) => {
+    //             console.log('Error loading todos');
+    //         })
+    // }, []);
 
     useEffect(() => {
         axios.get('/api/todos/' + date)
@@ -52,7 +51,10 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
                     setLoading(false);
                     setHappy(n.smile);
                 }
-                else setGoals([])
+                else {
+                    setGoals([])
+                    setLoading(true);
+                }
                 return;
             })
             .catch( (err) => {
@@ -70,14 +72,19 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
         setHappy(false)
         setCount(count+1)
         setEditMode(true);
-
-        setGoals([...goals, {id: goals.length+1, text: '', check: false}])
+        let max = 1;
+        goals.map((g) => (
+            max < g.id ? max = g.id : null 
+        ))
+        setGoals([...goals, {id: max+1, text: '', check: false}])
     };
 
     const handleEditTodo = async(key, value) => {
         //goals[key].text = value;
         const newState = goals.map(obj => {
-            if (obj.id === key+1)return {...obj, text: value};
+            if (obj.id === key) {
+                return {...obj, text: value};
+            }
             return obj;
         });
         setGoals(newState);
@@ -151,6 +158,11 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
         }
     }
 
+    const handleDelete = (id) => {
+        onDelete(id);
+        setGoals(goals.filter( e => e.id !== id));
+    }
+
     //<input type="checkbox" name={key} onChange={(e) => handleCheck(key, e.target.checked)} defaultChecked={value.check}/>
 
     return (
@@ -165,15 +177,15 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
             </div>
             <div className="todoList">
                 {!editMode ? goals.map((value, key) => (<div className="checkboxButton">
-                    {value.check ? <CheckBoxRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(key, false)}/>
-                    : <CheckBoxOutlineBlankRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(key, true)}/>}
-                    {value.text==='' ? <input onChange={(e) => handleEditTodo(key, e.target.value)} onKeyPress={handleKeyPress}/>
+                    {value.check ? <CheckBoxRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(value.id, false)}/>
+                    : <CheckBoxOutlineBlankRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(value.id, true)}/>}
+                    {value.text==='' ? <input onChange={(e) => handleEditTodo(value.id, e.target.value)} onKeyPress={handleKeyPress}/>
                     : <label>{value.text}</label>}
                 </div>)) : goals.map((value, key) => (<div className='checkboxButton'>
-                    {value.check ? <CheckBoxRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(key, false)}/>
-                    : <CheckBoxOutlineBlankRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(key, true)}/>}
-                    <input className='todoElem' placeholder={value.text} onChange={(e) => handleEditTodo(key, e.target.value)}/>
-                    <button onClick={() => onDelete(value.id)}><ClearRoundedIcon sx={editMode ? {size: '20px', color: "red"} : {size: '20px'}}/></button>
+                    {value.check ? <CheckBoxRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(value.id, false)}/>
+                    : <CheckBoxOutlineBlankRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(value.id, true)}/>}
+                    <input className='todoElem' placeholder={value.text} onChange={(e) => handleEditTodo(value.id, e.target.value)}/>
+                    <button onClick={() => handleDelete(value.id)}><ClearRoundedIcon sx={editMode ? {size: '20px', color: "red"} : {size: '20px'}}/></button>
                 </div>))}
             </div>
             <div className='faceMoodTodo'>
