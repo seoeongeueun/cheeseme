@@ -64,6 +64,36 @@ header a {
 }
 /* end of color line */
 
+
+/* start of main header */
+.mainHeader {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+}
+
+.fill {
+  
+}
+.mainMenu {
+  margin-right: 10rem;
+}
+
+.mainMenu button {
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  margin-right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+/* end of main header */
 /* search bar */
 
 .searchbar {
@@ -485,6 +515,35 @@ main {
 .footer {
   background-color: #928173;
 }
+/* Header Modals */
+.settingsboxHeader {
+  width: max-content;
+  height: max-content;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  z-index: 1;
+  position: fixed;
+  background-color: #FFFFFF;
+  padding: 1rem 2rem 1rem 1rem;
+}
+
+.settingsboxHeader p1{
+  font-size: 2.2rem;
+  margin-right: 1rem;
+}
+
+.settingsboxHeader span {
+  font-size: 1.7rem;
+}
+
+.friendCount {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* end of Header Modals */
 
 /* Settings */
 .settingsbox {
