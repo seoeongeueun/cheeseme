@@ -9,6 +9,8 @@ import Draggable from 'react-draggable';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
+import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
 import axios from 'axios';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
@@ -111,7 +113,7 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
 
     const handleCheck = async(key, value) => {
         //goals[key].check = value;
-        setCount(count+1)
+        setCount(count+1);
         if (value === false) {
             setHappy(false);
             const newState = goals.map(obj => {
@@ -149,6 +151,8 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
         }
     }
 
+    //<input type="checkbox" name={key} onChange={(e) => handleCheck(key, e.target.checked)} defaultChecked={value.check}/>
+
     return (
         <div className="todoWidget">
             {move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
@@ -161,11 +165,13 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
             </div>
             <div className="todoList">
                 {!editMode ? goals.map((value, key) => (<div className="checkboxButton">
-                    <input type="checkbox" name={key} onChange={(e) => handleCheck(key, e.target.checked)} defaultChecked={value.check}/>
+                    {value.check ? <CheckBoxRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(key, false)}/>
+                    : <CheckBoxOutlineBlankRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(key, true)}/>}
                     {value.text==='' ? <input onChange={(e) => handleEditTodo(key, e.target.value)} onKeyPress={handleKeyPress}/>
                     : <label>{value.text}</label>}
                 </div>)) : goals.map((value, key) => (<div className='checkboxButton'>
-                    <input type="checkbox" name={key} onChange={(e) => handleCheck(key, e.target.checked)} defaultChecked={value.check}/>
+                    {value.check ? <CheckBoxRoundedIcon sx={{fontSize: '7rem'}} onClick={() => handleCheck(key, true)}/>
+                    : <CheckBoxOutlineBlankRoundedIcon sx={{fontSize: '7rem'}} onClick={() => handleCheck(key, false)}/>}
                     <input className='todoElem' placeholder={value.text} onChange={(e) => handleEditTodo(key, e.target.value)}/>
                     <button onClick={() => onDelete(value.id)}><ClearRoundedIcon sx={editMode ? {size: '20px', color: "red"} : {size: '20px'}}/></button>
                 </div>))}

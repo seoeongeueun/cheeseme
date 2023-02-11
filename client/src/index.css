@@ -504,8 +504,12 @@ main {
 .checkboxButton {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 5px;
+}
+
+.checkbox {
+  margin-right: 0.5rem;
 }
 
 .checkboxButton label {
