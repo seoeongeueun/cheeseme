@@ -5,10 +5,15 @@ import RightContainer from './containers/RightContainer';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import SearchResultLeftContainer from './containers/SearchResultLeftContainer.js';
 import SearchResultRightContainer from './containers/SearchResultRightContainer.js';
-import AddReactionIcon from '@mui/icons-material/AddReaction';
-import HomeIcon from '@mui/icons-material/Home';
+import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
+import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Friend from './modals/Friend.js';
+import NotificationsNoneTwoToneIcon from '@mui/icons-material/NotificationsNoneTwoTone';
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 
 function App() {
   const [keyword, setKeyword] = useState('');
@@ -35,10 +40,12 @@ function App() {
             </div>
           </div>
           <div className='mainMenu'>
-            <button><HomeIcon sx={{fontSize: '2rem'}}/></button>
-            <button onClick={() => setShowFriend(!showFriend)}><AddReactionIcon sx={{fontSize: '2rem'}}/></button>
+            <button><HomeOutlinedIcon sx={{fontSize: '2rem'}}/></button>
+            {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
+            : <button onClick={() => setShowFriend(true)}><AddReactionOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
             {showFriend && <Friend/>}
-            <button><AccountCircleIcon sx={{fontSize: '2rem'}}/></button>
+            <button><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>
+            <button><AccountCircleOutlinedIcon sx={{fontSize: '2rem'}}/></button>
           </div>
         </div>
       </header>

@@ -524,18 +524,42 @@ main {
   z-index: 1;
   position: fixed;
   background-color: #FFFFFF;
-  padding: 1rem 2rem 1rem 1rem;
+  padding: 0.5rem 1rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.settingsboxHeader p1{
+.friendHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+.friendButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0;
+}
+
+.friendCount span{
   font-size: 2.2rem;
   margin-right: 1rem;
 }
 
-.settingsboxHeader span {
-  font-size: 1.7rem;
+.friendList {
+  display: flex;
+  flex-direction: column;
 }
 
+.friendList span {
+  font-size: 1.7rem;
+}
+.friendItem {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .friendCount {
   display: flex;
   flex-direction: row;
