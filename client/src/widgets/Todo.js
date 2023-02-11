@@ -124,7 +124,7 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
         if (value === false) {
             setHappy(false);
             const newState = goals.map(obj => {
-                if (obj.id === key+1) return {...obj, check: false};
+                if (obj.id === key) return {...obj, check: false};
                 return obj;
             });
             let res = await FetchAPIPost('/api/todos/update/' + date, {
@@ -138,7 +138,7 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
             let c = 0;
             const newState = goals.map(obj => {
                 if (obj.check === false) c++;
-                if (obj.id === key+1) {
+                if (obj.id === key) {
                     if (!obj.check) c --;
                     return {...obj, check: true};
                 }
