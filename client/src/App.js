@@ -11,6 +11,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Friend from './modals/Friend.js';
+import Notification from './modals/Notification';
 import NotificationsNoneTwoToneIcon from '@mui/icons-material/NotificationsNoneTwoTone';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
@@ -19,6 +20,7 @@ function App() {
   const [keyword, setKeyword] = useState('');
   const [search, setSearch] = useState(false);
   const [showFriend, setShowFriend] = useState(false);
+  const [showNoti, setShowNoti] = useState(false);
   const inputRef = useRef(null);
 
   const handleClick = () => {
@@ -44,7 +46,9 @@ function App() {
             {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
             : <button onClick={() => setShowFriend(true)}><AddReactionOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
             {showFriend && <Friend/>}
-            <button><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>
+            {showNoti ? <button onClick={() => setShowNoti(false)}><NotificationsNoneTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
+            : <button onClick={() => setShowNoti(true)}><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
+            {showNoti && <Notification/>}
             <button><AccountCircleOutlinedIcon sx={{fontSize: '2rem'}}/></button>
           </div>
         </div>
