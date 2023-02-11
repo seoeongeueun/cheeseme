@@ -439,6 +439,11 @@ main {
   padding: 1rem;
 }
 
+.postButtonsRight {
+  display: flex;
+  flex-direction: row;
+}
+
 .postButtonsRight button {
   border: none;
   background-color: transparent;
