@@ -15,6 +15,7 @@ import Notification from './modals/Notification';
 import NotificationsNoneTwoToneIcon from '@mui/icons-material/NotificationsNoneTwoTone';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import Login from './modals/Login';
 
 function App() {
   const [keyword, setKeyword] = useState('');
@@ -86,7 +87,7 @@ function App() {
             <div className='headerButtonSet'>
               {showAccount ? <button onClick={() => setShowAccount(false)}><AccountCircleTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
               : <button onClick={() => setShowAccount(true)}><AccountCircleOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-              {/* {showAccount && <Login/>} */}
+              {showAccount && <Login/>}
             </div>
           </div>
         </div>
