@@ -6,16 +6,35 @@ import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import CircleIcon from '@mui/icons-material/Circle';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import AddFriend from './AddFriend.js';
 import axios from 'axios';
 
 function Friend(){
     const [myFriends, setMyFriends] = useState(['burgerpants', 'eltonjohn']);
     const [clicked, setClicked] = useState('')
+    const [addFriend, setAddFriend] = useState(false);
+    const [username, setUsername] = useState('')
+
+    useEffect(() => {
+        if (username != ''){
+            const id = setTimeout(() => {
+                setUsername('')
+            }, 3000);
+            return () => {
+                clearTimeout(id)
+            }
+        }
+    }, [username])
 
     const handleClickFriend = (name) => {
         setClicked(name);
         console.log('Viewing ' + name + `'s Posts...`)
-    } 
+    }
+
+    const handleAddFriend = () => {
+        setUsername('');
+        setAddFriend(true);
+    }
 
     return (
         <div className='settingsboxHeader'>
@@ -25,7 +44,8 @@ function Friend(){
                     <span style={{color: "#F9D876"}}>{myFriends?.length}</span>
                 </div>
                 <div className='friendButton'>
-                    <span><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span>
+                    <span onClick={() => setAddFriend(true)}><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span>
+                    {addFriend && <AddFriend setAddFriend={setAddFriend} setUsername={setUsername} myFriend={myFriends}/>}
                     <span><RemoveRoundedIcon sx={{fontSize: '1.5rem'}}/></span>
                 </div>
             </div>
@@ -37,6 +57,7 @@ function Friend(){
                         <span onClick={() => handleClickFriend(f)}>{f}</span>
                     </div>
                 ))}
+                {username != '' && <span style={{color: "red"}}>Friend Request Sent to {username}!</span>}
             </div>
             : <span>Let's add new friends!</span>}
         </div>

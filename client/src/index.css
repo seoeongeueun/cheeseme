@@ -531,7 +531,7 @@ main {
 
 .friendHeader {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .friendButton {
@@ -881,6 +881,17 @@ input.todoElem::placeholder {
 
 /*start of dialog popup */
 
+.muiModal {
+  padding: 2rem;
+}
+
+.muiModal span{
+  font-size: 2.2rem;
+}
+
+.dialogInput {
+  font-size: 2rem;
+}
 /*end of dialog popup */
 
 /* start of search box left */
