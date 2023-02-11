@@ -170,8 +170,8 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
                     {value.text==='' ? <input onChange={(e) => handleEditTodo(key, e.target.value)} onKeyPress={handleKeyPress}/>
                     : <label>{value.text}</label>}
                 </div>)) : goals.map((value, key) => (<div className='checkboxButton'>
-                    {value.check ? <CheckBoxRoundedIcon sx={{fontSize: '7rem'}} onClick={() => handleCheck(key, true)}/>
-                    : <CheckBoxOutlineBlankRoundedIcon sx={{fontSize: '7rem'}} onClick={() => handleCheck(key, false)}/>}
+                    {value.check ? <CheckBoxRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(key, false)}/>
+                    : <CheckBoxOutlineBlankRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(key, true)}/>}
                     <input className='todoElem' placeholder={value.text} onChange={(e) => handleEditTodo(key, e.target.value)}/>
                     <button onClick={() => onDelete(value.id)}><ClearRoundedIcon sx={editMode ? {size: '20px', color: "red"} : {size: '20px'}}/></button>
                 </div>))}
