@@ -33,6 +33,27 @@ function App() {
     ));
   }, [noti])
 
+  useEffect(() => {
+    if (showAccount) {
+      setShowFriend(false);
+      setShowNoti(false);
+    }
+  }, [showAccount]);
+
+  useEffect(() => {
+    if (showFriend) {
+      setShowAccount(false);
+      setShowNoti(false);
+    }
+  }, [showFriend]);
+
+  useEffect(() => {
+    if (showNoti) {
+      setShowAccount(false);
+      setShowFriend(false);
+    }
+  }, [showNoti]);
+
   const handleClick = () => {
     setKeyword(inputRef.current.value);
     setSearch(true)

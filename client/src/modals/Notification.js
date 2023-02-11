@@ -75,8 +75,8 @@ function Notification(props){
                         <div className='notiItemContent'>
                             <span style={{marginRight: '1rem', color: !n.done || i === 0 ? 'black' : '#a0a096'}}>{new Date(n.date).getMonth()+1}/{new Date(n.date).getDate()}/{new Date(n.date).getFullYear()}</span>
                             {n.type === 'sendRequest' && <span style={{color: i === 0 ? 'black' : '#a0a096', color: !n.done ? 'black' : '#a0a096'}}>{n.from} sent you a friend request</span>}
-                            {n.type === 'acceptRequest' && <span style={{color: i === 0 ? 'black' : '#a0a096'}}>You and {n.to} are now friends!</span>}
-                            {n.type === 'declineRequest' && <span style={{color: i === 0 ? 'black' : '#a0a096'}}>You declined {n.to}'s friend request</span>}
+                            {n.type === 'acceptRequest' && <span style={{color: i === 0 ? 'black' : '#a0a096'}}>{n.to} is now your friend!</span>}
+                            {n.type === 'declineRequest' && <span style={{color: i === 0 ? 'black' : '#a0a096'}}>You declined friend request from {n.to}</span>}
                             </div>
                             {n.done === false && 
                                 <div className='notificationButtons'>
