@@ -50,14 +50,13 @@ function App() {
             </div>
           </div>
           <div className='mainMenu'>
-            <button><HomeOutlinedIcon sx={{fontSize: '2rem'}}/></button>
-            {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
-            : <button onClick={() => setShowFriend(true)}><AddReactionOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-            {showFriend && <Friend/>}
             {showNoti ? <button onClick={() => setShowNoti(false)}><NotificationsNoneTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
             : unRead ? <button onClick={() => setShowNoti(true)}><NotificationImportantIcon sx={{fontSize: '2rem'}}/></button>
               : <button onClick={() => setShowNoti(true)}><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
             {showNoti && <Notification noti={noti} setNoti={setNoti}/>}
+            {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
+            : <button onClick={() => setShowFriend(true)}><AddReactionOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
+            {showFriend && <Friend/>}
             <button><AccountCircleOutlinedIcon sx={{fontSize: '2rem'}}/></button>
           </div>
         </div>
