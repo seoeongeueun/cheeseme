@@ -9,9 +9,11 @@ import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import AddFriend from './AddFriend.js';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import axios from 'axios';
+import Star from '../icons/star.png';
+import StarColor from '../icons/starColor.png';
 
 function Friend(){
-    const [myFriends, setMyFriends] = useState(['burgerpants', 'eltonjohn']);
+    const [myFriends, setMyFriends] = useState([{name: 'burgerpants', fav: true}, {name: 'eltonjohn', fav: false}]);
     const [clicked, setClicked] = useState('')
     const [addFriend, setAddFriend] = useState(false);
     const [removeFriend, setRemoveFriend] = useState(false);
@@ -55,6 +57,16 @@ function Friend(){
         setBye(name);
     }
 
+    const handleStar = (name) => {
+        const newState = myFriends.map(f => {
+            if (f.name === name) {
+                return {...f, fav: !f.fav};
+            }
+            return f;
+        });
+        setMyFriends(newState)
+    }
+
     return (
         <div className='settingsboxHeader'>
             <div className='friendHeader'>
@@ -63,19 +75,19 @@ function Friend(){
                     {/* <span style={{color: "#F9D876"}}>{myFriends?.length}</span> */}
                 </div>
                 <div className='friendButton'>
-                    <button onClick={() => setAddFriend(true)}><span><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
+                    <button className={removeFriend ? 'cancel2' : 'save2'} onClick={() => setAddFriend(true)}><span><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
                     {addFriend && <AddFriend setAddFriend={setAddFriend} setUsername={setUsername} myFriends={myFriends}/>}
-                    {removeFriend ? <button onClick={() => setRemoveFriend(false)}><span><CheckRoundedIcon sx={{fontSize: '1.5rem', color: 'red'}}/></span></button>
-                    : <button onClick={() => setRemoveFriend(true)}><span><RemoveRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>}
+                    {removeFriend ? <button className='save2' onClick={() => setRemoveFriend(false)}><span><CheckRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
+                    : <button className='cancel2' onClick={() => setRemoveFriend(true)}><span><RemoveRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>}
                 </div>
             </div>
             {myFriends?.length > 0 ?
             <div className='friendList'>
                 {myFriends.map((f) => (
                     <div className='friendItem'>
-                        <StarOutlinedIcon sx={{fontSize: '0.8rem', marginRight: '0.5rem', marginTop: '3px'}}/>
-                        <span onClick={() => handleClickFriend(f)}>{f}</span>
-                        {removeFriend && <button onClick={() => handleRemove(f)}><span><ClearRoundedIcon sx={{fontSize: '1.2rem', color: 'red'}}/></span></button>}
+                        <img src={f.fav ? StarColor : Star} style={{width: '1rem', marginRight: '0.5rem', marginTop: '3px'}} onClick={() => handleStar(f.name)}/>
+                        <span onClick={() => handleClickFriend(f.name)}>{f.name}</span>
+                        {removeFriend && <button onClick={() => handleRemove(f.name)}><span><ClearRoundedIcon sx={{fontSize: '1.2rem', color: 'red'}}/></span></button>}
                     </div>
                 ))}
             </div>

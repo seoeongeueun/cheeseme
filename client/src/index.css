@@ -106,15 +106,29 @@ header a {
 /* end of main header */
 
 /*start of login modal */
+.settingsboxHeaderLogin{
+  width: max-content + 1rem;
+  height: max-content + 1rem;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  z-index: 1;
+  position: fixed;
+  background-color: #FFFFFF;
+  padding: 1rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  align-items: center;
+}
+
 .loginHeader {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
 }
 
 .loginHeader span {
   font-size: 2rem;
+  text-align: justify;
 }
 
 .loginHeader img {
@@ -554,7 +568,7 @@ main {
   background-color: #928173;
 }
 /* Header Modals */
-.settingsboxHeader {
+.settingsboxHeader{
   width: max-content;
   height: max-content;
   border: 1px solid #000000;
