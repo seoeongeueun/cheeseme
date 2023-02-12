@@ -9,6 +9,7 @@ import positionRouter from './routes/positionRouter.js';
 import widgetRouter from './routes/widgetRouter.js';
 import rightRouter from './routes/rightRouter.js'
 import cors from 'cors';
+import userRouter from './routes/userRouter.js';
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -32,6 +33,7 @@ app.use('/api/dday', ddayRouter);
 app.use('/api/position', positionRouter);
 app.use('/api/widget', widgetRouter);
 app.use('/api/right', rightRouter);
+app.use('/api/users', userRouter);
 
 app.listen(port, () => {
     console.log(`server at http://localhost:${port}`)
