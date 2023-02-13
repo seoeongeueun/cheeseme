@@ -61,7 +61,7 @@ app.post('/login', asyncHandler(async(req, res) => {
     const user = await User.findOne({ name: req.body.name });
     if (!user) return res.json({ loginSuccess: false, message: "No user found with username " + req.body.name });
 
-    user.comparePassword("testing", (err, isMatch) => {
+    user.comparePassword(req.body.password, (err, isMatch) => {
         if (!isMatch) return res.json({ loginSuccess: false, message: "Incorrect Password"});
 
         user.generateToken((err, user) => {

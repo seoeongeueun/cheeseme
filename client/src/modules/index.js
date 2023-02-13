@@ -4,6 +4,7 @@ import editMode from './editMode';
 import notes from './notes';
 import datePick from './datePick';
 import loginInfo from './loginInfo';
+import friendsList from './friendsList';
 
 const rootReducer = combineReducers({
     goals,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     notes,
     datePick,
     loginInfo,
+    friendsList
     //add more reducers
 });
 

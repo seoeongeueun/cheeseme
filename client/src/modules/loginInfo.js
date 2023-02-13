@@ -1,5 +1,8 @@
 const CURRENT_USER = 'loginInfo/CURRENT_USER';
 
+const CURRENT_NOTI = 'loginInfo/CURRENT_NOTI';
+const ADD_NOTI = 'loginInfo/ADD_NOTI';
+
 export const currentUser = userId => ({
     type: CURRENT_USER,
     userId

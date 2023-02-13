@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
+import { FetchAPIPost } from '../utils/api.js';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
@@ -12,13 +12,16 @@ import axios from 'axios';
 import Star from '../icons/star.png';
 import StarColor from '../icons/starColor.png';
 
-function Friend(){
-    const [myFriends, setMyFriends] = useState([{name: 'burgerpants', fav: true}, {name: 'eltonjohn', fav: false}]);
+function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, onFavFriend}){
     const [clicked, setClicked] = useState('')
     const [addFriend, setAddFriend] = useState(false);
     const [removeFriend, setRemoveFriend] = useState(false);
     const [username, setUsername] = useState('');
-    const [bye, setBye] = useState('')
+    const [bye, setBye] = useState('');
+
+    useEffect(() => {
+        console.log("friends: ", friends)
+    })
 
     useEffect(() => {
         if (username != ''){
@@ -52,19 +55,21 @@ function Friend(){
         setAddFriend(true);
     }
 
-    const handleRemove = (name) => {
-        setMyFriends(myFriends.filter( e => e !== name));
-        setBye(name);
+    const handleRemove = async(name) => {
+        let res = await FetchAPIPost('/api/users/update/' + userId, {
+            friends: friends
+        });
+        if (res){
+            onRemoveFriend(name);
+            setBye(name);
+        }
     }
 
-    const handleStar = (name) => {
-        const newState = myFriends.map(f => {
-            if (f.name === name) {
-                return {...f, fav: !f.fav};
-            }
-            return f;
+    const handleStar = async(name) => {
+        onFavFriend(name);
+        let res = await FetchAPIPost('/api/users/update/' + userId, {
+            friends: friends
         });
-        setMyFriends(newState)
     }
 
     return (
@@ -72,18 +77,18 @@ function Friend(){
             <div className='friendHeader'>
                 <div className='friendCount'>
                     <span>My Friends</span>
-                    {/* <span style={{color: "#F9D876"}}>{myFriends?.length}</span> */}
+                    {/* <span style={{color: "#F9D876"}}>{friends?.length}</span> */}
                 </div>
                 <div className='friendButton'>
                     <button className={removeFriend ? 'cancel2' : 'save2'} onClick={() => setAddFriend(true)}><span><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
-                    {addFriend && <AddFriend setAddFriend={setAddFriend} setUsername={setUsername} myFriends={myFriends}/>}
+                    {/* {addFriend && <AddFriend setAddFriend={setAddFriend} userId={userId} friends={friends} username={username}/>} */}
                     {removeFriend ? <button className='save2' onClick={() => setRemoveFriend(false)}><span><CheckRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
                     : <button className='cancel2' onClick={() => setRemoveFriend(true)}><span><RemoveRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>}
                 </div>
             </div>
-            {myFriends?.length > 0 ?
+            {friends?.length > 0 ?
             <div className='friendList'>
-                {myFriends.map((f) => (
+                {friends.map((f) => (
                     <div className='friendItem'>
                         <img src={f.fav ? StarColor : Star} style={{width: '1rem', marginRight: '0.5rem', marginTop: '3px'}} onClick={() => handleStar(f.name)}/>
                         <span onClick={() => handleClickFriend(f.name)}>{f.name}</span>

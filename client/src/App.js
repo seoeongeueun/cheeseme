@@ -11,7 +11,7 @@ import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import Friend from './modals/Friend.js';
+import FriendContainer from './containers/FriendContainer';
 import Notification from './modals/Notification';
 import NotificationsNoneTwoToneIcon from '@mui/icons-material/NotificationsNoneTwoTone';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
@@ -21,6 +21,8 @@ import { currentUser } from './modules/loginInfo.js';
 import { useSelector, useDispatch } from 'react-redux';
 import BigCheese from './icons/cheese.png';
 import SmallCheese from './icons/smallCheese.png';
+import { currentFriends } from './modules/friendsList.js';
+
 import axios from 'axios';
 
 function App() {
@@ -29,7 +31,6 @@ function App() {
   const [showFriend, setShowFriend] = useState(false);
   const [showNoti, setShowNoti] = useState(false);
   const [noti, setNoti] = useState([]);
-  const [friends, setFriends] = useState([]);
   const [name, setName] = useState('')
   const [unRead, setUnread] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
@@ -38,15 +39,20 @@ function App() {
   const { userId } = useSelector(state => ({
     userId: state.loginInfo.userId,
   }));
+  
+  const dispatch = useDispatch();
+  const onChangeFriends = friends => dispatch(currentFriends(friends));
+
 
   useEffect(() => {
     if (userId) {
+      console.log(userId)
       axios.get('/api/users/find/' + userId)
         .then((res) => {
           const n = res?.data;
           if (n) {
             setNoti(n.notifications);
-            setFriends(n.friends);
+            onChangeFriends(n.friends);
             setName(n.name);
           }
         })
@@ -111,7 +117,7 @@ function App() {
             <div className='headerButtonSet'>
               {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
               : <button onClick={() => setShowFriend(true)}><AddReactionOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-              {showFriend && <Friend/>}
+              {showFriend && <FriendContainer/>}
             </div>
             <div className='headerButtonSet'>
               {showAccount ? <button onClick={() => setShowAccount(false)}><AccountCircleTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>

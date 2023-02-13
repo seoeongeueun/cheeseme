@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -6,13 +6,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { FetchAPIPost } from '../utils/api.js';
 
 export default function AddFriend(props) {
-  const [open, setOpen] = React.useState(true);
-  const [entered, setEntered] = React.useState('')
-  const [error, setError] = React.useState(false);
+  const [open, setOpen] = useState(true);
+  const [entered, setEntered] = useState('')
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState('')
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (error){
       setError(false);
     }
@@ -25,24 +27,26 @@ export default function AddFriend(props) {
   const handleClose = () => {
     setOpen(false);
     props.setAddFriend(false);
-    props.setUsername('')
   };
 
-  const handleSend = (name) => {
-    if (props.myFriends){
-      for (let i = 0; i < props.myFriends.length; i++) {
-        if (props.myFriends[i] === name){
-          setError(true)
-          return
-        }
-      }
-      if (name != '') {
-        setOpen(false);
-        props.setAddFriend(false);
-        props.setUsername(name);
-      }
-    }
-    
+  const handleSend = async(name) => {
+    // if (name === '') {
+    //   setMessage('Please enter a correct username')
+    // }
+    // else {
+    //   let res = await FetchAPIPost('/api/users/updateWithName/' + name, {
+    //     notifications: [{notiType: 'sendRequest', from: username, to: name, done: false, date: new Date().setHours(0, 0, 0, 0)}, ...notifications]
+    //   })
+    //   if (!res) {
+    //     setMessage('User with username ' + name + ' does not exit');
+    //     setError(true);
+    //   }
+    //   else {
+    //     setError(false);
+    //     props.setAddFriend(false);
+    //   }
+    // }
+    props.setAddFriend(false);
   };
 
   return (

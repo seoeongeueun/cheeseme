@@ -81,7 +81,7 @@ export default function Signup(props) {
       name: username,
       email: email,
       password: pw,
-      friends: [],
+      friends: [{name: 'burgerpants', fav: false}],
       isAdmin: false,
       positions: [{name: 'cal', x: 0, y: 0, show: true}, {name: 'todo', x: 0, y: 0, show: true}, {name: 'note', x: 0, y: 0, show: true}, {name: 'dday', x: 0, y: 0, show: true}],
       settings: [{gridLine: false}, {snsStyle: true}],
