@@ -9,37 +9,55 @@ import AddFriend from './AddFriend.js';
 import { FetchAPIPost } from '../utils/api.js';
 import axios from 'axios';
 
-function Notification(props){
+function Notification({name, notis, userId, onChangeNotis, onAddNoti, onToggleNoti}){
+    const [friendsNoti, setFriendsNoti] = useState();
+    const [tmpObj, setTmpObj] = useState();
+    const [friendName, setFriendName] = useState('')
 
+    const updateFriendNoti = async() => {
+        if (friendsNoti) {
+            const newNoti = [tmpObj, ...friendsNoti]
+            let res = await FetchAPIPost('/api/users/updateWithName/' + friendName, {
+                notifications: newNoti.length > 5 ? newNoti.slice(0,5) : newNoti
+            })
+            if (res) {
+                let res2 = await FetchAPIPost('/api/users/update/' + userId, {
+                    notifications: notis.length > 5 ? notis.slice(0, 5) : notis
+                });
+            }
+        }
+        
+    }
+    
     useEffect(() => {
-
-        console.log('n: ', props.noti)
-    }, [props.noti])
+        if (tmpObj) {
+            updateFriendNoti()
+        }
+    }, [friendsNoti])
 
     const handleAccept = async(id, from) => {
-        const newState = props.noti.map(n => {
-            if (n._id === id) {
-                return {...n, done: true};
-            }
-            return n;
-        });
-        let res = await FetchAPIPost('/api/users/update/' + props.userId, {
-            notifications: [{notiType: 'acceptRequest', from: props.name, to: from, done: true, date: new Date().setHours(0, 0, 0, 0)}, ...newState]
-        });
-        let res2 = await FetchAPIPost('/api/users/updateWithName/' + from, {
-            notifications: [{notiType: 'receiveAccept', from: props.name, to: from, done: false, date: new Date().setHours(0, 0, 0, 0)}, ...res2]
+        // const newState = props.noti.map(n => {
+        //     if (n._id === id) {
+        //         return {...n, done: true};
+        //     }
+        //     return n;
+        // });
+        onAddNoti({notiType: 'acceptRequest', from: name, to: from, done: true, date: new Date().setHours(0, 0, 0, 0)})
+        setFriendName(from);
+        axios.get('/api/users/' + from)
+            .then((res) => {
+            if (res) setFriendsNoti(res?.data.notifications)
+            else console.log('why??')
         })
-        props.setNoti([{notiType: 'acceptRequest', from: props.name, to: from, done: true, date: new Date().setHours(0, 0, 0, 0)}, ...newState]);
+        setTmpObj({notiType: 'receiveAccept', from: name, to: from, done: false, date: new Date().setHours(0, 0, 0, 0)})
+        onToggleNoti(id)
     }
 
     const handleDecline = (id, from) => {
-        const newState = props.noti.map(n => {
-            if (n._id === id) {
-                return {...n, done: true};
-            }
-            return n;
-        });
-        props.setNoti([{notiType: 'declineRequest', from: props.name, to: 'sam', done: true, date: new Date().setHours(0, 0, 0, 0)}, ...newState]);
+        onAddNoti({notiType: 'declineRequest', from: name, to: from, done: true, date: new Date().setHours(0, 0, 0, 0)})
+        setFriendName(from);
+        setTmpObj({notiType: 'receiveDecline', from: name, to: from, done: false, date: new Date().setHours(0, 0, 0, 0)})
+        onToggleNoti(id)
     }
 
     // {props.noti?.length > 0 ? props.noti.map((n) => (
@@ -75,7 +93,7 @@ function Notification(props){
                 </div>
             </div>
             <div className='notification'>
-                {props.noti?.length > 0 && props.noti.map((n, i) => (
+                {notis?.length > 0 && notis.map((n, i) => (
                     <div className='notiItem'>
                         <div className='notiItemContent'>
                             <span style={{marginRight: '1rem', color: !n.done || i === 0 ? 'black' : '#a0a096'}}>{new Date(n.date).getMonth()+1}/{new Date(n.date).getDate()}/{new Date(n.date).getFullYear()}</span>

@@ -23,6 +23,7 @@ import BigCheese from './icons/cheese.png';
 import SmallCheese from './icons/smallCheese.png';
 import { currentFriends } from './modules/friendsList.js';
 import { currentNotis } from './modules/notisList';
+import NotiContainer from './containers/NotiContainer';
 
 import axios from 'axios';
 
@@ -114,7 +115,7 @@ function App() {
               {showNoti ? <button onClick={() => setShowNoti(false)}><NotificationsNoneTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
               : unRead ? <button onClick={() => setShowNoti(true)}><NotificationImportantIcon sx={{fontSize: '2rem'}}/></button>
                 : <button onClick={() => setShowNoti(true)}><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-              {showNoti && <Notification userId={userId} noti={noti} setNoti={setNoti} name={name}/>}
+              {showNoti && <NotiContainer/>}
             </div>
             <div className='headerButtonSet'>
               {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>

@@ -40,6 +40,7 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange}){
                 if (res?.data.success) {
                     onCurrentUserChange(null);
                     onCurrentNameChange(null);
+                    
                     setUsername(null);
                 }
             })
