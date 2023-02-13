@@ -35,7 +35,7 @@ userRouter.post('/add', asyncHandler(async(req, res) => {
     const isAdmin = false;
     const positions = req.body.positions;
     const settings = req.body.settings;
-    const notifications = req.body.settings;
+    const notifications = req.body.notifications;
     await User.create({ name, email, password, friends, isAdmin, positions, settings, notifications })
     res.send('Created')
 }));
@@ -52,7 +52,7 @@ userRouter.post('/update/:name', asyncHandler(async(req, res) => {
     const isAdmin = false;
     const positions = req.body.positions;
     const settings = req.body.settings;
-    const notifications = req.body.settings;
+    const notifications = req.body.notifications;
     await User.updateOne({name: req.params.name}, 
     {email: email, password: password, friends: friends, isAdmin: isAdmin, positions: positions, settings: settings, notifications: notifications});
     res.send('Updated')
