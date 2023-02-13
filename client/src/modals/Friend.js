@@ -11,6 +11,7 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import axios from 'axios';
 import Star from '../icons/star.png';
 import StarColor from '../icons/starColor.png';
+import AddFriendContainer from '../containers/AddFriendContainer.js';
 
 function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, onFavFriend}){
     const [clicked, setClicked] = useState('')
@@ -62,13 +63,8 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
     }
 
     const handleRemove = async(name) => {
-        let res = await FetchAPIPost('/api/users/update/' + userId, {
-            friends: friends
-        });
-        if (res){
-            onRemoveFriend(name);
-            setBye(name);
-        }
+        onRemoveFriend(name);
+        setBye(name);
     }
 
     const handleStar = async(name) => {
@@ -84,7 +80,7 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
                 </div>
                 <div className='friendButton'>
                     <button className={removeFriend ? 'cancel2' : 'save2'} onClick={() => setAddFriend(true)}><span><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
-                    {/* {addFriend && <AddFriend setAddFriend={setAddFriend} userId={userId} friends={friends} username={username}/>} */}
+                    {addFriend && <AddFriendContainer setAddFriend={setAddFriend}/>}
                     {removeFriend ? <button className='save2' onClick={() => setRemoveFriend(false)}><span><CheckRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
                     : <button className='cancel2' onClick={() => setRemoveFriend(true)}><span><RemoveRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>}
                 </div>

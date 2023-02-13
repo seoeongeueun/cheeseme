@@ -16,7 +16,7 @@ import Happy from '../icons/happy.png';
 import Signup from './Signup.js';
 import LoginModal from './LoginModal.js';
 
-function Login({onCurrentUserChange, userId, onChangeFriends}){
+function Login({onCurrentUserChange, userId, onCurrentNameChange}){
     const [username, setUsername] = useState()
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false);
@@ -39,6 +39,7 @@ function Login({onCurrentUserChange, userId, onChangeFriends}){
             .then( (res) => {
                 if (res?.data.success) {
                     onCurrentUserChange(null);
+                    onCurrentNameChange(null);
                     setUsername(null);
                 }
             })
@@ -67,7 +68,7 @@ function Login({onCurrentUserChange, userId, onChangeFriends}){
                 : <><button className='save2' onClick={() => handleLogin()}><span>Login</span></button><button className='cancel2' onClick={() => setSignup(true)}><span>Sign Up</span></button></>}
             </div>
             {signup && <Signup setSignup={setSignup}/>}
-            {login && <LoginModal setLogin={setLogin} onCurrentUserChange={onCurrentUserChange} onChangeFriends={onChangeFriends}/>}
+            {login && <LoginModal setLogin={setLogin} onCurrentUserChange={onCurrentUserChange} onCurrentNameChange={onCurrentNameChange} />}
         </div>
     );
 }

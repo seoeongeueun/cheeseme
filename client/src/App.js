@@ -22,6 +22,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import BigCheese from './icons/cheese.png';
 import SmallCheese from './icons/smallCheese.png';
 import { currentFriends } from './modules/friendsList.js';
+import { currentNotis } from './modules/notisList';
 
 import axios from 'axios';
 
@@ -42,6 +43,7 @@ function App() {
   
   const dispatch = useDispatch();
   const onChangeFriends = friends => dispatch(currentFriends(friends));
+  const onChangeNotis = notis => dispatch(currentNotis(notis));
 
 
   useEffect(() => {
@@ -51,7 +53,7 @@ function App() {
         .then((res) => {
           const n = res?.data;
           if (n) {
-            setNoti(n.notifications);
+            onChangeNotis(n.notifications);
             onChangeFriends(n.friends);
             setName(n.name);
           }

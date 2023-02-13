@@ -33,6 +33,7 @@ export default function LoginModal(props) {
       console.log('Login Success');
       setSuccess(true);
       props.onCurrentUserChange(res.userId);
+      props.onCurrentNameChange(username);
       props.setLogin(false);
     } else {
       console.log('Login Failed')

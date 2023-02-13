@@ -7,13 +7,34 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FetchAPIPost } from '../utils/api.js';
+import axios from 'axios';
 
-export default function AddFriend(props) {
+export default function AddFriend({name, setAddFriend}) {
   const [open, setOpen] = useState(true);
   const [entered, setEntered] = useState('')
   const [error, setError] = useState(false);
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('');
+  const [friendsNoti, setFriendsNoti] = useState();
 
+  const updateNotis = async() => {
+    const newNoti = [{notiType: 'sendRequest', from: name, to: entered, done: false, date: new Date().setHours(0, 0, 0, 0)}, ...friendsNoti]
+    let res = await FetchAPIPost('/api/users/updateWithName/' + entered, {
+      notifications: newNoti.length > 5 ? newNoti.slice(0,5) : newNoti
+    })
+    if (!res) {
+      setMessage('User with username ' + entered + ' does not exit');
+      setError(true);
+    }
+    else {
+      setError(false);
+      setAddFriend(false);
+    }
+  }
+
+  useEffect(() => {
+    if (friendsNoti) updateNotis();
+  }, [friendsNoti])
+  
   useEffect(() => {
     if (error){
       setError(false);
@@ -26,27 +47,23 @@ export default function AddFriend(props) {
 
   const handleClose = () => {
     setOpen(false);
-    props.setAddFriend(false);
+    setAddFriend(false);
   };
 
-  const handleSend = async(name) => {
-    // if (name === '') {
-    //   setMessage('Please enter a correct username')
-    // }
-    // else {
-    //   let res = await FetchAPIPost('/api/users/updateWithName/' + name, {
-    //     notifications: [{notiType: 'sendRequest', from: username, to: name, done: false, date: new Date().setHours(0, 0, 0, 0)}, ...notifications]
-    //   })
-    //   if (!res) {
-    //     setMessage('User with username ' + name + ' does not exit');
-    //     setError(true);
-    //   }
-    //   else {
-    //     setError(false);
-    //     props.setAddFriend(false);
-    //   }
-    // }
-    props.setAddFriend(false);
+  const handleSend = async(friendName) => {
+    if (friendName !== '') {
+      axios.get('/api/users/' + friendName)
+        .then((res) => {
+          if (res) setFriendsNoti(res?.data.notifications)
+          else {
+            setMessage('User with username ' + friendName + ' does not exit');
+            setError(true);
+          }
+        })
+    }
+    else {
+      setMessage('Please enter a correct username')
+    }
   };
 
   return (
@@ -63,6 +80,7 @@ export default function AddFriend(props) {
             <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
           </div>
           {error && <span style={{color: "red"}}>Error: User <i>{entered}</i> is already your friend!</span>}
+          {message !== '' && <span style={{color: "red"}}>{message}</span>}
           </div>
       </Dialog>
     </div>

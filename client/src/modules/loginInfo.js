@@ -1,12 +1,15 @@
 const CURRENT_USER = 'loginInfo/CURRENT_USER';
-
-const CURRENT_NOTI = 'loginInfo/CURRENT_NOTI';
-const ADD_NOTI = 'loginInfo/ADD_NOTI';
+const CURRENT_NAME = 'loginInfo/CURRENT_NAME';
 
 export const currentUser = userId => ({
     type: CURRENT_USER,
     userId
 });
+
+export const currentName = name => ({
+    type: CURRENT_NAME,
+    name
+})
 
 const initialState = '';
 
@@ -16,6 +19,11 @@ export default function loginInfo( state = initialState, action) {
             return {
                 ...state,
                 userId: action.userId
+            }
+        case CURRENT_NAME:
+            return {
+                ...state,
+                name: action.name
             }
         default:
             return state;
