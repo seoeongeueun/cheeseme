@@ -25,7 +25,7 @@ export default function LoginModal(props) {
   };
 
   const handleSend = async() => {
-    let res = await FetchAPIPostLogin('/api/users/login', {
+    let res = await FetchAPIPostLogin('/login', {
       name: username,
       password: pw
     });

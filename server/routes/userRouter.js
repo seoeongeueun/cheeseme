@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../models/userModel.js';
 import asyncHandler from '../utils/asyncHandler.js';
+import mongoose from 'mongoose';
 
 const userRouter = express.Router();
 
@@ -11,6 +12,12 @@ userRouter.get('/', asyncHandler(async(req, res) => {
 
 userRouter.get('/:name', asyncHandler(async(req, res) => {
     const user = await User.findOne({name: req.params.name});
+    res.send(user);
+}));
+
+
+userRouter.get('/info/:userId', asyncHandler(async(req, res) => {
+    const user = await User.findOne({_id: mongoose.Types.ObjectId(req.params.userId)});
     res.send(user);
 }));
 
@@ -40,57 +47,43 @@ userRouter.post('/update/:name', asyncHandler(async(req, res) => {
     res.send('Updated')
 }))
 
-let auth = (req, res, next) => {
+let auth = async(req, res, next) => {
     let token = req.cookies.x_auth;
-    User.findByToken(token, (err, user) => {
+    await User.findByToken(token, (err, user) => {
         if (err) throw err;
-        if (!user) return res.json({ isAuth: false, error: true });
-
+        if (!user) return res.json({ isAuth: false, error: true, token });
         req.token = token;
         req.user = user;
         next();
     })
 }
 
-userRouter.post('/login', asyncHandler(async(req, res) => {
-    const user = await User.findOne({ name: req.body.name });
-    if (!user) return res.json({ loginSuccess: false, message: "No user found with username " + req.body.name });
+// userRouter.post('/login', asyncHandler(async(req, res) => {
+//     const user = await User.findOne({ name: req.body.name });
+//     if (!user) return res.json({ loginSuccess: false, message: "No user found with username " + req.body.name });
 
-    user.comparePassword("testing", (err, isMatch) => {
-        if (!isMatch) return res.json({ loginSuccess: false, message: "Incorrect password" });
+//     user.comparePassword("testing", (err, isMatch) => {
+//         if (!isMatch) return res.json({ loginSuccess: false, message: "Incorrect Password"});
 
-        user.generateToken((err, user) => {
-            if (err) return res.status(400).send(err);
+//         user.generateToken((err, user) => {
+//             if (err) return res.status(400).send(err);
 
-            res.cookie("x_auth", user.token)
-                .status(200)
-                .json({ loginSuccess: true, userId: user._id });
-        })  
-      })
-}))
+//             res.cookie("x_auth", user.token)
+//                 .status(200)
+//                 .json({ loginSuccess: true, userId: user._id });
+//         })  
+//     })
+// }))
 
 userRouter.get('/auth', auth, (req, res) => {
     res.status(200).json({
-        _id: req.user._id,
+        _id: mongoose.Types.ObjectId(req.user._id),
         isAdmin: req.user.isAdmin,
         isAuth: true,
         email: req.user.email,
         name: req.user.name,
     })
 })
-
-userRouter.get('/logout', auth, asyncHandler(async(req, res) => {
-    await User.findOneAndUpdate(
-        { _id: req.user._id },
-        { token: "" },
-        (err, user) => {
-            if (err) return res.json({ success: false, err });
-            return res.status(200).send({
-                success: true
-            })
-        }
-    )
-}))
 
 export default userRouter;
 export { auth };

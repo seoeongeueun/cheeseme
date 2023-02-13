@@ -20,16 +20,32 @@ function Login(){
     const [username, setUsername] = useState()
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false);
-    const [userId, setUserId] = useState(); 
+    const [userId, setUserId] = useState();
 
     useEffect(() => {
         if (userId) {
-            
+            axios.get('/api/users/info/' + userId)
+            .then( (res) => {
+                setUsername(res?.data.name);
+            })
+            .catch( (err) => {
+                console.log('Error loading User info: ', err);
+            })
         }
     }, [userId])
 
     const handleLogout = () => {
         setLogin(false);
+        axios.get('/logout')
+            .then( (res) => {
+                if (res?.data.success) {
+                    setUserId(null);
+                    setUsername(null);
+                }
+            })
+            .catch( (err) => {
+                console.log('Error loading User info: ', err);
+            })
     }
 
     const handleLogin = () => {
@@ -42,13 +58,13 @@ function Login(){
 
     return (
         <div className='settingsboxHeaderLogin'>
-            {user ? <div className='loginHeader'>
+            {userId ? <div className='loginHeader'>
                 <span style={{textAlign: 'justify'}}>Welcome Back</span>
                 <span>{username}<img src={Happy} style={{width: '1.7rem'}} alt='happy'/></span>
             </div>
             : <div className='loginHeader'><span>Hello!</span></div>}
             <div className='loginButtons'>
-                {user ? <button className='cancel2' onClick={() => handleLogout()}><span>Logout</span></button> 
+                {userId ? <button className='cancel2' onClick={() => handleLogout()}><span>Logout</span></button> 
                 : <><button className='save2' onClick={() => handleLogin()}><span>Login</span></button><button className='cancel2' onClick={() => setSignup(true)}><span>Sign Up</span></button></>}
             </div>
             {signup && <Signup setSignup={setSignup}/>}
