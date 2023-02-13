@@ -33,7 +33,10 @@ userRouter.post('/add', asyncHandler(async(req, res) => {
     const password = req.body.password;
     const friends = req.body.friends;
     const isAdmin = false;
-    await User.create({ name, email, password, friends, isAdmin })
+    const positions = req.body.positions;
+    const settings = req.body.settings;
+    const notifications = req.body.settings;
+    await User.create({ name, email, password, friends, isAdmin, positions, settings, notifications })
     res.send('Created')
 }));
 
@@ -43,7 +46,15 @@ userRouter.delete("/delete/:name", asyncHandler(async(req, res) => {
 }));
 
 userRouter.post('/update/:name', asyncHandler(async(req, res) => {
-    await User.updateOne({name: req.params.name}, {email: req.body.email, password: req.body.password, friends: req.body.friends, isAdmin: isAdmin});
+    const email = req.body.email;
+    const password = req.body.password;
+    const friends = req.body.friends;
+    const isAdmin = false;
+    const positions = req.body.positions;
+    const settings = req.body.settings;
+    const notifications = req.body.settings;
+    await User.updateOne({name: req.params.name}, 
+    {email: email, password: password, friends: friends, isAdmin: isAdmin, positions: positions, settings: settings, notifications: notifications});
     res.send('Updated')
 }))
 
@@ -77,7 +88,7 @@ let auth = async(req, res, next) => {
 
 userRouter.get('/auth', auth, (req, res) => {
     res.status(200).json({
-        _id: mongoose.Types.ObjectId(req.user._id),
+        _id: req.user._id,
         isAdmin: req.user.isAdmin,
         isAuth: true,
         email: req.user.email,

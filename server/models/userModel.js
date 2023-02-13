@@ -16,6 +16,30 @@ const userSchema = new mongoose.Schema(
                 fav: Boolean,
             }
         ],
+        positions: [
+            {
+                name: String,
+                x: Number,
+                y: Number,
+                show: Boolean
+
+            }
+        ],
+        settings: [
+            {
+                gridLine: Boolean,
+                snsStyle: Boolean
+            }
+        ],
+        notifications: [
+            {
+                type: String,
+                from: String,
+                to: String,
+                done: Boolean,
+                date: Number
+            }
+        ],
         token: {type: String}
     }
 );
