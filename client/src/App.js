@@ -104,7 +104,7 @@ function App() {
         <div className='mainHeader'>
           <div className='fill'/>
           <div className='title'>
-            <a href="/">CheeseMe!</a>
+            <a href="/">아주개같음</a>
             <div className="searchbar">
               <input ref={inputRef} type="text" id="searchWord" name="searchWord" placeholder="Search"/>
               <button onClick={handleClick}><SearchRoundedIcon sx={{fontSize: "21px"}} /></button>
@@ -137,7 +137,7 @@ function App() {
               : <EditModeLeftContainer/>
             : <div className="leftInnerBorderGuest">
                 <img src={BigCheese} alt='bigCheese' style={{width: '10rem', height: '10rem'}}/>
-                <span>Please login to view content! </span>
+                <span>Login Required</span>
               </div>}
           </div>
           <div className="mainRight">
@@ -146,7 +146,7 @@ function App() {
               : <RightContainer/>
             : <div className='rightInnerBorderGuest'>
                 <img src={SmallCheese} alt='smallCheese' style={{width: '10rem', height: '10rem'}}/>
-                <span>Please login to view content</span>
+                <span>Login Required</span>
               </div>}
           </div>
       </main>

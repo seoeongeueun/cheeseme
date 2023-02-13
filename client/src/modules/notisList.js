@@ -15,7 +15,7 @@ export const addNoti = (noti) => ({
     noti
 })
 
-export const removeFriend = (id) => ({
+export const removeNoti = (id) => ({
     type: REMOVE_NOTI,
     id
 })

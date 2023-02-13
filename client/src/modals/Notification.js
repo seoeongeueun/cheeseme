@@ -28,7 +28,7 @@ function Notification({name, notis, userId, onChangeNotis, onAddNoti, onToggleNo
         }
         
     }
-    
+
     useEffect(() => {
         if (tmpObj) {
             updateFriendNoti()
@@ -47,7 +47,6 @@ function Notification({name, notis, userId, onChangeNotis, onAddNoti, onToggleNo
         axios.get('/api/users/' + from)
             .then((res) => {
             if (res) setFriendsNoti(res?.data.notifications)
-            else console.log('why??')
         })
         setTmpObj({notiType: 'receiveAccept', from: name, to: from, done: false, date: new Date().setHours(0, 0, 0, 0)})
         onToggleNoti(id)
@@ -56,6 +55,10 @@ function Notification({name, notis, userId, onChangeNotis, onAddNoti, onToggleNo
     const handleDecline = (id, from) => {
         onAddNoti({notiType: 'declineRequest', from: name, to: from, done: true, date: new Date().setHours(0, 0, 0, 0)})
         setFriendName(from);
+        axios.get('/api/users/' + from)
+            .then((res) => {
+            if (res) setFriendsNoti(res?.data.notifications)
+        })
         setTmpObj({notiType: 'receiveDecline', from: name, to: from, done: false, date: new Date().setHours(0, 0, 0, 0)})
         onToggleNoti(id)
     }
