@@ -199,7 +199,7 @@ export default function Signup(props) {
             <button className='save' onClick={handleSend} type='submit'><span>Confirm</span></button>
             <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
           </div>}
-          {errorType === 'noPw' || errorType === 'noPwCheck' || errorType === 'noName' && <span style={{color: "red"}}>Please fill in all of the fields</span>}
+          {(errorType === 'noPw' || errorType === 'noPwCheck' || errorType === 'noName') && <span style={{color: "red"}}>Please fill in all of the fields</span>}
           {errorType === 'notMatch' && <span style={{color: "red"}}>Password and password check are not matching</span>}
           {errorType === 'shortPw' && <span style={{color: "red"}}>Password needs to be at least 6 characters long</span>}
           {errorType === 'notUnique' && <span style={{color: "red"}}>This username is already taken</span>}

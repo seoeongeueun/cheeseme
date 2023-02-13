@@ -10,6 +10,11 @@ userRouter.get('/', asyncHandler(async(req, res) => {
     res.send(users);
 }));
 
+userRouter.get('/find/:userId', asyncHandler(async(req, res) => {
+    const user = await User.findOne({ _id: mongoose.Types.ObjectId(req.params.userId)});
+    res.send(user);
+}));
+
 userRouter.get('/:name', asyncHandler(async(req, res) => {
     const user = await User.findOne({name: req.params.name});
     res.send(user);
@@ -45,7 +50,21 @@ userRouter.delete("/delete/:name", asyncHandler(async(req, res) => {
     res.send('Deleted');
 }));
 
-userRouter.post('/update/:name', asyncHandler(async(req, res) => {
+userRouter.post('/update/:userId', asyncHandler(async(req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const friends = req.body.friends;
+    const isAdmin = false;
+    const positions = req.body.positions;
+    const settings = req.body.settings;
+    const notifications = req.body.notifications;
+    await User.updateOne({_id: mongoose.Types.ObjectId(req.params.userId)}, 
+    {email: email, password: password, friends: friends, isAdmin: isAdmin, positions: positions, settings: settings, notifications: notifications});
+    res.send('Updated')
+}))
+
+
+userRouter.post('/updateWithName/:name', asyncHandler(async(req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const friends = req.body.friends;

@@ -21,13 +21,16 @@ import { currentUser } from './modules/loginInfo.js';
 import { useSelector, useDispatch } from 'react-redux';
 import BigCheese from './icons/cheese.png';
 import SmallCheese from './icons/smallCheese.png';
+import axios from 'axios';
 
 function App() {
   const [keyword, setKeyword] = useState('');
   const [search, setSearch] = useState(false);
   const [showFriend, setShowFriend] = useState(false);
   const [showNoti, setShowNoti] = useState(false);
-  const [noti, setNoti] = useState([{_id: 1, type: 'declineRequest', from: 'sam', to: 'burgerpants', done: true, date: 1676127600000}, {_id: 1, type: 'sendRequest', from: 'sam', to: 'burgerpants', done: false, date: 1676127600000}])
+  const [noti, setNoti] = useState([]);
+  const [friends, setFriends] = useState([]);
+  const [name, setName] = useState('')
   const [unRead, setUnread] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
   const inputRef = useRef(null);
@@ -37,7 +40,23 @@ function App() {
   }));
 
   useEffect(() => {
-    setUnread(false);
+    if (userId) {
+      axios.get('/api/users/find/' + userId)
+        .then((res) => {
+          const n = res?.data;
+          if (n) {
+            setNoti(n.notifications);
+            setFriends(n.friends);
+            setName(n.name);
+          }
+        })
+        .catch( (err) => {
+            console.log('Error loading note')
+        })
+    }
+  }, [userId])
+
+  useEffect(() => {
     noti?.map(n => (
       n.done === false && setUnread(true)
     ));
@@ -59,6 +78,7 @@ function App() {
 
   useEffect(() => {
     if (showNoti) {
+      setUnread(false);
       setShowAccount(false);
       setShowFriend(false);
     }
@@ -86,7 +106,7 @@ function App() {
               {showNoti ? <button onClick={() => setShowNoti(false)}><NotificationsNoneTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
               : unRead ? <button onClick={() => setShowNoti(true)}><NotificationImportantIcon sx={{fontSize: '2rem'}}/></button>
                 : <button onClick={() => setShowNoti(true)}><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-              {showNoti && <Notification noti={noti} setNoti={setNoti}/>}
+              {showNoti && <Notification userId={userId} noti={noti} setNoti={setNoti} name={name}/>}
             </div>
             <div className='headerButtonSet'>
               {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
