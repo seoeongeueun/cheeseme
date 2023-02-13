@@ -18,10 +18,16 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
     const [removeFriend, setRemoveFriend] = useState(false);
     const [username, setUsername] = useState('');
     const [bye, setBye] = useState('');
+    
+    const updateList = async() => {
+        let res = await FetchAPIPost('/api/users/update/' + userId, {
+            friends: friends
+        });
+    }
 
     useEffect(() => {
-        console.log("friends: ", friends)
-    })
+        updateList();
+    }, [friends])
 
     useEffect(() => {
         if (username != ''){
@@ -67,9 +73,6 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
 
     const handleStar = async(name) => {
         onFavFriend(name);
-        let res = await FetchAPIPost('/api/users/update/' + userId, {
-            friends: friends
-        });
     }
 
     return (
