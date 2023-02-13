@@ -10,6 +10,12 @@ import widgetRouter from './routes/widgetRouter.js';
 import rightRouter from './routes/rightRouter.js'
 import cors from 'cors';
 import userRouter from './routes/userRouter.js';
+import asyncHandler from './utils/asyncHandler.js';
+import User from './models/userModel.js';
+import cookieParser from 'cookie-parser';
+import { auth } from './routes/userRouter.js';
+import bodyParser from 'body-parser';
+
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -25,6 +31,10 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 }).catch( err => {
     console.log(err.message);
 });
+
+app.use(express.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use('/api/seed', seedRouter);
 app.use('/api/notes', notesRouter);

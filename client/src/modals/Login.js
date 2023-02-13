@@ -14,11 +14,19 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import Wink from '../icons/wink.png';
 import Happy from '../icons/happy.png';
 import Signup from './Signup.js';
+import LoginModal from './LoginModal.js';
 
 function Login(){
-    const [username, setUsername] = useState('burgerpants')
+    const [username, setUsername] = useState()
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false);
+    const [userId, setUserId] = useState(); 
+
+    useEffect(() => {
+        if (userId) {
+            
+        }
+    }, [userId])
 
     const handleLogout = () => {
         setLogin(false);
@@ -34,16 +42,17 @@ function Login(){
 
     return (
         <div className='settingsboxHeaderLogin'>
-            {login ? <div className='loginHeader'>
+            {user ? <div className='loginHeader'>
                 <span style={{textAlign: 'justify'}}>Welcome Back</span>
                 <span>{username}<img src={Happy} style={{width: '1.7rem'}} alt='happy'/></span>
             </div>
             : <div className='loginHeader'><span>Hello!</span></div>}
             <div className='loginButtons'>
-                {login ? <button className='cancel2' onClick={() => handleLogout()}><span>Logout</span></button> 
+                {user ? <button className='cancel2' onClick={() => handleLogout()}><span>Logout</span></button> 
                 : <><button className='save2' onClick={() => handleLogin()}><span>Login</span></button><button className='cancel2' onClick={() => setSignup(true)}><span>Sign Up</span></button></>}
             </div>
             {signup && <Signup setSignup={setSignup}/>}
+            {login && <LoginModal setLogin={setLogin} setUserId={setUserId}/>}
         </div>
     );
 }
