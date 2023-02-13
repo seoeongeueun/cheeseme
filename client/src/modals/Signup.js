@@ -205,7 +205,7 @@ export default function Signup(props) {
           {errorType === 'notUnique' && <span style={{color: "red"}}>This username is already taken</span>}
           {errorType === 'noEmail' && <span style={{color: "red"}}>Please enter a correct email</span>}
           {errorType === 'notUniqueEmail' && <span style={{color: "red"}}>This email has already been used for a different account</span>}
-          {errorType === 'success' && <span>Account successfully created. Welcome {username} !</span>}
+          {errorType === 'success' && <span>Welcome {username} ! You can now login to start writing</span>}
           </div>
       </Dialog>
     </div>
