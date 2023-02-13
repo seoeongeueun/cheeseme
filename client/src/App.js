@@ -5,6 +5,7 @@ import RightContainer from './containers/RightContainer';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import SearchResultLeftContainer from './containers/SearchResultLeftContainer.js';
 import SearchResultRightContainer from './containers/SearchResultRightContainer.js';
+import LoginContainer from './containers/LoginContainer.js';
 import AddReactionTwoToneIcon from '@mui/icons-material/AddReactionTwoTone';
 import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -16,6 +17,10 @@ import NotificationsNoneTwoToneIcon from '@mui/icons-material/NotificationsNoneT
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import Login from './modals/Login';
+import { currentUser } from './modules/loginInfo.js';
+import { useSelector, useDispatch } from 'react-redux';
+import BigCheese from './icons/cheese.png';
+import SmallCheese from './icons/smallCheese.png';
 
 function App() {
   const [keyword, setKeyword] = useState('');
@@ -26,6 +31,10 @@ function App() {
   const [unRead, setUnread] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
   const inputRef = useRef(null);
+
+  const { userId } = useSelector(state => ({
+    userId: state.loginInfo.userId,
+  }));
 
   useEffect(() => {
     setUnread(false);
@@ -87,17 +96,29 @@ function App() {
             <div className='headerButtonSet'>
               {showAccount ? <button onClick={() => setShowAccount(false)}><AccountCircleTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
               : <button onClick={() => setShowAccount(true)}><AccountCircleOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-              {showAccount && <Login/>}
+              {showAccount && <LoginContainer/>}
             </div>
           </div>
         </div>
       </header>
       <main>
           <div className="mainLeft">
-            {search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> : <EditModeLeftContainer/> }
+            {userId  ? 
+              search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> 
+              : <EditModeLeftContainer/>
+            : <div className="leftInnerBorderGuest">
+                <img src={BigCheese} alt='bigCheese' style={{width: '10rem', height: '10rem'}}/>
+                <span>Please login to view content! </span>
+              </div>}
           </div>
           <div className="mainRight">
-            {search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/> : <RightContainer/> }
+            {userId ?
+              search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/>
+              : <RightContainer/>
+            : <div className='rightInnerBorderGuest'>
+                <img src={SmallCheese} alt='smallCheese' style={{width: '10rem', height: '10rem'}}/>
+                <span>Please login to view content</span>
+              </div>}
           </div>
       </main>
     </div>

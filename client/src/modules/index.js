@@ -3,12 +3,14 @@ import goals from './goals';
 import editMode from './editMode';
 import notes from './notes';
 import datePick from './datePick';
+import loginInfo from './loginInfo';
 
 const rootReducer = combineReducers({
     goals,
     editMode,
     notes,
-    datePick
+    datePick,
+    loginInfo,
     //add more reducers
 });
 

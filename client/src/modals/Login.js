@@ -16,11 +16,10 @@ import Happy from '../icons/happy.png';
 import Signup from './Signup.js';
 import LoginModal from './LoginModal.js';
 
-function Login(){
+function Login({onCurrentUserChange, userId}){
     const [username, setUsername] = useState()
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false);
-    const [userId, setUserId] = useState();
 
     useEffect(() => {
         if (userId) {
@@ -39,7 +38,7 @@ function Login(){
         axios.get('/logout')
             .then( (res) => {
                 if (res?.data.success) {
-                    setUserId(null);
+                    onCurrentUserChange(null);
                     setUsername(null);
                 }
             })
@@ -68,7 +67,7 @@ function Login(){
                 : <><button className='save2' onClick={() => handleLogin()}><span>Login</span></button><button className='cancel2' onClick={() => setSignup(true)}><span>Sign Up</span></button></>}
             </div>
             {signup && <Signup setSignup={setSignup}/>}
-            {login && <LoginModal setLogin={setLogin} setUserId={setUserId}/>}
+            {login && <LoginModal setLogin={setLogin} onCurrentUserChange={onCurrentUserChange}/>}
         </div>
     );
 }

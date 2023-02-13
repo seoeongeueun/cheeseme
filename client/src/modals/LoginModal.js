@@ -32,7 +32,7 @@ export default function LoginModal(props) {
     if (res.loginSuccess){
       console.log('Login Success');
       setSuccess(true);
-      props.setUserId(res.userId);
+      props.onCurrentUserChange(res.userId);
       props.setLogin(false);
     } else {
       console.log('Login Failed')
