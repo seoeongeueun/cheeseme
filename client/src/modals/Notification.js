@@ -9,10 +9,11 @@ import AddFriend from './AddFriend.js';
 import { FetchAPIPost } from '../utils/api.js';
 import axios from 'axios';
 
-function Notification({name, notis, userId, onChangeNotis, onAddNoti, onToggleNoti}){
+function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, onChangeFriends, onAddFriend}){
     const [friendsNoti, setFriendsNoti] = useState();
     const [tmpObj, setTmpObj] = useState();
-    const [friendName, setFriendName] = useState('')
+    const [friendName, setFriendName] = useState('');
+    const [friendFriends, setFriendFriends] = useState();
 
     const updateFriendNoti = async() => {
         if (friendsNoti) {
@@ -21,13 +22,33 @@ function Notification({name, notis, userId, onChangeNotis, onAddNoti, onToggleNo
                 notifications: newNoti.length > 5 ? newNoti.slice(0,5) : newNoti
             })
             if (res) {
+                onAddFriend(friendName);
                 let res2 = await FetchAPIPost('/api/users/update/' + userId, {
                     notifications: notis.length > 5 ? notis.slice(0, 5) : notis
                 });
+                if (res2) {
+                    let res3 = await FetchAPIPost('/api/users/updateWithName/' + friendName, {
+                        friends: friendFriends.concat({name: name, fav: false})
+                    })
+                }
+
             }
         }
         
     }
+
+    const updateFriends = async() => {
+        let res = await FetchAPIPost('/api/users/update/' + userId, {
+            friends: friends
+        })
+    }
+
+
+    useEffect(() => {
+        if (friends){
+            updateFriends();
+        }
+    }, [friends])
 
     useEffect(() => {
         if (tmpObj) {
@@ -46,7 +67,10 @@ function Notification({name, notis, userId, onChangeNotis, onAddNoti, onToggleNo
         setFriendName(from);
         axios.get('/api/users/' + from)
             .then((res) => {
-            if (res) setFriendsNoti(res?.data.notifications)
+            if (res) {
+                setFriendsNoti(res?.data.notifications);
+                setFriendFriends(res?.data.friends);
+            }
         })
         setTmpObj({notiType: 'receiveAccept', from: name, to: from, done: false, date: new Date().setHours(0, 0, 0, 0)})
         onToggleNoti(id)
@@ -57,7 +81,10 @@ function Notification({name, notis, userId, onChangeNotis, onAddNoti, onToggleNo
         setFriendName(from);
         axios.get('/api/users/' + from)
             .then((res) => {
-            if (res) setFriendsNoti(res?.data.notifications)
+            if (res) {
+                setFriendsNoti(res?.data.notifications);
+                setFriendFriends(res?.data.friends);
+            }
         })
         setTmpObj({notiType: 'receiveDecline', from: name, to: from, done: false, date: new Date().setHours(0, 0, 0, 0)})
         onToggleNoti(id)
