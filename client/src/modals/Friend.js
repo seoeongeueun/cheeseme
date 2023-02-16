@@ -79,23 +79,25 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
                     {/* <span style={{color: "#F9D876"}}>{friends?.length}</span> */}
                 </div>
                 <div className='friendButton'>
-                    <button className={removeFriend ? 'cancel2' : 'save2'} onClick={() => setAddFriend(true)}><span><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
+                    <button disabled={userId ? removeFriend ? true : false : true} className={userId ? removeFriend ? 'cancel2' : 'save2' : 'cancel2'} onClick={() => setAddFriend(true)}><span><AddRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
                     {addFriend && <AddFriendContainer setAddFriend={setAddFriend}/>}
                     {removeFriend ? <button className='save2' onClick={() => setRemoveFriend(false)}><span><CheckRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>
-                    : <button className='cancel2' onClick={() => setRemoveFriend(true)}><span><RemoveRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>}
+                    : <button disabled={userId ? false : true} className='save2' onClick={() => setRemoveFriend(true)}><span><RemoveRoundedIcon sx={{fontSize: '1.5rem'}}/></span></button>}
                 </div>
             </div>
-            {friends?.length > 0 ?
-            <div className='friendList'>
-                {friends.map((f) => (
-                    <div className='friendItem'>
-                        <img src={f.fav ? StarColor : Star} style={{width: '1rem', marginRight: '0.5rem', marginTop: '3px'}} onClick={() => handleStar(f.name)}/>
-                        <span onClick={() => handleClickFriend(f.name)}>{f.name}</span>
-                        {removeFriend && <button onClick={() => handleRemove(f.name)}><span><ClearRoundedIcon sx={{fontSize: '1.2rem', color: 'red'}}/></span></button>}
-                    </div>
-                ))}
-            </div>
-            : <span style={{fontSize: '2rem', color: '#a0a096'}}>Let's add new friends!</span>}
+            {userId ?
+                friends?.length > 0 ?
+                <div className='friendList'>
+                    {friends.map((f) => (
+                        <div className='friendItem'>
+                            <img src={f.fav ? StarColor : Star} style={{width: '1rem', marginRight: '0.5rem', marginTop: '3px'}} onClick={() => handleStar(f.name)}/>
+                            <span onClick={() => handleClickFriend(f.name)}>{f.name}</span>
+                            {removeFriend && <button onClick={() => handleRemove(f.name)}><span><ClearRoundedIcon sx={{fontSize: '1.2rem', color: 'red'}}/></span></button>}
+                        </div>
+                    ))}
+                </div>
+                : <span style={{fontSize: '2rem', color: '#a0a096'}}>Let's add new friends!</span>
+            : <span style={{fontSize: '2rem'}}>Login Required</span>}
             {username != '' && <span style={{color: "red", fontSize: '1.7rem'}}>Friend Request Sent to {username}</span>}
             {bye != '' && <span style={{color: "red", fontSize: '1.7rem'}}>You're no longer friends with {bye}</span>}
         </div>
