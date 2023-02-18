@@ -1,0 +1,40 @@
+import express from 'express';
+import Reminder from '../models/reminderModel.js'
+import asyncHandler from '../utils/asyncHandler.js';
+
+const reminderRouter = express.Router();
+
+reminderRouter.get('/', asyncHandler(async(req, res) => {
+    const remindres = await Reminder.find({});
+    res.send(reminders)
+}));
+
+reminderRouter.get('/:owner', asyncHandler(async(req, res) => {
+    const reminders = await Reminer.findOne({ ownder: req.params.owner });
+    res.send(reminders);
+}));
+
+
+reminderRouter.get('/search/:keyword', asyncHandler(async(req, res) => {
+    const reminder = await Reminder.find({ "reminders.text" : {$regex : req.params.keyword, '$options' : 'i'}});
+    res.send(reminder)
+}));
+
+reminderRouter.post('/add', asyncHandler(async(req, res) => {
+    const owner = req.body.owner;
+    const reminders = req.body.reminders;
+    await Reminder.create({ owner, reminders })
+    res.send('created')
+}));
+
+reminderRouter.delete('/delete/:owner', asyncHandler(async(req, res) => {
+    await Reminder.deleteOne({ owner: req.params.owner });
+    res.send('Deleted');
+}))
+
+reminderRouter.post('/update/:owner', asyncHandler(async(req, res) => {
+    await Reminder.updateOne({ owner: req.params.owner }, { reminders: req.body.reminders });
+    res.send('Updated');
+}))
+
+export default reminder Router;
