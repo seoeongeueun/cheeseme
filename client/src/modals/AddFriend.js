@@ -12,7 +12,7 @@ import axios from 'axios';
 export default function AddFriend({name, setAddFriend, friends, notis}) {
   const [open, setOpen] = useState(true);
   const [entered, setEntered] = useState('')
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(true);
   const [message, setMessage] = useState('');
   const [friendsNoti, setFriendsNoti] = useState();
 
@@ -28,6 +28,14 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
     else {
       setError(false);
       setMessage('Friend Request sent to ' + entered);
+      const id = setTimeout(() => {
+          setOpen(false);
+          setMessage('');
+          setAddFriend(false);
+      }, 2500);
+      return () => {
+          clearTimeout(id)
+      }
 
     }
   }
@@ -39,15 +47,17 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
   // }, [friendsNoti])
 
   useEffect(() => {
-    if (!error && entered !== '' && message === '') updateNotis()
+    if (error === false && entered !== '' && message === '') {
+      updateNotis()
+    }
   }, [error]);
   
-  useEffect(() => {
-    if (error){
-      setError(false);
-      setMessage('');
-    }
-  }, [entered]);
+  // useEffect(() => {
+  //   if (error){
+  //     setError(false);
+  //     setMessage('');
+  //   }
+  // }, [entered]);
 
   const handleClickOpen = (name) => {
     setOpen(true);
@@ -82,12 +92,15 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
     if (friendName !== '') {
       if (name === friendName){
         setMessage('You cannot add yourself')
+        setError(true);
+        return
       }
       else {
         axios.get('/api/users/' + friendName)
           .then((res) => {
             if (res?.data) {
               setFriendsNoti(res?.data.notifications);
+              setMessage('');
               setError(false);
             }
             else {
@@ -101,7 +114,7 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
       }
     }
     else {
-      setMessage('Please enter a correct username')
+      setMessage('Please enter a correct username');
     }
   };
 
@@ -112,7 +125,7 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
           <span style={{fontSize: '3rem'}}>Add Friend</span>
           <div className='dialogContent'>
             <span>Enter a username to add. Make sure you enter a correct username.</span>
-            <input className='dialogInput' placeholder='username' onChange={(e) => setEntered(e.target.value)} style={{color: error ? '#929292' : 'black'}}></input>
+            <input className='dialogInput' placeholder='username' onChange={(e) => setEntered(e.target.value)} style={{color: (error && message !== '') ? '#929292' : 'black'}}></input>
           </div>
           <div className='dialogActions'>
             <button className='save' onClick={() => handleSend(entered)}><span>Send</span></button>
