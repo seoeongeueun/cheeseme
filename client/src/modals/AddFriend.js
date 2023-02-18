@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { FetchAPIPost } from '../utils/api.js';
 import axios from 'axios';
 
-export default function AddFriend({name, setAddFriend}) {
+export default function AddFriend({name, setAddFriend, friends, notis}) {
   const [open, setOpen] = useState(true);
   const [entered, setEntered] = useState('')
   const [error, setError] = useState(false);
@@ -50,16 +50,41 @@ export default function AddFriend({name, setAddFriend}) {
     setAddFriend(false);
   };
 
+  const checkFriend = (name) => {
+    friends?.map((f) => {
+      if (f.name === name) {
+        setMessage(name + ' is already your friend');
+        setError(true);
+      }
+    })
+  };
+
+  const checkNotis = (name) => {
+    notis?.map((n) => {
+      if (n.notiType === 'sendRequest' && n.from === name && n.done === false) {
+        setMessage('You have a pending friend request from ' + name);
+        setError(true);
+      }
+    })
+  }
+
   const handleSend = async(friendName) => {
     if (friendName !== '') {
-      axios.get('/api/users/' + friendName)
-        .then((res) => {
-          if (res) setFriendsNoti(res?.data.notifications)
-          else {
-            setMessage('User with username ' + friendName + ' does not exit');
-            setError(true);
-          }
-        })
+      checkFriend(friendName);
+      checkNotis(friendName);
+      if (!error){
+        axios.get('/api/users/' + friendName)
+          .then((res) => {
+            if (res) {
+              setFriendsNoti(res?.data.notifications);
+              setError(false);
+            }
+            else {
+              setMessage('User with username ' + friendName + ' does not exit');
+              setError(true);
+            }
+          })
+      }
     }
     else {
       setMessage('Please enter a correct username')
