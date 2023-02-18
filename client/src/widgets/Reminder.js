@@ -5,7 +5,7 @@ import Draggable from 'react-draggable';
 import axios from 'axios';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
-function Reminder({move, onCreate, onToggle, onDelete, date, userId}){
+function Reminder({move, onCreate, onToggle, onDelete, userId}){
     const [editMode, setEditMode] = useState(false);
     const [reminders, setReminders] = useState([{title: '컵 정리하기', detail: '할리스 컵', check: false, color: 'red'}]);
     const [show, setShow] = useState(false);

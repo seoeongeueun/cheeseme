@@ -40,6 +40,7 @@ function Left({editMode, setEditMode, date}){
     const [todo, setTodo] = useState(true);
     const [calendar, setCalendar] = useState(true);
     const [notes, setNotes] = useState(true);
+    const [reminder, setReminder] = useState(true);
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
@@ -68,6 +69,8 @@ function Left({editMode, setEditMode, date}){
     const [todoPosition, setTodoPosition] = useState({x: 0, y: 0})
     const [ddayPosition, setDdayPosition] = useState({x: 0, y: 0})
     const [notePosition, setNotePosition] = useState({x: 0, y: 0})
+    const [reminderPosition, setReminderPosition] = useState({x: 0, y: 0});
+
 
     const [id, setId] = useState("");
 
@@ -250,6 +253,8 @@ function Left({editMode, setEditMode, date}){
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(350), bottom: height-(350 + 45)}} position={calPosition} onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 98), bottom: height-(350 - 33)}} position={todoPosition} onStop={(e, {x, y}) => setTodoPosition({x, y})} handle="strong"><div><TodosContainer move={editMode} date={date}/></div></Draggable>} 
                         {notes && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={notePosition} onStop={(e, {x, y}) => setNotePosition({x, y})} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
+                        {reminder && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={reminderPosition} onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><RemindersContainer move={editMode}/></div></Draggable>}
+
                         <div className="stickers">
                             {stickerList?.length > 0 &&
                                 stickerList.map((value, index) => {
