@@ -93,6 +93,7 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
             else {
               setMessage('User with username ' + friendName + ' does not exit');
               setError(true);
+              return;
             }
           })
         .then(checkFriend(friendName))
