@@ -8,6 +8,7 @@ import ddayRouter from './routes/ddayRouter.js';
 import positionRouter from './routes/positionRouter.js';
 import widgetRouter from './routes/widgetRouter.js';
 import rightRouter from './routes/rightRouter.js'
+import reminderRouter from './routes/reminderRouter.js'
 import cors from 'cors';
 import userRouter from './routes/userRouter.js';
 import asyncHandler from './utils/asyncHandler.js';
@@ -42,6 +43,7 @@ app.use('/api/position', positionRouter);
 app.use('/api/widget', widgetRouter);
 app.use('/api/right', rightRouter);
 app.use('/api/users', userRouter);
+app.use('/api/reminder', reminderRouter);
 
 app.get('/logout', auth, (req, res) => {
     //미들웨어에서 가져옴

@@ -15,8 +15,13 @@ reminderRouter.get('/:owner', asyncHandler(async(req, res) => {
 }));
 
 
-reminderRouter.get('/search/:keyword', asyncHandler(async(req, res) => {
-    const reminder = await Reminder.find({ "reminders.text" : {$regex : req.params.keyword, '$options' : 'i'}});
+reminderRouter.get('/search/title/:keyword', asyncHandler(async(req, res) => {
+    const reminder = await Reminder.find({ "reminders.title" : {$regex : req.params.keyword, '$options' : 'i'}});
+    res.send(reminder)
+}));
+
+reminderRouter.get('/search/detail/:keyword', asyncHandler(async(req, res) => {
+    const reminder = await Reminder.find({ "reminders.detail" : {$regex : req.params.keyword, '$options' : 'i'}});
     res.send(reminder)
 }));
 

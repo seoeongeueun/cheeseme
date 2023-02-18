@@ -27,6 +27,7 @@ import CropSquareSharpIcon from '@mui/icons-material/CropSquareSharp';
 import TodosContainer from '../containers/TodosContainer';
 import NotesContainer from '../containers/NotesContainer';
 import CalendarContainer from '../containers/CalendarContainer';
+import RemindersContainer from '../containers/RemindersContainer.js';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 import axios from 'axios';
 

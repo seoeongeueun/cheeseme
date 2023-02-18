@@ -5,7 +5,8 @@ const reminderSchema = new mongoose.Schema({
     reminders: [
         {
             date: Number,
-            text: String,
+            title: String,
+            detail: String,
             check: Boolean,
             color: String,
         }
