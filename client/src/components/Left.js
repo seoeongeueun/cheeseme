@@ -27,7 +27,7 @@ import CropSquareSharpIcon from '@mui/icons-material/CropSquareSharp';
 import TodosContainer from '../containers/TodosContainer';
 import NotesContainer from '../containers/NotesContainer';
 import CalendarContainer from '../containers/CalendarContainer';
-import RemindersContainer from '../containers/RemindersContainer.js';
+import ReminderContainer from '../containers/ReminderContainer.js';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 import axios from 'axios';
 
@@ -253,7 +253,7 @@ function Left({editMode, setEditMode, date}){
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(350), bottom: height-(350 + 45)}} position={calPosition} onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
                         {todo && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 98), bottom: height-(350 - 33)}} position={todoPosition} onStop={(e, {x, y}) => setTodoPosition({x, y})} handle="strong"><div><TodosContainer move={editMode} date={date}/></div></Draggable>} 
                         {notes && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={notePosition} onStop={(e, {x, y}) => setNotePosition({x, y})} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
-                        {reminder && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={reminderPosition} onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><RemindersContainer move={editMode}/></div></Draggable>}
+                        {reminder && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={reminderPosition} onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
 
                         <div className="stickers">
                             {stickerList?.length > 0 &&

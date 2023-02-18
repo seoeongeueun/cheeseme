@@ -23,7 +23,7 @@ function Reminder({move, onCreate, onToggle, onDelete, userId}){
     }, []);
 
     const handleTitleClick = () => {
-        setShow(true);
+        setShow(!show);
     };
 
     return (
