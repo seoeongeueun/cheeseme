@@ -27,22 +27,32 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
     }
     else {
       setError(false);
-      setAddFriend(false);
+      setMessage('Friend Request sent to ' + entered);
+
     }
   }
 
+  // useEffect(() => {
+  //   if (friendsNoti) {
+  //     if (!error) updateNotis();
+  //   }
+  // }, [friendsNoti])
+
   useEffect(() => {
-    if (friendsNoti) updateNotis();
-  }, [friendsNoti])
+    if (!error && entered !== '' && message === '') updateNotis()
+  }, [error]);
   
   useEffect(() => {
     if (error){
       setError(false);
+      setMessage('');
     }
   }, [entered]);
 
   const handleClickOpen = (name) => {
     setOpen(true);
+    setError(false);
+    setAddFriend(false);
   };
 
   const handleClose = () => {
@@ -50,8 +60,8 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
     setAddFriend(false);
   };
 
-  const checkFriend = (name) => {
-    friends?.map((f) => {
+  const checkFriend = async(name) => {
+    await friends?.forEach((f) => {
       if (f.name === name) {
         setMessage(name + ' is already your friend');
         setError(true);
@@ -59,8 +69,8 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
     })
   };
 
-  const checkNotis = (name) => {
-    notis?.map((n) => {
+  const checkNotis = async(name) => {
+    await notis?.forEach((n) => {
       if (n.notiType === 'sendRequest' && n.from === name && n.done === false) {
         setMessage('You have a pending friend request from ' + name);
         setError(true);
@@ -70,9 +80,10 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
 
   const handleSend = async(friendName) => {
     if (friendName !== '') {
-      checkFriend(friendName);
-      checkNotis(friendName);
-      if (!error){
+      if (name === friendName){
+        setMessage('You cannot add yourself')
+      }
+      else {
         axios.get('/api/users/' + friendName)
           .then((res) => {
             if (res) {
@@ -84,6 +95,8 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
               setError(true);
             }
           })
+        .then(checkFriend(friendName))
+        .then(checkNotis(friendName));
       }
     }
     else {
@@ -104,7 +117,6 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
             <button className='save' onClick={() => handleSend(entered)}><span>Send</span></button>
             <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
           </div>
-          {error && <span style={{color: "red"}}>Error: User <i>{entered}</i> is already your friend!</span>}
           {message !== '' && <span style={{color: "red"}}>{message}</span>}
           </div>
       </Dialog>
