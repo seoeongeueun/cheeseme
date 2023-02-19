@@ -361,6 +361,61 @@ main {
 }
 /* end of dday widget */
 
+/* start of reminder widget */
+.reminderWidget {
+  width: 25rem;
+  border: 1px solid #d2d2d2;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: absolute;
+  top: 2rem;
+  height: 13rem;
+}
+
+.reminderHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.reminderContent {
+  width: 100%;
+  overflow: hidden;
+}
+
+.reminderContent:hover {
+  overflow-y: scroll;
+}
+
+.reminderItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.reminderItem button {
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 2rem;
+  text-align: left;
+}
+.reminderTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.reminderDetail {
+  width: 100%;
+  cursor: pointer;
+  padding-bottom: 0.2rem;
+}
+
+/* end of reminder widget */
 /* Right content */
 .rightInnerBorder {
   background-color: #FFFFFF;
