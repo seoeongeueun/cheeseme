@@ -31,7 +31,7 @@ import ReminderContainer from '../containers/ReminderContainer.js';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 import axios from 'axios';
 
-function Left({editMode, setEditMode, date}){
+function Left({editMode, setEditMode, date, userId, positions, onChangePositions}){
     const [showSettings, setShowSettings] = useState(false);
     const [showWidgetSettings, setShowWidgetSettings] = useState(false);
 
@@ -82,64 +82,51 @@ function Left({editMode, setEditMode, date}){
     }
     
     const change = async () => {
-        let res = await FetchAPIPost('/api/position/update/' + id, {
-            cal: [Object.values(calPosition)[0], Object.values(calPosition)[1]],
-            dday: [Object.values(ddayPosition)[0], Object.values(ddayPosition)[1]],
-            note: [Object.values(notePosition)[0], Object.values(notePosition)[1]],
-            todo: [Object.values(todoPosition)[0], Object.values(todoPosition)[1]],
+        const newState = [{name: 'cal', x: Object.values(calPosition)[0], y: Object.values(calPosition)[1], show: true},
+            {name: 'dday', x: Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1], show: true},
+            {name: 'note', x: Object.values(notePosition)[0], y: Object.values(notePosition)[1], show: true},
+            {name: 'todo', x: Object.values(todoPosition)[0], y: Object.values(todoPosition)[1], show: true},
+            {name: 'reminder', x: Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1], show: true}];
+        
+        let res = await FetchAPIPost('/api/users/update/' + userId, {
+            positions: newState
         });
-    }
-    const addNew = async () => {
-        let res = await FetchAPIPost('/api/position/add/', {
-            cal: [Object.values(calPosition)[0], Object.values(calPosition)[1]],
-            dday: [Object.values(ddayPosition)[0], Object.values(ddayPosition)[1]],
-            note: [Object.values(notePosition)[0], Object.values(notePosition)[1]],
-            todo: [Object.values(todoPosition)[0], Object.values(todoPosition)[1]],
-        });
+        onChangePositions(newState);
     }
 
     useEffect(() => {
         setToday(new Date().setHours(0, 0, 0, 0));
-        axios.get('/api/position/' + "default")
-            .then( (res) => {
-                const n = res?.data;
-                setCalPosition({x: n.cal[0], y: n.cal[1]});
-                setTodoPosition({x: n.todo[0], y: n.todo[1]});
-                setDdayPosition({x: n.dday[0], y: n.dday[1]});
-                setNotePosition({x: n.note[0], y: n.note[1]});
-                setId("default")
-                return;
-            })
-            .catch( (err) => {
-                console.log('Error loading positions: ', err);
-                addNew();
-                setId("default");
-                console.log("position created")
-            })
     }, [id]);
 
-    useEffect(() => {
-
-    }, [calPosition, todoPosition, ddayPosition, notePosition])
-
     // useEffect(() => {
-    //     axios.get('/api/position/')
-    //         .then( (res) => {
-    //             const n = res?.data;
-    //             if (n) {
-    //                 setCalPosition({x: n.cal[0], y: n.cal[1]});
-    //                 setTodoPosition({x: n.todo[0], y: n.todo[1]});
-    //                 setDdayPosition({x: n.dday[0], y: n.dday[1]});
-    //                 setNotePosition({x: n.note[0], y: n.note[1]});
-    //                 setId("default");
-    //             }
-    //             return;
-    //         })
-    //         .catch( (err) => {
-    //             setId("")
-    //             console.log('Error loading positions');
-    //         })
-    // }, [id]);
+    //     if (positions) {
+    //         console.log('po: ', positions)
+    //         console.log(positions[0])
+    //         setCalPosition({x: Object.values(positions[0])[1], y: Object.values(positions[0])[2]});
+    //         setTodoPosition({x: Object.values(positions[1])[1], y: Object.values(positions[1])[2]});
+    //         setDdayPosition({x: Object.values(positions[2])[1], y: Object.values(positions[2])[2]});
+    //         setNotePosition({x: Object.values(positions[3])[1], y: Object.values(positions[3])[2]});
+    //         setReminderPosition({x: Object.values(positions[4])[1], y: Object.values(positions[4])[2]});
+    //     }
+    // }, [userId])
+
+    useEffect(() => {
+        axios.get('/api/users/find/' + userId)
+        .then((res) => {
+          const n = res?.data;
+          if (n) {
+            onChangePositions(n.positions);
+            setCalPosition({x: Object.values(n.positions[0])[1], y: Object.values(n.positions[0])[2]});
+            setDdayPosition({x: Object.values(n.positions[1])[1], y: Object.values(n.positions[1])[2]});
+            setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
+            setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
+            setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
+          }
+        })
+        .catch( (err) => {
+            console.log('Error loading positions')
+        })
+    }, [userId]);
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver((event) => {
@@ -168,7 +155,7 @@ function Left({editMode, setEditMode, date}){
     }, [addPic, today]);
 
     useEffect(() => {
-        if (!editMode && id != "") {
+        if (!editMode) {
             change();
         }
     }, [editMode]);

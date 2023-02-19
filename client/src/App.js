@@ -36,6 +36,7 @@ function App() {
   const [name, setName] = useState('')
   const [unRead, setUnread] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
+  const [positions, setPositions] = useState([]);
   const inputRef = useRef(null);
 
   const { userId } = useSelector(state => ({

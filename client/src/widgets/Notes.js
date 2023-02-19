@@ -30,7 +30,7 @@ function Notes({move, onEdit, note, onCreate, date}){
             .catch( (err) => {
                 console.log('Error loading note')
             })
-    }, [])
+    }, []);
 
     useEffect(() => {
         axios.get('/api/notes/' + date)
@@ -46,7 +46,7 @@ function Notes({move, onEdit, note, onCreate, date}){
             .catch( (err) => {
                 console.log('Error loading note')
             })
-    }, [date])
+    }, [date]);
     
     useEffect(() => {
 
