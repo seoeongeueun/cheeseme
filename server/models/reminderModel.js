@@ -8,7 +8,6 @@ const reminderSchema = new mongoose.Schema({
             title: String,
             detail: String,
             check: Boolean,
-            color: String,
         }
     ]
 });

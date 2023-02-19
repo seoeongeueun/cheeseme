@@ -104,7 +104,7 @@ function App() {
         <div className='mainHeader'>
           <div className='fill'/>
           <div className='title'>
-            <a href="/">아주개같음</a>
+            <a href="/">CheeseMe</a>
             <div className="searchbar">
               <input ref={inputRef} type="text" id="searchWord" name="searchWord" placeholder="Search"/>
               <button onClick={handleClick}><SearchRoundedIcon sx={{fontSize: "21px"}} /></button>

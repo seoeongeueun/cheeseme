@@ -6,11 +6,9 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
-
 import Draggable from 'react-draggable';
 import axios from 'axios';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
-import { create } from '@mui/material/styles/createTransitions.js';
 
 function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
     const [editMode, setEditMode] = useState(false);
@@ -73,7 +71,6 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
     }
 
     const handleEditReminder = (i, title) => {
-        console.log('i: ', i)
         //onEdit(_id, title, '');
         const newState = reminders.map(r => {
             if (reminders.indexOf(r) === i){

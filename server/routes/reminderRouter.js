@@ -5,7 +5,7 @@ import asyncHandler from '../utils/asyncHandler.js';
 const reminderRouter = express.Router();
 
 reminderRouter.get('/', asyncHandler(async(req, res) => {
-    const remindres = await Reminder.find({});
+    const reminders = await Reminder.find({});
     res.send(reminders)
 }));
 
