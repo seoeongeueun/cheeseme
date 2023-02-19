@@ -372,7 +372,6 @@ main {
   position: absolute;
   top: 2rem;
   min-height: min-content;
-  max-height: 14rem;
 }
 
 .reminderWidget input {

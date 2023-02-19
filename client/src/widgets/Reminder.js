@@ -5,6 +5,7 @@ import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 
 import Draggable from 'react-draggable';
 import axios from 'axios';
@@ -71,10 +72,11 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
         setReminders([...reminders, {title: '', detail: '', check: false}])
     }
 
-    const handleEditReminder = (_id, title) => {
-        onEdit(_id, title, '');
+    const handleEditReminder = (i, title) => {
+        console.log('i: ', i)
+        //onEdit(_id, title, '');
         const newState = reminders.map(r => {
-            if (r._id === _id){
+            if (reminders.indexOf(r) === i){
                 return {...r, title: title}
             }
             return r;
@@ -82,10 +84,10 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
         setReminders(newState);
     }
 
-    const handleEditDetail = (_id, title, detail) => {
-        onEdit(_id, title, detail);
+    const handleEditDetail = (i, title, detail) => {
+        //onEdit(_id, title, detail);
         const newState = reminders.map(r => {
-            if (r._id === _id){
+            if (reminders.indexOf(r) === i) {
                 return {...r, detail: detail}
             }
             return r;
@@ -105,6 +107,10 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
         })
     }
 
+    const handleDelete = (i) => {
+        setReminders(reminders.filter( e => reminders.indexOf(e) !== i));
+    }
+
     return (
         <div className='reminderWidget'>
             {move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
@@ -116,18 +122,19 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                     : <button onClick={() => setEditMode(true)}><RemoveRoundedIcon sx={{fontSize: "1.5rem"}}/></button>}
                 </div>
             </div>
-            <div className='reminderContent' id='reminderContent' style={{overflowY: show ? 'scroll' : 'hidden'}}>
+            <div className='reminderContent' id='reminderContent' style={{overflowY: show ? 'scroll' : 'hidden', maxHeight: show ? '17rem' : ''}}>
                 {reminders?.length > 0 && reminders.map((r, i) => (
                     <div className='reminderItem'>
                         <div className='reminderTitle'>
                             <button style={{backgroundColor: colorCode[i%colorCode.length]}}>
-                                {editMode ? <input className='reminderInput' value={r.title} onChange={(e) => handleEditReminder(r._id, e.target.value)}/>
+                                {editMode ? 
+                                <><input className='reminderInput' value={r.title} onChange={(e) => handleEditReminder(i, e.target.value)}/><ClearRoundedIcon onClick={() => handleDelete(i)} sx={{fontSize: '1.2rem', color: 'red'}}/></>
                                 : <label style={{textDecoration: r.check ? 'line-through' : 'none', cursor: 'pointer'}} onClick={() => handleCheckTitle(r._id)}>{r.title}</label>}
                             </button>
-                            <button onClick={() => handleTitleClick()} style={{width: '10%', backgroundColor: colorCode[i%colorCode.length]}}>{show ? <ArrowDropUpIcon sc={{fontSize: '1.7rem'}}/> : <ArrowDropDownIcon sx={{fontSize: '1.7rem'}}/>}</button>
+                            <button onClick={() => handleTitleClick()} style={{width: '10%', backgroundColor: colorCode[i%colorCode.length]}}>{show ? <ArrowDropUpIcon sx={{fontSize: '1.5rem'}}/> : <ArrowDropDownIcon sx={{fontSize: '1.7rem'}}/>}</button>
                         </div>
                         {(show && r.detail !== '' && !editMode) && <div className='reminderDetail' onClick={() => setShow(false)} style={{backgroundColor: colorCodeLight[i%colorCodeLight.length]}}><span style={{fontSize: '1.9rem', marginLeft: '0.7rem'}}>{r.detail}</span></div>}
-                        {(show && editMode) && <input style={{marginLeft: '0.6rem'}} value={r.detail} onChange={(e) => handleEditDetail(r._id, r.title, e.target.value)}/>}
+                        {(show && editMode) && <input style={{marginLeft: '0.6rem'}} value={r.detail} onChange={(e) => handleEditDetail(i, r.title, e.target.value)}/>}
                     </div>
                 ))}
             </div>
