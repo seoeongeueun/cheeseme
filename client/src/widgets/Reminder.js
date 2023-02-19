@@ -9,21 +9,23 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import Draggable from 'react-draggable';
 import axios from 'axios';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
+import { create } from '@mui/material/styles/createTransitions.js';
 
 function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
     const [editMode, setEditMode] = useState(false);
-    const [reminders, setReminders] = useState([{title: '컵 정리하기', detail: '컵 할리스 컵', check: false, color: 'rgba(206, 151, 251, 0.3)'},
-    {title: '컴퓨터 끄기', detail: '꼭 끄세요', check: false, color: 'rgba(250, 169, 157, 0.3)'},
-    {title: '다이아몬드', detail: '컵 할리스 컵', check: false, color: 'rgba(253, 223, 126, 0.3)'},
-    {title: '컵 정리하기', detail: '컵 할리스 컵', check: false, color: 'rgba(155, 251, 225, 0.3)'},
-    {title: '컵 정리하기', detail: '컵 할리스 컵', check: false, color: 'rgba(155, 251, 225, 0.3)'}]);
+    const [notFound, setNotFound] = useState(false);
     const [show, setShow] = useState(false);
+    const [reminders, setReminders] = useState([]);
+    const [colorCode, setColorCode] = useState(['rgba(206, 151, 251, 0.3)', 'rgba(250, 169, 157, 0.3)', 'rgba(253, 223, 126, 0.3)', 'rgba(103, 235, 250, 0.3)'])
+    const [colorCodeLight, setColorCodeLight] = useState(['rgba(206, 151, 251, 0.1)', 'rgba(250, 169, 157, 0.1)', 'rgba(253, 223, 126, 0.1)', 'rgba(103, 235, 250, 0.1)'])
     //rgba(250, 169, 157, 0.4) rgba(253, 223, 126, 0.4) rgba(155, 251, 225, 0.4) rgba(103, 235, 250, 0.4)
     useEffect(() => {
         axios.get('/api/reminder/' + userId)
             .then((res) => {
                 if (res?.data){
                     setReminders(res?.data.reminders);
+                } else {
+                    setNotFound(true);
                 }
             })
             .catch((err) => {
@@ -37,11 +39,12 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
         })
     }
 
-    useEffect(() => {
-        if (reminders) {
-            updateReminders()
-        }
-    }, [reminders])
+    const createReminders = async() => {
+        let res = await FetchAPIPost('/api/reminder/add', {
+            owner: userId,
+            reminders: reminders
+        })
+    }
 
     const handleTitleClick = () => {
         let contentDiv = document.getElementById("reminderContent");
@@ -53,16 +56,53 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
 
     const handleSave = () => {
         setEditMode(false);
+        setShow(false)
+        if (notFound) {
+            createReminders();
+            setNotFound(false);
+        } else {
+            updateReminders()
+        }
     }
 
     const handleAdd = () => {
         setEditMode(true);
         onCreate('', '');
-        setReminders([...reminders, {title: '', text: '', check: false}])
+        setReminders([...reminders, {title: '', detail: '', check: false}])
     }
 
     const handleEditReminder = (_id, title) => {
         onEdit(_id, title, '');
+        const newState = reminders.map(r => {
+            if (r._id === _id){
+                return {...r, title: title}
+            }
+            return r;
+        });
+        setReminders(newState);
+    }
+
+    const handleEditDetail = (_id, title, detail) => {
+        onEdit(_id, title, detail);
+        const newState = reminders.map(r => {
+            if (r._id === _id){
+                return {...r, detail: detail}
+            }
+            return r;
+        });
+        setReminders(newState);
+    }
+
+    const handleCheckTitle = async(_id) => {
+        onToggle(_id);
+        const newState = reminders.map(r => {
+            if (r._id === _id) return {...r, check: !r.check};
+            return r;
+        });
+        setReminders(newState);
+        let res = await FetchAPIPost('/api/reminder/update/' + userId, {
+            reminders: newState
+        })
     }
 
     return (
@@ -77,16 +117,17 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                 </div>
             </div>
             <div className='reminderContent' id='reminderContent' style={{overflowY: show ? 'scroll' : 'hidden'}}>
-                {reminders?.length > 0 && reminders.map((r) => (
+                {reminders?.length > 0 && reminders.map((r, i) => (
                     <div className='reminderItem'>
                         <div className='reminderTitle'>
-                            <button style={{backgroundColor: r.color}}>
-                                {r.title === '' ? <input className='reminderInput' onChange={(e) => handleEditReminder(r._id, e.target.value)}/>
-                                : <label style={{textDecoration: r.done ? 'line-through' : 'none'}}>{r.title}</label>}
+                            <button style={{backgroundColor: colorCode[i%colorCode.length]}}>
+                                {editMode ? <input className='reminderInput' value={r.title} onChange={(e) => handleEditReminder(r._id, e.target.value)}/>
+                                : <label style={{textDecoration: r.check ? 'line-through' : 'none', cursor: 'pointer'}} onClick={() => handleCheckTitle(r._id)}>{r.title}</label>}
                             </button>
-                            <button onClick={() => handleTitleClick()} style={{width: '10%', backgroundColor: r.color}}>{show ? <ArrowDropUpIcon sc={{fontSize: '1.7rem'}}/> : <ArrowDropDownIcon sx={{fontSize: '1.7rem'}}/>}</button>
+                            <button onClick={() => handleTitleClick()} style={{width: '10%', backgroundColor: colorCode[i%colorCode.length]}}>{show ? <ArrowDropUpIcon sc={{fontSize: '1.7rem'}}/> : <ArrowDropDownIcon sx={{fontSize: '1.7rem'}}/>}</button>
                         </div>
-                        {show && <div className='reminderDetail' style={{backgroundColor: ''}} onClick={() => handleTitleClick()}><span style={{fontSize: '1.9rem', marginLeft: '0.7rem'}}>{r.detail}</span></div>}
+                        {(show && r.detail !== '' && !editMode) && <div className='reminderDetail' onClick={() => setShow(false)} style={{backgroundColor: colorCodeLight[i%colorCodeLight.length]}}><span style={{fontSize: '1.9rem', marginLeft: '0.7rem'}}>{r.detail}</span></div>}
+                        {(show && editMode) && <input style={{marginLeft: '0.6rem'}} value={r.detail} onChange={(e) => handleEditDetail(r._id, r.title, e.target.value)}/>}
                     </div>
                 ))}
             </div>

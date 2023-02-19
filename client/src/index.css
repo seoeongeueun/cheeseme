@@ -372,7 +372,11 @@ main {
   position: absolute;
   top: 2rem;
   min-height: min-content;
-  max-height: 13rem;
+  max-height: 14rem;
+}
+
+.reminderWidget input {
+  width: 23rem;
 }
 
 .reminderHeader {
@@ -390,6 +394,10 @@ main {
 
 .reminderContent {
   width: 100%;
+}
+
+.reminderContent input {
+  font-size: 1.7rem;
 }
 
 .reminderContent:hover {
