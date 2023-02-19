@@ -155,7 +155,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     }, [addPic, today]);
 
     useEffect(() => {
-        if (!editMode) {
+        if (userId && editMode === false) {
             change();
         }
     }, [editMode]);
