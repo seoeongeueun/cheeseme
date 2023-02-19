@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const reminderSchema = new mongoose.Schema({
-    owner: {type: String, required: true, unique: true }
+    owner: {type: String, required: true, unique: true },
     reminders: [
         {
             date: Number,
@@ -13,6 +13,6 @@ const reminderSchema = new mongoose.Schema({
     ]
 });
 
-const Reminder = mongoose.model("Reminder", todosSchema);
+const Reminder = mongoose.model("Reminder", reminderSchema);
 
 export default Reminder;

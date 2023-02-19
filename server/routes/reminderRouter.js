@@ -10,7 +10,7 @@ reminderRouter.get('/', asyncHandler(async(req, res) => {
 }));
 
 reminderRouter.get('/:owner', asyncHandler(async(req, res) => {
-    const reminders = await Reminer.findOne({ ownder: req.params.owner });
+    const reminders = await Reminder.findOne({ ownder: req.params.owner });
     res.send(reminders);
 }));
 
@@ -42,4 +42,4 @@ reminderRouter.post('/update/:owner', asyncHandler(async(req, res) => {
     res.send('Updated');
 }))
 
-export default reminder Router;
+export default reminderRouter;
