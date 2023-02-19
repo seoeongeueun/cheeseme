@@ -4,7 +4,7 @@ import Reminder from '../widgets/Reminder.js';
 import { addReminder, toggleReminder, deleteReminder, editReminder } from '../modules/reminders';
 
 function RemindersContainer(props) {
-    const reminders = useSelector(state => state.reminders);
+    const {reminders} = useSelector(state => state.reminders);
     const dispatch = useDispatch();
 
     const onCreate = (title, detail) => dispatch(addReminder(title, detail));
@@ -12,7 +12,7 @@ function RemindersContainer(props) {
     const onDelete = useCallback(_id => dispatch(deleteReminder(_id)), [dispatch])
     const onEdit = useCallback((_id, title, detail) => dispatch(editReminder(_id, title, detail)), [dispatch])
 
-    return <Reminder move={props.move} onEdit={onEdit} onCreate={onCreate} onToggle={onToggle} onDelete={onDelete}/>;
+    return <Reminder reminders={reminders} move={props.move} onEdit={onEdit} onCreate={onCreate} onToggle={onToggle} onDelete={onDelete}/>;
 }
 
 export default RemindersContainer;
