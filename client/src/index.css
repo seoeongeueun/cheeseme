@@ -371,18 +371,19 @@ main {
   justify-content: flex-start;
   position: absolute;
   top: 2rem;
-  height: 13rem;
+  min-height: min-content;
+  max-height: 13rem;
 }
 
 .reminderHeader {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .reminderContent {
   width: 100%;
-  overflow: hidden;
 }
 
 .reminderContent:hover {

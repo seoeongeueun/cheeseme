@@ -10,10 +10,11 @@ import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
 function Reminder({move, onCreate, onToggle, onDelete, userId}){
     const [editMode, setEditMode] = useState(false);
-    const [reminders, setReminders] = useState([{title: '컵 정리하기', detail: '컵 할리스 컵', check: false, color: 'rgba(206, 151, 251, 0.4)'},
-    {title: '컴퓨터 끄기', detail: '꼭 끄세요', check: false, color: 'rgba(250, 169, 157, 0.4)'},
-    {title: '다이아몬드', detail: '컵 할리스 컵', check: false, color: 'rgba(253, 223, 126, 0.4)'},
-    {title: '컵 정리하기', detail: '컵 할리스 컵', check: false, color: 'rgba(155, 251, 225, 0.4)'}]);
+    const [reminders, setReminders] = useState([{title: '컵 정리하기', detail: '컵 할리스 컵', check: false, color: 'rgba(206, 151, 251, 0.3)'},
+    {title: '컴퓨터 끄기', detail: '꼭 끄세요', check: false, color: 'rgba(250, 169, 157, 0.3)'},
+    {title: '다이아몬드', detail: '컵 할리스 컵', check: false, color: 'rgba(253, 223, 126, 0.3)'},
+    {title: '컵 정리하기', detail: '컵 할리스 컵', check: false, color: 'rgba(155, 251, 225, 0.3)'},
+    {title: '컵 정리하기', detail: '컵 할리스 컵', check: false, color: 'rgba(155, 251, 225, 0.3)'}]);
     const [show, setShow] = useState(false);
     //rgba(250, 169, 157, 0.4) rgba(253, 223, 126, 0.4) rgba(155, 251, 225, 0.4) rgba(103, 235, 250, 0.4)
     useEffect(() => {
@@ -29,6 +30,10 @@ function Reminder({move, onCreate, onToggle, onDelete, userId}){
     }, []);
 
     const handleTitleClick = () => {
+        let contentDiv = document.getElementById("reminderContent");
+        if (show) {
+            contentDiv.scrollTop = 0;
+        }
         setShow(!show);
     };
 
@@ -36,13 +41,13 @@ function Reminder({move, onCreate, onToggle, onDelete, userId}){
         <div className='reminderWidget'>
             {move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
             <div className='reminderHeader'>
-                <span style={{marginLeft: '0.3rem'}}>Reminder</span>
+                <span style={{marginLeft: '0.5rem', marginBottom: '0.1rem'}}>Reminder</span>
                 <div className='reminderHeaderButtons'>
                     <button>+</button>
                     <button>-</button>
                 </div>
             </div>
-            <div className='reminderContent' style={{overflowY: show ? 'scroll' : 'hidden'}}>
+            <div className='reminderContent' id='reminderContent' style={{overflowY: show ? 'scroll' : 'hidden'}}>
                 {reminders?.length > 0 && reminders.map((r) => (
                     <div className='reminderItem'>
                         <div className='reminderTitle'>
