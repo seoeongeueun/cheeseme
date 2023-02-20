@@ -21,7 +21,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     const [happy, setHappy] = useState(false);
     const [loading, setLoading] = useState(true);
     const [allTodos, setAllTodos] = useState([]);
-    const [_id, setId] = useState();
+    const [_id, setId] = useState('');
 
     //change to redux later
     const [goals, setGoals] = useState([]);
@@ -36,7 +36,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                     setAllTodos(n)
                 }
                 else {
-                    setAllTodos([])
+                    setAllTodos([]);
                 }
                 return;
             })
@@ -47,7 +47,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     }, [userId]);
 
     useEffect(() => {
-        if (loading === false && allTodos?.length === 0) {
+        if (loading === false && _id === '') {
             axios.get('/api/todos/getByOwner/' + userId)
             .then( (res) => {
                 setLoading(true);
@@ -98,6 +98,23 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     }, [allTodos]);
 
     useEffect(() => {
+        if (allTodos?.length > 0 && date) {
+            const todo = allTodos.find(t => t.date === date);
+            if (todo) {
+                setGoals(todo?.goals);
+                setHappy(todo?.smile);
+                setId(todo?._id);
+                setLoading(false);
+            } else {
+                setGoals([]);
+                setHappy(false);
+                setId('')
+                setLoading(false)
+            }
+        }
+    }, [date]);
+
+    useEffect(() => {
         
     }, [count, editMode, move, happy, goals])
 
@@ -127,9 +144,8 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     };
 
     const handleEditMode = async() => {
-        if (editMode) {
-            if (allTodos?.length === 0){
-                console.log('hrere: ', allTodos)
+        if (editMode && userId) {
+            if (allTodos?.length === 0 || _id === ''){
                 let res = await FetchAPIPost('/api/todos/add', {
                     owner: userId,
                     date: date,
