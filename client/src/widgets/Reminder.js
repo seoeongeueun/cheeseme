@@ -15,8 +15,8 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
     const [notFound, setNotFound] = useState(false);
     const [show, setShow] = useState(false);
     const [reminders, setReminders] = useState([]);
-    const [colorCode, setColorCode] = useState(['rgba(206, 151, 251, 0.3)', 'rgba(250, 169, 157, 0.3)', 'rgba(253, 223, 126, 0.3)', 'rgba(103, 235, 250, 0.3)'])
-    const [colorCodeLight, setColorCodeLight] = useState(['rgba(206, 151, 251, 0.1)', 'rgba(250, 169, 157, 0.1)', 'rgba(253, 223, 126, 0.1)', 'rgba(103, 235, 250, 0.1)'])
+    const [colorCode, setColorCode] = useState(['rgba(103, 235, 250, 0.3)', 'rgba(250, 169, 157, 0.3)', 'rgba(253, 223, 126, 0.3)', 'rgba(206, 151, 251, 0.3)'])
+    const [colorCodeLight, setColorCodeLight] = useState(['rgba(103, 235, 250, 0.1)', 'rgba(250, 169, 157, 0.1)', 'rgba(253, 223, 126, 0.1)', 'rgba(206, 151, 251, 0.1)'])
     //rgba(250, 169, 157, 0.4) rgba(253, 223, 126, 0.4) rgba(155, 251, 225, 0.4) rgba(103, 235, 250, 0.4)
     useEffect(() => {
         if (userId) {
@@ -132,7 +132,7 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                             </button>
                             <button onClick={() => handleTitleClick()} style={{width: '10%', backgroundColor: colorCode[i%colorCode.length]}}>{show ? <ArrowDropUpIcon sx={{fontSize: '1.5rem'}}/> : <ArrowDropDownIcon sx={{fontSize: '1.7rem'}}/>}</button>
                         </div>
-                        {(show && r.detail !== '' && !editMode) && <div className='reminderDetail' onClick={() => setShow(false)} style={{backgroundColor: colorCodeLight[i%colorCodeLight.length]}}><span style={{fontSize: '1.9rem', marginLeft: '0.7rem'}}>{r.detail}</span></div>}
+                        {(show && !editMode) && <div className='reminderDetail' onClick={() => setShow(false)} style={{backgroundColor: colorCodeLight[i%colorCodeLight.length]}}><span style={{fontSize: '1.9rem', marginLeft: '0.7rem'}}>{r.detail}</span></div>}
                         {(show && editMode) && <input style={{marginLeft: '0.6rem'}} value={r.detail} onChange={(e) => handleEditDetail(i, r.title, e.target.value)}/>}
                     </div>
                 ))}
