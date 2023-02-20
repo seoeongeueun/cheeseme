@@ -54,6 +54,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                 const n = res?.data;
                 if (n) {
                     setAllTodos(n)
+                    console.log('n: ', n)
                 }
                 else {
                     setAllTodos([])
@@ -109,8 +110,11 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                 setGoals([]);
                 setHappy(false);
                 setId('')
-                setLoading(false)
+                setLoading(true)
             }
+        } else {
+            setId('');
+            setLoading(true);
         }
     }, [date]);
 
@@ -211,9 +215,23 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
         }
     }
 
-    const handleDelete = (id) => {
+    const handleDelete = async(id) => {
         onDelete(id);
-        setGoals(goals.filter( e => e.id !== id));
+        const newState = goals.filter( e => e.id !== id)
+        setGoals(newState);
+        if (newState.length === 0) {
+            let res = await FetchApiDelete('/api/todos/deleteById/' + _id, {
+
+            });
+            if (res) {
+                setGoals([]);
+                setId('');
+                setLoading(true);
+                setHappy(false);
+                setEditMode(false);
+                console.log('Todo deleted')
+            }
+        }
     }
 
     //<input type="checkbox" name={key} onChange={(e) => handleCheck(key, e.target.checked)} defaultChecked={value.check}/>

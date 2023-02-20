@@ -38,6 +38,11 @@ todosRouter.delete("/delete/:date", asyncHandler(async(req, res) => {
     res.send('Deleted');
 }));
 
+todosRouter.delete("/deleteById/:_id", asyncHandler(async(req, res) => {
+    await Todos.deleteOne({_id: req.params._id});
+    res.send('Deleted');
+}));
+
 todosRouter.post('/update/:date', asyncHandler(async(req, res) => {
     await Todos.updateOne({date: req.params.date}, {goals: req.body.goals, smile: req.body.smile});
     res.send('Updated')
