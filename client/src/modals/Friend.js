@@ -92,14 +92,14 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
                         <div className='friendItem'>
                             <img src={f.fav ? StarColor : Star} style={{width: '1rem', marginRight: '0.5rem', marginTop: '3px'}} onClick={() => handleStar(f.name)}/>
                             <span onClick={() => handleClickFriend(f.name)}>{f.name}</span>
-                            {removeFriend && <button onClick={() => handleRemove(f.name)}><span><ClearRoundedIcon sx={{fontSize: '1.2rem', color: 'red'}}/></span></button>}
+                            {removeFriend && <button onClick={() => handleRemove(f.name)}><span><ClearRoundedIcon sx={{fontSize: '1.2rem', color: '#f73939'}}/></span></button>}
                         </div>
                     ))}
                 </div>
                 : <span style={{fontSize: '2rem', color: '#a0a096'}}>Let's add new friends!</span>
             : <span style={{fontSize: '2rem'}}>Login Required</span>}
-            {username != '' && <span style={{color: "red", fontSize: '1.7rem'}}>Friend Request Sent to {username}</span>}
-            {bye != '' && <span style={{color: "red", fontSize: '1.7rem'}}>You're no longer friends with {bye}</span>}
+            {username != '' && <span style={{color: "#f73939", fontSize: '1.7rem'}}>Friend Request Sent to {username}</span>}
+            {bye != '' && <span style={{color: "#f73939", fontSize: '1.7rem'}}>You're no longer friends with {bye}</span>}
         </div>
     );
 }

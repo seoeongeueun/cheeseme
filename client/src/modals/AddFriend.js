@@ -131,7 +131,7 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
             <button className='save' onClick={() => handleSend(entered)}><span>Send</span></button>
             <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
           </div>
-          {message !== '' && <span style={{color: "red"}}>{message}</span>}
+          {message !== '' && <span style={{color: "#f73939"}}>{message}</span>}
           </div>
       </Dialog>
     </div>

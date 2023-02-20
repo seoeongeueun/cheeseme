@@ -231,7 +231,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                 <span style={{marginLeft: '0.3rem'}}>To Do</span>
                 <div className="todoHeaderButtons">
                     <button onClick={handleAddTodo}><AddRoundedIcon sx={{size: '20px'}}/></button>
-                    <button onClick={handleEditMode}>{editMode && goals.length > 0 ? <CheckRoundedIcon sx={{size: '20px', color: "red"}}/> : <RemoveRoundedIcon sx={{size: '20px'}}/>}</button>
+                    <button onClick={handleEditMode}>{editMode && goals.length > 0 ? <CheckRoundedIcon sx={{size: '20px', color: "#f73939"}}/> : <RemoveRoundedIcon sx={{size: '20px'}}/>}</button>
                 </div>
             </div>
             <div className="todoList">
@@ -244,7 +244,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                     {value.check ? <CheckBoxRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(value.id, false)}/>
                     : <CheckBoxOutlineBlankRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(value.id, true)}/>}
                     <input className='todoElem' placeholder={value.text} onChange={(e) => handleEditTodo(value.id, e.target.value)}/>
-                    <button onClick={() => handleDelete(value.id)}><ClearRoundedIcon sx={editMode ? {size: '20px', color: "red"} : {size: '20px'}}/></button>
+                    <button onClick={() => handleDelete(value.id)}><ClearRoundedIcon sx={editMode ? {size: '20px', color: "#f73939"} : {size: '20px'}}/></button>
                 </div>))}
             </div>
             <div className='faceMoodTodo'>

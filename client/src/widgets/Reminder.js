@@ -123,7 +123,7 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                 <span style={{marginLeft: '0.5rem', marginBottom: '0.1rem'}}>Reminder</span>
                 <div className='reminderHeaderButtons'>
                     {!editMode && <button onClick={() => handleAdd()}><AddRoundedIcon sx={{fontSize: "1.5rem"}}/></button>}
-                    {editMode ? <button onClick={() => handleSave()}><CheckRoundedIcon sx={{fontSize: "1.5rem", color: 'red'}}/></button> 
+                    {editMode ? <button onClick={() => handleSave()}><CheckRoundedIcon sx={{fontSize: "1.5rem", color: '#f73939'}}/></button> 
                     : <button onClick={() => setEditMode(true)}><RemoveRoundedIcon sx={{fontSize: "1.5rem"}}/></button>}
                 </div>
             </div>
@@ -133,7 +133,7 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                         <div className='reminderTitle'>
                             <button style={{backgroundColor: colorCode[i%colorCode.length]}}>
                                 {editMode ? 
-                                <><input className='reminderInput' value={r.title} onChange={(e) => handleEditReminder(i, e.target.value)}/><ClearRoundedIcon onClick={() => handleDelete(i)} sx={{fontSize: '1.2rem', color: 'red'}}/></>
+                                <><input className='reminderInput' value={r.title} onChange={(e) => handleEditReminder(i, e.target.value)}/><ClearRoundedIcon onClick={() => handleDelete(i)} sx={{fontSize: '1.2rem', color: '#f73939'}}/></>
                                 : <label style={{textDecorationLine: r.check ? 'line-through' : 'none', cursor: 'pointer', textDecorationThickness: '1px'}} onClick={() => handleCheckTitle(r._id)}>{r.title}</label>}
                             </button>
                             <button onClick={() => handleTitleClick()} style={{width: '10%', backgroundColor: colorCode[i%colorCode.length]}}>{show ? <ArrowDropUpIcon sx={{fontSize: '1.5rem'}}/> : <ArrowDropDownIcon sx={{fontSize: '1.7rem'}}/>}</button>

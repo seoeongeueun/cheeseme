@@ -199,12 +199,12 @@ export default function Signup(props) {
             <button className='save' onClick={handleSend} type='submit'><span>Confirm</span></button>
             <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
           </div>}
-          {(errorType === 'noPw' || errorType === 'noPwCheck' || errorType === 'noName') && <span style={{color: "red"}}>Please fill in all of the fields</span>}
-          {errorType === 'notMatch' && <span style={{color: "red"}}>Password and password check are not matching</span>}
-          {errorType === 'shortPw' && <span style={{color: "red"}}>Password needs to be at least 6 characters long</span>}
-          {errorType === 'notUnique' && <span style={{color: "red"}}>This username is already taken</span>}
-          {errorType === 'noEmail' && <span style={{color: "red"}}>Please enter a correct email</span>}
-          {errorType === 'notUniqueEmail' && <span style={{color: "red"}}>This email has already been used for a different account</span>}
+          {(errorType === 'noPw' || errorType === 'noPwCheck' || errorType === 'noName') && <span style={{color: "#f73939"}}>Please fill in all of the fields</span>}
+          {errorType === 'notMatch' && <span style={{color: "#f73939"}}>Password and password check are not matching</span>}
+          {errorType === 'shortPw' && <span style={{color: "#f73939"}}>Password needs to be at least 6 characters long</span>}
+          {errorType === 'notUnique' && <span style={{color: "#f73939"}}>This username is already taken</span>}
+          {errorType === 'noEmail' && <span style={{color: "#f73939"}}>Please enter a correct email</span>}
+          {errorType === 'notUniqueEmail' && <span style={{color: "#f73939"}}>This email has already been used for a different account</span>}
           {errorType === 'success' && <span>Welcome {username} ! You can now login to start writing</span>}
           </div>
       </Dialog>

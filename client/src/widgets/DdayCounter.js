@@ -121,8 +121,8 @@ function DdayCounter(props) {
                 {title ? <span style={{marginTop: '-0.8rem'}}>{title}</span> : <span style={{color: "#929292", marginTop: '-0.6rem'}}>name your d-day!</span>}
                 {end ? <span style={{color: "#929292", fontSize: '1.5rem'}}>{new Date(end).getMonth()+1}/{new Date(end).getDate()}/{new Date(end).getFullYear()}</span>
                     : <span style={{color: "#929292", fontSize: '1.5rem'}}>{new Date().getMonth()+1}/{new Date().getDate()}/{new Date().getFullYear()}</span>}
-                {edit ? <button onClick={() => setEdit(!edit)}><ExpandLessRoundedIcon sx={{fontSize: '18px', color: 'red', marginBottom: '-6px'}}/></button>
-                    : <button onClick={() => setEdit(!edit)}><ExpandMoreRoundedIcon sx={{fontSize: '18px', color: 'red', marginBottom: '5px', marginTop: '0px'}}/></button>}
+                {edit ? <button onClick={() => setEdit(!edit)}><ExpandLessRoundedIcon sx={{fontSize: '18px', color: '#f73939', marginBottom: '-6px'}}/></button>
+                    : <button onClick={() => setEdit(!edit)}><ExpandMoreRoundedIcon sx={{fontSize: '18px', color: '#f73939', marginBottom: '5px', marginTop: '0px'}}/></button>}
             </div>
             {edit && <div className='ddayCollapse'>
             <div className="endDate">

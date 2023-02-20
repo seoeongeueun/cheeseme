@@ -118,7 +118,7 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
         <div className="notesWidget">
             <div className='notesHeader'>
                 <span style={{marginBottom: '0.4rem'}}>Notes</span>
-                <button onClick={() => handleEdit()}>{closeQuill ? <AddRoundedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px', color: 'red'}}/>}</button>
+                <button onClick={() => handleEdit()}>{closeQuill ? <AddRoundedIcon sx={{fontSize: '20px'}}/> : <CheckRoundedIcon sx={{fontSize: '20px', color: '#f73939'}}/>}</button>
             </div>
             <div className="notesContent">
                 <ReactQuill

@@ -231,7 +231,7 @@ main {
 }
 
 .leftContent {
-  padding: 0rem 5rem 0rem 5rem;
+  padding: 0;
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -254,7 +254,7 @@ main {
 
 .leftFooter {
   margin-bottom: 1rem;
-  margin-right: -2rem;
+  margin-right: 3rem;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -322,7 +322,7 @@ main {
 .ddayDeco2 {
   width: 10px;
   height: 30px;
-  border: 1px solid #a0a096;
+  border: 2px solid #a0a096;
   background-color: black;
   position: absolute;
   top: -15px;
