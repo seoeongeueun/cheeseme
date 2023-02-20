@@ -108,22 +108,21 @@ function DdayCounter(props) {
     }
 
     return (
-        <div className="ddayWidget">
-            <div className='datesLeft'>
-                <div className='ddayHeader'>
-                    <span style={{color: '#F9D876', '-webkit-text-stroke': '1px solid black'}}>D-{left}</span>
-                    <span style={{fontSize: "2.2rem"}}> 🧀</span>
+        <div className="ddayWidget" style={{width: edit && '23rem'}}>
+            <div className='ddayProgressHeader'>
+                <div className='ddayDeco'/>
+                <div className='ddayDeco2'/>
+                <div className="progressBarContainer">
+                    <div className="progressBar" style={{width: `${100 - left}%`}}/>
                 </div>
-                {edit ? <button onClick={() => setEdit(!edit)}><ExpandLessRoundedIcon sx={{fontSize: '30px', color: '#F9D876'}}/></button> : <button onClick={() => setEdit(!edit)}><ExpandMoreRoundedIcon sx={{fontSize: '30px', color: '#F9D876'}}/></button>}
             </div>
-            <div className='ddayfooter'>
-                <div className='displayTitle'>
-                    {title ? <span>{title}</span> : <span style={{color: "#929292"}}>name your d-day!</span>}
-                </div>
-                <div className='displayDate'>
-                    {end ? <span style={{color: "#929292"}}>{new Date(end).getMonth()+1}/{new Date(end).getDate()}/{new Date(end).getFullYear()}</span>
+            <div className='datesLeft'>
+                <span style={{'-webkit-text-stroke': '1px solid black', fontWeight: 'bold', fontSize: '7rem'}}>{left}</span>
+                {title ? <span style={{marginTop: '-0.6rem'}}>{title}</span> : <span style={{color: "#929292"}}>name your d-day!</span>}
+                {end ? <span style={{color: "#929292"}}>{new Date(end).getMonth()+1}/{new Date(end).getDate()}/{new Date(end).getFullYear()}</span>
                     : <span style={{color: "#929292"}}>{new Date().getMonth()+1}/{new Date().getDate()}/{new Date().getFullYear()}</span>}
-                </div>
+                {edit ? <button onClick={() => setEdit(!edit)}><ExpandLessRoundedIcon sx={{fontSize: '20px', color: 'red', marginBottom: '3px'}}/></button>
+                    : <button onClick={() => setEdit(!edit)}><ExpandMoreRoundedIcon sx={{fontSize: '20px', color: 'red', marginBottom: '3px'}}/></button>}
             </div>
             {edit && <div className='ddayCollapse'>
             <div className="endDate">
