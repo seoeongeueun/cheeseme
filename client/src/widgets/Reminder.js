@@ -34,6 +34,12 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
         }
     }, [userId]);
 
+    useEffect(() => {
+        if (editMode) {
+            setShow(true)
+        }
+    }, [editMode])
+
     const updateReminders = async() => {
         let res = await FetchAPIPost('/api/reminder/update/' + userId, {
             reminders: reminders
@@ -133,7 +139,7 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                             <button onClick={() => handleTitleClick()} style={{width: '10%', backgroundColor: colorCode[i%colorCode.length]}}>{show ? <ArrowDropUpIcon sx={{fontSize: '1.5rem'}}/> : <ArrowDropDownIcon sx={{fontSize: '1.7rem'}}/>}</button>
                         </div>
                         {(show && !editMode) && <div className='reminderDetail' onClick={() => setShow(false)} style={{backgroundColor: colorCodeLight[i%colorCodeLight.length]}}><span style={{fontSize: '1.9rem', marginLeft: '0.7rem'}}>{r.detail}</span></div>}
-                        {(show && editMode) && <input style={{marginLeft: '0.6rem'}} value={r.detail} onChange={(e) => handleEditDetail(i, r.title, e.target.value)}/>}
+                        {(show && editMode) && <div className='reminderDetail' style={{backgroundColor: colorCodeLight[i%colorCodeLight.length]}}><input style={{marginLeft: '0.6rem'}} value={r.detail} onChange={(e) => handleEditDetail(i, r.title, e.target.value)}/></div>}
                     </div>
                 ))}
             </div>
