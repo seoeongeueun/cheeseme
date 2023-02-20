@@ -8,49 +8,87 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import axios from 'axios';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
-function Notes({move, onEdit, note, onCreate, date}){
-    const [body, setBody] = useState(note);
+function Notes({move, onEdit, note, onCreate, date, userId}){
+    const [body, setBody] = useState();
     const [closeQuill, setCloseQuill] = useState(true);
     const [loading, setLoading] = useState(true);
     const quillRef = useRef();
-    //change it to today later
-    //const [tmpDate, setTmpDate] = useState(0);
+    const [allNotes, setAllNotes] = useState([]);
+    const [_id, setId] = useState('');
 
     useEffect(() => {
-        axios.get('/api/notes/' + date)
-            .then( (res) => {
+        if (userId) {
+            axios.get('/api/notes/getByOwner/' + userId)
+                .then((res) => {
+                    const n = res?.data;
+                    if (n) {
+                        setAllNotes(n);
+                    } else {
+                        setAllNotes([]);
+                    }
+                    return;
+                })
+                .catch((err) => {
+                    console.log('Error loading notes: ', err)
+                })
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        if (_id === '') {
+            axios.get('/api/notes/getByOwner/' + userId)
+            .then((res) => {
                 setLoading(true);
                 const n = res?.data;
                 if (n) {
-                    setBody(n.text);
-                    setLoading(false);
+                    setAllNotes(n);
+                }
+                else {
+                    setAllNotes([])
                 }
                 return;
             })
             .catch( (err) => {
-                console.log('Error loading note')
+                console.log('Error loading notes: ', err);
             })
-    }, []);
+        }
+    }, [loading]);
 
     useEffect(() => {
-        axios.get('/api/notes/' + date)
-            .then( (res) => {
-                setLoading(true);
-                const n = res?.data;
-                if (n) {
-                    setBody(n.text);
-                    setLoading(false);
-                }
-                return;
-            })
-            .catch( (err) => {
-                console.log('Error loading note')
-            })
-    }, [date]);
+        if (allNotes?.length > 0 && date) {
+            const note = allNotes.find(n => n.date === date);
+            if (note) {
+                setBody(note?.text);
+                setId(note?._id);
+                setLoading(false);
+            } else {
+                setBody('');
+                setId('')
+                setLoading(true)
+            }
+        } else {
+            setId('');
+            setLoading(true);
+        }
+    }, [allNotes]);
     
     useEffect(() => {
-
-    }, [closeQuill, move, quillRef, body])
+        if (allNotes?.length > 0 && date) {
+            const note = allNotes.find(n => n.date === date);
+            if (note) {
+                setBody(note?.text);
+                setId(note?._id);
+                setLoading(false);
+            } else {
+                setBody('');
+                setId('')
+                setLoading(true)
+            }
+        } else {
+            setId('');
+            setLoading(true);
+        }
+    }, [date]);
 
     const handleEdit = async() => {
         if (!closeQuill){
@@ -60,6 +98,7 @@ function Notes({move, onEdit, note, onCreate, date}){
             await onEdit(tmp);
             if (loading){
                 let res = await FetchAPIPost('/api/notes/add', {
+                    owner: userId,
                     date: date,
                     text: tmp  
                 });

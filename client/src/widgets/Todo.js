@@ -67,27 +67,6 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
         }
     }, [loading]);
 
-    // useEffect(() => {
-    //     axios.get('/api/todos/' + date)
-    //         .then( (res) => {
-    //             setLoading(true);
-    //             const n = res?.data;
-    //             if (n) {
-    //                 setGoals(n.goals);
-    //                 setLoading(false);
-    //                 setHappy(n.smile);
-    //             }
-    //             else {
-    //                 setGoals([])
-    //                 setLoading(true);
-    //             }
-    //             return;
-    //         })
-    //         .catch( (err) => {
-    //             console.log('Error loading todos');
-    //         })
-    // }, [date])
-
     useEffect(() => {
         if (allTodos?.length > 0 && date) {
             const todo = allTodos.find(t => t.date === date);

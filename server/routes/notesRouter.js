@@ -14,7 +14,7 @@ notesRouter.get('/:date', asyncHandler(async(req, res) => {
     res.send(note);
 }));
 
-notesRouter.get('getByOwner/:owner', asyncHandler(async(req, res) => {
+notesRouter.get('/getByOwner/:owner', asyncHandler(async(req, res) => {
     const note = await Notes.find({owner: req.params.owner});
     res.send(note);
 }));
