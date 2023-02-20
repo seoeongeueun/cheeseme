@@ -65,11 +65,18 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     const [today, setToday] = useState(0);
 
-    const [calPosition, setCalPosition] = useState({x: 0, y: 0})
-    const [todoPosition, setTodoPosition] = useState({x: 0, y: 0})
-    const [ddayPosition, setDdayPosition] = useState({x: 0, y: 0})
-    const [notePosition, setNotePosition] = useState({x: 0, y: 0})
-    const [reminderPosition, setReminderPosition] = useState({x: 0, y: 0});
+    // const [calPosition, setCalPosition] = useState({x: 0, y: 0})
+    // const [todoPosition, setTodoPosition] = useState({x: 0, y: 0})
+    // const [ddayPosition, setDdayPosition] = useState({x: 0, y: 0})
+    // const [notePosition, setNotePosition] = useState({x: 0, y: 0})
+    // const [reminderPosition, setReminderPosition] = useState({x: 0, y: 0});
+
+    
+    const [calPosition, setCalPosition] = useState()
+    const [todoPosition, setTodoPosition] = useState()
+    const [ddayPosition, setDdayPosition] = useState()
+    const [notePosition, setNotePosition] = useState()
+    const [reminderPosition, setReminderPosition] = useState();
 
 
     const [id, setId] = useState("");
@@ -82,6 +89,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     }
     
     const change = async () => {
+        console.log('cal po: ', calPosition)
         const newState = [{name: 'cal', x: Object.values(calPosition)[0], y: Object.values(calPosition)[1], show: true},
             {name: 'dday', x: Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1], show: true},
             {name: 'note', x: Object.values(notePosition)[0], y: Object.values(notePosition)[1], show: true},
@@ -111,21 +119,45 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     // }, [userId])
 
     useEffect(() => {
-        axios.get('/api/users/find/' + userId)
-        .then((res) => {
-          const n = res?.data;
-          if (n) {
-            onChangePositions(n.positions);
-            setCalPosition({x: Object.values(n.positions[0])[1], y: Object.values(n.positions[0])[2]});
-            setDdayPosition({x: Object.values(n.positions[1])[1], y: Object.values(n.positions[1])[2]});
-            setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
-            setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
-            setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
-          }
-        })
-        .catch( (err) => {
-            console.log('Error loading positions')
-        })
+        if (userId) {
+            axios.get('/api/users/find/' + userId)
+            .then((res) => {
+              const n = res?.data;
+              if (n) {
+                console.log('n: ', n)
+                onChangePositions(n.positions);
+                setCalPosition({x: Object.values(n.positions[0])[1], y: Object.values(n.positions[0])[2]});
+                setDdayPosition({x: Object.values(n.positions[1])[1], y: Object.values(n.positions[1])[2]});
+                setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
+                setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
+                setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
+              }
+            })
+            .catch( (err) => {
+                console.log('Error loading positions')
+            })
+        }
+    }, [])
+
+    useEffect(() => {
+        if (userId) {
+            axios.get('/api/users/find/' + userId)
+            .then((res) => {
+              const n = res?.data;
+              if (n) {
+                console.log('n: ', n)
+                onChangePositions(n.positions);
+                setCalPosition({x: Object.values(n.positions[0])[1], y: Object.values(n.positions[0])[2]});
+                setDdayPosition({x: Object.values(n.positions[1])[1], y: Object.values(n.positions[1])[2]});
+                setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
+                setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
+                setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
+              }
+            })
+            .catch( (err) => {
+                console.log('Error loading positions')
+            })
+        }
     }, [userId]);
 
     useEffect(() => {
@@ -156,6 +188,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     useEffect(() => {
         if (userId && editMode === false) {
+            console.log('updated')
             change();
         }
     }, [editMode]);
@@ -218,7 +251,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
         //setControlledPosition({x, y});
     };
-    
+
     return(
         <div className="leftInnerBorder">
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12}>
@@ -236,11 +269,11 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             </GridLines> :
                 <div className="leftContent" id="leftContent">
                     <div className="leftBody" id="leftBody">
-                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(350), bottom: height-(350 + 45)}} position={calPosition} onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
-                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 98), bottom: height-(350 - 33)}} position={todoPosition} onStop={(e, {x, y}) => setTodoPosition({x, y})} handle="strong"><div><TodosContainer move={editMode} date={date}/></div></Draggable>} 
-                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={notePosition} onStop={(e, {x, y}) => setNotePosition({x, y})} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
-                        {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: width- (340.8 - 87.2), bottom: height - (400- 118)}} position={ddayPosition} onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode}/></div></Draggable>}
-                        {reminder && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={reminderPosition} onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
+                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(350), bottom: height-(350 + 45)}} position={calPosition ? calPosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
+                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 98), bottom: height-(350 - 33)}} position={todoPosition ? todoPosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setTodoPosition({x, y})} handle="strong"><div><TodosContainer move={editMode} date={date}/></div></Draggable>} 
+                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={notePosition ? notePosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setNotePosition({x, y})} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
+                        {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: width- (340.8 - 87.2), bottom: height - (400- 118)}} position={ddayPosition ? ddayPosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode}/></div></Draggable>}
+                        {reminder && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={reminderPosition ? reminderPosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
                         <div className="stickers">
                             {stickerList?.length > 0 &&
                                 stickerList.map((value, index) => {
