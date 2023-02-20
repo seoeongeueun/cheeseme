@@ -14,7 +14,7 @@ todosRouter.get('/:date', asyncHandler(async(req, res) => {
     res.send(todo);
 }));
 
-todosRouter.get('getByOwner/:owner', asyncHandler(async(req, res) => {
+todosRouter.get('/getByOwner/:owner', asyncHandler(async(req, res) => {
     const todos = await Todos.find({owner: req.params.owner});
     res.send(todos);
 }));

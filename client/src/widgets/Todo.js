@@ -14,15 +14,57 @@ import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
 import axios from 'axios';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
-function Todo({move, onCreate, onToggle, onDelete, date}){
+function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     const [count, setCount] = useState(1);
     // const [goals, setGoals] = useState([{id: 'cse323', check: false}, {id: 'eat', check: false}]);
     const [editMode, setEditMode] = useState(false);
     const [happy, setHappy] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [allTodos, setAllTodos] = useState([]);
+    const [_id, setId] = useState();
 
     //change to redux later
     const [goals, setGoals] = useState([]);
+
+    useEffect(() => {
+        if (userId) {
+            axios.get('/api/todos/getByOwner/' + userId)
+            .then( (res) => {
+                setLoading(true);
+                const n = res?.data;
+                if (n) {
+                    setAllTodos(n)
+                }
+                else {
+                    setAllTodos([])
+                }
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading todos');
+            })
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        if (loading === false && allTodos?.length === 0) {
+            axios.get('/api/todos/getByOwner/' + userId)
+            .then( (res) => {
+                setLoading(true);
+                const n = res?.data;
+                if (n) {
+                    setAllTodos(n)
+                }
+                else {
+                    setAllTodos([])
+                }
+                return;
+            })
+            .catch( (err) => {
+                console.log('Error loading todos');
+            })
+        }
+    }, [loading]);
 
     // useEffect(() => {
     //     axios.get('/api/todos/' + date)
@@ -34,33 +76,26 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
     //                 setLoading(false);
     //                 setHappy(n.smile);
     //             }
+    //             else {
+    //                 setGoals([])
+    //                 setLoading(true);
+    //             }
     //             return;
     //         })
     //         .catch( (err) => {
     //             console.log('Error loading todos');
     //         })
-    // }, []);
+    // }, [date])
 
     useEffect(() => {
-        axios.get('/api/todos/' + date)
-            .then( (res) => {
-                setLoading(true);
-                const n = res?.data;
-                if (n) {
-                    setGoals(n.goals);
-                    setLoading(false);
-                    setHappy(n.smile);
-                }
-                else {
-                    setGoals([])
-                    setLoading(true);
-                }
-                return;
-            })
-            .catch( (err) => {
-                console.log('Error loading todos');
-            })
-    }, [date])
+        if (allTodos?.length > 0 && date) {
+            const todo = allTodos.find(t => t.date === date);
+            setGoals(todo.goals);
+            setHappy(todo.smile);
+            setId(todo._id);
+            setLoading(false);
+        }
+    }, [allTodos]);
 
     useEffect(() => {
         
@@ -93,15 +128,17 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
 
     const handleEditMode = async() => {
         if (editMode) {
-            if (loading){
+            if (allTodos?.length === 0){
+                console.log('hrere: ', allTodos)
                 let res = await FetchAPIPost('/api/todos/add', {
+                    owner: userId,
                     date: date,
                     goals: goals,
                     smile: happy
                 });
                 setLoading(false);
             } else {
-                let res = await FetchAPIPost('/api/todos/update/' + date, {
+                let res = await FetchAPIPost('/api/todos/updateById/' + _id, {
                     date: date,
                     goals: goals,
                     smile: happy
@@ -127,7 +164,7 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
                 if (obj.id === key) return {...obj, check: false};
                 return obj;
             });
-            let res = await FetchAPIPost('/api/todos/update/' + date, {
+            let res = await FetchAPIPost('/api/todos/updateById/' + _id, {
                 date: date,
                 goals: newState,
                 smile: false,
@@ -149,7 +186,7 @@ function Todo({move, onCreate, onToggle, onDelete, date}){
                 setHappy(true)
                 checkSmile = true;
             }
-            let res = await FetchAPIPost('/api/todos/update/' + date, {
+            let res = await FetchAPIPost('/api/todos/updateById/' + _id, {
                 date: date,
                 goals: newState,
                 smile: checkSmile
