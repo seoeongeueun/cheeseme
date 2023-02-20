@@ -47,7 +47,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     }, [userId]);
 
     useEffect(() => {
-        if (loading === false && _id === '') {
+        if (_id === '') {
             axios.get('/api/todos/getByOwner/' + userId)
             .then( (res) => {
                 setLoading(true);
@@ -91,10 +91,20 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     useEffect(() => {
         if (allTodos?.length > 0 && date) {
             const todo = allTodos.find(t => t.date === date);
-            setGoals(todo.goals);
-            setHappy(todo.smile);
-            setId(todo._id);
-            setLoading(false);
+            if (todo) {
+                setGoals(todo?.goals);
+                setHappy(todo?.smile);
+                setId(todo?._id);
+                setLoading(false);
+            } else {
+                setGoals([]);
+                setHappy(false);
+                setId('')
+                setLoading(true)
+            }
+        } else {
+            setId('');
+            setLoading(true);
         }
     }, [allTodos]);
 
@@ -224,11 +234,11 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
 
             });
             if (res) {
+                setEditMode(false);
                 setGoals([]);
                 setId('');
                 setLoading(true);
                 setHappy(false);
-                setEditMode(false);
                 console.log('Todo deleted')
             }
         }
