@@ -38,7 +38,8 @@ rightRouter.post('/add', asyncHandler(async(req, res) => {
     const weather = req.body.weather;
     const bookmark = req.body.bookmark;
     const hide = req.body.hide;
-    await Right.create({ owner, date, text, title, like, weather, bookmark, hide });
+    const likes = req.body.likes;
+    await Right.create({ owner, date, text, title, like, weather, bookmark, hide, likes });
     res.send('Created');
 }))
 
@@ -54,7 +55,8 @@ rightRouter.post('/update/:date', asyncHandler(async(req, res) => {
     const weather = req.body.weather;
     const bookmark = req.body.bookmark;
     const hide = req.body.hide;
-    await Right.updateOne({date: req.params.date}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide});
+    const likes = req.body.likes;
+    await Right.updateOne({date: req.params.date}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide, likes: likes});
     res.send('Updated')
 }))
 
@@ -65,7 +67,8 @@ rightRouter.post('/updateById/:_id', asyncHandler(async(req, res) => {
     const weather = req.body.weather;
     const bookmark = req.body.bookmark;
     const hide = req.body.hide;
-    await Right.updateOne({_id: req.params._id}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide});
+    const likes = req.body.likes;
+    await Right.updateOne({_id: req.params._id}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide, likes: likes});
     res.send('Updated')
 }))
 

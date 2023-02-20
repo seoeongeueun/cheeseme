@@ -43,6 +43,7 @@ function Right({date, userId}){
 
     const [heart, setHeart] = useState(false);
     const [bookmark, setBookmark] = useState(false);
+    const [likes, setLikes] = useState([]);
 
     const [open, setOpen] = useState(false);
 
@@ -56,37 +57,10 @@ function Right({date, userId}){
 
     const [found, setFound] = useState(false);
 
-    const [hide, setHide] = useState();
+    const [hide, setHide] = useState(false);
     const [loading, setLoading] = useState(true);
     const [allPosts, setAllPosts] = useState([]);
     const [_id, setId] = useState('');
-    
-    // useEffect(() => {
-    //     axios.get('/api/right/' + date)
-    //         .then( (res) => {
-    //             const n = res?.data;
-    //             if (n){
-    //                 setBody(n.text);
-    //                 setHeart(n.like);
-    //                 setBookmark(n.bookmark);
-    //                 setTitle(n.title);
-    //                 setWeather(n.weather);
-    //                 setFound(true);
-    //             } else {
-    //                 setBody("");
-    //                 setHeart(false);
-    //                 setBookmark(false);
-    //                 setTitle("")
-    //                 setWeather("")
-    //                 setFound(false);
-    //             }
-    //             return;
-    //         })
-    //         .catch( (err) => {
-    //             console.log('Error loading right post: ', err);
-    //             setFound(false);
-    //         })
-    // }, [date])
 
     useEffect(() => {
         if (userId) {
@@ -131,6 +105,7 @@ function Right({date, userId}){
                 setBookmark(post?.bookmark);
                 setTitle(post?.title);
                 setWeather(post?.weather);
+                setLikes(post?.likes);
                 setHide(post?.hide);
                 setId(post?._id);
                 setLoading(false);
@@ -140,6 +115,7 @@ function Right({date, userId}){
                 setHeart(false);
                 setBookmark(false);
                 setHide(false);
+                setLikes([]);
                 setWeather('');
                 setId('')
                 setLoading(true)
@@ -158,6 +134,7 @@ function Right({date, userId}){
                 setHeart(post?.like);
                 setBookmark(post?.bookmark);
                 setTitle(post?.title);
+                setLikes(post?.likes);
                 setWeather(post?.weather);
                 setHide(post?.hide);
                 setId(post?._id);
@@ -166,6 +143,7 @@ function Right({date, userId}){
                 setBody('');
                 setTitle('');
                 setHeart(false);
+                setLikes([]);
                 setBookmark(false);
                 setHide(false);
                 setWeather('');
@@ -182,23 +160,27 @@ function Right({date, userId}){
         if (_id !== '') {
             if (heart) {
                 setHeart(false);
+                setLikes(likes.filter(e => e !== userId))
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                     like: false,
                     bookmark: bookmark,
                     title: title,
                     text: body,
                     weather: weather,
-                    hide: hide
+                    hide: hide,
+                    likes: likes.filter(e => e !== userId)
                 });
             } else {
                 setHeart(true);
+                setLikes([...likes, userId]);
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                     like: true,
                     bookmark: bookmark,
                     title: title,
                     text: body,
                     weather: weather,
-                    hide: hide
+                    hide: hide,
+                    likes: [...likes, userId]
                 });
             }
         }
@@ -214,7 +196,8 @@ function Right({date, userId}){
                     title: title,
                     text: body,
                     weather: weather,
-                    hide: hide
+                    hide: hide,
+                    likes: likes
                 });
             } else {
                 setBookmark(true);
@@ -224,7 +207,8 @@ function Right({date, userId}){
                     title: title,
                     text: body,
                     weather: weather,
-                    hide: hide
+                    hide: hide,
+                    likes: likes
                 });
             }
         }
@@ -241,6 +225,7 @@ function Right({date, userId}){
                     text: body,
                     weather: weather,
                     hide: false,
+                    likes: likes
                 });
             } else {
                 setHide(true);
@@ -250,7 +235,8 @@ function Right({date, userId}){
                     title: title,
                     text: body,
                     weather: weather,
-                    hide: true
+                    hide: true,
+                    likes: likes
                 });
             }
         }
@@ -282,9 +268,10 @@ function Right({date, userId}){
                 title: title,
                 text: body,
                 weather: weather,
-                hide: hide
+                hide: hide,
+                likes: likes
             });
-            setFound(true)
+            setLoading(false);
             console.log("create")
         } else {
             let res = await FetchAPIPost('/api/right/updateById/' + _id, {
@@ -293,7 +280,8 @@ function Right({date, userId}){
                 title: title,
                 text: body,
                 weather: weather,
-                hide: hide
+                hide: hide,
+                likes: likes
             });
             console.log("update")
         }
@@ -315,7 +303,8 @@ function Right({date, userId}){
                 title: title,
                 text: body,
                 weather: weatherOption,
-                hide: hide
+                hide: hide,
+                likes: likes
             });
         }
 
@@ -347,7 +336,7 @@ function Right({date, userId}){
                                     </IconButton>}
                             <div className="postButtons">
                                 <div className="postButtonsLeft">
-                                    <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                    <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", position: 'relative'}}><span>1</span></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     <button onClick={onClickBookmark}>{bookmark ? <LockTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                 </div>
@@ -408,7 +397,7 @@ function Right({date, userId}){
                             <div className="postButtons">
                                 <div className="postButtonsLeft">
                                     <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                    <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px' }}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                     <button onClick={onClickLock}>{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                 </div>
                                 <div className="postButtonsRight">

@@ -8,7 +8,8 @@ const rightSchema = new mongoose.Schema({
     weather: String,
     like: Boolean,
     bookmark: Boolean,
-    hide: Boolean
+    hide: Boolean,
+    likes: [ String ]
 });
 
 const Right = mongoose.model("Right", rightSchema);

@@ -637,6 +637,10 @@ main {
   flex-direction: row;
 }
 
+.postButtonsLeft {
+  position: relative;
+}
+
 .postButtonsRight button {
   border: none;
   background-color: transparent;
@@ -647,6 +651,15 @@ main {
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.likes {
+  position: absolute;
+  font-size: 1.8rem;
+  clear: both;
+  z-index: 1000;
+  left: 50px;
+  bottom: 9px;
 }
 
 .postInput {
