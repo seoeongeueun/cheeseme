@@ -128,7 +128,7 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                             <button style={{backgroundColor: colorCode[i%colorCode.length]}}>
                                 {editMode ? 
                                 <><input className='reminderInput' value={r.title} onChange={(e) => handleEditReminder(i, e.target.value)}/><ClearRoundedIcon onClick={() => handleDelete(i)} sx={{fontSize: '1.2rem', color: 'red'}}/></>
-                                : <label style={{textDecoration: r.check ? 'line-through' : 'none', cursor: 'pointer'}} onClick={() => handleCheckTitle(r._id)}>{r.title}</label>}
+                                : <label style={{textDecorationLine: r.check ? 'line-through' : 'none', cursor: 'pointer', textDecorationThickness: '1px'}} onClick={() => handleCheckTitle(r._id)}>{r.title}</label>}
                             </button>
                             <button onClick={() => handleTitleClick()} style={{width: '10%', backgroundColor: colorCode[i%colorCode.length]}}>{show ? <ArrowDropUpIcon sx={{fontSize: '1.5rem'}}/> : <ArrowDropDownIcon sx={{fontSize: '1.7rem'}}/>}</button>
                         </div>
