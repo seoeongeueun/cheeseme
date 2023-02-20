@@ -32,6 +32,8 @@ import SunPlain from '../icons/sunny.png';
 import SnowPlain from '../icons/snowman (1).png';
 import SnowColor from '../icons/snowman.png';
 import { FetchAPIPost } from '../utils/api.js';
+import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
+import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import axios from 'axios';
 
 function Right({date}){
@@ -53,6 +55,8 @@ function Right({date}){
     const [weather, setWeather] = useState('');
 
     const [found, setFound] = useState(false);
+
+    const [hide, setHide] = useState();
     
     useEffect(() => {
         axios.get('/api/right/' + date)
@@ -132,6 +136,10 @@ function Right({date}){
                 weather: weather
             });
         }
+    }
+
+    const onClickLock = async() => {
+        setHide(!hide)
     }
 
     const handleClickOpen = () => {
@@ -221,6 +229,7 @@ function Right({date}){
                                 <div className="postButtonsLeft">
                                     <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                    <button onClick={onClickBookmark}>{bookmark ? <LockTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                 </div>
                                 <div className="postButtonsRight">
                                     <button onClick={() => setEdit(!edit)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
@@ -280,6 +289,7 @@ function Right({date}){
                                 <div className="postButtonsLeft">
                                     <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                     <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    <button onClick={onClickLock}>{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                 </div>
                                 <div className="postButtonsRight">
                                     <button onClick={() => setEdit(true)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
