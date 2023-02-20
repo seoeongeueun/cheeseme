@@ -1,9 +1,9 @@
 .react-calendar {
-    width: 30rem;
+    width: 32rem !important;
     max-width: 100%;
     background: white;
-    border: 1px solid #d2d2d2;
-    line-height: 1.125em;
+    border: 1px solid #d2d2d2 !important;
+    line-height: 1.125em !important;
     font-size: 2rem;
   }
 
@@ -52,6 +52,7 @@
   }
   .react-calendar__month-view__weekdays {
     text-align: center;
+    text-decoration: none !important;
   }
   .react-calendar__month-view__weekdays__weekday {
     padding: 0;
@@ -64,7 +65,7 @@
     font-weight: bold;
   }
   .react-calendar__month-view__days__day--weekend {
-    color: #d10000;
+    color: #f73939 !important;
   }
   .react-calendar__month-view__days__day--neighboringMonth {
     color: #a4a4a4;
