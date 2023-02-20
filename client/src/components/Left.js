@@ -132,6 +132,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
                 setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
                 setSettings(n.settings);
+                setGrid(n.settings[0]);
               }
             })
             .catch( (err) => {
@@ -153,6 +154,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
                 setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
                 setSettings(n.settings);
+                setGrid(n.settings[0])
               }
             })
             .catch( (err) => {
@@ -182,12 +184,12 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const gridSetting = async() => {
         console.log(settings)
         let res = await FetchAPIPost('/api/users/update/' + userId, {
-            settings: [{gridLeft: grid}, {gridRight: settings[1].gridRight}, {snsStyle: settings[2].snsStyle}]
+            settings: [grid, settings[1], settings[2]]
         });
     }
 
     useEffect(() => {
-        if (settings && grid !== undefined) {
+        if (settings) {
             gridSetting();
         }
     }, [grid])

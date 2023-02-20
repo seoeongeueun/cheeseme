@@ -25,17 +25,7 @@ const userSchema = new mongoose.Schema(
 
             }
         ],
-        settings: [
-            {
-                gridLeft: Boolean
-            },
-            {
-                gridRight: Boolean
-            },
-            {
-                snsStyle: Boolean
-            }
-        ],
+        settings: [ Boolean ],
         notifications: [
             {
                 notiType: String,

@@ -84,7 +84,7 @@ export default function Signup(props) {
       friends: [],
       isAdmin: false,
       positions: [{name: 'cal', x: 0, y: 0, show: true}, {name: 'todo', x: 0, y: 0, show: true}, {name: 'note', x: 0, y: 0, show: true}, {name: 'dday', x: 0, y: 0, show: true}],
-      settings: [{gridLine: false}, {snsStyle: true}],
+      settings: [false, false, true],
       notifications: [{notiType: 'signUp', from: 'admin', to: username, done: false, date: new Date().setHours(0, 0, 0, 0)}]
     });
   }

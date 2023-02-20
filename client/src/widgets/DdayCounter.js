@@ -9,7 +9,7 @@ import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 function DdayCounter(props) {
     const [start, setStart] = useState();
     const [end, setEnd] = useState();
-    const [left, setLeft] = useState();
+    const [left, setLeft] = useState(0);
     const [title, setTitle] = useState();
     const [edit, setEdit] = useState(false);
     const [loading, setLoading] = useState(true);
