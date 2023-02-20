@@ -217,9 +217,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         const {x, y} = position;
 
         //setControlledPosition({x, y});
-        console.log("X: ", x)
-        console.log("Y: ", y)
     };
+    
     return(
         <div className="leftInnerBorder">
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12}>

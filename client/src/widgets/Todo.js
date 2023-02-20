@@ -54,7 +54,6 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                 const n = res?.data;
                 if (n) {
                     setAllTodos(n)
-                    console.log('n: ', n)
                 }
                 else {
                     setAllTodos([])

@@ -10,7 +10,7 @@ reminderRouter.get('/', asyncHandler(async(req, res) => {
 }));
 
 reminderRouter.get('/:owner', asyncHandler(async(req, res) => {
-    const reminders = await Reminder.findOne({ ownder: req.params.owner });
+    const reminders = await Reminder.findOne({ owner: req.params.owner });
     res.send(reminders);
 }));
 

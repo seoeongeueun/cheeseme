@@ -104,7 +104,7 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
                 });
                 setLoading(false)
             } else {
-                let res = await FetchAPIPost('/api/notes/update/' + date, {
+                let res = await FetchAPIPost('/api/notes/updateById/' + _id, {
                     date: date,
                     text: tmp  
                 });

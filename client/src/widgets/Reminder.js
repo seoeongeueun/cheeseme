@@ -19,7 +19,8 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
     const [colorCodeLight, setColorCodeLight] = useState(['rgba(206, 151, 251, 0.1)', 'rgba(250, 169, 157, 0.1)', 'rgba(253, 223, 126, 0.1)', 'rgba(103, 235, 250, 0.1)'])
     //rgba(250, 169, 157, 0.4) rgba(253, 223, 126, 0.4) rgba(155, 251, 225, 0.4) rgba(103, 235, 250, 0.4)
     useEffect(() => {
-        axios.get('/api/reminder/' + userId)
+        if (userId) {
+            axios.get('/api/reminder/' + userId)
             .then((res) => {
                 if (res?.data){
                     setReminders(res?.data.reminders);
@@ -30,7 +31,8 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
             .catch((err) => {
                 console.log('Error loading reminders')
             })
-    }, []);
+        }
+    }, [userId]);
 
     const updateReminders = async() => {
         let res = await FetchAPIPost('/api/reminder/update/' + userId, {
