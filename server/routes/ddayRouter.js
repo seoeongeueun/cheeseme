@@ -9,23 +9,22 @@ ddayRouter.get('/', asyncHandler(async(req, res) => {
     res.send(dday);
 }));
 
-ddayRouter.get('/:date', asyncHandler(async(req, res) => {
-    const dday = await Dday.findOne({date: req.params.date});
-    res.send(dday);
-}));
+// ddayRouter.get('/:date', asyncHandler(async(req, res) => {
+//     const dday = await Dday.findOne({date: req.params.date});
+//     res.send(dday);
+// }));
 
-ddayRouter.get('getByOwner/:owner', asyncHandler(async(req, res) => {
-    const dday = await Dday.find({ owner: req.params.owner });
+ddayRouter.get('/getByOwner/:owner', asyncHandler(async(req, res) => {
+    const dday = await Dday.findOne({ owner: req.params.owner });
     res.send(dday);
 }));
 
 ddayRouter.post('/add', asyncHandler(async(req, res) => {
     const owner = req.body.owner;
-    const date = req.body.date;
     const text = req.body.text;
     const end = req.body.end;
     const start = req.body.start;
-    await Dday.create({ owner, date, text, start, end })
+    await Dday.create({ owner, start, text, end })
     res.send('Created')
 }));
 
@@ -34,16 +33,16 @@ ddayRouter.get('/search/text/:keyword', asyncHandler(async(req, res) => {
     res.send(dday)
 }))
 
-ddayRouter.delete("/delete/:date", asyncHandler(async(req, res) => {
-    await Dday.deleteOne({date: req.params.date});
+ddayRouter.delete("/delete/:owner", asyncHandler(async(req, res) => {
+    await Dday.deleteOne({owner: req.params.owner});
     res.send('Deleted');
 }));
 
-ddayRouter.post('/update/:date', asyncHandler(async(req, res) => {
+ddayRouter.post('/update/:owner', asyncHandler(async(req, res) => {
     const text = req.body.text;
     const start = req.body.start;
     const end = req.body.end;
-    await Dday.updateOne({date: req.params.date}, {text: text, start: start, end: end});
+    await Dday.updateOne({owner: req.params.owner}, {text: text, start: start, end: end});
     res.send('Updated')
 }))
 

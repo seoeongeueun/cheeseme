@@ -11,53 +11,73 @@ function DdayCounter(props) {
     const [end, setEnd] = useState();
     const [left, setLeft] = useState();
     const [title, setTitle] = useState();
-    const [edit, setEdit] = useState(true);
+    const [edit, setEdit] = useState(false);
     const [loading, setLoading] = useState(true);
     const [date, setDate] = useState();
 
     //change it to today later
 
-    useEffect(() => {
-        let tmp = new Date().setHours(0, 0, 0, 0);
-        setStart(tmp)
-        setLoading(true);
-        axios.get('/api/dday/' + tmp)
-            .then( (res) => {
-                const n = res?.data;
-                if (n) {
-                    setDate(n.date)
-                    setEnd(n.end)
-                    setTitle(n.text)
-                    setLoading(false);
-                }
-                else{
-                    setDate(tmp)
-                }
-                return;
-            })
-            .catch( (err) => {
-                console.log('Error loading note')
-            })
-    }, []);
+    // useEffect(() => {
+    //     let tmp = new Date().setHours(0, 0, 0, 0);
+    //     setStart(tmp)
+    //     setLoading(true);
+    //     axios.get('/api/dday/' + tmp)
+    //         .then( (res) => {
+    //             const n = res?.data;
+    //             if (n) {
+    //                 setDate(n.date)
+    //                 setEnd(n.end)
+    //                 setTitle(n.text)
+    //                 setLoading(false);
+    //             }
+    //             else{
+    //                 setDate(tmp)
+    //             }
+    //             return;
+    //         })
+    //         .catch( (err) => {
+    //             console.log('Error loading note')
+    //         })
+    // }, []);
 
     useEffect(() => {
-        let c = 0
-        if (end) c = end - start;
-        let daysLeft = Math.round(c / (1000 * 60 * 60 * 24));
-        if (daysLeft < 0) setLeft(0)
-        else setLeft(daysLeft)
-    }, [start, end]);
+        if (props.userId) {
+            axios.get('/api/dday/getByOwner/' + props.userId)
+                .then((res) => {
+                    if (res?.data) {
+                        setTitle(res?.data.text);
+                        setEnd(res?.data.end);
+                        setStart(res?.data.start);
+                        setLoading(false)
+                    }
+                    else {
+                        setEdit(true);
+                        setStart(new Date().setHours(0, 0, 0, 0));
+                    }
+                })
+        }
+    }, [props.userId])
+
+    useEffect(() => {
+        if (end && start) {
+            let c = end - start;
+            let daysLeft = Math.round(c / (1000 * 60 * 60 * 24));
+            if (daysLeft < 0) setLeft(0)
+            else setLeft(daysLeft)
+        }
+    }, [end, start]);
 
     useEffect(() => {
         const change = async () => {
-            let res = await FetchAPIPost('/api/dday/update/' + date, {
+            let res = await FetchAPIPost('/api/dday/update/' + props.userId, {
+                start: new Date().setHours(0, 0, 0, 0),
                 text: title,
                 end: end
             });
         }
         const addNew = async () => {
             let res = await FetchAPIPost('/api/dday/add/', {
-                date: new Date().setHours(0, 0, 0, 0),
+                owner: props.userId,
                 start: new Date().setHours(0, 0, 0, 0),
                 text: title,
                 end: end
@@ -65,11 +85,11 @@ function DdayCounter(props) {
         }
         if (loading) {
             addNew();
-            setLoading(false)
+            setLoading(false);
         }
         else {
             change();
-            setLoading(false)
+            setLoading(false);
         }
         setLoading(false);
     }, [edit, end])
@@ -80,8 +100,8 @@ function DdayCounter(props) {
         if(event.key === 'Enter'){
             setEdit(false);
             if (date) {
-                let res = await FetchAPIPost('/api/dday/update/' + date, {
-                    text: title
+                let res = await FetchAPIPost('/api/dday/update/' + props.userId, {
+                    text: title,
                 });
             }
         }
