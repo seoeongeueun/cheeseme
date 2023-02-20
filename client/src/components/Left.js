@@ -78,6 +78,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [notePosition, setNotePosition] = useState()
     const [reminderPosition, setReminderPosition] = useState();
 
+    const [settings, setSettings] = useState();
+
 
     const [id, setId] = useState("");
 
@@ -99,7 +101,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             positions: newState
         });
         onChangePositions(newState);
-    }
+    };
 
     useEffect(() => {
         setToday(new Date().setHours(0, 0, 0, 0));
@@ -129,6 +131,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
                 setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
                 setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
+                setSettings(n.settings);
               }
             })
             .catch( (err) => {
@@ -149,6 +152,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
                 setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
                 setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
+                setSettings(n.settings);
               }
             })
             .catch( (err) => {
@@ -175,9 +179,20 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         resizeObserver.observe(document.getElementById("leftBody"));
     });
 
-    useEffect(() => {
+    const gridSetting = async() => {
+        console.log(settings)
+        let res = await FetchAPIPost('/api/users/update/' + userId, {
+            settings: [{gridLeft: grid}, {gridRight: settings[1].gridRight}, {snsStyle: settings[2].snsStyle}]
+        });
+    }
 
-    }, [date])
+    useEffect(() => {
+        if (settings && grid !== undefined) {
+            gridSetting();
+        }
+    }, [grid])
+
+    
 
     useEffect(() => {
 
@@ -251,15 +266,111 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     return(
         <div className="leftInnerBorder">
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12}>
-                <div className="leftContent">
-                    <div className="leftBody">
+            <div className="leftContent" id="leftContent">
+                    <div className="leftBody" id="leftBody">
+                        {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(319), bottom: height-(350 + 10)}} position={calPosition ? calPosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
+                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 98), bottom: height-(350 - 33)}} position={todoPosition ? todoPosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setTodoPosition({x, y})} handle="strong"><div><TodosContainer move={editMode} date={date}/></div></Draggable>} 
+                        {notes && <Draggable bounds={{top: 0, left: 0, right: width-(320 - 118), bottom: height-(400- 153)}} position={notePosition ? notePosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setNotePosition({x, y})} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
+                        {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: width- (225 - 73), bottom: height - (400- 161)}} position={ddayPosition ? ddayPosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode} userId={userId}/></div></Draggable>}
+                        {reminder && <Draggable bounds={{top: 0, left: 0, right: width-(450 - 128), bottom: height-(400- 153)}} position={reminderPosition ? reminderPosition : {x: 0, y: 0}} onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
+                        <div className="stickers">
+                            {stickerList?.length > 0 &&
+                                stickerList.map((value, index) => {
+                                    if (stickersOn[index]) {
+                                        return (
+                                            <Draggable bounds={{top: 0, left: -112*index, right: width-112*(index+1), bottom: height-112*(index+1)}} handle="strong">
+                                                <div className="stickerWidget">
+                                                    <img alt={"sticker" + index} src={value} style={roundStickers[index] ? {borderRadius: "50%"} : {}}/>
+                                                    {editMode && <strong>
+                                                        <OpenWithSharpIcon sx={{fontSize: '7rem'}}/>
+                                                    </strong>}
+                                                </div>
+                                            </Draggable>
+                                        )
+                                    }
+                                    return null }
+                                )
+                            }
+                        </div>
+                        {(addPic && imgSrc) && <div className='stickerMakerBox'>
+                            <div className='stickerMaker'>
+                                <Cropper
+                                  image={imgSrc}
+                                  crop={crop}
+                                  rotation={rotation}
+                                  zoom={zoom}
+                                  aspect={(square || circle) ? 1 / 1 : 3 / 4}
+                                  onCropChange={setCrop}
+                                  onRotationChange={setRotation}
+                                  onCropComplete={onCropComplete}
+                                  onZoomChange={setZoom}
+                                  cropShape={circle ? 'round' : 'rect'}
+                                />
+                            </div>
+                            <div className='stickerMakerSettings'>
+                                <div className="sliders">
+                                    <div className='stickerMakerSliders'>
+                                      <Typography variant="overline">
+                                        Zoom
+                                      </Typography>
+                                      <Slider
+                                        value={zoom}
+                                        min={1}
+                                        max={5}
+                                        step={0.1}
+                                        aria-labelledby="Zoom"
+                                        onChange={(e, zoom) => setZoom(zoom)}
+                                      />
+                                    </div>
+                                    <div className='stickerSliderContainer'>
+                                      <Typography variant="overline" classes='sliderLabel'>
+                                        Rotation
+                                      </Typography>
+                                      <Slider
+                                        value={rotation}
+                                        min={0}
+                                        max={360}
+                                        step={1}
+                                        aria-labelledby="Rotation"
+                                        onChange={(e, rotation) => setRotation(rotation)}
+                                      />
+                                    </div>
+                                </div>
+                                <div className="stickersShaper">
+                                    <Typography variant="overline" classes='sliderLabel'>Crop Shape</Typography>
+                                    <div className="stickerShape">
+                                        <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(!circle); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                        <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(!square); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                        <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(!rect); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                    </div>
+                                </div>
+                                <Button
+                                  onClick={showCroppedImage}
+                                  variant="contained"
+                                  color="primary"
+                                  style={{fontSize: "1.5rem"}}>
+                                  Done
+                                </Button>
+                              </div>
+                            </div>
+                        }
                     </div>
                     <div className="leftFooter">
-                        <button onClick={()=> setShowWidgetSettings(!showWidgetSettings)}>widgets</button>
-                        {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo}/>}
-                        <button onClick={()=> setShowSettings(!showSettings)}>settings</button>
-                        {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
-                        <button onClick={() => setEditMode()}><OpenWithRoundedIcon sx={{fontSize: '20px'}}/></button>
+                        <div className="leftWidget">
+                            <button onClick={() => setAddPic(!addPic)}><AddPhotoAlternateOutlinedIcon sx={ addPic ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
+                            {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
+                        </div>
+                        <div className="leftWidget">
+                            <button onClick={() => setEditMode()}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
+                        </div>
+                        <div className="leftWidget">
+                            <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                            {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
+                        </div>
+                        <div className="leftWidget">
+                            <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                            {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
+                        </div>
                     </div>
                 </div>
             </GridLines> :

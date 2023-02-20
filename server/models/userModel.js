@@ -27,7 +27,12 @@ const userSchema = new mongoose.Schema(
         ],
         settings: [
             {
-                gridLine: Boolean,
+                gridLeft: Boolean
+            },
+            {
+                gridRight: Boolean
+            },
+            {
                 snsStyle: Boolean
             }
         ],
