@@ -14,12 +14,18 @@ ddayRouter.get('/:date', asyncHandler(async(req, res) => {
     res.send(dday);
 }));
 
+ddayRouter.get('getByOwner/:owner', asyncHandler(async(req, res) => {
+    const dday = await Dday.find({ owner: req.params.owner });
+    res.send(dday);
+}));
+
 ddayRouter.post('/add', asyncHandler(async(req, res) => {
+    const owner = req.body.owner;
     const date = req.body.date;
     const text = req.body.text;
     const end = req.body.end;
     const start = req.body.start;
-    await Dday.create({ date, text, start, end })
+    await Dday.create({ owner, date, text, start, end })
     res.send('Created')
 }));
 
@@ -38,6 +44,14 @@ ddayRouter.post('/update/:date', asyncHandler(async(req, res) => {
     const start = req.body.start;
     const end = req.body.end;
     await Dday.updateOne({date: req.params.date}, {text: text, start: start, end: end});
+    res.send('Updated')
+}))
+
+ddayRouter.post('/updateById/:_id', asyncHandler(async(req, res) => {
+    const text = req.body.text;
+    const start = req.body.start;
+    const end = req.body.end;
+    await Dday.updateOne({_id: req.params._id}, {text: text, start: start, end: end});
     res.send('Updated')
 }))
 

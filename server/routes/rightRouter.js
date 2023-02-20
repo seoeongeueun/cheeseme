@@ -14,6 +14,11 @@ rightRouter.get('/:date', asyncHandler(async(req, res) => {
     res.send(right);
 }));
 
+rightRouter.get('getByOwner/:owner', asyncHandler(async(req, res) => {
+    const right = await Right.find({ owner: req.params.owner });
+    res.send(right);
+}));
+
 rightRouter.get('/search/text/:keyword', asyncHandler(async(req, res) => {
     const right = await Right.find({ text: {$regex : req.params.keyword, '$options' : 'i'}});
     res.send(right)
@@ -25,13 +30,15 @@ rightRouter.get('/search/title/:keyword', asyncHandler(async(req, res) => {
 }));
 
 rightRouter.post('/add', asyncHandler(async(req, res) => {
+    const owner = req.body.owner;
     const date = req.body.date;
     const text = req.body.text;
     const title = req.body.title;
     const like = req.body.like;
     const weather = req.body.weather;
     const bookmark = req.body.bookmark;
-    await Right.create({ date, text, title, like, weather, bookmark });
+    const hide = req.body.hide;
+    await Right.create({ owner, date, text, title, like, weather, bookmark, hide });
     res.send('Created');
 }))
 
@@ -46,7 +53,19 @@ rightRouter.post('/update/:date', asyncHandler(async(req, res) => {
     const like = req.body.like;
     const weather = req.body.weather;
     const bookmark = req.body.bookmark;
-    await Right.updateOne({date: req.params.date}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark});
+    const hide = req.body.hide;
+    await Right.updateOne({date: req.params.date}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide});
+    res.send('Updated')
+}))
+
+rightRouter.post('/updateById/:_id', asyncHandler(async(req, res) => {
+    const text = req.body.text;
+    const title = req.body.title;
+    const like = req.body.like;
+    const weather = req.body.weather;
+    const bookmark = req.body.bookmark;
+    const hide = req.body.hide;
+    await Right.updateOne({_id: req.params._id}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide});
     res.send('Updated')
 }))
 
