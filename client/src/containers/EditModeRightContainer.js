@@ -7,6 +7,10 @@ function EditModeRightContainer() {
         editMode: state.editMode.rightEdit
     }));
 
+    const { userId } = useSelector(state => ({
+        userId: state.loginInfo.userId,
+    }));
+
     const dispatch = useDispatch();
     const onToggleRight = () => dispatch(toggleRight());
 }

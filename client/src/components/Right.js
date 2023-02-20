@@ -36,7 +36,7 @@ import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import axios from 'axios';
 
-function Right({date}){
+function Right({date, userId}){
     const [showSettings, setShowSettings] = useState(false);
     const [grid, setGrid] = useState(false);
     const [sns, setSns] = useState(true);
@@ -57,89 +57,203 @@ function Right({date}){
     const [found, setFound] = useState(false);
 
     const [hide, setHide] = useState();
+    const [loading, setLoading] = useState(true);
+    const [allPosts, setAllPosts] = useState([]);
+    const [_id, setId] = useState('');
     
+    // useEffect(() => {
+    //     axios.get('/api/right/' + date)
+    //         .then( (res) => {
+    //             const n = res?.data;
+    //             if (n){
+    //                 setBody(n.text);
+    //                 setHeart(n.like);
+    //                 setBookmark(n.bookmark);
+    //                 setTitle(n.title);
+    //                 setWeather(n.weather);
+    //                 setFound(true);
+    //             } else {
+    //                 setBody("");
+    //                 setHeart(false);
+    //                 setBookmark(false);
+    //                 setTitle("")
+    //                 setWeather("")
+    //                 setFound(false);
+    //             }
+    //             return;
+    //         })
+    //         .catch( (err) => {
+    //             console.log('Error loading right post: ', err);
+    //             setFound(false);
+    //         })
+    // }, [date])
+
     useEffect(() => {
-        axios.get('/api/right/' + date)
-            .then( (res) => {
+        if (userId) {
+            axios.get('/api/right/getByOwner/' + userId)
+                .then((res) => {
+                    const n = res?.data;
+                    if (n) setAllPosts(n)
+                    else setAllPosts([])
+                })
+                .catch((err) => {
+                    console.log('Error loading posts')
+                })
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        if (_id === '') {
+            axios.get('/api/right/getByOwner/' + userId)
+            .then((res) => {
+                setLoading(true);
                 const n = res?.data;
-                if (n){
-                    setBody(n.text);
-                    setHeart(n.like);
-                    setBookmark(n.bookmark);
-                    setTitle(n.title);
-                    setWeather(n.weather);
-                    setFound(true);
-                } else {
-                    setBody("");
-                    setHeart(false);
-                    setBookmark(false);
-                    setTitle("")
-                    setWeather("")
-                    setFound(false);
+                if (n) {
+                    setAllPosts(n);
+                }
+                else {
+                    setAllPosts([])
                 }
                 return;
             })
             .catch( (err) => {
-                console.log('Error loading right post: ', err);
-                setFound(false);
+                console.log('Error loading posts: ', err);
             })
-    }, [date])
+        }
+    }, [loading]);
 
     useEffect(() => {
-        console.log('edit: ', edit)
-
-    }, [showSettings, grid, sns, edit]);
+        if (allPosts?.length > 0 && date) {
+            const post = allPosts.find(p => p.date === date);
+            if (post) {
+                setBody(post?.text);
+                setHeart(post?.like);
+                setBookmark(post?.bookmark);
+                setTitle(post?.title);
+                setWeather(post?.weather);
+                setHide(post?.hide);
+                setId(post?._id);
+                setLoading(false);
+            } else {
+                setBody('');
+                setTitle('');
+                setHeart(false);
+                setBookmark(false);
+                setHide(false);
+                setWeather('');
+                setId('')
+                setLoading(true)
+            }
+        } else {
+            setId('');
+            setLoading(true);
+        }
+    }, [allPosts]);
 
     useEffect(() => {
-
-    }, [heart, postImage, weather])
+        if (allPosts?.length > 0 && date) {
+            const post = allPosts.find(p => p.date === date);
+            if (post) {
+                setBody(post?.text);
+                setHeart(post?.like);
+                setBookmark(post?.bookmark);
+                setTitle(post?.title);
+                setWeather(post?.weather);
+                setHide(post?.hide);
+                setId(post?._id);
+                setLoading(false);
+            } else {
+                setBody('');
+                setTitle('');
+                setHeart(false);
+                setBookmark(false);
+                setHide(false);
+                setWeather('');
+                setId('')
+                setLoading(true)
+            }
+        } else {
+            setId('');
+            setLoading(true);
+        }
+    }, [date]);
 
     const onClickHeart = async() => {
-        if (heart) {
-            setHeart(false);
-            let res = await FetchAPIPost('/api/right/update/' + date, {
-                like: false,
-                bookmark: bookmark,
-                title: title,
-                text: body,
-                weather: weather
-            });
-        } else {
-            setHeart(true);
-            let res = await FetchAPIPost('/api/right/update/' + date, {
-                like: true,
-                bookmark: bookmark,
-                title: title,
-                text: body,
-                weather: weather
-            });
+        if (_id !== '') {
+            if (heart) {
+                setHeart(false);
+                let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+                    like: false,
+                    bookmark: bookmark,
+                    title: title,
+                    text: body,
+                    weather: weather,
+                    hide: hide
+                });
+            } else {
+                setHeart(true);
+                let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+                    like: true,
+                    bookmark: bookmark,
+                    title: title,
+                    text: body,
+                    weather: weather,
+                    hide: hide
+                });
+            }
         }
     }
 
     const onClickBookmark = async() => {
-        if (bookmark) {
-            setBookmark(false);
-            let res = await FetchAPIPost('/api/right/update/' + date, {
-                like: heart,
-                bookmark: false,
-                title: title,
-                text: body,
-                weather: weather
-            });
-        } else {
-            setBookmark(true);
-            let res = await FetchAPIPost('/api/right/update/' + date, {
-                like: heart,
-                bookmark: true,
-                title: title,
-                text: body,
-                weather: weather
-            });
+        if (_id !== '') {
+            if (bookmark) {
+                setBookmark(false);
+                let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+                    like: heart,
+                    bookmark: false,
+                    title: title,
+                    text: body,
+                    weather: weather,
+                    hide: hide
+                });
+            } else {
+                setBookmark(true);
+                let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+                    like: heart,
+                    bookmark: true,
+                    title: title,
+                    text: body,
+                    weather: weather,
+                    hide: hide
+                });
+            }
         }
     }
 
     const onClickLock = async() => {
-        setHide(!hide)
+        if (_id !== '') {
+            if (hide) {
+                setHide(false);
+                let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+                    like: heart,
+                    bookmark: bookmark,
+                    title: title,
+                    text: body,
+                    weather: weather,
+                    hide: false,
+                });
+            } else {
+                setHide(true);
+                let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+                    like: heart,
+                    bookmark: bookmark,
+                    title: title,
+                    text: body,
+                    weather: weather,
+                    hide: true
+                });
+            }
+        }
     }
 
     const handleClickOpen = () => {
@@ -159,26 +273,28 @@ function Right({date}){
 
     const handleSave = async() => {
         setEdit(false);
-        if (!found){
+        if (_id === ''){
             let res = await FetchAPIPost('/api/right/add/', {
+                owner: userId,
                 date: date,
                 like: heart,
                 bookmark: bookmark,
                 title: title,
                 text: body,
-                weather: weather
+                weather: weather,
+                hide: hide
             });
             setFound(true)
             console.log("create")
         } else {
-            let res = await FetchAPIPost('/api/right/update/' + date, {
+            let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                 like: heart,
                 bookmark: bookmark,
                 title: title,
                 text: body,
-                weather: weather
+                weather: weather,
+                hide: hide
             });
-
             console.log("update")
         }
     }
@@ -192,13 +308,17 @@ function Right({date}){
         if (weatherOption === 'cloud') setWeather('cloud')
         if (weatherOption === 'rainy') setWeather('rainy')
         if (weatherOption === 'snowy') setWeather('snowy')
-        let res = await FetchAPIPost('/api/right/update/' + date, {
-            like: heart,
-            bookmark: bookmark,
-            title: title,
-            text: body,
-            weather: weatherOption
-        });
+        if (_id !== '') {
+            let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+                like: heart,
+                bookmark: bookmark,
+                title: title,
+                text: body,
+                weather: weatherOption,
+                hide: hide
+            });
+        }
+
     }
 
     /*<span className="profileArea"/>*/

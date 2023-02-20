@@ -14,7 +14,7 @@ rightRouter.get('/:date', asyncHandler(async(req, res) => {
     res.send(right);
 }));
 
-rightRouter.get('getByOwner/:owner', asyncHandler(async(req, res) => {
+rightRouter.get('/getByOwner/:owner', asyncHandler(async(req, res) => {
     const right = await Right.find({ owner: req.params.owner });
     res.send(right);
 }));

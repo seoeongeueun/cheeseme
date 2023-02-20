@@ -8,8 +8,12 @@ function RightContainer() {
         date: state.datePick.date,
     }));
 
+    const { userId } = useSelector(state => ({
+        userId: state.loginInfo.userId,
+    }));
+
     return (
-        <Right date={date}/>
+        <Right date={date} userId={userId}/>
     )
 }
 
