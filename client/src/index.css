@@ -372,6 +372,7 @@ main {
   position: absolute;
   top: 2rem;
   min-height: min-content;
+  padding: 1rem;
 }
 
 .reminderWidget input {
@@ -408,6 +409,7 @@ main {
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  margin-top: 0.5rem;
 }
 
 .reminderItem button {
