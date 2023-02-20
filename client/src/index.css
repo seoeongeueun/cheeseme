@@ -791,12 +791,13 @@ main {
 .checkboxButton {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 5px;
 }
 
 .checkbox {
   margin-right: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .checkboxButton label {
