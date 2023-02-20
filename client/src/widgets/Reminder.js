@@ -121,7 +121,7 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
             </div>
             <div className='reminderContent' id='reminderContent' style={{overflowY: show ? 'scroll' : 'hidden', maxHeight: show ? '17rem' : ''}}>
                 {reminders?.length > 0 && reminders.map((r, i) => (
-                    <div className='reminderItem'>
+                    <div className='reminderItem' key={r._id}>
                         <div className='reminderTitle'>
                             <button style={{backgroundColor: colorCode[i%colorCode.length]}}>
                                 {editMode ? 
