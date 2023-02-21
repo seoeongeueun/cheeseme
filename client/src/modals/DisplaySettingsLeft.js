@@ -14,8 +14,8 @@ function DisplaySettingsLeft(props){
 
     return(
         <div className="settingsbox">
+            <span className='settingsboxTitle'>Display Settings</span>
             <div className="checkboxlist">
-                <p1>Display Settings</p1>
                 <div className="checkboxButton">
                     <input type="checkbox" name="checkGrid" onClick={() => handleGridClick()} checked={props.grid}/>
                     <label>Grid</label>

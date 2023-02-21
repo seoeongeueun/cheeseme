@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const ddaySchema = new mongoose.Schema({
-    owner: {type: String, required: true},
+    owner: {type: String, required: true, unique: true},
     start: {type: Number, required: true},
     text: String,
     end: Number

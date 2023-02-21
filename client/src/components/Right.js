@@ -31,9 +31,11 @@ import SunColor from '../icons/sunny (1).png';
 import SunPlain from '../icons/sunny.png';
 import SnowPlain from '../icons/snowman (1).png';
 import SnowColor from '../icons/snowman.png';
+import HomeSharpIcon from '@mui/icons-material/HomeSharp';
 import { FetchAPIPost } from '../utils/api.js';
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import axios from 'axios';
 
 function Right({date, userId}){
@@ -61,6 +63,9 @@ function Right({date, userId}){
     const [loading, setLoading] = useState(true);
     const [allPosts, setAllPosts] = useState([]);
     const [_id, setId] = useState('');
+    const [showBookMark, setShowBookMark] = useState(false);
+    const [showHome, setShowHome] = useState(false);
+    const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
 
     useEffect(() => {
         if (userId) {
@@ -370,6 +375,23 @@ function Right({date, userId}){
                 </div>
             </GridLines> :
             <div className="rightContent">
+                {showHome ? <div className='marker'>
+                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>
+                : <div className='marker2' style={{top: '6rem', background: 'rgba(247, 57, 57, 0.8)' }}>
+                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>}
+                <div className='marker2'>
+                    <span>B</span>
+                </div>
+                <div className='marker2' style={{top: '15rem'}}/>
+                {showBookMark ? <div className='marker4'>
+                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>
+                :
+                <div className='marker3'>
+                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>}
                     {edit ? <div className="rightHeader">
                         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}

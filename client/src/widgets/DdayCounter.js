@@ -52,15 +52,19 @@ function DdayCounter(props) {
                     }
                     else {
                         setEdit(true);
-                        setStart(new Date().setHours(0, 0, 0, 0));
                     }
                 })
         }
     }, [props.userId])
 
     useEffect(() => {
-        if (end && start) {
-            let c = end - start;
+        if (end) {
+            let c = 0
+            if (!start) {
+                c = end - new Date().setHours(0, 0, 0, 0);
+            } else {
+                c = end - start
+            }
             let daysLeft = Math.round(c / (1000 * 60 * 60 * 24));
             if (daysLeft < 0) setLeft(0)
             else setLeft(daysLeft)
@@ -82,13 +86,14 @@ function DdayCounter(props) {
                 text: title,
                 end: end
             });
+            setStart(new Date().setHours(0, 0, 0, 0));
         }
-        if (loading) {
-            addNew();
+        if (start) {
+            change();
             setLoading(false);
         }
         else {
-            change();
+            addNew();
             setLoading(false);
         }
         setLoading(false);

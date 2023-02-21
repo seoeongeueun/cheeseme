@@ -82,7 +82,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     const [id, setId] = useState("");
 
-
     const ORIENTATION_TO_ANGLE = {
         '3': 180,
         '6': 90,

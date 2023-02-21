@@ -527,10 +527,181 @@ main {
   width: 100%;
   flex-direction: column;
   justify-content: flex-start;
+  position: relative;
 }
 
 .rightContent span{
   margin: 2rem 0rem 0rem 0rem;
+}
+
+.marker {
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 7rem;
+  height: 2.5rem;
+  right: -5rem;
+  top: 6rem;
+  background: rgba(247, 57, 57, 0.8);
+  /* background: rgba(249, 216, 118, 0.7); */
+  border: 1px solid #000000;
+  border-radius: 3px;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.marker:hover {
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 8rem;
+  height: 2.5rem;
+  right: -6rem;
+  top: 6rem;
+
+  /* background: rgba(249, 216, 118, 0.7); */
+  border: 1px solid #000000;
+  border-radius: 3px;
+  z-index: 10;
+}
+
+.marker span {
+  font-size: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.marker2 {
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 4.7rem;
+  height: 2.5rem;
+  right: -5rem;
+  top: 10.5rem;
+
+  /* background: rgba(247, 57, 57, 0.7); */
+  background: rgba(233, 233, 233, 0.7);
+  border-top: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-radius: 0px 3px 3px 0px;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.marker2:hover{
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 5.5rem;
+  height: 2.5rem;
+  right: -5.8rem;
+  top: 10.5rem;
+
+  /* background: rgba(247, 57, 57, 0.7); */
+  border-top: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-radius: 0px 3px 3px 0px;
+  z-index: 10;
+}
+
+.marker2 span {
+  font-size: 3rem;
+  margin-bottom: 2.4rem;
+}
+
+.marker3 {
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 4.7rem;
+  height: 2.5rem;
+  right: -5rem;
+  bottom: 4rem;
+
+  /* background: rgba(247, 57, 57, 0.7); */
+  background: rgba(249, 216, 118, 0.8);
+  border-top: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-radius: 0px 3px 3px 0px;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.marker3:hover{
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 5.5rem;
+  height: 2.5rem;
+  right: -5.8rem;
+  bottom: 4rem;
+
+  /* background: rgba(247, 57, 57, 0.7); */
+  border-top: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-radius: 0px 3px 3px 0px;
+  z-index: 10;
+}
+
+.marker3 span {
+  font-size: 3rem;
+  margin-bottom: 2.4rem;
+}
+
+.marker4 {
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 7rem;
+  height: 2.5rem;
+  right: -5rem;
+  bottom: 4rem;
+  background: rgba(249, 216, 118, 0.8);
+  /* background: rgba(249, 216, 118, 0.7); */
+  border: 1px solid #000000;
+  border-radius: 3px;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.marker4:hover {
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 8rem;
+  height: 2.5rem;
+  right: -6rem;
+  bottom: 4rem;
+
+  /* background: rgba(249, 216, 118, 0.7); */
+  border: 1px solid #000000;
+  border-radius: 3px;
+  z-index: 10;
+}
+
+.marker4 span {
+  font-size: 3rem;
+  margin-bottom: 2.5rem;
 }
 
 .rightHeader span{
