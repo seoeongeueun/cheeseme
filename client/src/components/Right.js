@@ -398,7 +398,7 @@ function Right({date, userId}){
                                 <div className="postButtonsLeft">
                                     <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                     <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px' }}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                    <button onClick={onClickLock}>{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                 </div>
                                 <div className="postButtonsRight">
                                     <button onClick={() => setEdit(true)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>

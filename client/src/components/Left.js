@@ -39,6 +39,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     const [todo, setTodo] = useState(true);
     const [calendar, setCalendar] = useState(true);
+    const [ddayCounter, setDdayCounter] = useState(true);
     const [notes, setNotes] = useState(true);
     const [reminder, setReminder] = useState(true);
     const [width, setWidth] = useState(0);
@@ -60,8 +61,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [circle, setCircle] = useState(false);
 
     const [imgSrc, setImageSrc] = useState();
-
-    const [ddayCounter, setDdayCounter] = useState(true);
 
     const [today, setToday] = useState(0);
 
@@ -131,6 +130,11 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
                 setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
                 setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
+                setCalendar((n.positions.find(obj => obj.name === 'cal')).show)
+                setDdayCounter((n.positions.find(obj => obj.name === 'dday')).show)
+                setNotes((n.positions.find(obj => obj.name === 'note')).show)
+                setReminder((n.positions.find(obj => obj.name === 'reminder')).show)
+                setTodo((n.positions.find(obj => obj.name === 'todo')).show)
                 setSettings(n.settings);
                 setGrid(n.settings[0]);
               }
@@ -153,6 +157,11 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
                 setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
                 setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
+                setCalendar((n.positions.find(obj => obj.name === 'cal')).show)
+                setDdayCounter((n.positions.find(obj => obj.name === 'dday')).show)
+                setNotes((n.positions.find(obj => obj.name === 'note')).show)
+                setReminder((n.positions.find(obj => obj.name === 'reminder')).show)
+                setTodo((n.positions.find(obj => obj.name === 'todo')).show)
                 setSettings(n.settings);
                 setGrid(n.settings[0])
               }
@@ -182,7 +191,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     });
 
     const gridSetting = async() => {
-        console.log(settings)
         let res = await FetchAPIPost('/api/users/update/' + userId, {
             settings: [grid, settings[1], settings[2]]
         });
@@ -367,7 +375,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                            {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
+                            {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
@@ -475,7 +483,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                            {showWidgetSettings && <WidgetSettingsLeft todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
+                            {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
