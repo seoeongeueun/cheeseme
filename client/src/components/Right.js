@@ -382,7 +382,7 @@ function Right({date, userId}){
                     <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>}
                 <div className='marker2'>
-                    <span>B</span>
+                    <span></span>
                 </div>
                 <div className='marker2' style={{top: '15rem'}}/>
                 {showBookMark ? <div className='marker4'>
