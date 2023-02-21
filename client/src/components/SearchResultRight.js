@@ -5,19 +5,19 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 
 
-function SearchResultRight({onChangeDate, keyword, setSearch}){
+function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
     const [foundPosts, setFoundPosts] = useState();
     const [clicked, setClicked] = useState();
     const [searchBy, setSearchBy] = useState('Content');
     const [showOption, setShowOption] = useState(false);
 
     useEffect(() => {
-        if (keyword) {
+        if (keyword && userId) {
             if (searchBy === 'Title'){
-                axios.get('/api/right/search/title/' + keyword)
+                axios.get('/api/right/getByOwner/' + userId)
                 .then( (res) => {
                     const n = res?.data;
-                    if (n) setFoundPosts(n);
+                    if (n) setFoundPosts(res?.data.filter(n => n.title.toLowerCase().includes(keyword.toLowerCase())));
                     return;
                 })
                 .catch( (err) => {
@@ -25,10 +25,10 @@ function SearchResultRight({onChangeDate, keyword, setSearch}){
                 });
             }
             else if (searchBy === 'Content'){
-                axios.get('/api/right/search/text/' + keyword)
+                axios.get('/api/right/getByOwner/' + userId)
                 .then( (res) => {
                     const n = res?.data;
-                    if (n) setFoundPosts(n);
+                    if (n) setFoundPosts(res?.data.filter(n => n.text.toLowerCase().includes(keyword.toLowerCase())));
                     return;
                 })
                 .catch( (err) => {
@@ -36,7 +36,7 @@ function SearchResultRight({onChangeDate, keyword, setSearch}){
                 });
             }
         }
-    }, [keyword, searchBy])
+    }, [keyword, searchBy, userId])
 
     useEffect(() => {
         console.log(foundPosts)

@@ -28,7 +28,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
                 console.log('Error loading todos: ', err)
             })
         }
-    }, [keyword]);
+    }, [keyword, userId]);
 
     function removeTags(str) {
         if ((str===null) || (str===''))
