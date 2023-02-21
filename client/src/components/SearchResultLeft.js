@@ -2,49 +2,33 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Highlighter from "react-highlight-words";
 
-function SearchResultLeft({onChangeDate, keyword, setSearch}){
+function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
     const [foundNotes, setFoundNotes] = useState();
     const [foundTodos, setFoundTodos] = useState();
-    const [foundDdays, setFoundDdays] = useState();
     const [clicked, setClicked] = useState();
 
-
-
     useEffect(() => {
-        if (keyword) {
-            axios.get('/api/notes/search/text/' + keyword)
+        if (keyword && userId) {
+            axios.get('/api/notes/getByOwner/' + userId)
             .then( (res) => {
                 const n = res?.data;
-                if (n) setFoundNotes(n);
+                if (n) setFoundNotes(res?.data.filter(n => n.text.toLowerCase().includes(keyword.toLowerCase())));
                 return;
             })
             .catch( (err) => {
                 console.log('Error loading notes: ', err)
             });
-            axios.get('/api/todos/search/goals/' + keyword)
+            axios.get('/api/todos/getByOwner/' + userId)
             .then( (res) => {
                 const n = res?.data;
-                if (n) setFoundTodos(n);
+                if (n) setFoundTodos(res?.data.filter(t => t.goals.find(g => g.text.toLowerCase().includes(keyword.toLowerCase()))));
                 return;
             })
             .catch( (err) => {
                 console.log('Error loading todos: ', err)
             })
-            axios.get('/api/dday/search/text/' + keyword)
-            .then( (res) => {
-                const n = res?.data;
-                if (n) setFoundDdays(n);
-                return;
-            })
-            .catch( (err) => {
-                console.log('Error loading ddays: ', err)
-            })
         }
-    }, [keyword])
-
-    useEffect(() => {
-        console.log(foundDdays)
-    }, [foundNotes, foundTodos, foundDdays])
+    }, [keyword]);
 
     function removeTags(str) {
         if ((str===null) || (str===''))
@@ -156,18 +140,6 @@ function SearchResultLeft({onChangeDate, keyword, setSearch}){
                                     <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={g.text} />
                                 </div>
                             ))}
-                        </div>
-                    )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
-                </div>
-                <div className='foundWidgetCategory'>
-                    <div className='foundWidgetHeader'>
-                        <span>D-Day </span>
-                        <div className="line-yellow-short"/>
-                    </div>
-                    {foundDdays?.length > 0 ? foundDdays.map((dday) => (
-                        <div className='foundSearchItem' onClick={() => handleClick(dday.date)}>
-                            <span className='foundDate'>{new Date(dday.date).getMonth()+1}.{new Date(dday.date).getDate()}.{new Date(dday.date).getFullYear()}</span>
-                            <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={dday.text} />
                         </div>
                     )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
                 </div>
