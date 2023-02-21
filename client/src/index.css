@@ -2,6 +2,12 @@
   font-family: 'school';
   src: local('school'), url(./fonts/school.ttf) format('truetype');
 }
+
+@font-face {
+  font-family: 'dunggeunmo';
+  src: url(./fonts/dunggeunmo.ttf);
+}
+
 * {
   font-family: 'school';
 }
@@ -1298,7 +1304,12 @@ input.todoElem::placeholder {
   top: 2rem;
   max-height: 17rem;
   left: 0rem;
-  background-color: white;
+  background-color: #e9e9e9;
+  border: 2px solid rgb(68, 112, 233);
+}
+
+.notesWidget span {
+  font-family: 'dunggeunmo';
 }
 
 .notesHeader {
@@ -1306,19 +1317,36 @@ input.todoElem::placeholder {
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem;
-  background-color: #F9D876;
+  background-color: rgb(68, 112, 233);
   color: black;
   align-items: center;
-  height: 2rem;
+  height: 0.5rem;
+  
+}
+
+.notesHeader span {
+  font-size: 1.5rem;
+  color: white;
+  margin-left: 0rem;
+  font-family: 'dunggeunmo';
+}
+
+.notesContent p{
+  font-family: 'dunggeunmo' !important;
+  font-size: 1.5rem;
 }
 
 .notesHeader button {
-  border: none;
-  background-color: transparent;
+  border: 1px solid rgb(164, 164, 164);
+  background-color: #d2d2d2;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding: 0;
+  color: rgb(164, 164, 164);
+  margin-right: -0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .notesContent {
