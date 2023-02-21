@@ -439,6 +439,17 @@ main {
   width: 23rem;
 }
 
+.reminderDeco {
+  width: 6.5rem;
+  height: 2rem;
+  position: absolute;
+  top: -1rem;
+  left: -2rem;
+  background: rgba(206, 151, 251, 0.5);
+  border-radius: 0px;
+  transform: rotate(-5.46deg);
+}
+
 .reminderHeader {
   display: flex;
   flex-direction: row;
@@ -1202,6 +1213,18 @@ abbr[title] {
   top: 2rem;
   max-height: 22rem;
   background-color: white;
+  position: relative;
+}
+
+.reminderDeco {
+  width: 6.5rem;
+  height: 2rem;
+  position: absolute;
+  top: -1rem;
+  left: 8rem;
+  background: rgba(249, 216, 118, 0.5);
+  border-radius: 0px;
+  transform: rotate(-5.46deg);
 }
 
 .todoHeader {

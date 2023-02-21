@@ -226,6 +226,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
 
     return (
         <div className="todoWidget">
+            <div className='reminderDeco'/>
             {move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}
             <div className="todoHeader">
                 <span style={{marginLeft: '0.3rem'}}>To Do</span>
