@@ -13,7 +13,7 @@ import Star from '../icons/star.png';
 import StarColor from '../icons/starColor.png';
 import AddFriendContainer from '../containers/AddFriendContainer.js';
 
-function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, onFavFriend}){
+function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, onFavFriend, onSetFriendId}){
     const [clicked, setClicked] = useState('')
     const [addFriend, setAddFriend] = useState(false);
     const [removeFriend, setRemoveFriend] = useState(false);

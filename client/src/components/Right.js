@@ -64,7 +64,7 @@ function Right({date, userId}){
     const [allPosts, setAllPosts] = useState([]);
     const [_id, setId] = useState('');
     const [showBookMark, setShowBookMark] = useState(false);
-    const [showHome, setShowHome] = useState(false);
+    const [showHome, setShowHome] = useState(true);
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
 
     useEffect(() => {
