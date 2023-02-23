@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Right from '../components/Right.js';
 import { setFriendId } from '../modules/viewFriend.js';
+import { changeDate } from '../modules/datePick.js';
 
 function RightContainer() {
 
@@ -19,9 +20,10 @@ function RightContainer() {
 
     const dispatch = useDispatch();
     const onSetFriendId = friendId => dispatch(setFriendId(friendId));
+    const onChangeDate = d => dispatch(changeDate(d));
 
     return (
-        <Right date={date} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId}/>
+        <Right date={date} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId} onChangeDate={onChangeDate}/>
     )
 }
 

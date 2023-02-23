@@ -35,6 +35,7 @@ export default function LoginModal(props) {
       props.onCurrentUserChange(res.userId);
       props.onCurrentNameChange(username);
       props.setLogin(false);
+      props.onSetFriendId('');
     } else {
       console.log('Login Failed')
     }

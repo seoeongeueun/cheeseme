@@ -8,6 +8,11 @@
   src: url(./fonts/dunggeunmo.ttf);
 }
 
+@font-face {
+  font-family: 'NanumBarunpenR';
+  src: local('NanumBarunpenR'), url(./fonts/NanumBarunpenR.otf) format('opentype');
+}
+
 * {
   font-family: 'school';
 }
@@ -943,7 +948,16 @@ main {
 }
 
 .rightFooter {
+  display: flex;
+  flex-direction: row;
+  font-size: 1.5rem;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
 
+.rightFooter span{
+  font-family: 'NanumBarunPenR' !important;
 }
 
 .footer {
