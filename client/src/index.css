@@ -665,7 +665,7 @@ main {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .marker3:hover{
@@ -688,6 +688,7 @@ main {
 .marker3 span {
   font-size: 3rem;
   margin-bottom: 2.4rem;
+  margin-right: 1rem;
 }
 
 .marker4 {
@@ -706,7 +707,7 @@ main {
   cursor: pointer;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -728,6 +729,7 @@ main {
 .marker4 span {
   font-size: 3rem;
   margin-bottom: 2.5rem;
+  margin-right: 1rem;
 }
 
 .rightHeader span{
@@ -1235,7 +1237,6 @@ abbr[title] {
   top: 2rem;
   max-height: 22rem;
   background-color: white;
-  position: relative;
 }
 
 .reminderDeco {
