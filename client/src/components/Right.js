@@ -73,7 +73,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
     const [currentFriendName, setCurrentFriendName] = useState('');
     const [index, setIndex] = useState(0);
 
-    const [value, setValue] = useState();
+    const [value, setValue] = useState(0);
     const [message, setMessage] = useState('')
     
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
@@ -165,6 +165,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes(post?.likes);
                     setHide(post?.hide);
                     setId(post?._id);
+                    setMessage('')
                     setLoading(false);
                 } else {
                     setIndex(0)
@@ -176,23 +177,42 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes([]);
                     setWeather('');
                     setId('')
+                    setMessage(`No Post On ${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
                     setLoading(true)
                 }
             }
             else {
-                const post = allPosts.find(p => p.date === date && p.hide === false);
+                const post = allPosts.find(p => p.date === date);
                 if (post) {
-                    setIndex(allPosts.indexOf(post))
-                    setBody(post?.text);
-                    setHeart(post?.like);
-                    setBookmark(post?.bookmark);
-                    setTitle(post?.title);
-                    setWeather(post?.weather);
-                    setLikes(post?.likes);
-                    setHide(post?.hide);
-                    setId(post?._id);
-                    setLoading(false);
-                } else {
+                    if (post.hide) {
+                        setIndex(post ? allPosts.indexOf(post) : 0)
+                        setBody('');
+                        setTitle('');
+                        setHeart(false);
+                        setBookmark(false);
+                        setHide(false);
+                        setLikes([]);
+                        setWeather('');
+                        setId('')
+                        setMessage('This post is private');
+                        setLoading(true)
+                    }
+                    else {
+                        setIndex(allPosts.indexOf(post))
+                        setBody(post?.text);
+                        setHeart(post?.like);
+                        setBookmark(post?.bookmark);
+                        setTitle(post?.title);
+                        setWeather(post?.weather);
+                        setLikes(post?.likes);
+                        setHide(post?.hide);
+                        setId(post?._id);
+                        setMessage('')
+                        setLoading(false);
+                    }
+                }
+                else {
+                    setMessage(`No Post Found On ${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
                     setIndex(0)
                     setBody('');
                     setTitle('');
@@ -225,8 +245,54 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes(post?.likes);
                     setHide(post?.hide);
                     setId(post?._id);
+                    setMessage('')
                     setLoading(false);
                 } else {
+                    setIndex(0)
+                    setBody('');
+                    setTitle('');
+                    setHeart(false);
+                    setBookmark(false);
+                    setHide(false);
+                    setLikes([]);
+                    setWeather('');
+                    setId('')
+                    setMessage(`No Post On ${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
+                    setLoading(true)
+                }
+            }
+            else {
+                const post = allPosts.find(p => p.date === date);
+                if (post) {
+                    if (post.hide) {
+                        setIndex(post ? allPosts.indexOf(post) : 0)
+                        setBody('');
+                        setTitle('');
+                        setHeart(false);
+                        setBookmark(false);
+                        setHide(false);
+                        setLikes([]);
+                        setWeather('');
+                        setId('')
+                        setMessage('This post is private');
+                        setLoading(true)
+                    }
+                    else {
+                        setIndex(allPosts.indexOf(post))
+                        setBody(post?.text);
+                        setHeart(post?.like);
+                        setBookmark(post?.bookmark);
+                        setTitle(post?.title);
+                        setWeather(post?.weather);
+                        setLikes(post?.likes);
+                        setHide(post?.hide);
+                        setId(post?._id);
+                        setMessage('')
+                        setLoading(false);
+                    }
+                }
+                else {
+                    setMessage(`No Post Found On ${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
                     setIndex(0)
                     setBody('');
                     setTitle('');
@@ -239,33 +305,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLoading(true)
                 }
             }
-            else {
-                const post = allPosts.find(p => p.date === date);
-                if (post?.hide) {
-                    setIndex(post ? allPosts.indexOf(post) : 0)
-                    setBody('');
-                    setTitle('');
-                    setHeart(false);
-                    setBookmark(false);
-                    setHide(false);
-                    setLikes([]);
-                    setWeather('');
-                    setId('')
-                    setMessage('This post is private');
-                    setLoading(true)
-                } else {
-                    setIndex(allPosts.indexOf(post))
-                    setBody(post?.text);
-                    setHeart(post?.like);
-                    setBookmark(post?.bookmark);
-                    setTitle(post?.title);
-                    setWeather(post?.weather);
-                    setLikes(post?.likes);
-                    setHide(post?.hide);
-                    setId(post?._id);
-                    setLoading(false);
-                }
-            }
         } else {
             setId('');
             setLoading(true);
@@ -274,12 +313,27 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
 
     useEffect(() => {
         if (value) {
-            const post = allPosts[value-1];
+            const post = allPosts[value];
             if (post) {
                 onChangeDate(post?.date);
             }
         }
-    }, [value])
+        else if (value === 0){
+            const post = allPosts[0];
+            if (post) {
+                onChangeDate(post?.date);
+            }
+        }
+    }, [value]);
+
+    useEffect(() => {
+        if (index) {
+            setValue(index)
+        }
+        if (index === 0) {
+            setValue(0)
+        }
+    }, [index])
 
     const onClickHeart = async() => {
         if (_id !== '') {
@@ -585,16 +639,17 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                             </div> : <div className='postInput2'>
                                         <span>{body}</span>
                                     </div>}
-                            {(!edit && friendId !== '') && <div className='rightFooter'>
+                            {message !== '' && <span>{message}</span>}
+                            {!edit&& <div className='rightFooter'>
                                 <Box sx={{ width: 200 }}>
                                     <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
                                         <span>1</span>
-                                        <Slider aria-label="Posts" key={`slider-${value}`} min={1} max={allPosts?.length} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}}/>
+                                        <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}}/>
                                         <span>{allPosts?.length}</span>
                                     </Stack>
                                 </Box>
                                 <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                <span>VIEWING {currentFriendName.toUpperCase()} 'S POSTS</span>
+                                <span>{currentFriendName !== '' ? `${currentFriendName.toUpperCase()} 'S POSTS` : 'My Posts'} </span>
                                 <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>}
                         </div>
