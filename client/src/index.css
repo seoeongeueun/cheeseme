@@ -555,19 +555,21 @@ main {
   box-sizing: border-box;
 
   position: absolute;
-  width: 7rem;
-  height: 2.5rem;
+  width: 6rem;
+  height: 4rem;
   right: -5rem;
   top: 6rem;
-  background: rgba(247, 57, 57, 0.8);
+  background: rgba(249, 216, 118, 0.8);
   /* background: rgba(249, 216, 118, 0.7); */
-  border: 1px solid #000000;
-  border-radius: 3px;
+  border-top: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-radius: 0px 3px 3px 0px;
   z-index: 10;
   cursor: pointer;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -575,20 +577,22 @@ main {
   box-sizing: border-box;
 
   position: absolute;
-  width: 8rem;
-  height: 2.5rem;
+  width: 7rem;
+  height: 4rem;
   right: -6rem;
   top: 6rem;
 
-  /* background: rgba(249, 216, 118, 0.7); */
-  border: 1px solid #000000;
-  border-radius: 3px;
+  border-top: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-radius: 0px 3px 3px 0px;
   z-index: 10;
 }
 
 .marker span {
   font-size: 3rem;
   margin-bottom: 2.5rem;
+  margin-right: 1rem;
 }
 
 .marker2 {
@@ -596,9 +600,9 @@ main {
 
   position: absolute;
   width: 4.7rem;
-  height: 2.5rem;
+  height: 4rem;
   right: -5rem;
-  top: 10.5rem;
+  top: 12rem;
 
   /* background: rgba(247, 57, 57, 0.7); */
   background: rgba(233, 233, 233, 0.7);
@@ -611,7 +615,7 @@ main {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .marker2:hover{
@@ -619,9 +623,9 @@ main {
 
   position: absolute;
   width: 5.5rem;
-  height: 2.5rem;
+  height: 4rem;
   right: -5.8rem;
-  top: 10.5rem;
+  top: 12rem;
 
   /* background: rgba(247, 57, 57, 0.7); */
   border-top: 1px solid #000000;
@@ -634,6 +638,7 @@ main {
 .marker2 span {
   font-size: 3rem;
   margin-bottom: 2.4rem;
+  margin-right: 1rem;
 }
 
 .marker3 {
@@ -641,12 +646,12 @@ main {
 
   position: absolute;
   width: 4.7rem;
-  height: 2.5rem;
+  height: 4rem;
   right: -5rem;
   bottom: 4rem;
 
   /* background: rgba(247, 57, 57, 0.7); */
-  background: rgba(249, 216, 118, 0.8);
+  background: rgba(247, 57, 57, 0.6);
   border-top: 1px solid #000000;
   border-right: 1px solid #000000;
   border-bottom: 1px solid #000000;
@@ -664,7 +669,7 @@ main {
 
   position: absolute;
   width: 5.5rem;
-  height: 2.5rem;
+  height: 4rem;
   right: -5.8rem;
   bottom: 4rem;
 

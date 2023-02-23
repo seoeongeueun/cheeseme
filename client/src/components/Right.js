@@ -480,7 +480,7 @@ function Right({date, userId, friendId, onSetFriendId}){
                 : <div className='marker2' style={{top: '6rem', background: 'rgba(233, 233, 233, 0.7)' }}>
                     <span onClick={() => handleClickHome()}><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>}
-                {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '10.5rem', background: 'rgba(103, 235, 250, 0.7)'}}>
+                {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '12rem', background: 'rgba(249, 216, 118, 0.8)'}}>
                     <span style={{fontSize: '1.5rem'}}>{currentFriendName}</span>
                 </div>
                 : <div className='marker2'/>}
