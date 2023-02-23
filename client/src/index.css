@@ -949,15 +949,40 @@ main {
 
 .rightFooter {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   font-size: 1.5rem;
-  justify-content: space-between;
   width: 100%;
   align-items: center;
+  justify-content: center;
 }
 
 .rightFooter span{
   font-family: 'NanumBarunPenR' !important;
+}
+
+.pageSlider {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.pageSliderButtons {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageSliderButtons span {
+  margin-bottom: 1.8rem;
+}
+
+.pageSliderButtons button{
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .footer {

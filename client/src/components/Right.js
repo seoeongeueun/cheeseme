@@ -190,7 +190,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                         setTitle('');
                         setHeart(false);
                         setBookmark(false);
-                        setHide(false);
+                        setHide(true);
                         setLikes([]);
                         setWeather('');
                         setId('')
@@ -270,7 +270,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                         setTitle('');
                         setHeart(false);
                         setBookmark(false);
-                        setHide(false);
+                        setHide(true);
                         setLikes([]);
                         setWeather('');
                         setId('')
@@ -641,17 +641,21 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                     </div>}
                             {message !== '' && <span>{message}</span>}
                             {!edit&& <div className='rightFooter'>
-                                <Box sx={{ width: 200 }}>
-                                    <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-                                        <span>1</span>
-                                        <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}}/>
-                                        <span>{allPosts?.length}</span>
-                                    </Stack>
-                                </Box>
-                                <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                <span>{currentFriendName !== '' ? `${currentFriendName.toUpperCase()} 'S POSTS` : 'My Posts'} </span>
-                                <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                </div>}
+                                <div className='pageSlider'>
+                                    <Box sx={{ width: '100%' }}>
+                                        <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                                            <span style={{marginBottom: '-1.3rem'}}>1</span>
+                                            <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}}/>
+                                            <span style={{marginBottom: '-3rem'}}>{allPosts?.length}</span>
+                                        </Stack>
+                                    </Box>
+                                </div>
+                                <div className='pageSliderButtons'>
+                                    <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                    <span>{currentFriendName !== '' ? `${currentFriendName.toUpperCase()} 'S POSTS` : 'My Posts'} </span>
+                                    <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                </div>
+                            </div>}
                         </div>
                     </div> : <PlainRight grid={grid} setGrid={setGrid} setSns={setSns} sns={sns} edit={edit} setEdit={setEdit} date={date}/>}
                 </div>}
