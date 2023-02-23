@@ -75,7 +75,11 @@ header a {
 }
 /* end of color line */
 
+.errorMessage {
+  font-family: 'NanumBarunPenR';
+  font-size: 2rem;
 
+}
 /* start of main header */
 .mainHeader {
   display: flex;
@@ -968,7 +972,7 @@ main {
 }
 
 .pageSliderButtons {
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

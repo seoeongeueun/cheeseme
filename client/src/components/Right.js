@@ -41,6 +41,7 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
+import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import axios from 'axios';
 
 function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
@@ -177,7 +178,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes([]);
                     setWeather('');
                     setId('')
-                    setMessage(`No Post On ${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
+                    setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setLoading(true)
                 }
             }
@@ -212,7 +213,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     }
                 }
                 else {
-                    setMessage(`No Post Found On ${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
+                    setMessage(`No Post Found On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setIndex(0)
                     setBody('');
                     setTitle('');
@@ -629,6 +630,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                     </div>
                                 </div>
                             </div>
+                            {message !== '' && <span className='errorMessage'>{message.toUpperCase()}</span>}
+
                             {edit ? 
                             <div className="postInput">
                                 <textarea id="text" name="text" rows="12" cols="50" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
@@ -639,12 +642,11 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                             </div> : <div className='postInput2'>
                                         <span>{body}</span>
                                     </div>}
-                            {message !== '' && <span>{message}</span>}
                             {!edit&& <div className='rightFooter'>
                                 <div className='pageSlider'>
                                     <Box sx={{ width: '100%' }}>
                                         <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-                                            <span style={{marginBottom: '-1.3rem'}}>1</span>
+                                            <span style={{marginBottom: '-1.5rem'}}>1</span>
                                             <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}}/>
                                             <span style={{marginBottom: '-3rem'}}>{allPosts?.length}</span>
                                         </Stack>
@@ -652,7 +654,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                 </div>
                                 <div className='pageSliderButtons'>
                                     <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                    <span>{currentFriendName !== '' ? `${currentFriendName.toUpperCase()} 'S POSTS` : 'My Posts'} </span>
+                                    <span>{currentFriendName !== '' ? `@${currentFriendName.toUpperCase()} 'S POSTS` : 'My Posts'} </span>
                                     <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>
                             </div>}
