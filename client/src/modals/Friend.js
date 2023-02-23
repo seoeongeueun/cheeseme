@@ -52,8 +52,12 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
         }
     }, [bye])
 
-    const handleClickFriend = (name) => {
+    const handleClickFriend = async(name) => {
         setClicked(name);
+        axios.get('/api/users/' + name)
+            .then((res) => {
+                onSetFriendId(res?.data._id.toString());
+            })
         console.log('Viewing ' + name + `'s Posts...`)
     }
 

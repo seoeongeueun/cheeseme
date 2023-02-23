@@ -38,7 +38,7 @@ import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import axios from 'axios';
 
-function Right({date, userId}){
+function Right({date, userId, friendId, onSetFriendId}){
     const [showSettings, setShowSettings] = useState(false);
     const [grid, setGrid] = useState(false);
     const [sns, setSns] = useState(true);
@@ -65,6 +65,7 @@ function Right({date, userId}){
     const [_id, setId] = useState('');
     const [showBookMark, setShowBookMark] = useState(false);
     const [showHome, setShowHome] = useState(true);
+    const [currentFriendName, setCurrentFriendName] = useState('');
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
 
     useEffect(() => {
@@ -82,48 +83,113 @@ function Right({date, userId}){
     }, [userId]);
 
     useEffect(() => {
+        if (friendId !== '') {
+            axios.get('/api/right/getByOwner/' + friendId)
+                .then((res) => {
+                    const n = res?.data;
+                    if (n) setAllPosts(n)
+                    else setAllPosts([])
+                })
+                .catch((err) => {
+                    console.log('Error loading posts')
+                })
+            axios.get('/api/users/find/' + friendId)
+                .then((res) => {
+                    const n = res?.data;
+                    if (n) setCurrentFriendName(n.name);
+                })
+        }
+    }, [friendId]);
+
+    useEffect(() => {
         if (_id === '') {
-            axios.get('/api/right/getByOwner/' + userId)
-            .then((res) => {
-                setLoading(true);
-                const n = res?.data;
-                if (n) {
-                    setAllPosts(n);
-                }
-                else {
-                    setAllPosts([])
-                }
-                return;
-            })
-            .catch( (err) => {
-                console.log('Error loading posts: ', err);
-            })
+            if (friendId !== '') {
+                axios.get('/api/right/getByOwner/' + friendId)
+                .then((res) => {
+                    setLoading(true);
+                    const n = res?.data;
+                    if (n) {
+                        setAllPosts(n);
+                    }
+                    else {
+                        setAllPosts([])
+                    }
+                    return;
+                })
+                .catch( (err) => {
+                    console.log('Error loading posts: ', err);
+                })
+            }
+            else {
+                axios.get('/api/right/getByOwner/' + userId)
+                .then((res) => {
+                    setLoading(true);
+                    const n = res?.data;
+                    if (n) {
+                        setAllPosts(n);
+                    }
+                    else {
+                        setAllPosts([])
+                    }
+                    return;
+                })
+                .catch( (err) => {
+                    console.log('Error loading posts: ', err);
+                })
+            }
+            
         }
     }, [loading]);
 
     useEffect(() => {
         if (allPosts?.length > 0 && date) {
-            const post = allPosts.find(p => p.date === date);
-            if (post) {
-                setBody(post?.text);
-                setHeart(post?.like);
-                setBookmark(post?.bookmark);
-                setTitle(post?.title);
-                setWeather(post?.weather);
-                setLikes(post?.likes);
-                setHide(post?.hide);
-                setId(post?._id);
-                setLoading(false);
-            } else {
-                setBody('');
-                setTitle('');
-                setHeart(false);
-                setBookmark(false);
-                setHide(false);
-                setLikes([]);
-                setWeather('');
-                setId('')
-                setLoading(true)
+            if (userId === friendId && userId !== '') {
+                const post = allPosts.find(p => p.date === date);
+                if (post) {
+                    setBody(post?.text);
+                    setHeart(post?.like);
+                    setBookmark(post?.bookmark);
+                    setTitle(post?.title);
+                    setWeather(post?.weather);
+                    setLikes(post?.likes);
+                    setHide(post?.hide);
+                    setId(post?._id);
+                    setLoading(false);
+                } else {
+                    setBody('');
+                    setTitle('');
+                    setHeart(false);
+                    setBookmark(false);
+                    setHide(false);
+                    setLikes([]);
+                    setWeather('');
+                    setId('')
+                    setLoading(true)
+                }
+            }
+            else {
+                const post = allPosts.find(p => p.date === date && p.hide === false);
+                if (post) {
+                    setBody(post?.text);
+                    setHeart(post?.like);
+                    setBookmark(post?.bookmark);
+                    setTitle(post?.title);
+                    setWeather(post?.weather);
+                    setLikes(post?.likes);
+                    setHide(post?.hide);
+                    setId(post?._id);
+                    setLoading(false);
+                } else {
+                    setBody('');
+                    setTitle('');
+                    setHeart(false);
+                    setBookmark(false);
+                    setHide(false);
+                    setLikes([]);
+                    setWeather('');
+                    setId('')
+                    setLoading(true)
+                }
             }
         } else {
             setId('');
@@ -133,27 +199,53 @@ function Right({date, userId}){
 
     useEffect(() => {
         if (allPosts?.length > 0 && date) {
-            const post = allPosts.find(p => p.date === date);
-            if (post) {
-                setBody(post?.text);
-                setHeart(post?.like);
-                setBookmark(post?.bookmark);
-                setTitle(post?.title);
-                setLikes(post?.likes);
-                setWeather(post?.weather);
-                setHide(post?.hide);
-                setId(post?._id);
-                setLoading(false);
-            } else {
-                setBody('');
-                setTitle('');
-                setHeart(false);
-                setLikes([]);
-                setBookmark(false);
-                setHide(false);
-                setWeather('');
-                setId('')
-                setLoading(true)
+            if (userId === friendId && userId !== '') {
+                const post = allPosts.find(p => p.date === date);
+                if (post) {
+                    setBody(post?.text);
+                    setHeart(post?.like);
+                    setBookmark(post?.bookmark);
+                    setTitle(post?.title);
+                    setWeather(post?.weather);
+                    setLikes(post?.likes);
+                    setHide(post?.hide);
+                    setId(post?._id);
+                    setLoading(false);
+                } else {
+                    setBody('');
+                    setTitle('');
+                    setHeart(false);
+                    setBookmark(false);
+                    setHide(false);
+                    setLikes([]);
+                    setWeather('');
+                    setId('')
+                    setLoading(true)
+                }
+            }
+            else {
+                const post = allPosts.find(p => p.date === date && p.hide === false);
+                if (post) {
+                    setBody(post?.text);
+                    setHeart(post?.like);
+                    setBookmark(post?.bookmark);
+                    setTitle(post?.title);
+                    setWeather(post?.weather);
+                    setLikes(post?.likes);
+                    setHide(post?.hide);
+                    setId(post?._id);
+                    setLoading(false);
+                } else {
+                    setBody('');
+                    setTitle('');
+                    setHeart(false);
+                    setBookmark(false);
+                    setHide(false);
+                    setLikes([]);
+                    setWeather('');
+                    setId('')
+                    setLoading(true)
+                }
             }
         } else {
             setId('');
@@ -315,6 +407,13 @@ function Right({date, userId}){
 
     }
 
+    const handleClickHome = () => {
+        onSetFriendId('');
+        setCurrentFriendName('')
+        setId('');
+        setLoading(true);
+    }
+
     /*<span className="profileArea"/>*/
 
     return(
@@ -375,16 +474,16 @@ function Right({date, userId}){
                 </div>
             </GridLines> :
             <div className="rightContent">
-                {showHome ? <div className='marker'>
+                {friendId === '' ? <div className='marker'>
                     <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>
-                : <div className='marker2' style={{top: '6rem', background: 'rgba(247, 57, 57, 0.8)' }}>
-                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                : <div className='marker2' style={{top: '6rem', background: 'rgba(233, 233, 233, 0.7)' }}>
+                    <span onClick={() => handleClickHome()}><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>}
-                <div className='marker2'>
-                    <span></span>
+                {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '10.5rem', background: 'rgba(103, 235, 250, 0.7)'}}>
+                    <span style={{fontSize: '1.5rem'}}>{currentFriendName}</span>
                 </div>
-                <div className='marker2' style={{top: '15rem'}}/>
+                : <div className='marker2'/>}
                 {showBookMark ? <div className='marker4'>
                     <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>

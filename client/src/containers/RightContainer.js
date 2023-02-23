@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Right from '../components/Right.js';
+import { setFriendId } from '../modules/viewFriend.js';
 
 function RightContainer() {
 
@@ -12,8 +13,15 @@ function RightContainer() {
         userId: state.loginInfo.userId,
     }));
 
+    const { friendId } = useSelector(state => ({
+        friendId: state.viewFriend.friendId,
+    }));
+
+    const dispatch = useDispatch();
+    const onSetFriendId = friendId => dispatch(setFriendId(friendId));
+
     return (
-        <Right date={date} userId={userId}/>
+        <Right date={date} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId}/>
     )
 }
 
