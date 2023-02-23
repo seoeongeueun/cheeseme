@@ -499,10 +499,10 @@ function Right({date, userId, friendId, onSetFriendId}){
                         <div className="rightBodyHeader">
                             <span>{new Date(date).getMonth()+1}.{new Date(date).getDate()}.{new Date(date).getFullYear()}</span>
                             <div className='weatherMood'>
-                                <button onClick={() => handleWeather('sunny')}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
-                                <button onClick={() => handleWeather('cloud')}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
-                                <button onClick={() => handleWeather('rainy')}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
-                                <button onClick={() => handleWeather('snowy')}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
+                                <button onClick={() => handleWeather('sunny')} disabled={friendId !== '' ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
+                                <button onClick={() => handleWeather('cloud')} disabled={friendId !== '' ? true : false}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
+                                <button onClick={() => handleWeather('rainy')} disabled={friendId !== '' ? true : false}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
+                                <button onClick={() => handleWeather('snowy')} disabled={friendId !== '' ? true : false}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
                             </div>
                         </div>
                         <div className="rightBodyMain">
@@ -517,13 +517,14 @@ function Right({date, userId, friendId, onSetFriendId}){
                                     </IconButton>}
                             <div className="postButtons">
                                 <div className="postButtonsLeft">
-                                    <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                    <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px' }}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                    <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    <button onClick={onClickBookmark} disabled={friendId !== '' ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
                                 </div>
                                 <div className="postButtonsRight">
-                                    <button onClick={() => setEdit(true)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
-                                    <button onClick={handleClickOpen}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                    <button onClick={() => setEdit(true)} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                    <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                     <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                         <DialogTitle>{"Delete this post?"}</DialogTitle>
                                         <DialogContent>
@@ -535,7 +536,7 @@ function Right({date, userId, friendId, onSetFriendId}){
                                         </DialogActions>
                                     </Dialog>
                                     <div className='leftWidget'>
-                                        <button onClick={()=> setShowSettings(!showSettings)}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                        <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                         {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
                                     </div>
                                 </div>
