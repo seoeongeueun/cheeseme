@@ -213,7 +213,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     }
                 }
                 else {
-                    setMessage(`No Post Found On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+                    setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setIndex(0)
                     setBody('');
                     setTitle('');
@@ -258,7 +258,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes([]);
                     setWeather('');
                     setId('')
-                    setMessage(`No Post On ${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
+                    setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setLoading(true)
                 }
             }
@@ -293,7 +293,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     }
                 }
                 else {
-                    setMessage(`No Post Found On ${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
+                    setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setIndex(0)
                     setBody('');
                     setTitle('');
@@ -334,7 +334,13 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
         if (index === 0) {
             setValue(0)
         }
-    }, [index])
+    }, [index]);
+
+    useEffect(() => {
+        if (edit) {
+            setMessage('')
+        }
+    }, [edit])
 
     const onClickHeart = async() => {
         if (_id !== '') {
@@ -580,13 +586,14 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 <div className='marker3'>
                     <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>}
+                    <div className='rightBodyAndHeader'>
                     {edit ? <div className="rightHeader">
                         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
                     {sns ? 
                     <div className="rightBody">
                         <div className="rightBodyHeader">
-                            <span>{new Date(date).getMonth()+1}.{new Date(date).getDate()}.{new Date(date).getFullYear()}</span>
+                            <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
                             <div className='weatherMood'>
                                 <button onClick={() => handleWeather('sunny')} disabled={friendId !== '' ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
                                 <button onClick={() => handleWeather('cloud')} disabled={friendId !== '' ? true : false}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
@@ -642,7 +649,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                             </div> : <div className='postInput2'>
                                         <span>{body}</span>
                                     </div>}
-                            {!edit&& <div className='rightFooter'>
+                        </div>
+                    </div> : <PlainRight grid={grid} setGrid={setGrid} setSns={setSns} sns={sns} edit={edit} setEdit={setEdit} date={date}/>}
+                    </div>
+                    {!edit&& <div className='rightFooter'>
                                 <div className='pageSlider'>
                                     <Box sx={{ width: '100%' }}>
                                         <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
@@ -654,12 +664,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                 </div>
                                 <div className='pageSliderButtons'>
                                     <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                    <span>{currentFriendName !== '' ? `@${currentFriendName.toUpperCase()} 'S POSTS` : 'My Posts'} </span>
+                                    <span>{currentFriendName !== '' ? `@ ${currentFriendName.toUpperCase()} 'S POSTS` : '@ My Posts'} </span>
                                     <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>
                             </div>}
-                        </div>
-                    </div> : <PlainRight grid={grid} setGrid={setGrid} setSns={setSns} sns={sns} edit={edit} setEdit={setEdit} date={date}/>}
                 </div>}
         </div>
     );
