@@ -451,7 +451,6 @@ main {
   justify-content: flex-start;
   position: absolute;
   top: 2rem;
-  min-height: min-content;
   padding: 1rem;
 }
 
@@ -1280,12 +1279,22 @@ main {
 }
 
 .react-calendar__tile--now {
-  background-color: #F9D876 !important;
+  background-color: #e6e6e6 !important;
 }
 
 .react-calendar__tile--active {
-  background: #e6e6e6 !important;
+  /* background: #e6e6e6 !important; */
+  border: 1px solid #f73939 !important;
+  background: none;
   color: black !important;
+}
+
+.react-calendar__tile--active {
+  background: none !important;
+}
+
+.react-calendar__tile--active:hover{
+  background-color: #e6e6e6 !important;
 }
 
 .react-calendar span{
