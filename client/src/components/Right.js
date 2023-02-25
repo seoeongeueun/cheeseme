@@ -664,7 +664,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                 </div>
                                 <div className='pageSliderButtons'>
                                     <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                    <span>{currentFriendName !== '' ? `@ ${currentFriendName.toUpperCase()} 'S POSTS` : '@ My Posts'} </span>
+                                    <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName.toUpperCase()} 'S POSTS` : '@ My Posts'} </span>
                                     <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>
                             </div>}
