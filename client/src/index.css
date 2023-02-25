@@ -80,6 +80,11 @@ header a {
   font-size: 2rem;
 
 }
+
+textarea {
+  resize: none;
+}
+
 /* start of main header */
 .mainHeader {
   display: flex;
@@ -486,6 +491,10 @@ main {
   font-size: 1.7rem;
 }
 
+.reminderDetial textarea {
+  font-size: 3rem;
+}
+
 .reminderContent:hover {
   overflow-y: scroll;
 }
@@ -515,6 +524,16 @@ main {
   width: 100%;
   cursor: pointer;
   padding-bottom: 0.2rem;
+}
+
+.reminderDetail p {
+  margin-left: 0.6rem;
+  margin-top: -0.1rem;
+  margin-bottom: -0.1rem;
+}
+
+.reminderDetail textarea {
+  width: 23.2rem;
 }
 
 /* end of reminder widget */
