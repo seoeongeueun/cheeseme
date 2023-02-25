@@ -89,11 +89,11 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     }
     
     const change = async () => {
-        const newState = [{name: 'cal', x: Object.values(calPosition)[0], y: Object.values(calPosition)[1], show: true},
-            {name: 'dday', x: Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1], show: true},
-            {name: 'note', x: Object.values(notePosition)[0], y: Object.values(notePosition)[1], show: true},
-            {name: 'todo', x: Object.values(todoPosition)[0], y: Object.values(todoPosition)[1], show: true},
-            {name: 'reminder', x: Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1], show: true}];
+        const newState = [{name: 'cal', x: Object.values(calPosition)[0], y: Object.values(calPosition)[1], show: calendar},
+            {name: 'dday', x: Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1], show: ddayCounter},
+            {name: 'note', x: Object.values(notePosition)[0], y: Object.values(notePosition)[1], show: notes},
+            {name: 'todo', x: Object.values(todoPosition)[0], y: Object.values(todoPosition)[1], show: todo},
+            {name: 'reminder', x: Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1], show: reminder}];
         
         let res = await FetchAPIPost('/api/users/update/' + userId, {
             positions: newState

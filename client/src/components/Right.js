@@ -246,7 +246,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes(post?.likes);
                     setHide(post?.hide);
                     setId(post?._id);
-                    setMessage('')
+                    setMessage('');
                     setLoading(false);
                 } else {
                     setIndex(0)
@@ -257,7 +257,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setHide(false);
                     setLikes([]);
                     setWeather('');
-                    setId('')
+                    setId('');
                     setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setLoading(true)
                 }
