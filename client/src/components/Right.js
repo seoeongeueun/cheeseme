@@ -303,7 +303,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes([]);
                     setWeather('');
                     setId('')
-                    setLoading(true)
+                    setLoading(true);
                 }
             }
         } else {
@@ -318,11 +318,17 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
             if (post) {
                 onChangeDate(post?.date);
             }
+            else{
+                console.log('no postttttt')
+            }
         }
         else if (value === 0){
             const post = allPosts[0];
             if (post) {
                 onChangeDate(post?.date);
+            }
+            else{
+                console.log('no postttttt')
             }
         }
     }, [value]);
