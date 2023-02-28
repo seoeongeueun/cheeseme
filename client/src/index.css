@@ -906,7 +906,7 @@ main {
 }
 
 .postInput {
-  max-height: 50%;
+  max-height: 45%;
   width: 100%;
   display: flex;
   flex-direction: column;
