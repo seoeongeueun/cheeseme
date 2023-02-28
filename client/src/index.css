@@ -576,7 +576,7 @@ main {
 }
 
 .rightContent span{
-  margin: 2rem 0rem 0rem 0rem;
+  margin: 1rem 0rem 0rem 0rem;
 }
 
 .rightContent button:disabled svg{
@@ -873,7 +873,7 @@ main {
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 1rem 0.5rem 1rem;
 }
 
 .postButtonsRight {
@@ -914,7 +914,7 @@ main {
 
 .postInput2 {
   min-width: 100%;
-  height: 45%;
+  height: 35%;
   display: flex;
   flex-direction: column;
   align-items: space-between;
