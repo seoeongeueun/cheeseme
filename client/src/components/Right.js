@@ -154,7 +154,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
 
     useEffect(() => {
         if (allPosts?.length > 0 && date) {
-            if (userId === friendId && userId !== '') {
+            if ((userId === friendId && userId !== '') || (friendId === '' && userId !== '')) {
                 const post = allPosts.find(p => p.date === date);
                 if (post) {
                     setIndex(allPosts.indexOf(post))
@@ -186,6 +186,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 const post = allPosts.find(p => p.date === date);
                 if (post) {
                     if (post.hide) {
+                        console.log(friendId)
+                        console.log(userId)
                         setIndex(post ? allPosts.indexOf(post) : 0)
                         setBody('');
                         setTitle('');
@@ -598,7 +600,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
                     {sns ? 
                     <div className="rightBody">
-                        <div className="rightBodyHeader">
+                        <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
                             <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
                             <div className='weatherMood'>
                                 <button onClick={() => handleWeather('sunny')} disabled={friendId !== '' ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
@@ -664,13 +666,13 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                         <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
                                             <span style={{marginBottom: '-1.5rem'}}>1</span>
                                             <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}}/>
-                                            <span style={{marginBottom: '-3rem'}}>{allPosts?.length}</span>
+                                            <span style={{marginBottom: '-2.2rem'}}>{allPosts?.length}</span>
                                         </Stack>
                                     </Box>
                                 </div>
                                 <div className='pageSliderButtons'>
                                     <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                    <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName.toUpperCase()} 'S POSTS` : '@ My Posts'} </span>
+                                    <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName.toUpperCase()}'s posts` : '@ My posts'} </span>
                                     <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>
                             </div>}
