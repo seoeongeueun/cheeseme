@@ -125,7 +125,7 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
           <span style={{fontSize: '3rem'}}>Add Friend</span>
           <div className='dialogContent'>
             <span>Enter a username to add. Make sure you enter a correct username.</span>
-            <input className='dialogInput' placeholder='username' onChange={(e) => setEntered(e.target.value)} style={{color: (error && message !== '') ? '#929292' : 'black'}}></input>
+            <input className='dialogInput' placeholder='username' onChange={(e) => setEntered(e.target.value)}></input>
           </div>
           <div className='dialogActions'>
             <button className='save' onClick={() => handleSend(entered)}><span>Send</span></button>
