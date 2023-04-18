@@ -8,6 +8,9 @@ function FriendContainer() {
     const { userId } = useSelector(state => ({
         userId: state.loginInfo.userId,
     }));
+    const { name } = useSelector(state => ({
+        name: state.nameInfo.name,
+    }));
     const { friendId } = useSelector(state => ({
         friendId: state.viewFriend.friendId,
     }));
@@ -19,7 +22,7 @@ function FriendContainer() {
 
     const onSetFriendId = friendId => dispatch(setFriendId(friendId));
 
-    return <Friend userId={userId} onSetFriendId={onSetFriendId} friends={friends} onChangeFriends={onChangeFriends} onAddFriend={onAddFriend} onRemoveFriend={onRemoveFriend} onFavFriend={onFavFriend}/>;
+    return <Friend name={name} userId={userId} onSetFriendId={onSetFriendId} friends={friends} onChangeFriends={onChangeFriends} onAddFriend={onAddFriend} onRemoveFriend={onRemoveFriend} onFavFriend={onFavFriend}/>;
 }
 
 export default FriendContainer;

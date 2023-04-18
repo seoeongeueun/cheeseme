@@ -13,25 +13,33 @@ import Star from '../icons/star.png';
 import StarColor from '../icons/starColor.png';
 import AddFriendContainer from '../containers/AddFriendContainer.js';
 
-function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, onFavFriend, onSetFriendId}){
+function Friend({userId, name, friends, onChangeFriends, onAddFriend, onRemoveFriend, onFavFriend, onSetFriendId}){
     const [clicked, setClicked] = useState('')
     const [addFriend, setAddFriend] = useState(false);
     const [removeFriend, setRemoveFriend] = useState(false);
     const [username, setUsername] = useState('');
     const [bye, setBye] = useState('');
+    const [friendFriends, setFriendFriends] = useState(null);
     
     const updateList = async() => {
         let res = await FetchAPIPost('/api/users/update/' + userId, {
             friends: friends
         });
+    };
+
+    const updateFriendList = async() => {
+        let res = await FetchAPIPost('/api/users/updateWithName/' + bye, {
+            friends: friendFriends.filter(e => e.name !== name)
+        });
+        setFriendFriends(null);
     }
 
     useEffect(() => {
         updateList();
-    }, [friends])
+    }, [friends]);
 
     useEffect(() => {
-        if (username != ''){
+        if (username !== ''){
             const id = setTimeout(() => {
                 setUsername('')
             }, 3000);
@@ -39,10 +47,14 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
                 clearTimeout(id)
             }
         }
-    }, [username])
+    }, [username]);
 
     useEffect(() => {
-        if (bye != ''){
+        if (bye !== ''){
+            axios.get('/api/users/' + bye)
+                .then((res) => {
+                setFriendFriends(res?.data.friends);
+            })
             const id = setTimeout(() => {
                 setBye('')
             }, 3000);
@@ -51,6 +63,12 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
             }
         }
     }, [bye])
+
+    useEffect(() => {
+        if (friendFriends) {
+            updateFriendList();
+        }
+    }, [friendFriends]);
 
     const handleClickFriend = async(name) => {
         setClicked(name);
@@ -102,8 +120,8 @@ function Friend({userId, friends, onChangeFriends, onAddFriend, onRemoveFriend, 
                 </div>
                 : <span style={{fontSize: '2rem', color: '#a0a096'}}>Let's add new friends!</span>
             : <span style={{fontSize: '2rem'}}>Login Required</span>}
-            {username != '' && <span style={{color: "#f73939", fontSize: '1.7rem'}}>Friend Request Sent to {username}</span>}
-            {bye != '' && <span style={{color: "#f73939", fontSize: '1.7rem'}}>You're no longer friends with {bye}</span>}
+            {username !== '' && <span style={{color: "#f73939", fontSize: '1.7rem'}}>Friend Request Sent to {username}</span>}
+            {bye !== '' && <span style={{color: "#f73939", fontSize: '1.7rem'}}>You're no longer friends with {bye}</span>}
         </div>
     );
 }
