@@ -32,7 +32,7 @@ import SunPlain from '../icons/sunny.png';
 import SnowPlain from '../icons/snowman (1).png';
 import SnowColor from '../icons/snowman.png';
 import HomeSharpIcon from '@mui/icons-material/HomeSharp';
-import { FetchAPIPost } from '../utils/api.js';
+import { FetchAPIPost, FetchAPIPostImg } from '../utils/api.js';
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -75,7 +75,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
     const [index, setIndex] = useState(0);
 
     const [value, setValue] = useState(0);
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState('');
+    const [imgUrl, setImgUrl] = useState();
     
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
 
@@ -166,6 +167,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes(post?.likes);
                     setHide(post?.hide);
                     setId(post?._id);
+                    setImgUrl(post?.imgUrl)
                     setMessage('')
                     setLoading(false);
                 } else {
@@ -173,6 +175,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setBody('');
                     setTitle('');
                     setHeart(false);
+                    setImgUrl('');
                     setBookmark(false);
                     setHide(false);
                     setLikes([]);
@@ -186,10 +189,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 const post = allPosts.find(p => p.date === date);
                 if (post) {
                     if (post.hide) {
-                        console.log(friendId)
-                        console.log(userId)
                         setIndex(post ? allPosts.indexOf(post) : 0)
                         setBody('');
+                        setImgUrl('');
                         setTitle('');
                         setHeart(false);
                         setBookmark(false);
@@ -203,6 +205,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     else {
                         setIndex(allPosts.indexOf(post))
                         setBody(post?.text);
+                        setImgUrl(post?.imgUrl);
                         setHeart(post?.like);
                         setBookmark(post?.bookmark);
                         setTitle(post?.title);
@@ -218,6 +221,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setIndex(0)
                     setBody('');
+                    setImgUrl('')
                     setTitle('');
                     setHeart(false);
                     setBookmark(false);
@@ -236,11 +240,13 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
 
     useEffect(() => {
         if (allPosts?.length > 0 && date) {
-            if (userId === friendId && userId !== '') {
+            if ((userId === friendId && userId !== '') || (friendId === '' && userId !== '')) {
                 const post = allPosts.find(p => p.date === date);
+                console.log(new Date(date).toString());
                 if (post) {
                     setIndex(allPosts.indexOf(post))
                     setBody(post?.text);
+                    setImgUrl(post?.imgUrl);
                     setHeart(post?.like);
                     setBookmark(post?.bookmark);
                     setTitle(post?.title);
@@ -253,6 +259,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 } else {
                     setIndex(0)
                     setBody('');
+                    setImgUrl('')
                     setTitle('');
                     setHeart(false);
                     setBookmark(false);
@@ -270,6 +277,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     if (post.hide) {
                         setIndex(post ? allPosts.indexOf(post) : 0)
                         setBody('');
+                        setImgUrl('')
                         setTitle('');
                         setHeart(false);
                         setBookmark(false);
@@ -283,6 +291,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     else {
                         setIndex(allPosts.indexOf(post))
                         setBody(post?.text);
+                        setImgUrl(post?.imgUrl);
                         setHeart(post?.like);
                         setBookmark(post?.bookmark);
                         setTitle(post?.title);
@@ -298,6 +307,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setIndex(0)
                     setBody('');
+                    setImgUrl('');
                     setTitle('');
                     setHeart(false);
                     setBookmark(false);
@@ -453,6 +463,23 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
 
     const handleSave = async() => {
         setEdit(false);
+        let imgPath = '';
+        if (selectedImage) {
+            const formData = new FormData();
+            formData.append("image", selectedImage);
+            const res = await axios({
+                method: 'POST',
+                url: '/upload',
+                data: formData,
+                header: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'multipart/form-data',
+                },
+                withCredentials: true,
+            });
+            imgPath = res?.data;
+        }
+        
         if (_id === ''){
             let res = await FetchAPIPost('/api/right/add/', {
                 owner: userId,
@@ -463,7 +490,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 text: body,
                 weather: weather,
                 hide: hide,
-                likes: likes
+                likes: likes,
+                imgUrl: imgPath
             });
             setLoading(false);
             console.log("create")
@@ -475,7 +503,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 text: body,
                 weather: weather,
                 hide: hide,
-                likes: likes
+                likes: likes,
+                imgUrl: imgPath
             });
             console.log("update")
         }
@@ -535,7 +564,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                             {postImage ?
                                 <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                     <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
-                                    <img src={URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                    {/* <img src={URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/> */}
+                                    <img src={imgUrl ? imgUrl.replace(/\.\.\/client\//g, "../../") : URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+
                                 </IconButton>
                                 :   <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
@@ -611,12 +642,13 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                         </div>
                         <div className="rightBodyMain">
                             {postImage ?
-                                <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
-                                    <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
-                                    <img src={URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
-                                </IconButton>
-                                :   <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
-                                        <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
+                                    <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                        <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
+                                        <img src={imgUrl ? imgUrl : URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                    </IconButton>
+                                :   
+                                    <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                        <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
                                         <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>
                                     </IconButton>}
                             <div className="postButtons">
@@ -676,7 +708,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                     <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>
                             </div>}
-                </div>}
+            </div>}
         </div>
     );
 }

@@ -24,6 +24,31 @@ export const FetchAPIPost = async (url, params) => {
     }
 }
 
+export const FetchAPIPostImg = async (url, params) => {
+    try{
+        if (params === undefined){
+            params = {};
+        }
+
+        const res = await axios({
+            method: 'POST',
+            url: url,
+            data: params,
+            header: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'multipart/form-data',
+            },
+            withCredentials: true,
+        });
+        if (res.status !== 200) {
+            throw res.result;
+        }
+        return res.data;
+    } catch (err) {
+        console.log('Err: ', err)
+    }
+}
+
 export const FetchAPIPostLogin = async (url, params) => {
     try{
         if (params === undefined){
@@ -40,7 +65,7 @@ export const FetchAPIPostLogin = async (url, params) => {
             },
             withCredentials: true,
         });
-        if (res.status != 200) {
+        if (res.status !== 200) {
             throw res.result;
         }
         return res.data;

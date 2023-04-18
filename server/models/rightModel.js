@@ -4,6 +4,7 @@ const rightSchema = new mongoose.Schema({
     owner: {type: String, required: true},
     date: {type: Number, required: true},
     title: String,
+    imgUrl: String,
     text: String,
     weather: String,
     like: Boolean,

@@ -15,16 +15,21 @@ import asyncHandler from './utils/asyncHandler.js';
 import User from './models/userModel.js';
 import cookieParser from 'cookie-parser';
 import { auth } from './routes/userRouter.js';
+import multer from 'multer';
+import path from 'path';
+import fs from "fs";
 
 
 const app = express();
 const port = process.env.PORT || 3001;
 const ORIGIN = process.env.ORIGIN ? process.env.ORIGIN : "127.0.0.1:3000";
+const __dirname = path.resolve();
 
 dotenv.config();
 
 app.use(cors());
 app.use(express.json());
+
 
 mongoose.connect(process.env.MONGODB_URI).then(() => {
     console.log('connected to db')
@@ -44,6 +49,41 @@ app.use('/api/widget', widgetRouter);
 app.use('/api/right', rightRouter);
 app.use('/api/users', userRouter);
 app.use('/api/reminder', reminderRouter);
+
+try {
+  fs.readdirSync("images");
+} catch (err) {
+  console.error("images 폴더가 없습니다. 폴더를 생성합니다.");
+  fs.mkdirSync("images");
+}
+
+const fileStorage = multer.diskStorage({
+    destination: (req,file,cb)=>{
+        cb(null, 'images');
+    },
+    filename: (req,file,cb)=>{ // 저장되는 이름 지정 
+        cb(null, new Date().valueOf() + path.extname(file.originalname));
+    }
+});
+const fileFilter = (req,file,cb) => {
+    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
+        cb(null,true); 
+    }
+    else{
+        cb(null,false);
+    }
+};
+
+app.post('/upload', multer({storage :fileStorage, fileFilter:fileFilter}).single('image'), (req, res) => {
+    const image = req.file;
+    console.log("yeeee: ", image)
+    const imgUrl = image.path;
+    res.send(imgUrl);
+});
+
+app.use('/images',express.static(path.join(__dirname,'images')))
+
+
 
 app.get('/logout', auth, (req, res) => {
     //미들웨어에서 가져옴
