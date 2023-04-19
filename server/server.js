@@ -53,7 +53,7 @@ app.use('/api/reminder', reminderRouter);
 try {
   fs.readdirSync("images");
 } catch (err) {
-  console.error("images 폴더가 없습니다. 폴더를 생성합니다.");
+  console.error("Images folder does not exist. Creating images folder...");
   fs.mkdirSync("images");
 }
 

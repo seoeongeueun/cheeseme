@@ -213,7 +213,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                         setLikes(post?.likes);
                         setHide(post?.hide);
                         setId(post?._id);
-                        setMessage('')
+                        setMessage('');
                         setLoading(false);
                     }
                 }
@@ -242,7 +242,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
         if (allPosts?.length > 0 && date) {
             if ((userId === friendId && userId !== '') || (friendId === '' && userId !== '')) {
                 const post = allPosts.find(p => p.date === date);
-                console.log(new Date(date).toString());
+                // console.log(new Date(date).toString());
                 if (post) {
                     setIndex(allPosts.indexOf(post))
                     setBody(post?.text);
@@ -356,7 +356,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
 
     useEffect(() => {
         if (edit) {
-            setMessage('')
+            setMessage('');
         }
     }, [edit])
 
@@ -579,7 +579,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                     <button onClick={onClickBookmark}>{bookmark ? <LockTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                 </div>
                                 <div className="postButtonsRight">
-                                    <button onClick={() => setEdit(!edit)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                    <button onClick={() => setEdit(edit)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                     <button onClick={handleClickOpen}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                         <DialogTitle >{"Delete this post?"}</DialogTitle>
@@ -644,7 +644,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                             {postImage ?
                                     <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                        <img src={imgUrl ? imgUrl : URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                        <img src={imgUrl && imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                     </IconButton>
                                 :   
                                     <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>

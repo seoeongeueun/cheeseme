@@ -589,6 +589,7 @@ main {
   justify-content: flex-start;
   max-height: 90%;
   width: 80%;
+  min-height: 80% !important;
 }
 
 .marker {
