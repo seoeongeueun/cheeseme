@@ -61,7 +61,7 @@ const fileStorage = multer.diskStorage({
     destination: (req,file,cb)=>{
         cb(null, 'images');
     },
-    filename: (req,file,cb)=>{ // 저장되는 이름 지정 
+    filename: (req,file,cb)=>{ 
         cb(null, new Date().valueOf() + path.extname(file.originalname));
     }
 });

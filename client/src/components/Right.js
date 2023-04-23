@@ -42,6 +42,7 @@ import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
+import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import axios from 'axios';
 
 function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
@@ -85,7 +86,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
             axios.get('/api/right/getByOwner/' + userId)
                 .then((res) => {
                     const n = res?.data;
-                    if (n) setAllPosts(n)
+                    if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
                     else setAllPosts([])
                 })
                 .catch((err) => {
@@ -99,11 +100,11 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
             axios.get('/api/right/getByOwner/' + friendId)
                 .then((res) => {
                     const n = res?.data;
-                    if (n) setAllPosts(n)
+                    if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
                     else setAllPosts([])
                 })
                 .catch((err) => {
-                    console.log('Error loading posts')
+                    console.log('Error loading posts: ', err)
                 })
             axios.get('/api/users/find/' + friendId)
                 .then((res) => {
@@ -121,7 +122,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLoading(true);
                     const n = res?.data;
                     if (n) {
-                        setAllPosts(n);
+                        setAllPosts(n.sort((a, b) => a.date - b.date));
                     }
                     else {
                         setAllPosts([])
@@ -138,7 +139,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLoading(true);
                     const n = res?.data;
                     if (n) {
-                        setAllPosts(n);
+                        setAllPosts(n.sort((a, b) => a.date - b.date))
                     }
                     else {
                         setAllPosts([])
@@ -168,10 +169,11 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setHide(post?.hide);
                     setId(post?._id);
                     setImgUrl(post?.imgUrl)
+                    setPostImage(post?.imgUrl !== '' ? true : false);
                     setMessage('')
                     setLoading(false);
                 } else {
-                    setIndex(0)
+                    setIndex(-1)
                     setBody('');
                     setTitle('');
                     setHeart(false);
@@ -181,6 +183,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes([]);
                     setWeather('');
                     setId('')
+                    setPostImage(false);
                     setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setLoading(true)
                 }
@@ -200,7 +203,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                         setWeather('');
                         setId('')
                         setMessage('This post is private');
-                        setLoading(true)
+                        setLoading(true);
+                        setPostImage(false);
                     }
                     else {
                         setIndex(allPosts.indexOf(post))
@@ -208,6 +212,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                         setImgUrl(post?.imgUrl);
                         setHeart(post?.like);
                         setBookmark(post?.bookmark);
+                        setPostImage(post?.imgUrl !== '' ? true : false);
                         setTitle(post?.title);
                         setWeather(post?.weather);
                         setLikes(post?.likes);
@@ -219,7 +224,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 }
                 else {
                     setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
-                    setIndex(0)
+                    setIndex(-1)
                     setBody('');
                     setImgUrl('')
                     setTitle('');
@@ -229,7 +234,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setLikes([]);
                     setWeather('');
                     setId('')
-                    setLoading(true)
+                    setLoading(true);
+                    setPostImage(false);
                 }
             }
         } else {
@@ -247,6 +253,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setIndex(allPosts.indexOf(post))
                     setBody(post?.text);
                     setImgUrl(post?.imgUrl);
+                    setPostImage(post?.imgUrl !== '' ? true : false);
                     setHeart(post?.like);
                     setBookmark(post?.bookmark);
                     setTitle(post?.title);
@@ -257,10 +264,11 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     setMessage('');
                     setLoading(false);
                 } else {
-                    setIndex(0)
+                    setIndex(-1)
                     setBody('');
                     setImgUrl('')
                     setTitle('');
+                    setPostImage(false);
                     setHeart(false);
                     setBookmark(false);
                     setHide(false);
@@ -279,6 +287,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                         setBody('');
                         setImgUrl('')
                         setTitle('');
+                        setPostImage(false);
                         setHeart(false);
                         setBookmark(false);
                         setHide(true);
@@ -292,6 +301,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                         setIndex(allPosts.indexOf(post))
                         setBody(post?.text);
                         setImgUrl(post?.imgUrl);
+                        setPostImage(post?.imgUrl !== '' ? true : false);
                         setHeart(post?.like);
                         setBookmark(post?.bookmark);
                         setTitle(post?.title);
@@ -305,8 +315,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 }
                 else {
                     setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
-                    setIndex(0)
+                    setIndex(-1)
                     setBody('');
+                    setPostImage(false);
                     setImgUrl('');
                     setTitle('');
                     setHeart(false);
@@ -360,6 +371,12 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
         }
     }, [edit])
 
+    useEffect(() => {
+        if (imgUrl !== '' && postImage) {
+            setSelectedImage(null);
+        }
+    }, [imgUrl, postImage])
+
     const onClickHeart = async() => {
         if (_id !== '') {
             if (heart) {
@@ -372,7 +389,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     text: body,
                     weather: weather,
                     hide: hide,
-                    likes: likes.filter(e => e !== userId)
+                    likes: likes.filter(e => e !== userId),
+                    imgUrl: imgUrl
                 });
             } else {
                 setHeart(true);
@@ -384,7 +402,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     text: body,
                     weather: weather,
                     hide: hide,
-                    likes: [...likes, userId]
+                    likes: [...likes, userId],
+                    imgUrl: imgUrl
                 });
             }
         }
@@ -401,7 +420,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     text: body,
                     weather: weather,
                     hide: hide,
-                    likes: likes
+                    likes: likes,
+                    imgUrl: imgUrl
                 });
             } else {
                 setBookmark(true);
@@ -412,7 +432,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     text: body,
                     weather: weather,
                     hide: hide,
-                    likes: likes
+                    likes: likes,
+                    imgUrl: imgUrl
                 });
             }
         }
@@ -429,7 +450,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     text: body,
                     weather: weather,
                     hide: false,
-                    likes: likes
+                    likes: likes,
+                    imgUrl: imgUrl
                 });
             } else {
                 setHide(true);
@@ -440,7 +462,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                     text: body,
                     weather: weather,
                     hide: true,
-                    likes: likes
+                    likes: likes,
+                    imgUrl: imgUrl
                 });
             }
         }
@@ -464,6 +487,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
     const handleSave = async() => {
         setEdit(false);
         let imgPath = '';
+        console.log('heee: ', selectedImage)
         if (selectedImage) {
             const formData = new FormData();
             formData.append("image", selectedImage);
@@ -478,6 +502,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 withCredentials: true,
             });
             imgPath = res?.data;
+            setImgUrl(imgPath);
         }
         
         if (_id === ''){
@@ -494,7 +519,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 imgUrl: imgPath
             });
             setLoading(false);
-            console.log("create")
+            console.log("created")
         } else {
             let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                 like: heart,
@@ -506,7 +531,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 likes: likes,
                 imgUrl: imgPath
             });
-            console.log("update")
+            console.log("updated")
         }
     }
 
@@ -527,7 +552,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 text: body,
                 weather: weatherOption,
                 hide: hide,
-                likes: likes
+                likes: likes,
             });
         }
 
@@ -537,7 +562,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
         onSetFriendId('');
         setCurrentFriendName('')
         setId('');
-        setIndex(0);
+        setIndex(-1);
         onChangeDate(new Date().setHours(0, 0, 0, 0))
         setLoading(true);
     }
@@ -606,25 +631,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                         </div>
                     </div> : <PlainRight grid={grid} setGrid={setGrid} sns={sns} setSns={setSns} edit={edit} setEdit={setEdit} date={date}/>}
                 </div>
+                {/*here*/}
             </GridLines> :
             <div className="rightContent">
-                {friendId === '' ? <div className='marker'>
-                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
-                </div>
-                : <div className='marker2' style={{top: '6rem', background: 'rgba(233, 233, 233, 0.7)' }}>
-                    <span onClick={() => handleClickHome()}><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
-                </div>}
-                {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '12rem', background: 'rgba(249, 216, 118, 0.8)'}}>
-                    <span style={{fontSize: '1.5rem'}}>{currentFriendName}</span>
-                </div>
-                : <div className='marker2'/>}
-                {showBookMark ? <div className='marker4'>
-                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
-                </div>
-                :
-                <div className='marker3'>
-                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
-                </div>}
+                
                     <div className='rightBodyAndHeader'>
                     {edit ? <div className="rightHeader">
                         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
@@ -644,12 +654,12 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                             {postImage ?
                                     <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                        <img src={imgUrl && imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                        <img src={imgUrl === '' && selectedImage ? URL.createObjectURL(selectedImage) : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                     </IconButton>
                                 :   
-                                    <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                    <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                        <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>
+                                        {edit && <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>}
                                     </IconButton>}
                             <div className="postButtons">
                                 <div className="postButtonsLeft">
