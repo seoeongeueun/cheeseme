@@ -155,6 +155,13 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
     }, [loading]);
 
     useEffect(() => {
+        if (imgUrl === undefined) {
+            setImgUrl('');
+            setPostImage(false);
+        }
+    }, [imgUrl])
+
+    useEffect(() => {
         if (allPosts?.length > 0 && date) {
             if ((userId === friendId && userId !== '') || (friendId === '' && userId !== '')) {
                 const post = allPosts.find(p => p.date === date);
@@ -634,7 +641,23 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 {/*here*/}
             </GridLines> :
             <div className="rightContent">
-                
+                {friendId === '' ? <div className='marker'>
+                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>
+                : <div className='marker2' style={{top: '6rem', background: 'rgba(233, 233, 233, 0.7)' }}>
+                    <span onClick={() => handleClickHome()}><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>}
+                {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '12rem', background: 'rgba(249, 216, 118, 0.8)'}}>
+                    <span><PeopleRoundedIcon style={{fontSize: '1.7rem'}}/></span>
+                </div>
+                : <div className='marker2'/>}
+                {showBookMark ? <div className='marker4'>
+                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>
+                :
+                <div className='marker3'>
+                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>}
                     <div className='rightBodyAndHeader'>
                     {edit ? <div className="rightHeader">
                         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>

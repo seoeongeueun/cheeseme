@@ -588,9 +588,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  max-height: 90%;
-  width: 80%;
-  min-height: 90% !important;
+  width: 83%;
+  height: 90% !important;
 }
 
 .marker {
@@ -832,7 +831,7 @@ main {
 .rightBodyMain {
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  height: 100%;
   align-items: center;
 }
 
@@ -916,7 +915,7 @@ main {
 
 .postInput2 {
   min-width: 100%;
-  height: 35%;
+  height: 47%;
   display: flex;
   flex-direction: column;
   align-items: space-between;
@@ -987,7 +986,8 @@ main {
   width: 90%;
   align-items: center;
   justify-content: center;
-  height: min-content;
+  /*height: min-content;*/
+  height: 10%;
 }
 
 .rightFooter span{
