@@ -928,6 +928,7 @@ main {
   height: 300px;
 }
 
+
 .postInput2:hover {
   overflow-y: overlay;
   overflow-x: hidden;

@@ -730,7 +730,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                     <Box sx={{ width: '100%' }}>
                                         <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
                                             <span style={{marginBottom: '-1.5rem'}}>1</span>
-                                            <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}}/>
+                                            <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}} valueLabelDisplay="auto"/>
                                             <span style={{marginBottom: '-2.2rem'}}>{allPosts?.length}</span>
                                         </Stack>
                                     </Box>
