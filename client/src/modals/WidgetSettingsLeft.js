@@ -18,7 +18,7 @@ function WidgetSettingsLeft(props){
               const n = res?.data;
               if (n) {
                 setPositions(n.positions);
-                console.log(n.positions)
+                props.onChangePositions(n.positions);
               }
             })
             .catch( (err) => {
@@ -195,30 +195,30 @@ function WidgetSettingsLeft(props){
     return(
         <div className="settingsbox">
             <span className='settingsboxTitle'>Widget Settings</span>
-            <div class="checkboxlist">
+            <div className="checkboxlist">
                 <div className="checkboxButton">
-                    <input type="checkbox" name="checkTodo" checked={props.notes} onClick={(e) => handleNotesClick(e.target.checked)}/>
+                    <input type="checkbox" name="checkTodo" checked={props.notes} onChange={(e) => handleNotesClick(e.target.checked)}/>
                     <label>Notes</label>
                 </div>
                 <div className="checkboxButton">
-                    <input type="checkbox" name="checkTodo" checked={props.todo} onClick={(e) => handleTodoClick(e.target.checked)}/>
+                    <input type="checkbox" name="checkTodo" checked={props.todo} onChange={(e) => handleTodoClick(e.target.checked)}/>
                     <label>To Do List</label>
                 </div>
                 <div className="checkboxButton">
-                    <input type="checkbox" name="checkTodo" checked={props.calendar} onClick={(e) => handleCalendarClick(e.target.checked)}/>
+                    <input type="checkbox" name="checkTodo" checked={props.calendar} onChange={(e) => handleCalendarClick(e.target.checked)}/>
                     <label>Calendar</label>
                 </div>
                 <div className="checkboxButton">
-                    <input type="checkbox" name="checkTodo" checked={props.ddayCounter} onClick={(e) => handleDdayCounterClick(e.target.checked)}/>
+                    <input type="checkbox" name="checkTodo" checked={props.ddayCounter} onChange={(e) => handleDdayCounterClick(e.target.checked)}/>
                     <label>D-Day Counter</label>
                 </div>
                 <div className="checkboxButton">
-                    <input type="checkbox" name="checkTodo" checked={props.reminder} onClick={(e) => handleReminderClick(e.target.checked)}/>
+                    <input type="checkbox" name="checkTodo" checked={props.reminder} onChange={(e) => handleReminderClick(e.target.checked)}/>
                     <label>Reminder</label>
                 </div>
                 {stickersOn?.length > 0 && props.stickersOn.map((value, index) => 
                     <div className="checkboxButton">
-                        <input type="checkbox" name="checkTodo" checked={stickersOn[index]} onClick={() => handleStickerClick(index)}/>
+                        <input type="checkbox" name="checkTodo" checked={stickersOn[index]} onChange={() => handleStickerClick(index)}/>
                         <label>Sticker {index + 1}</label>
                     </div>
                 )}

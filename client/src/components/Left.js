@@ -71,11 +71,11 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     // const [reminderPosition, setReminderPosition] = useState({x: 0, y: 0});
 
     
-    const [calPosition, setCalPosition] = useState()
-    const [todoPosition, setTodoPosition] = useState()
-    const [ddayPosition, setDdayPosition] = useState()
-    const [notePosition, setNotePosition] = useState()
-    const [reminderPosition, setReminderPosition] = useState();
+    const [calPosition, setCalPosition] = useState({x: positions[0].x, y: positions[0].y})
+    const [ddayPosition, setDdayPosition] = useState({x: positions[1].x, y: positions[1].y})
+    const [notePosition, setNotePosition] = useState({x: positions[2].x, y: positions[2].y})
+    const [todoPosition, setTodoPosition] = useState({x: positions[3].x, y: positions[3].y})
+    const [reminderPosition, setReminderPosition] = useState({x: positions[4].x, y: positions[4].y});
 
     const [settings, setSettings] = useState();
 
@@ -105,18 +105,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         setToday(new Date().setHours(0, 0, 0, 0));
     }, [id]);
 
-    // useEffect(() => {
-    //     if (positions) {
-    //         console.log('po: ', positions)
-    //         console.log(positions[0])
-    //         setCalPosition({x: Object.values(positions[0])[1], y: Object.values(positions[0])[2]});
-    //         setTodoPosition({x: Object.values(positions[1])[1], y: Object.values(positions[1])[2]});
-    //         setDdayPosition({x: Object.values(positions[2])[1], y: Object.values(positions[2])[2]});
-    //         setNotePosition({x: Object.values(positions[3])[1], y: Object.values(positions[3])[2]});
-    //         setReminderPosition({x: Object.values(positions[4])[1], y: Object.values(positions[4])[2]});
-    //     }
-    // }, [userId])
-
     useEffect(() => {
         if (userId) {
             axios.get('/api/users/find/' + userId)
@@ -139,7 +127,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
               }
             })
             .catch( (err) => {
-                console.log('Error loading positions')
+                console.log('Error loading positions');
             })
         }
     }, [])
@@ -482,7 +470,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                            {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
+                            {showWidgetSettings && <WidgetSettingsLeft onChangePositions={onChangePositions} userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>

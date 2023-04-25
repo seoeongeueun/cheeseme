@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { FetchAPIPostLogin } from '../utils/api.js';
 import axios from 'axios';
 
@@ -14,6 +8,7 @@ export default function LoginModal(props) {
   const [username, setUsername] = useState('')
   const [pw, setPw] = useState('');
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleClickOpen = (name) => {
     setOpen(true);
@@ -32,12 +27,14 @@ export default function LoginModal(props) {
     if (res.loginSuccess){
       console.log('Login Success');
       setSuccess(true);
+      setError(false);
       props.onCurrentUserChange(res.userId);
       props.onCurrentNameChange(username);
       props.setLogin(false);
       props.onSetFriendId('');
     } else {
       console.log('Login Failed')
+      setError(true);
     }
   }
 
@@ -58,6 +55,7 @@ export default function LoginModal(props) {
             <button className='save' onClick={handleSend} type='submit'><span>Confirm</span></button>
             <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
           </div>
+          {error && <span style={{color: "#f73939"}}>Invalid id or password</span>}
         </div>
       </Dialog>
     </div>

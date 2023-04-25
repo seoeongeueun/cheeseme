@@ -23,6 +23,7 @@ import BigCheese from './icons/cheese.png';
 import SmallCheese from './icons/smallCheese.png';
 import { currentFriends } from './modules/friendsList.js';
 import { currentNotis } from './modules/notisList';
+import { currentPositions } from './modules/positionsList';
 import NotiContainer from './containers/NotiContainer';
 
 import axios from 'axios';
@@ -46,17 +47,18 @@ function App() {
   const dispatch = useDispatch();
   const onChangeFriends = friends => dispatch(currentFriends(friends));
   const onChangeNotis = notis => dispatch(currentNotis(notis));
+  const onChangePositions = positions => dispatch(currentPositions(positions));
 
 
   useEffect(() => {
     if (userId) {
-      console.log(userId)
       axios.get('/api/users/find/' + userId)
         .then((res) => {
           const n = res?.data;
           if (n) {
             onChangeNotis(n.notifications);
             onChangeFriends(n.friends);
+            onChangePositions(n.positions);
             setName(n.name);
           }
         })
