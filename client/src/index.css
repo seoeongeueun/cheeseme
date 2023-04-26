@@ -991,7 +991,7 @@ main {
   height: 10%;
 }
 
-.rightFooter span{
+.pageSlider span{
   font-family: 'NanumBarunPenR' !important;
 }
 
@@ -1020,6 +1020,10 @@ main {
   border: none;
   cursor: pointer;
   padding: 0;
+}
+
+.pageSliderButtons span {
+  font-size: 2rem;
 }
 
 .footer {

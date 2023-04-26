@@ -45,7 +45,7 @@ import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import axios from 'axios';
 
-function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
+function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const [showSettings, setShowSettings] = useState(false);
     const [grid, setGrid] = useState(false);
     const [sns, setSns] = useState(true);
@@ -350,7 +350,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 onChangeDate(post?.date);
             }
             else{
-                console.log('no postttttt')
+                console.log('no post1')
             }
         }
         else if (value === 0){
@@ -359,7 +359,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                 onChangeDate(post?.date);
             }
             else{
-                console.log('no postttttt')
+                console.log('no post2')
             }
         }
     }, [value]);
@@ -738,7 +738,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate}){
                                 </div>
                                 <div className='pageSliderButtons'>
                                     <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                    <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName.toUpperCase()}'s posts` : '@ My posts'} </span>
+                                    <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : `@ ${name}`} </span>
                                     <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>
                             </div>}

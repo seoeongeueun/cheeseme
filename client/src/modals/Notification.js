@@ -122,7 +122,7 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
             </div>
             <div className='notification'>
                 {notis?.length > 0 && notis.map((n, i) => (
-                    <div className='notiItem'>
+                    <div className='notiItem' key={i}>
                         <div className='notiItemContent'>
                             <span style={{marginRight: '1rem', color: (!n.done && n.notiType === 'sendRequest')|| i === 0 ? 'black' : '#a0a096'}}>{new Date(n.date).getMonth()+1}/{new Date(n.date).getDate()}/{new Date(n.date).getFullYear()}</span>
                             {n.notiType === 'receiveAccept' && <span style={{color: i === 0 ? 'black' : '#a0a096'}}>{n.from} has accepted your friend request</span>}

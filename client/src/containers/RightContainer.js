@@ -13,6 +13,10 @@ function RightContainer() {
     const { userId } = useSelector(state => ({
         userId: state.loginInfo.userId,
     }));
+    
+    const { name } = useSelector(state => ({
+        name: state.nameInfo.name,
+    }));
 
     const { friendId } = useSelector(state => ({
         friendId: state.viewFriend.friendId,
@@ -23,7 +27,7 @@ function RightContainer() {
     const onChangeDate = d => dispatch(changeDate(d));
 
     return (
-        <Right date={date} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId} onChangeDate={onChangeDate}/>
+        <Right date={date} name={name} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId} onChangeDate={onChangeDate}/>
     )
 }
 
