@@ -19,6 +19,7 @@ function Friend({userId, name, friends, onChangeFriends, onAddFriend, onRemoveFr
     const [removeFriend, setRemoveFriend] = useState(false);
     const [username, setUsername] = useState('');
     const [bye, setBye] = useState('');
+    const [friendName, setFriendName] = useState('');
     const [friendFriends, setFriendFriends] = useState(null);
     
     const updateList = async() => {
@@ -110,8 +111,8 @@ function Friend({userId, name, friends, onChangeFriends, onAddFriend, onRemoveFr
             {userId ?
                 friends?.length > 0 ?
                 <div className='friendList'>
-                    {friends.map((f) => (
-                        <div className='friendItem'>
+                    {friends.map((f, i) => (
+                        <div className='friendItem' key={i}>
                             <img src={f.fav ? StarColor : Star} style={{width: '1rem', marginRight: '0.5rem', marginTop: '3px'}} onClick={() => handleStar(f.name)}/>
                             <span onClick={() => handleClickFriend(f.name)}>{f.name}</span>
                             {removeFriend && <button onClick={() => handleRemove(f.name)}><span><ClearRoundedIcon sx={{fontSize: '1.2rem', color: '#f73939'}}/></span></button>}
