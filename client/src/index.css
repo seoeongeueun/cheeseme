@@ -787,7 +787,8 @@ main {
 .rightBody {
   display: flex;
   flex-direction: column;
-  max-height: 90%;
+  /* max-height: 90%; */
+  height: 90%;
   justify-content: space-between;
 }
 
@@ -1490,7 +1491,7 @@ input.todoElem::placeholder {
 .quill {
   display: flex;
   flex-direction: column;
-  max-height: 120%;
+  height: 100%;
   background-color: transparent;
   border: none;
 }
