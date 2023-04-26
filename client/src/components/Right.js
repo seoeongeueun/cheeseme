@@ -125,7 +125,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setAllPosts(n.sort((a, b) => a.date - b.date));
                     }
                     else {
-                        setAllPosts([])
+                        setAllPosts([]);
                     }
                     return;
                 })
@@ -142,7 +142,19 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setAllPosts(n.sort((a, b) => a.date - b.date))
                     }
                     else {
-                        setAllPosts([])
+                        setAllPosts([]);
+                        setIndex(-1)
+                        setBody('');
+                        setTitle('');
+                        setHeart(false);
+                        setImgUrl('');
+                        setBookmark(false);
+                        setHide(false);
+                        setLikes([]);
+                        setWeather('');
+                        setId('')
+                        setPostImage(false);
+                        setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     }
                     return;
                 })
@@ -152,7 +164,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             }
             
         }
-    }, [loading]);
+    }, [loading, friendId]);
 
     useEffect(() => {
         if (imgUrl === undefined) {
@@ -192,7 +204,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setId('')
                     setPostImage(false);
                     setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
-                    setLoading(true)
+                    setLoading(true);
                 }
             }
             else {
@@ -248,6 +260,21 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         } else {
             setId('');
             setLoading(true);
+            if (allPosts.length === 0) {
+                console.log('check1');
+                setIndex(-1)
+                setBody('');
+                setTitle('');
+                setHeart(false);
+                setImgUrl('');
+                setBookmark(false);
+                setHide(false);
+                setLikes([]);
+                setWeather('');
+                setId('')
+                setPostImage(false);
+                setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+            }
         }
     }, [allPosts]);
 
@@ -339,7 +366,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         } else {
             setId('');
             setLoading(true);
-            setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+            setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`);
+            console.log('check2')
+
         }
     }, [date]);
 
@@ -350,7 +379,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 onChangeDate(post?.date);
             }
             else{
-                console.log('no post1')
+                console.log('no post1');
             }
         }
         else if (value === 0){
@@ -359,7 +388,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 onChangeDate(post?.date);
             }
             else{
-                console.log('no post2')
+                console.log('no post2');
             }
         }
     }, [value]);
@@ -571,7 +600,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         setCurrentFriendName('')
         setId('');
         setIndex(-1);
-        onChangeDate(new Date().setHours(0, 0, 0, 0))
+        onChangeDate(new Date().setHours(0, 0, 0, 0));
         setLoading(true);
     }
 

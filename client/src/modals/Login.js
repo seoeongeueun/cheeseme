@@ -1,17 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
-import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
-import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import AddFriend from './AddFriend.js';
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+
 import axios from 'axios';
-import SentimentSatisfiedAltRoundedIcon from '@mui/icons-material/SentimentSatisfiedAltRounded';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import Wink from '../icons/wink.png';
 import Happy from '../icons/happy.png';
 import Signup from './Signup.js';
 import LoginModal from './LoginModal.js';
