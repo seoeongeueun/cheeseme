@@ -37,11 +37,11 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     const [grid, setGrid] = useState(false);
 
-    const [todo, setTodo] = useState(true);
-    const [calendar, setCalendar] = useState(true);
-    const [ddayCounter, setDdayCounter] = useState(true);
-    const [notes, setNotes] = useState(true);
-    const [reminder, setReminder] = useState(true);
+    const [todo, setTodo] = useState(positions.find(obj => obj.name === 'todo').show)
+    const [calendar, setCalendar] = useState(positions.find(obj => obj.name === 'cal').show)
+    const [ddayCounter, setDdayCounter] = useState(positions.find(obj => obj.name === 'dday').show)
+    const [notes, setNotes] = useState(positions.find(obj => obj.name === 'note').show);
+    const [reminder, setReminder] = useState(positions.find(obj => obj.name === 'reminder').show);
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 

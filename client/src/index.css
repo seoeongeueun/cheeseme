@@ -76,8 +76,8 @@ header a {
 /* end of color line */
 
 .errorMessage {
-  font-family: 'NanumBarunPenR';
-  font-size: 2rem;
+  /*font-family: 'NanumBarunPenR';*/
+  font-size: 3rem;
 
 }
 
