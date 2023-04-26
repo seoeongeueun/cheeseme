@@ -44,6 +44,8 @@ import Box from '@mui/material/Box';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import axios from 'axios';
+import ReactQuill from 'react-quill';
+import "../../node_modules/quill/dist/quill.snow.css";
 
 function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const [showSettings, setShowSettings] = useState(false);
@@ -78,6 +80,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const [value, setValue] = useState(0);
     const [message, setMessage] = useState('');
     const [imgUrl, setImgUrl] = useState();
+
+    const [plain, setPlain] = useState(true);
+    const [closeQuill, setCloseQuill] = useState(true);
     
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
 
@@ -523,6 +528,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     const handleSave = async() => {
         setEdit(false);
+        if (plain) {
+            setCloseQuill(true);
+        }
         let imgPath = '';
         console.log('heee: ', selectedImage)
         if (selectedImage) {
@@ -574,6 +582,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     const handleCancel = () => {
         setEdit(false);
+        if (plain) setCloseQuill(false)
     }
 
     const handleWeather = async(weatherOption) => {
@@ -607,6 +616,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const handleBody = (e) => {
+        setBody(e);
+    }
 
     /*<span className="profileArea"/>*/
 
@@ -692,7 +705,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     {edit ? <div className="rightHeader">
                         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
-                    {sns ? 
                     <div className="rightBody">
                         <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
                             <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
@@ -703,8 +715,18 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                 <button onClick={() => handleWeather('snowy')} disabled={friendId !== '' ? true : false}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
                             </div>
                         </div>
-                        <div className="rightBodyMain">
-                            {postImage ?
+                        
+                            {plain ? 
+                            <ReactQuill readOnly={closeQuill} style={closeQuill ? {border: "none"} : {border: "none"}}
+                                modules={closeQuill ? Right.modules2 : Right.modules}
+                                formats={Right.formats}
+                                onChange={handleBody}
+                                value={body}>
+                                <div className="ql-container" style={edit ? {height: '70%'} : {}}/>
+                            </ReactQuill>
+                            :
+                            <div className="rightBodyMain">
+                                {postImage ?
                                     <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
                                         <img src={imgUrl === '' && selectedImage ? URL.createObjectURL(selectedImage) : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
@@ -714,46 +736,46 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
                                         {edit && <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>}
                                     </IconButton>}
-                            <div className="postButtons">
-                                <div className="postButtonsLeft">
-                                    <button onClick={onClickBookmark} disabled={friendId !== '' ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                    <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                    {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                    : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
-                                </div>
-                                <div className="postButtonsRight">
-                                    <button onClick={() => setEdit(true)} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
-                                    <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                    <Dialog className="dialogBox" open={open} onClose={handleClose}>
-                                        <DialogTitle>{"Delete this post?"}</DialogTitle>
-                                        <DialogContent>
-                                            <DialogContentText>This post will be permanently deleted.</DialogContentText>
-                                        </DialogContent>
-                                        <DialogActions>
-                                            <Button onClick={handleClose}>Confirm</Button>
-                                            <Button onClick={handleClose} autoFocus>Cancel</Button>
-                                        </DialogActions>
-                                    </Dialog>
-                                    <div className='leftWidget'>
-                                        <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                        {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
+                                <div className="postButtons">
+                                    <div className="postButtonsLeft">
+                                        <button onClick={onClickBookmark} disabled={friendId !== '' ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
+                                    </div>
+                                    <div className="postButtonsRight">
+                                        <button onClick={() => setEdit(true)} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                        <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        <Dialog className="dialogBox" open={open} onClose={handleClose}>
+                                            <DialogTitle>{"Delete this post?"}</DialogTitle>
+                                            <DialogContent>
+                                                <DialogContentText>This post will be permanently deleted.</DialogContentText>
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button onClick={handleClose}>Confirm</Button>
+                                                <Button onClick={handleClose} autoFocus>Cancel</Button>
+                                            </DialogActions>
+                                        </Dialog>
+                                        <div className='leftWidget'>
+                                            <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {message !== '' && <span className='errorMessage'>{message.toUpperCase()}</span>}
+                                {message !== '' && <span className='errorMessage'>{message.toUpperCase()}</span>}
 
-                            {edit ? 
-                            <div className="postInput">
-                                <textarea id="text" name="text" rows="12" cols="50" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
-                                <div className="inputButtons">
-                                    <button className="save" onClick={handleSave}>Save</button>
-                                    <button className="cancel" onClick={handleCancel}>Cancel</button>
-                                </div>
-                            </div> : <div className='postInput2'>
-                                        <span>{body}</span>
-                                    </div>}
+                                {edit ? 
+                                <div className="postInput">
+                                    <textarea id="text" name="text" rows="12" cols="50" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+                                    <div className="inputButtons">
+                                        <button className="save" onClick={handleSave}>Save</button>
+                                        <button className="cancel" onClick={handleCancel}>Cancel</button>
+                                    </div>
+                                </div> : <div className='postInput2'>
+                                            <span>{body}</span>
+                                        </div>}
+                            </div>}
                         </div>
-                    </div> : <PlainRight grid={grid} setGrid={setGrid} setSns={setSns} sns={sns} edit={edit} setEdit={setEdit} date={date}/>}
                     </div>
                     {!edit&& <div className='rightFooter'>
                                 <div className='pageSlider'>
@@ -775,5 +797,35 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         </div>
     );
 }
+
+Right.modules = {
+    toolbar: [
+      [{ 'header': [1, 2, false] }],
+      ['bold', 'italic', 'underline','strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image']
+    ],
+};
+
+Right.modules2 = {
+    toolbar: false,
+};
+
+Right.formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "link",
+    "image",
+    "video",
+    "code-block"
+];
 
 export default Right;
