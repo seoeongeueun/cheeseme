@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import DisplaySettings from '../modals/DisplaySettings';
 import GridLines from 'react-gridlines';
 import PlainRight from './PlainRight';
@@ -83,6 +83,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     const [plain, setPlain] = useState(true);
     const [closeQuill, setCloseQuill] = useState(true);
+    const quillRef = useRef();
     
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
 
@@ -528,7 +529,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     const handleSave = async() => {
         setEdit(false);
+        let tmp = quillRef.current.editor.container.firstChild.innerHTML;
         if (plain) {
+            setBody(tmp);
             setCloseQuill(true);
         }
         let imgPath = '';
@@ -557,7 +560,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 like: heart,
                 bookmark: bookmark,
                 title: title,
-                text: body,
+                text: plain? tmp : body,
                 weather: weather,
                 hide: hide,
                 likes: likes,
@@ -570,7 +573,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 like: heart,
                 bookmark: bookmark,
                 title: title,
-                text: body,
+                text: plain? tmp : body,
                 weather: weather,
                 hide: hide,
                 likes: likes,
@@ -582,7 +585,12 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     const handleCancel = () => {
         setEdit(false);
-        if (plain) setCloseQuill(false)
+        if (plain) setCloseQuill(true);
+    }
+
+    const handleEdit = () => {
+        setEdit(true);
+        if (plain) setCloseQuill(false);
     }
 
     const handleWeather = async(weatherOption) => {
@@ -616,10 +624,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    const handleBody = (e) => {
-        setBody(e);
-    }
 
     /*<span className="profileArea"/>*/
 
@@ -705,7 +709,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     {edit ? <div className="rightHeader">
                         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
-                    <div className="rightBody" style={{height: plain && '100%'}}>
+                    <div className="rightBody" style={{maxHeight: (plain && edit) && '90%', justifyContent: (plain && !edit) && 'flex-start'}}>
                         <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
                             <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
                             <div className='weatherMood'>
@@ -717,15 +721,23 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         </div>
                         
                             {plain ?
-                            <>
-                            <ReactQuill readOnly={closeQuill} style={closeQuill ? {border: "none"} : {border: "none"}}
+                            <div className='plainRight'>
+                            <ReactQuill 
+                                ref={quillRef} 
+                                readOnly={closeQuill}
+                                style={{border: 'none', height: edit && '100%'}}
                                 modules={closeQuill ? Right.modules2 : Right.modules}
                                 formats={Right.formats}
-                                onChange={handleBody}
+                                placeholder="Let's start writing!"
                                 value={body}>
-                                <div className="ql-container" style={edit ? {height: '70%'} : {}}/>
+                                <div className="ql-container" style={{height: edit && '80%', border: '1px solid black'}}/>
                             </ReactQuill>
-                            <div className="postButtons">
+                            {!closeQuill ?
+                                <div className="inputButtons">
+                                    <button className="save" onClick={handleSave}>SAVE</button>
+                                    <button className="cancel" onClick={handleCancel}>CANCEL</button>
+                                </div> :
+                                <div className="postButtons" style={{padding: '0rem'}}>
                                     <div className="postButtonsLeft">
                                         <button onClick={onClickBookmark} disabled={friendId !== '' ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
@@ -733,7 +745,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
                                     </div>
                                     <div className="postButtonsRight">
-                                        <button onClick={() => setEdit(true)} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                        <button onClick={handleEdit} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                         <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                             <DialogTitle>{"Delete this post?"}</DialogTitle>
@@ -751,7 +763,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         </div>
                                     </div>
                                 </div>
-                            </>
+                            }
+                            </div>
                             :
                             <div className="rightBodyMain">
                                 {postImage ?
