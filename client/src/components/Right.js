@@ -530,6 +530,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const handleSave = async() => {
         setEdit(false);
         let tmp = quillRef.current.editor.container.firstChild.innerHTML;
+        setTitle(document.getElementById("rightTitle").value);
         if (plain) {
             setBody(tmp);
             setCloseQuill(true);
@@ -559,7 +560,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 date: date,
                 like: heart,
                 bookmark: bookmark,
-                title: title,
+                title: document.getElementById("rightTitle").value,
                 text: plain? tmp : body,
                 weather: weather,
                 hide: hide,
@@ -572,7 +573,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                 like: heart,
                 bookmark: bookmark,
-                title: title,
+                title: document.getElementById("rightTitle").value,
                 text: plain? tmp : body,
                 weather: weather,
                 hide: hide,
@@ -632,7 +633,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#e5e5e5"} lineColor2={"#efefef"}>
                 <div className="rightContent">
                     {edit ? <div className="rightHeader">
-                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                        <input id='rightTitle' type="text" value={title}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
                     {sns ? 
                     <div className="rightBody">
@@ -707,7 +708,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 </div>}
                     <div className='rightBodyAndHeader'>
                     {edit ? <div className="rightHeader">
-                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                        <input id='rightTitle' type="text" defaultValue={title}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
                     <div className="rightBody" style={{maxHeight: (plain && edit) && '90%', justifyContent: (plain && !edit) && 'flex-start'}}>
                         <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
