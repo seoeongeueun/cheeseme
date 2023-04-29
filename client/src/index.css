@@ -1239,6 +1239,7 @@ main {
 
 .stickerWidget img {
   width: 7rem;
+  height: 7rem;
   object-fit: contain;
 }
 
@@ -1257,6 +1258,7 @@ main {
   bottom: 0px;
   transform: translate(-50%, 0%);
   padding: 1rem 2rem 1rem 2rem;
+  z-index: 6 !important;
 }
 
 .stickerMakerBox {
