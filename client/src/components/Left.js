@@ -275,7 +275,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                 stickerList.map((value, index) => {
                                     if (stickersOn[index]) {
                                         return (
-                                            <Draggable bounds={{top: 0, left: -112*index, right: width-112*(index+1), bottom: height-112*(index+1)}} handle="strong">
+                                            <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}} handle="strong">
                                                 <div className="stickerWidget">
                                                     <img alt={"sticker" + index} src={value} style={roundStickers[index] ? {borderRadius: "50%"} : {}}/>
                                                     {editMode && <strong>
@@ -383,7 +383,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                 stickerList.map((value, index) => {
                                     if (stickersOn[index]) {
                                         return (
-                                            <Draggable bounds={{top: 0, left: -112*index, right: width-112*(index+1), bottom: height-112*(index+1)}} handle="strong">
+                                            <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}} handle="strong">
                                                 <div className="stickerWidget">
                                                     <img alt={"sticker" + index} src={value} style={roundStickers[index] ? {borderRadius: "50%"} : {}}/>
                                                     {editMode && <strong>

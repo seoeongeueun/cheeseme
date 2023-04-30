@@ -1237,6 +1237,11 @@ main {
   flex-direction: row;
 }
 
+.stickerWidget {
+  position: absolute;
+  
+}
+
 .stickerWidget img {
   width: 7rem;
   height: 7rem;
