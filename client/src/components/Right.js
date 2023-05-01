@@ -32,7 +32,7 @@ import SunPlain from '../icons/sunny.png';
 import SnowPlain from '../icons/snowman (1).png';
 import SnowColor from '../icons/snowman.png';
 import HomeSharpIcon from '@mui/icons-material/HomeSharp';
-import { FetchAPIPost, FetchAPIPostImg } from '../utils/api.js';
+import { FetchAPIPost, FetchAPIPostImg, FetchApiDelete } from '../utils/api.js';
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -516,10 +516,27 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
       setOpen(true);
     };
 
-    const handleClose = () => {
-      setOpen(false);
+    const handleDelete = async() => {
+        setOpen(false);
+        if (date) {
+            let res = await FetchApiDelete('/api/right/delete/' + date);
+            setBody('');
+            setTitle('');
+            setHeart(false);
+            setImgUrl('');
+            setBookmark(false);
+            setHide(false);
+            setLikes([]);
+            setWeather('');
+            setId('')
+            setPostImage(false);
+            setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+        }
     };
 
+    const handleClose = async() => {
+        setOpen(false);
+    }
     const onUploadImage = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage(e.target.files[0]);
@@ -667,7 +684,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                             <DialogContentText>This post will be permanently deleted.</DialogContentText>
                                         </DialogContent>
                                         <DialogActions>
-                                            <Button onClick={handleClose}>Confirm</Button>
+                                            <Button onClick={handleDelete}>Confirm</Button>
                                             <Button onClick={handleClose} autoFocus>Cancel</Button>
                                         </DialogActions>
                                     </Dialog>
@@ -754,7 +771,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                                 <DialogContentText>This post will be permanently deleted.</DialogContentText>
                                             </DialogContent>
                                             <DialogActions>
-                                                <Button onClick={handleClose}>Confirm</Button>
+                                                <Button onClick={handleDelete}>Confirm</Button>
                                                 <Button onClick={handleClose} autoFocus>Cancel</Button>
                                             </DialogActions>
                                         </Dialog>
