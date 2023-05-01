@@ -64,7 +64,7 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
 
 userSchema.methods.generateToken = function (cb) {
     var user = this;
-    var token = jsonwebtoken.sign(user._id.toHexString(), 'secretToken');
+    var token = jsonwebtoken.sign(user._id.toHexString(), process.env.JWT_KEY);
 
     user.token = token;
     user.save(function (err, user) {
@@ -78,7 +78,7 @@ userSchema.statics.findByToken = function (token, cb) {
     var user = this;
 
     //token decoded
-    jsonwebtoken.verify(token, 'secretToken', function (err, decoded) {
+    jsonwebtoken.verify(token, process.env.JWT_KEY, function (err, decoded) {
         user.findOne({ _id: mongoose.Types.ObjectId(decoded), "token": token }, function (err, user) {
             if (err) return cb(err);
             cb(null, user);
