@@ -102,7 +102,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     }, [userId]);
 
     useEffect(() => {
-        if (friendId !== '') {
+        if (friendId !== '' && friendId !== undefined) {
             axios.get('/api/right/getByOwner/' + friendId)
                 .then((res) => {
                     const n = res?.data;

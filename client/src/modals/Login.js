@@ -31,6 +31,7 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId}
                     onCurrentNameChange(null);
                     onSetFriendId('')
                     setUsername(null);
+                    localStorage.removeItem('token');
                 }
             })
             .catch( (err) => {

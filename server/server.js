@@ -118,7 +118,7 @@ app.post('/login', asyncHandler(async(req, res) => {
                 })
                 .status(200)
                 .json({ loginSuccess: true, userId: user._id });
-        })  
+        })
     })
 }))
 

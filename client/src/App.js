@@ -25,6 +25,7 @@ import { currentFriends } from './modules/friendsList.js';
 import { currentNotis } from './modules/notisList';
 import { currentPositions } from './modules/positionsList';
 import NotiContainer from './containers/NotiContainer';
+import { setFriendId } from './modules/viewFriend.js';
 
 import axios from 'axios';
 
@@ -48,7 +49,15 @@ function App() {
   const onChangeFriends = friends => dispatch(currentFriends(friends));
   const onChangeNotis = notis => dispatch(currentNotis(notis));
   const onChangePositions = positions => dispatch(currentPositions(positions));
+  const onCurrentUserChange = id => dispatch(currentUser(id));
+  const onSetFriendId = friendId => dispatch(setFriendId(friendId));
 
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      onCurrentUserChange(localStorage.getItem('token'));
+      onSetFriendId('')
+    }
+  }, [])
 
   useEffect(() => {
     if (userId) {
