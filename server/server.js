@@ -97,6 +97,9 @@ app.get('/logout', auth, (req, res) => {
             })
         }
     )
+    res.cookie('x_auth', null, {
+        maxAge: 0,
+    });
 })
 
 app.post('/login', asyncHandler(async(req, res) => {
@@ -109,7 +112,10 @@ app.post('/login', asyncHandler(async(req, res) => {
         user.generateToken((err, user) => {
             if (err) return res.status(400).send(err);
 
-            res.cookie("x_auth", user.token)
+            res.cookie("x_auth", user.token, {
+                    maxAge: 1000 * 60 * 60 * 24 * 2,
+                    httpOnly: true,
+                })
                 .status(200)
                 .json({ loginSuccess: true, userId: user._id });
         })  
