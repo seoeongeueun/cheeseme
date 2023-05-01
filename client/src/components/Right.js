@@ -679,14 +679,16 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                     <button onClick={() => setEdit(edit)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                     <button onClick={handleClickOpen}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     <Dialog className="dialogBox" open={open} onClose={handleClose}>
-                                        <DialogTitle >{"Delete this post?"}</DialogTitle>
-                                        <DialogContent>
-                                            <DialogContentText>This post will be permanently deleted.</DialogContentText>
-                                        </DialogContent>
-                                        <DialogActions>
-                                            <Button onClick={handleDelete}>Confirm</Button>
-                                            <Button onClick={handleClose} autoFocus>Cancel</Button>
-                                        </DialogActions>
+                                        <div className='muiModal'>
+                                            <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
+                                            <div className='dialogContent'>
+                                                <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
+                                            </div>
+                                            <div className='dialogActions'>
+                                                <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
+                                                <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
+                                            </div>
+                                        </div>
                                     </Dialog>
                                     <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
                                     {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
@@ -766,14 +768,16 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         <button onClick={handleEdit} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                         <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         <Dialog className="dialogBox" open={open} onClose={handleClose}>
-                                            <DialogTitle>{"Delete this post?"}</DialogTitle>
-                                            <DialogContent>
-                                                <DialogContentText>This post will be permanently deleted.</DialogContentText>
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button onClick={handleDelete}>Confirm</Button>
-                                                <Button onClick={handleClose} autoFocus>Cancel</Button>
-                                            </DialogActions>
+                                            <div className='muiModal'>
+                                                <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
+                                                <div className='dialogContent'>
+                                                    <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
+                                                </div>
+                                                <div className='dialogActions'>
+                                                    <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
+                                                    <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
+                                                </div>
+                                            </div>
                                         </Dialog>
                                         <div className='leftWidget'>
                                             <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
@@ -806,14 +810,16 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         <button onClick={() => setEdit(true)} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                         <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         <Dialog className="dialogBox" open={open} onClose={handleClose}>
-                                            <DialogTitle>{"Delete this post?"}</DialogTitle>
-                                            <DialogContent>
-                                                <DialogContentText>This post will be permanently deleted.</DialogContentText>
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button onClick={handleClose}>Confirm</Button>
-                                                <Button onClick={handleClose} autoFocus>Cancel</Button>
-                                            </DialogActions>
+                                            <div className='muiModal'>
+                                                <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
+                                                <div className='dialogContent'>
+                                                    <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
+                                                </div>
+                                                <div className='dialogActions'>
+                                                    <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
+                                                    <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
+                                                </div>
+                                            </div>
                                         </Dialog>
                                         <div className='leftWidget'>
                                             <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
