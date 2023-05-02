@@ -926,6 +926,8 @@ main {
 .postInput2 span{
   margin: 0;
   height: 300px;
+  word-break:break-all;
+  white-space: normal;
 }
 
 
@@ -1500,6 +1502,10 @@ input.todoElem::placeholder {
   background-color: transparent;
   border: none;
   margin-bottom: 0rem;
+}
+
+.quill p {
+  word-break:break-all;
 }
 
 .ql-container {

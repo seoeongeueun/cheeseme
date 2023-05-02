@@ -81,7 +81,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const [message, setMessage] = useState('');
     const [imgUrl, setImgUrl] = useState();
 
-    const [plain, setPlain] = useState(false);
+    const [plain, setPlain] = useState(true);
     const [closeQuill, setCloseQuill] = useState(true);
     const [tmpBody, setTmpBody] = useState(null)
     const quillRef = useRef();
