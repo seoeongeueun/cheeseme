@@ -843,7 +843,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         </div>
                     </div>
                     {!edit&& <div className='rightFooter'>
-                                {/* <div className='pageSlider'>
+                                <div className='pageSlider'>
                                     <Box sx={{ width: '100%' }}>
                                         <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
                                             <span style={{marginBottom: '-1.3rem'}}>{allPosts?.length < 1 ? 0 : 1}</span>
@@ -856,7 +856,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                     <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                     <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : `@ ${name}`} </span>
                                     <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                </div> */}
+                                </div>
                             </div>}
             </div>}
         </div>

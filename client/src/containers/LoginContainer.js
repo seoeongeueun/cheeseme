@@ -10,11 +10,15 @@ function LoginContainer(props) {
         userId: state.loginInfo.userId,
     }));
 
+    const { name } = useSelector(state => ({
+        name: state.nameInfo.name,
+    }));
+
     const dispatch = useDispatch();
     const onCurrentUserChange = id => dispatch(currentUser(id));
     const onCurrentNameChange = name => dispatch(currentName(name));
     const onSetFriendId = friendId => dispatch(setFriendId(friendId));
-    return <Login onSetFriendId={onSetFriendId} onCurrentNameChange={onCurrentNameChange} onCurrentUserChange={onCurrentUserChange} userId={userId}/>;
+    return <Login name={name} onSetFriendId={onSetFriendId} onCurrentNameChange={onCurrentNameChange} onCurrentUserChange={onCurrentUserChange} userId={userId}/>;
 }
 
 export default LoginContainer;

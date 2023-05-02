@@ -5,22 +5,21 @@ import Happy from '../icons/happy.png';
 import Signup from './Signup.js';
 import LoginModal from './LoginModal.js';
 
-function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId}){
-    const [username, setUsername] = useState()
+function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId, name}){
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false);
 
-    useEffect(() => {
-        if (userId) {
-            axios.get('/api/users/info/' + userId)
-            .then( (res) => {
-                setUsername(res?.data.name);
-            })
-            .catch( (err) => {
-                console.log('Error loading User info: ', err);
-            })
-        }
-    }, [userId])
+    // useEffect(() => {
+    //     if (userId) {
+    //         axios.get('/api/users/info/' + userId)
+    //         .then( (res) => {
+    //             setUsername(res?.data.name);
+    //         })
+    //         .catch( (err) => {
+    //             console.log('Error loading User info: ', err);
+    //         })
+    //     }
+    // }, [userId])
 
     const handleLogout = () => {
         setLogin(false);
@@ -29,8 +28,7 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId}
                 if (res?.data.success) {
                     onCurrentUserChange(null);
                     onCurrentNameChange(null);
-                    onSetFriendId('')
-                    setUsername(null);
+                    onSetFriendId('');
                     localStorage.removeItem('token');
                 }
             })
@@ -51,7 +49,7 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId}
         <div className='settingsboxHeaderLogin'>
             {userId ? <div className='loginHeader'>
                 <span style={{textAlign: 'justify'}}>Welcome Back</span>
-                <span>{username}<img src={Happy} style={{width: '1.7rem'}} alt='happy'/></span>
+                <span>{name}<img src={Happy} style={{width: '1.7rem'}} alt='happy'/></span>
             </div>
             : <div className='loginHeader'><span>Hello!</span></div>}
             <div className='loginButtons'>

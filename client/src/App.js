@@ -26,6 +26,7 @@ import { currentNotis } from './modules/notisList';
 import { currentPositions } from './modules/positionsList';
 import NotiContainer from './containers/NotiContainer';
 import { setFriendId } from './modules/viewFriend.js';
+import { currentName } from './modules/nameInfo.js';
 
 import axios from 'axios';
 
@@ -35,7 +36,6 @@ function App() {
   const [showFriend, setShowFriend] = useState(false);
   const [showNoti, setShowNoti] = useState(false);
   const [noti, setNoti] = useState([]);
-  const [name, setName] = useState('')
   const [unRead, setUnread] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
   const [positions, setPositions] = useState([]);
@@ -51,6 +51,7 @@ function App() {
   const onChangePositions = positions => dispatch(currentPositions(positions));
   const onCurrentUserChange = id => dispatch(currentUser(id));
   const onSetFriendId = friendId => dispatch(setFriendId(friendId));
+  const onCurrentNameChange = name => dispatch(currentName(name));
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -68,7 +69,7 @@ function App() {
             onChangeNotis(n.notifications);
             onChangeFriends(n.friends);
             onChangePositions(n.positions);
-            setName(n.name);
+            onCurrentNameChange(n.name);
           }
         })
         .catch( (err) => {
