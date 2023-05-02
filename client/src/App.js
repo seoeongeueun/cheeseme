@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       onCurrentUserChange(localStorage.getItem('token'));
-      onSetFriendId('')
+      onSetFriendId('');
     }
   }, [])
 

@@ -95,6 +95,7 @@ const Demo = ({ classes }) => {
                   aria-labelledby="Zoom"
                   classes={{ root: classes.slider }}
                   onChange={(e, zoom) => setZoom(zoom)}
+                  sx={{color: '#F9D876'}}
                 />
               </div>
               <div className={classes.sliderContainer}>

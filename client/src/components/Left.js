@@ -320,7 +320,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                       />
                                     </div>
                                     <div className='stickerSliderContainer'>
-                                      <Typography variant="overline" classes='sliderLabel'>
+                                      <Typography variant="overline">
                                         Rotation
                                       </Typography>
                                       <Slider
@@ -334,7 +334,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                     </div>
                                 </div>
                                 <div className="stickersShaper">
-                                    <Typography variant="overline" classes='sliderLabel'>Crop Shape</Typography>
+                                    <Typography variant="overline">Crop Shape</Typography>
                                     <div className="stickerShape">
                                         <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(!circle); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
                                         <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(!square); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
@@ -425,6 +425,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                         step={0.1}
                                         aria-labelledby="Zoom"
                                         onChange={(e, zoom) => setZoom(zoom)}
+                                        sx={{color: '#F9D876'}}
                                       />
                                     </div>
                                     <div className='stickerSliderContainer'>
@@ -438,6 +439,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                         step={1}
                                         aria-labelledby="Rotation"
                                         onChange={(e, rotation) => setRotation(rotation)}
+                                        sx={{color: '#F9D876'}}
                                       />
                                     </div>
                                 </div>

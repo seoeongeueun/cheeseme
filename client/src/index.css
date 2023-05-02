@@ -812,7 +812,6 @@ main {
 .weatherMood button{
   border: none;
   background-color: transparent;
-  cursor: pointer;
 }
 
 .weatherMood img {

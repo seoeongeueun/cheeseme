@@ -81,8 +81,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const [message, setMessage] = useState('');
     const [imgUrl, setImgUrl] = useState();
 
-    const [plain, setPlain] = useState(true);
+    const [plain, setPlain] = useState(false);
     const [closeQuill, setCloseQuill] = useState(true);
+    const [tmpBody, setTmpBody] = useState(null)
     const quillRef = useRef();
     
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
@@ -420,6 +421,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         }
     }, [imgUrl, postImage])
 
+    useEffect(() => {
+        console.log(weather)
+    }, [weather])
+
     const onClickHeart = async() => {
         if (_id !== '') {
             if (heart) {
@@ -599,11 +604,24 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             });
             console.log("updated")
         }
+        setTmpBody(null);
+        axios.get('/api/right/getByOwner/' + userId)
+                .then((res) => {
+                    const n = res?.data;
+                    if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
+                    else setAllPosts([])
+                })
+                .catch((err) => {
+                    console.log('Error loading posts')
+                })
     }
 
     const handleCancel = () => {
         setEdit(false);
-        if (plain) setCloseQuill(true);
+        if (plain) {
+            setCloseQuill(true);
+            setTmpBody(null)
+        }
     }
 
     const handleEdit = () => {
@@ -611,23 +629,17 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         if (plain) setCloseQuill(false);
     }
 
+    useEffect(() => {
+        if (tmpBody) {
+        } 
+    }, [tmpBody])
+
     const handleWeather = async(weatherOption) => {
+        setTmpBody(quillRef.current.editor.container.firstChild.innerHTML);
         if (weatherOption === 'sunny') setWeather('sunny')
         if (weatherOption === 'cloud') setWeather('cloud')
         if (weatherOption === 'rainy') setWeather('rainy')
         if (weatherOption === 'snowy') setWeather('snowy')
-        if (_id !== '') {
-            let res = await FetchAPIPost('/api/right/updateById/' + _id, {
-                like: heart,
-                bookmark: bookmark,
-                title: title,
-                text: body,
-                weather: weatherOption,
-                hide: hide,
-                likes: likes,
-            });
-        }
-
     }
 
     const handleClickHome = () => {
@@ -733,10 +745,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
                             <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
                             <div className='weatherMood'>
-                                <button onClick={() => handleWeather('sunny')} disabled={friendId !== '' ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
-                                <button onClick={() => handleWeather('cloud')} disabled={friendId !== '' ? true : false}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
-                                <button onClick={() => handleWeather('rainy')} disabled={friendId !== '' ? true : false}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
-                                <button onClick={() => handleWeather('snowy')} disabled={friendId !== '' ? true : false}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
+                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('sunny')} disabled={friendId !== '' || !edit ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
+                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('cloud')} disabled={friendId !== '' || !edit ? true : false}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
+                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('rainy')} disabled={friendId !== '' || !edit ? true : false}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
+                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('snowy')} disabled={friendId !== '' || !edit ? true : false}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
                             </div>
                         </div>
                         
@@ -749,7 +761,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                 modules={closeQuill ? Right.modules2 : Right.modules}
                                 formats={Right.formats}
                                 placeholder="Let's start writing!"
-                                value={body}>
+                                value={tmpBody ? tmpBody : body}>
                                 <div className="ql-container" style={{height: edit && '80%', border: '1px solid black'}}/>
                             </ReactQuill>
                             {!closeQuill ?
@@ -837,7 +849,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         <button className="cancel" onClick={handleCancel}>Cancel</button>
                                     </div>
                                 </div> : <div className='postInput2'>
-                                            <span>{body}</span>
+                                            <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
                                         </div>}
                             </div>}
                         </div>
