@@ -46,6 +46,7 @@ import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
 import "../../node_modules/quill/dist/quill.snow.css";
+import BookmarkPosts from './BookmarkPosts.js';
 
 function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const [showSettings, setShowSettings] = useState(false);
@@ -82,7 +83,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const [imgUrl, setImgUrl] = useState();
 
     const [closeQuill, setCloseQuill] = useState(true);
-    const [tmpBody, setTmpBody] = useState(null)
+    const [tmpBody, setTmpBody] = useState(null);
+    const [openBookmark, setOpenBookmark] = useState(false);
     const quillRef = useRef();
     
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
@@ -438,6 +440,20 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         }
     }, [imgUrl, postImage]);
 
+    useEffect(() => {
+        if (openBookmark) {
+            setShowBookMark(true);
+        } else {
+            setShowBookMark(false);
+        }
+    }, [openBookmark]);
+
+    useEffect(() => {
+        if (friendId === '') {
+            setCurrentFriendName('')
+        }
+    }, [friendId])
+
     const onClickHeart = async() => {
         if (_id !== '') {
             if (heart) {
@@ -479,31 +495,31 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             if (bookmark) {
                 setBookmark(false);
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
-                    like: heart,
                     bookmark: false,
-                    title: title,
-                    text: body,
-                    weather: weather,
-                    hide: hide,
-                    likes: likes,
-                    imgUrl: imgUrl,
-                    grid: grid,
-                    plain: plain
                 });
+                if (res) axios.get('/api/right/getByOwner/' + userId)
+                    .then((res) => {
+                    const n = res?.data;
+                    if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
+                    else setAllPosts([])
+                })
+                .catch((err) => {
+                    console.log('Error loading posts')
+                })
             } else {
                 setBookmark(true);
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
-                    like: heart,
                     bookmark: true,
-                    title: title,
-                    text: body,
-                    weather: weather,
-                    hide: hide,
-                    likes: likes,
-                    imgUrl: imgUrl,
-                    grid: grid,
-                    plain: plain
                 });
+                if (res) axios.get('/api/right/getByOwner/' + userId)
+                    .then((res) => {
+                    const n = res?.data;
+                    if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
+                    else setAllPosts([])
+                })
+                .catch((err) => {
+                    console.log('Error loading posts')
+                })                
             }
         }
     }
@@ -513,30 +529,12 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             if (hide) {
                 setHide(false);
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
-                    like: heart,
-                    bookmark: bookmark,
-                    title: title,
-                    text: body,
-                    weather: weather,
                     hide: false,
-                    likes: likes,
-                    imgUrl: imgUrl,
-                    grid: grid,
-                    plain: plain
                 });
             } else {
                 setHide(true);
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
-                    like: heart,
-                    bookmark: bookmark,
-                    title: title,
-                    text: body,
-                    weather: weather,
                     hide: true,
-                    likes: likes,
-                    imgUrl: imgUrl,
-                    grid: grid,
-                    plain: plain
                 });
             }
         } else {
@@ -591,7 +589,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         } else {
             setBody(document.getElementById("text").value);
         }
-        let tmpText = document.getElementById("text").value;
+        let tmpText = document.getElementById("text")?.value;
         let tmpTitle = document.getElementById("rightTitle").value;
         let imgPath = '';
         console.log('heee: ', selectedImage)
@@ -697,10 +695,12 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         if (weatherOption === 'cloud') setWeather('cloud')
         if (weatherOption === 'rainy') setWeather('rainy')
         if (weatherOption === 'snowy') setWeather('snowy')
-        console.log(weatherOption)
     }
 
     const handleClickHome = () => {
+        console.log('ye?')
+        setOpenBookmark(false);
+        setShowBookMark(false);
         onSetFriendId('');
         setCurrentFriendName('')
         setId('');
@@ -719,11 +719,11 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         <div className="rightInnerBorder">
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#e1e1e1"}>
             <div className="rightContent">
-                {friendId === '' ? <div className='marker'>
+                {friendId === '' && !openBookmark ? <div className='marker'>
                     <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>
-                : <div className='marker2' style={{top: '6rem', background: 'rgba(233, 233, 233, 0.7)' }}>
-                    <span onClick={() => handleClickHome()}><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                : <div className='marker2' onClick={() => handleClickHome()} style={{top: '6rem', background: 'rgba(249, 216, 118, 0.8)' }}>
+                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>}
                 {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '12rem', background: 'rgba(249, 216, 118, 0.8)'}}>
                     <span><PeopleRoundedIcon style={{fontSize: '1.7rem'}}/></span>
@@ -733,10 +733,11 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>
                 :
-                <div className='marker3'>
+                <div className='marker3' onClick={() => {setOpenBookmark(true); setShowBookMark(true);}}>
                     <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>}
-                    <div className='rightBodyAndHeader'>
+                {openBookmark ? <BookmarkPosts allPosts={allPosts} setOpenBookmark={setOpenBookmark} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId}/>
+                    : <div className='rightBodyAndHeader'>
                     {edit ? <div className="rightHeader">
                         <input id='rightTitle' type="text" defaultValue={title}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
@@ -854,8 +855,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         </div>}
                             </div>}
                         </div>
-                    </div>
-                    {!edit&& <div className='rightFooter'>
+                    </div>}
+                    {(!edit && !openBookmark) && <div className='rightFooter'>
                                 <div className='pageSlider'>
                                     <Box sx={{ width: '100%' }}>
                                         <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
@@ -871,15 +872,14 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                     <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>
                             </div>}
-            </div>
-                {/*here*/}
+                </div>
             </GridLines> :
             <div className="rightContent">
-                {friendId === '' ? <div className='marker'>
+                {friendId === '' && !openBookmark ? <div className='marker'>
                     <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>
-                : <div className='marker2' style={{top: '6rem', background: 'rgba(233, 233, 233, 0.7)' }}>
-                    <span onClick={() => handleClickHome()}><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                : <div className='marker2' onClick={() => handleClickHome()} style={{top: '6rem', background: 'rgba(249, 216, 118, 0.8)' }}>
+                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>}
                 {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '12rem', background: 'rgba(249, 216, 118, 0.8)'}}>
                     <span><PeopleRoundedIcon style={{fontSize: '1.7rem'}}/></span>
@@ -889,10 +889,12 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>
                 :
-                <div className='marker3'>
+                <div className='marker3' onClick={() => {setOpenBookmark(true); setShowBookMark(true);}}>
                     <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>}
-                    <div className='rightBodyAndHeader'>
+                
+                {openBookmark ? <BookmarkPosts allPosts={allPosts} setOpenBookmark={setOpenBookmark} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId}/>
+                : <div className='rightBodyAndHeader'>
                     {edit ? <div className="rightHeader">
                         <input id='rightTitle' type="text" defaultValue={title}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
@@ -1010,8 +1012,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         </div>}
                             </div>}
                         </div>
-                    </div>
-                    {!edit&& <div className='rightFooter'>
+                    </div>}
+                    {(!edit && !openBookmark) && <div className='rightFooter'>
                                 <div className='pageSlider'>
                                     <Box sx={{ width: '100%' }}>
                                         <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
@@ -1026,11 +1028,11 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                     <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : `@ ${name}`} </span>
                                     <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>
-                            </div>}
-            </div>}
-        </div>
-    );
-}
+                    </div>}
+                </div>}
+            </div>
+        );
+    }
 
 Right.modules = {
     toolbar: [

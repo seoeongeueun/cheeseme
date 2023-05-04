@@ -52,6 +52,7 @@ header a {
 /*start of webkit scrollbar*/
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -732,14 +733,16 @@ main {
   box-sizing: border-box;
 
   position: absolute;
-  width: 7rem;
-  height: 2.5rem;
+  width: 6rem;
+  height: 4rem;
   right: -5rem;
   bottom: 4rem;
-  background: rgba(249, 216, 118, 0.8);
+  background: rgba(247, 57, 57, 0.6);
   /* background: rgba(249, 216, 118, 0.7); */
-  border: 1px solid #000000;
-  border-radius: 3px;
+  border-top: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-radius: 0px 3px 3px 0px;
   z-index: 10;
   cursor: pointer;
   display: flex;
@@ -752,14 +755,15 @@ main {
   box-sizing: border-box;
 
   position: absolute;
-  width: 8rem;
-  height: 2.5rem;
+  width: 7rem;
+  height: 4rem;
   right: -6rem;
   bottom: 4rem;
 
-  /* background: rgba(249, 216, 118, 0.7); */
-  border: 1px solid #000000;
-  border-radius: 3px;
+  border-top: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-radius: 0px 3px 3px 0px;
   z-index: 10;
 }
 
@@ -1613,7 +1617,7 @@ input.todoElem::placeholder {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
   cursor: default;
 }
@@ -1664,3 +1668,38 @@ input.todoElem::placeholder {
   flex-direction: column;
 }
 /* end of search box right */
+
+/* start of right bookmark posts */
+.bookmarkInnerBorder {
+  height: 90%;
+  width: 100%;
+  display: flex;
+}
+
+.rightBookmarkPosts {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+
+.foundContentTitle {
+  margin-left: 3rem !important;
+}
+
+.foundPostsCategory {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 90%;
+  height: 100%;
+}
+
+.foundPostsCategory span {
+  white-space: normal;
+  word-break: normal;
+}
+
+/* end of right bookmark posts */
