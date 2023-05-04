@@ -1,26 +1,51 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FetchAPIPost } from '../utils/api.js';
 import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
 import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
+import axios from 'axios';
 
 function DisplaySettings(props){
     const [grid, setGrid] = useState(props.grid);
     const [plain, setPlain] = useState(props.plain);
+    const { date } = useSelector(state => ({
+        date: state.datePick.date,
+    }));
 
     const handleGridClick = async(bool) => {
         props.setGrid(bool)
         setGrid(bool);
-        let res = await FetchAPIPost('/api/right/update/' + props.date, {
+        let res = await FetchAPIPost('/api/right/update/' + date, {
             grid: bool
         });
+        if (props.userId && res) {
+            axios.get('/api/right/getByOwner/' + props.userId)
+                .then((res) => {
+                    const n = res?.data;
+                    if (n) props.setAllPosts(n.sort((a, b) => a.date - b.date))
+                })
+                .catch((err) => {
+                    console.log('Error loading posts')
+                });
+        }
     }
 
     const handlePlainClick = async(bool) => {
         props.setPlain(bool);
         setPlain(bool);
-        let res = await FetchAPIPost('/api/right/update/' + props.date, {
-            plain: bool
+        let res = await FetchAPIPost('/api/right/update/' + date, {
+            plain: bool,
         });
+        if (props.userId && res) {
+            axios.get('/api/right/getByOwner/' + props.userId)
+                .then((res) => {
+                    const n = res?.data;
+                    if (n) props.setAllPosts(n.sort((a, b) => a.date - b.date))
+                })
+                .catch((err) => {
+                    console.log('Error loading posts');
+                });
+        }
     }
 
     return(

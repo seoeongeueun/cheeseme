@@ -433,12 +433,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     }, [index]);
 
     useEffect(() => {
-        if (edit) {
-            setMessage('');
-        }
-    }, [edit])
-
-    useEffect(() => {
         if (imgUrl !== '' && postImage) {
             setSelectedImage(null);
         }
@@ -592,6 +586,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             tmp = quillRef.current.editor.container.firstChild.innerHTML;
             setBody(tmp);
             setCloseQuill(true);
+        } else {
+            setBody(document.getElementById("text").value)
         }
         let imgPath = '';
         console.log('heee: ', selectedImage)
@@ -619,7 +615,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 like: heart,
                 bookmark: bookmark,
                 title: document.getElementById("rightTitle").value,
-                text: plain? tmp : body,
+                text: plain? tmp : document.getElementById("text").value,
                 weather: weather,
                 hide: hide,
                 likes: likes,
@@ -635,7 +631,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 like: heart,
                 bookmark: bookmark,
                 title: document.getElementById("rightTitle").value,
-                text: plain? tmp : body,
+                text: plain? tmp : document.getElementById("text").value,
                 weather: weather,
                 hide: hide,
                 likes: likes,
@@ -663,6 +659,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         if (plain) {
             setCloseQuill(true);
             setTmpBody(null)
+        }
+        if (_id === '') {
+            setBody('')
         }
         setHide(false);
     }
@@ -762,7 +761,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
                                     </div>
                                     <div className="postButtonsRight">
-                                        <button onClick={handleEdit} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                        <button onClick={() => {handleEdit(); setShowSettings(false);}} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                         <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                             <div className='muiModal'>
@@ -780,7 +779,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                             <button onClick={()=> setShowSettings(!showSettings)}  className='tooltip' disabled={friendId !== '' ? true : false}>
                                                 <span className='tooltiptext'>Settings apply separately for each post</span>
                                                 {showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date}/>}
+                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date} setAllPosts={setAllPosts} userId={userId}/>}
                                         </div>
                                     </div>
                                 </div>
@@ -806,7 +805,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
                                     </div>
                                     <div className="postButtonsRight">
-                                        <button onClick={() => setEdit(true)} disabled={friendId !== '' || edit ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                        <button onClick={() => {handleEdit(); setShowSettings(false);}} disabled={friendId !== '' || edit ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                         <button onClick={handleClickOpen} disabled={friendId !== '' || edit ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                             <div className='muiModal'>
@@ -822,7 +821,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         </Dialog>
                                         <div className='leftWidget'>
                                             <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' || edit ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date}/>}
+                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date} setAllPosts={setAllPosts} userId={userId}/>}
                                         </div>
                                     </div>
                                 </div>
@@ -830,7 +829,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
                                 {edit ? 
                                 <div className="postInput">
-                                    <textarea id="text" name="text" rows="12" cols="50" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+                                    <textarea id="text" name="text" rows="12" cols="50" defaultValue={body}/>
                                     <div className="inputButtons">
                                         <button className="save" onClick={handleSave}>Save</button>
                                         <button className="cancel" onClick={handleCancel}>Cancel</button>
@@ -918,7 +917,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
                                     </div>
                                     <div className="postButtonsRight">
-                                        <button onClick={handleEdit} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                        <button onClick={() => {handleEdit(); setShowSettings(false);}} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                         <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                             <div className='muiModal'>
@@ -936,7 +935,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                             <button onClick={()=> setShowSettings(!showSettings)}  className='tooltip' disabled={friendId !== '' ? true : false}>
                                                 <span className='tooltiptext'>Settings apply separately for each post</span>
                                                 {showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date}/>}
+                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date} setAllPosts={setAllPosts} userId={userId}/>}
                                         </div>
                                     </div>
                                 </div>
@@ -962,7 +961,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
                                     </div>
                                     <div className="postButtonsRight">
-                                        <button onClick={() => setEdit(true)} disabled={friendId !== '' || edit ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                        <button onClick={() => {handleEdit(); setShowSettings(false);}} disabled={friendId !== '' || edit ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
                                         <button onClick={handleClickOpen} disabled={friendId !== '' || edit ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                             <div className='muiModal'>
@@ -978,7 +977,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         </Dialog>
                                         <div className='leftWidget'>
                                             <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' || edit ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date}/>}
+                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date} setAllPosts={setAllPosts} userId={userId}/>}
                                         </div>
                                     </div>
                                 </div>
@@ -986,7 +985,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
                                 {edit ? 
                                 <div className="postInput">
-                                    <textarea id="text" name="text" rows="12" cols="50" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+                                    <textarea id="text" name="text" rows="12" cols="50" defaultValue={body}/>
                                     <div className="inputButtons">
                                         <button className="save" onClick={handleSave}>Save</button>
                                         <button className="cancel" onClick={handleCancel}>Cancel</button>
