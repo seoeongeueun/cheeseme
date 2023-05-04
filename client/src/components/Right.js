@@ -564,7 +564,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setPlain(false);
             setId('')
             setPostImage(false);
-            setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+            setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`);
+            setAllPosts(allPosts.filter(e => e.date !== date));
+            setIndex(0)
         }
     };
 
@@ -573,8 +575,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     }
     const onUploadImage = (e) => {
         if (e.target.files && e.target.files.length > 0) {
+            setPostImage(true);
             setSelectedImage(e.target.files[0]);
-            setPostImage(true)
           }
     };
 
@@ -587,8 +589,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setBody(tmp);
             setCloseQuill(true);
         } else {
-            setBody(document.getElementById("text").value)
+            setBody(document.getElementById("text").value);
         }
+        let tmpText = document.getElementById("text").value;
+        let tmpTitle = document.getElementById("rightTitle").value;
         let imgPath = '';
         console.log('heee: ', selectedImage)
         if (selectedImage) {
@@ -606,6 +610,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             });
             imgPath = res?.data;
             setImgUrl(imgPath);
+            setSelectedImage(null);
         }
         
         if (_id === ''){
@@ -614,44 +619,52 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 date: date,
                 like: heart,
                 bookmark: bookmark,
-                title: document.getElementById("rightTitle").value,
-                text: plain? tmp : document.getElementById("text").value,
+                title: tmpTitle,
+                text: plain ? tmp : tmpText,
                 weather: weather,
                 hide: hide,
                 likes: likes,
-                imgUrl: imgPath,
+                imgUrl: imgPath !== '' ? imgPath : imgUrl,
                 grid: grid,
                 plain: plain
             });
-            setLoading(false);
             console.log("created");
-            setMessage('')
+            setMessage('');
+            if (res) axios.get('/api/right/getByOwner/' + userId)
+            .then((res) => {
+                const n = res?.data;
+                if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
+                else setAllPosts([])
+            })
+            .catch((err) => {
+                console.log('Error loading posts')
+            })
         } else {
             let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                 like: heart,
                 bookmark: bookmark,
-                title: document.getElementById("rightTitle").value,
-                text: plain? tmp : document.getElementById("text").value,
+                title: tmpTitle,
+                text: plain ? tmp : tmpText,
                 weather: weather,
                 hide: hide,
                 likes: likes,
-                imgUrl: imgPath,
+                imgUrl: imgPath !== '' ? imgPath : imgUrl,
                 grid: grid,
                 plain: plain
             });
             console.log("updated");
-            setMessage('');
+            if (res) axios.get('/api/right/getByOwner/' + userId)
+            .then((res) => {
+                const n = res?.data;
+                if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
+                else setAllPosts([])
+            })
+            .catch((err) => {
+                console.log('Error loading posts')
+            })
         }
         setTmpBody(null);
-        axios.get('/api/right/getByOwner/' + userId)
-                .then((res) => {
-                    const n = res?.data;
-                    if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
-                    else setAllPosts([])
-                })
-                .catch((err) => {
-                    console.log('Error loading posts')
-                })
+
     }
 
     const handleCancel = () => {
@@ -790,7 +803,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                 {postImage ?
                                     <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                        <img src={imgUrl === '' && selectedImage ? URL.createObjectURL(selectedImage) : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                        <img src={edit ? selectedImage ? URL.createObjectURL(selectedImage) : imgUrl : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                     </IconButton>
                                 :   
                                     <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
@@ -946,7 +959,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                 {postImage ?
                                     <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                        <img src={imgUrl === '' && selectedImage ? URL.createObjectURL(selectedImage) : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                        <img src={edit ? selectedImage ? URL.createObjectURL(selectedImage) : imgUrl : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                     </IconButton>
                                 :   
                                     <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
