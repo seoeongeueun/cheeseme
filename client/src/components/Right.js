@@ -50,7 +50,7 @@ import "../../node_modules/quill/dist/quill.snow.css";
 function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const [showSettings, setShowSettings] = useState(false);
     const [grid, setGrid] = useState(false);
-    const [sns, setSns] = useState(true);
+    const [plain, setPlain] = useState(false);
 
     const [heart, setHeart] = useState(false);
     const [bookmark, setBookmark] = useState(false);
@@ -81,7 +81,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const [message, setMessage] = useState('');
     const [imgUrl, setImgUrl] = useState();
 
-    const [plain, setPlain] = useState(true);
     const [closeQuill, setCloseQuill] = useState(true);
     const [tmpBody, setTmpBody] = useState(null)
     const quillRef = useRef();
@@ -159,8 +158,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setHide(false);
                         setLikes([]);
                         setWeather('');
-                        setId('')
+                        setId('');
                         setPostImage(false);
+                        setGrid(false);
+                        setPlain(false);
                         setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     }
                     return;
@@ -196,6 +197,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setId(post?._id);
                     setImgUrl(post?.imgUrl)
                     setPostImage(post?.imgUrl !== '' ? true : false);
+                    setGrid(post?.grid);
+                    setPlain(post?.plain);
                     setMessage('')
                     setLoading(false);
                 } else {
@@ -210,6 +213,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setWeather('');
                     setId('')
                     setPostImage(false);
+                    setGrid(false);
+                    setPlain(false);
                     setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setLoading(true);
                 }
@@ -227,7 +232,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setHide(true);
                         setLikes([]);
                         setWeather('');
-                        setId('')
+                        setId('');
+                        setGrid(false);
+                        setPlain(false);
                         setMessage('This post is private');
                         setLoading(true);
                         setPostImage(false);
@@ -244,6 +251,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setLikes(post?.likes);
                         setHide(post?.hide);
                         setId(post?._id);
+                        setGrid(post?.grid);
+                        setPlain(post?.plain);
                         setMessage('');
                         setLoading(false);
                     }
@@ -259,7 +268,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setHide(false);
                     setLikes([]);
                     setWeather('');
-                    setId('')
+                    setGrid(false);
+                    setPlain(false);
+                    setId('');
                     setLoading(true);
                     setPostImage(false);
                 }
@@ -278,7 +289,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 setHide(false);
                 setLikes([]);
                 setWeather('');
-                setId('')
+                setId('');
+                setGrid(false);
+                setPlain(false);
                 setPostImage(false);
                 setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
             }
@@ -302,6 +315,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setLikes(post?.likes);
                     setHide(post?.hide);
                     setId(post?._id);
+                    setGrid(post?.grid);
+                    setPlain(post?.plain);
                     setMessage('');
                     setLoading(false);
                 } else {
@@ -316,6 +331,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setLikes([]);
                     setWeather('');
                     setId('');
+                    setGrid(false);
+                    setPlain(false);
                     setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setLoading(true)
                 }
@@ -333,8 +350,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setBookmark(false);
                         setHide(true);
                         setLikes([]);
+                        setGrid(false);
+                        setPlain(false);
                         setWeather('');
-                        setId('')
+                        setId('');
                         setMessage('This post is private');
                         setLoading(true)
                     }
@@ -349,6 +368,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setWeather(post?.weather);
                         setLikes(post?.likes);
                         setHide(post?.hide);
+                        setGrid(post?.grid);
+                        setPlain(post?.plain);
                         setId(post?._id);
                         setMessage('')
                         setLoading(false);
@@ -364,6 +385,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setHeart(false);
                     setBookmark(false);
                     setHide(false);
+                    setGrid(false);
+                    setPlain(false);
                     setLikes([]);
                     setWeather('');
                     setId('')
@@ -419,11 +442,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         if (imgUrl !== '' && postImage) {
             setSelectedImage(null);
         }
-    }, [imgUrl, postImage])
-
-    useEffect(() => {
-        console.log(weather)
-    }, [weather])
+    }, [imgUrl, postImage]);
 
     const onClickHeart = async() => {
         if (_id !== '') {
@@ -438,7 +457,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     weather: weather,
                     hide: hide,
                     likes: likes.filter(e => e !== userId),
-                    imgUrl: imgUrl
+                    imgUrl: imgUrl,
+                    grid: grid,
+                    plain: plain
                 });
             } else {
                 setHeart(true);
@@ -451,7 +472,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     weather: weather,
                     hide: hide,
                     likes: [...likes, userId],
-                    imgUrl: imgUrl
+                    imgUrl: imgUrl,
+                    grid: grid,
+                    plain: plain
                 });
             }
         }
@@ -469,7 +492,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     weather: weather,
                     hide: hide,
                     likes: likes,
-                    imgUrl: imgUrl
+                    imgUrl: imgUrl,
+                    grid: grid,
+                    plain: plain
                 });
             } else {
                 setBookmark(true);
@@ -481,7 +506,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     weather: weather,
                     hide: hide,
                     likes: likes,
-                    imgUrl: imgUrl
+                    imgUrl: imgUrl,
+                    grid: grid,
+                    plain: plain
                 });
             }
         }
@@ -499,7 +526,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     weather: weather,
                     hide: false,
                     likes: likes,
-                    imgUrl: imgUrl
+                    imgUrl: imgUrl,
+                    grid: grid,
+                    plain: plain
                 });
             } else {
                 setHide(true);
@@ -511,9 +540,13 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     weather: weather,
                     hide: true,
                     likes: likes,
-                    imgUrl: imgUrl
+                    imgUrl: imgUrl,
+                    grid: grid,
+                    plain: plain
                 });
             }
+        } else {
+            setHide(!hide);
         }
     }
 
@@ -533,6 +566,8 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setHide(false);
             setLikes([]);
             setWeather('');
+            setGrid(false);
+            setPlain(false);
             setId('')
             setPostImage(false);
             setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
@@ -551,9 +586,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     const handleSave = async() => {
         setEdit(false);
-        let tmp = quillRef.current.editor.container.firstChild.innerHTML;
+        let tmp = '';
         setTitle(document.getElementById("rightTitle").value);
         if (plain) {
+            tmp = quillRef.current.editor.container.firstChild.innerHTML;
             setBody(tmp);
             setCloseQuill(true);
         }
@@ -587,10 +623,13 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 weather: weather,
                 hide: hide,
                 likes: likes,
-                imgUrl: imgPath
+                imgUrl: imgPath,
+                grid: grid,
+                plain: plain
             });
             setLoading(false);
-            console.log("created")
+            console.log("created");
+            setMessage('')
         } else {
             let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                 like: heart,
@@ -600,9 +639,12 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 weather: weather,
                 hide: hide,
                 likes: likes,
-                imgUrl: imgPath
+                imgUrl: imgPath,
+                grid: grid,
+                plain: plain
             });
-            console.log("updated")
+            console.log("updated");
+            setMessage('');
         }
         setTmpBody(null);
         axios.get('/api/right/getByOwner/' + userId)
@@ -622,6 +664,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setCloseQuill(true);
             setTmpBody(null)
         }
+        setHide(false);
     }
 
     const handleEdit = () => {
@@ -635,11 +678,12 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     }, [tmpBody])
 
     const handleWeather = async(weatherOption) => {
-        setTmpBody(quillRef.current.editor.container.firstChild.innerHTML);
+        if (plain) setTmpBody(quillRef.current.editor.container.firstChild.innerHTML);
         if (weatherOption === 'sunny') setWeather('sunny')
         if (weatherOption === 'cloud') setWeather('cloud')
         if (weatherOption === 'rainy') setWeather('rainy')
         if (weatherOption === 'snowy') setWeather('snowy')
+        console.log(weatherOption)
     }
 
     const handleClickHome = () => {
@@ -659,64 +703,161 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     return(
         <div className="rightInnerBorder">
-            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#e5e5e5"} lineColor2={"#efefef"}>
-                <div className="rightContent">
-                    {edit ? <div className="rightHeader">
-                        <input id='rightTitle' type="text" value={title}/>
-                    </div> : <span style={{textAlign: 'center'}}>{title}</span>}
-                    {sns ? 
-                    <div className="rightBody">
-                        <div className="rightBodyHeader">
-                            <span className="profileArea"/>
-                        </div>
-                        <div className="rightBodyMain">
-                            {postImage ?
-                                <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
-                                    <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
-                                    {/* <img src={URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/> */}
-                                    <img src={imgUrl ? imgUrl.replace(/\.\.\/client\//g, "../../") : URL.createObjectURL(selectedImage)} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
-
-                                </IconButton>
-                                :   <IconButton className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
-                                        <input hidden accept="image/*" type="file" onChange={onUploadImage}/>
-                                        <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>
-                                    </IconButton>}
-                            <div className="postButtons">
-                                <div className="postButtonsLeft">
-                                    <button onClick={onClickHeart}>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", position: 'relative'}}><span>1</span></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                    <button onClick={onClickBookmark}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                    <button onClick={onClickBookmark}>{bookmark ? <LockTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                </div>
-                                <div className="postButtonsRight">
-                                    <button onClick={() => setEdit(edit)}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
-                                    <button onClick={handleClickOpen}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                    <Dialog className="dialogBox" open={open} onClose={handleClose}>
-                                        <div className='muiModal'>
-                                            <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
-                                            <div className='dialogContent'>
-                                                <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
-                                            </div>
-                                            <div className='dialogActions'>
-                                                <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
-                                                <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
-                                            </div>
-                                        </div>
-                                    </Dialog>
-                                    <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                    {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
-                                </div>
-                            </div>
-                            {edit ? 
-                            <div className="postInput">
-                                <textarea id="text" name="text" rows="12" cols="50" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
-                                <div className="inputButtons">
-                                    <button className="save" onClick={handleSave}>Save</button>
-                                    <button className="cancel" onClick={handleCancel}>Cancel</button>
-                                </div>
-                            </div> : <div className='postInput2'><span>{body}</span></div>}
-                        </div>
-                    </div> : <PlainRight grid={grid} setGrid={setGrid} sns={sns} setSns={setSns} edit={edit} setEdit={setEdit} date={date}/>}
+            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#e1e1e1"}>
+            <div className="rightContent">
+                {friendId === '' ? <div className='marker'>
+                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>
+                : <div className='marker2' style={{top: '6rem', background: 'rgba(233, 233, 233, 0.7)' }}>
+                    <span onClick={() => handleClickHome()}><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>}
+                {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '12rem', background: 'rgba(249, 216, 118, 0.8)'}}>
+                    <span><PeopleRoundedIcon style={{fontSize: '1.7rem'}}/></span>
+                </div>
+                : <div className='marker2'/>}
+                {showBookMark ? <div className='marker4'>
+                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>
+                :
+                <div className='marker3'>
+                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
+                </div>}
+                    <div className='rightBodyAndHeader'>
+                    {edit ? <div className="rightHeader">
+                        <input id='rightTitle' type="text" defaultValue={title}/>
+                    </div> : <span style={{textAlign: 'center'}}>{title}</span>}
+                    <div className="rightBody" style={{maxHeight: (plain && edit) && '90%', justifyContent: (plain && !edit) && 'flex-start'}}>
+                        <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
+                            <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
+                            <div className='weatherMood'>
+                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('sunny')} disabled={friendId !== '' || !edit ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
+                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('cloud')} disabled={friendId !== '' || !edit ? true : false}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
+                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('rainy')} disabled={friendId !== '' || !edit ? true : false}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
+                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('snowy')} disabled={friendId !== '' || !edit ? true : false}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
+                            </div>
+                        </div>
+                        
+                            {plain ?
+                            <div className='plainRight'>
+                            <ReactQuill 
+                                ref={quillRef} 
+                                readOnly={closeQuill}
+                                style={{border: 'none', height: edit && '100%'}}
+                                modules={closeQuill ? Right.modules2 : Right.modules}
+                                formats={Right.formats}
+                                placeholder="Let's start writing!"
+                                value={tmpBody ? tmpBody : body}>
+                                <div className="ql-container" style={{height: edit && '80%', border: '1px solid black'}}/>
+                            </ReactQuill>
+                            {!closeQuill ?
+                                <div className="inputButtons">
+                                    <button className="save" onClick={handleSave}>SAVE</button>
+                                    <button className="cancel" onClick={handleCancel}>CANCEL</button>
+                                </div> :
+                                <div className="postButtons" style={{padding: '0rem'}}>
+                                    <div className="postButtonsLeft">
+                                        <button onClick={onClickBookmark} disabled={friendId !== '' ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
+                                    </div>
+                                    <div className="postButtonsRight">
+                                        <button onClick={handleEdit} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                        <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        <Dialog className="dialogBox" open={open} onClose={handleClose}>
+                                            <div className='muiModal'>
+                                                <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
+                                                <div className='dialogContent'>
+                                                    <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
+                                                </div>
+                                                <div className='dialogActions'>
+                                                    <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
+                                                    <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
+                                                </div>
+                                            </div>
+                                        </Dialog>
+                                        <div className='leftWidget'>
+                                            <button onClick={()=> setShowSettings(!showSettings)}  className='tooltip' disabled={friendId !== '' ? true : false}>
+                                                <span className='tooltiptext'>Settings apply separately for each post</span>
+                                                {showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date}/>}
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            </div>
+                            :
+                            <div className="rightBodyMain">
+                                {postImage ?
+                                    <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                        <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
+                                        <img src={imgUrl === '' && selectedImage ? URL.createObjectURL(selectedImage) : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                    </IconButton>
+                                :   
+                                    <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                        <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
+                                        {edit && <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>}
+                                    </IconButton>}
+                                <div className="postButtons">
+                                    <div className="postButtonsLeft">
+                                        <button onClick={onClickBookmark} disabled={friendId !== '' || edit ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        <button onClick={onClickHeart} disabled={edit ? true : false}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
+                                    </div>
+                                    <div className="postButtonsRight">
+                                        <button onClick={() => setEdit(true)} disabled={friendId !== '' || edit ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                        <button onClick={handleClickOpen} disabled={friendId !== '' || edit ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        <Dialog className="dialogBox" open={open} onClose={handleClose}>
+                                            <div className='muiModal'>
+                                                <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
+                                                <div className='dialogContent'>
+                                                    <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
+                                                </div>
+                                                <div className='dialogActions'>
+                                                    <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
+                                                    <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
+                                                </div>
+                                            </div>
+                                        </Dialog>
+                                        <div className='leftWidget'>
+                                            <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' || edit ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date}/>}
+                                        </div>
+                                    </div>
+                                </div>
+                                {(message !== '' && !edit) && <span className='errorMessage'>{message.toUpperCase()}</span>}
+
+                                {edit ? 
+                                <div className="postInput">
+                                    <textarea id="text" name="text" rows="12" cols="50" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+                                    <div className="inputButtons">
+                                        <button className="save" onClick={handleSave}>Save</button>
+                                        <button className="cancel" onClick={handleCancel}>Cancel</button>
+                                    </div>
+                                </div> : <div className='postInput2'>
+                                            <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
+                                        </div>}
+                            </div>}
+                        </div>
+                    </div>
+                    {!edit&& <div className='rightFooter'>
+                                <div className='pageSlider'>
+                                    <Box sx={{ width: '100%' }}>
+                                        <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                                            <span style={{marginBottom: '-1.3rem'}}>{allPosts?.length < 1 ? 0 : 1}</span>
+                                            <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}} valueLabelDisplay='auto' valueLabelFormat={value => <div>{value + 1}</div>}/>
+                                            <span style={{marginBottom: '-2.2rem'}}>{allPosts?.length}</span>
+                                        </Stack>
+                                    </Box>
+                                </div>
+                                <div className='pageSliderButtons'>
+                                    <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                    <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : `@ ${name}`} </span>
+                                    <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                </div>
+                            </div>}
+            </div>
                 {/*here*/}
             </GridLines> :
             <div className="rightContent">
@@ -792,8 +933,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                             </div>
                                         </Dialog>
                                         <div className='leftWidget'>
-                                            <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
+                                            <button onClick={()=> setShowSettings(!showSettings)}  className='tooltip' disabled={friendId !== '' ? true : false}>
+                                                <span className='tooltiptext'>Settings apply separately for each post</span>
+                                                {showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date}/>}
                                         </div>
                                     </div>
                                 </div>
@@ -813,14 +956,14 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                     </IconButton>}
                                 <div className="postButtons">
                                     <div className="postButtonsLeft">
-                                        <button onClick={onClickBookmark} disabled={friendId !== '' ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                        <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        <button onClick={onClickBookmark} disabled={friendId !== '' || edit ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        <button onClick={onClickHeart} disabled={edit ? true : false}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
                                     </div>
                                     <div className="postButtonsRight">
-                                        <button onClick={() => setEdit(true)} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
-                                        <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                        <button onClick={() => setEdit(true)} disabled={friendId !== '' || edit ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                        <button onClick={handleClickOpen} disabled={friendId !== '' || edit ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
                                         <Dialog className="dialogBox" open={open} onClose={handleClose}>
                                             <div className='muiModal'>
                                                 <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
@@ -834,12 +977,12 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                             </div>
                                         </Dialog>
                                         <div className='leftWidget'>
-                                            <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setSns={setSns} sns={sns}/>}
+                                            <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' || edit ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date}/>}
                                         </div>
                                     </div>
                                 </div>
-                                {message !== '' && <span className='errorMessage'>{message.toUpperCase()}</span>}
+                                {(message !== '' && !edit) && <span className='errorMessage'>{message.toUpperCase()}</span>}
 
                                 {edit ? 
                                 <div className="postInput">

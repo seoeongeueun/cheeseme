@@ -10,7 +10,9 @@ const rightSchema = new mongoose.Schema({
     like: Boolean,
     bookmark: Boolean,
     hide: Boolean,
-    likes: [ String ]
+    likes: [ String ],
+    plain: Boolean,
+    grid: Boolean
 });
 
 const Right = mongoose.model("Right", rightSchema);

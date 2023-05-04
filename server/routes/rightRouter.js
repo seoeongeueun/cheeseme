@@ -40,7 +40,9 @@ rightRouter.post('/add', asyncHandler(async(req, res) => {
     const hide = req.body.hide;
     const likes = req.body.likes;
     const imgUrl = req.body.imgUrl;
-    await Right.create({ owner, date, text, title, like, weather, bookmark, hide, likes, imgUrl });
+    const plain = req.body.plain;
+    const grid = req.body.grid;
+    await Right.create({ owner, date, text, title, like, weather, bookmark, hide, likes, imgUrl, plain, grid });
     res.send('Created');
 }))
 
@@ -58,7 +60,9 @@ rightRouter.post('/update/:date', asyncHandler(async(req, res) => {
     const hide = req.body.hide;
     const likes = req.body.likes;
     const imgUrl = req.body.imgUrl;
-    await Right.updateOne({date: req.params.date}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide, likes: likes, imgUrl: imgUrl});
+    const plain = req.body.plain;
+    const grid = req.body.grid;
+    await Right.updateOne({date: req.params.date}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide, likes: likes, imgUrl: imgUrl, plain: plain, grid: grid});
     res.send('Updated')
 }))
 
@@ -71,7 +75,9 @@ rightRouter.post('/updateById/:_id', asyncHandler(async(req, res) => {
     const hide = req.body.hide;
     const likes = req.body.likes;
     const imgUrl = req.body.imgUrl;
-    await Right.updateOne({_id: req.params._id}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide, likes: likes, imgUrl: imgUrl});
+    const plain = req.body.plain;
+    const grid = req.body.grid;
+    await Right.updateOne({_id: req.params._id}, {text: text, title: title, like: like, weather: weather, bookmark: bookmark, hide: hide, likes: likes, imgUrl: imgUrl, plain: plain, grid: grid});
     res.send('Updated')
 }))
 
