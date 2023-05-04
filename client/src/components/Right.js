@@ -674,7 +674,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setTmpBody(null)
         }
         if (_id === '') {
-            setBody('')
+            setBody('');
+            setSelectedImage(null);
+            setPostImage(false);
         }
         setHide(false);
     }
