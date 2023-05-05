@@ -56,6 +56,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [stickersOn, setStickersOn] = useState([]);
     const [roundStickers, setRoundStickers] = useState([]);
 
+    const [stickers, setStickers] = useState([]);
+
     const [square, setSquare] = useState(false);
     const [rect, setRect] = useState(true);
     const [circle, setCircle] = useState(false);
@@ -79,6 +81,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     const [settings, setSettings] = useState();
 
+    const [angle, setAngle] = useState();
+
 
     const [id, setId] = useState("");
 
@@ -101,9 +105,30 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         onChangePositions(newState);
     };
 
+    const changeStickers = async() => {
+        let res = await FetchAPIPost('/api/users/update/' + userId, {
+            stickers: stickers
+        });
+    };
+
+    async function updateList() {
+        const tmp = [];
+        for (const sticker of stickers) {
+            tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
+        };
+        setStickerList(tmp);
+    }
+    
     useEffect(() => {
         setToday(new Date().setHours(0, 0, 0, 0));
     }, [id]);
+
+    useEffect(() => {
+        if (stickers?.length !== stickerList?.length) {
+            updateList();
+            changeStickers();
+        }
+    }, [stickers]);
 
     useEffect(() => {
         if (userId) {
@@ -124,6 +149,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setTodo((n.positions.find(obj => obj.name === 'todo')).show)
                 setSettings(n.settings);
                 setGrid(n.settings[0]);
+                setStickers(n.stickers);
+                updateList();
               }
             })
             .catch( (err) => {
@@ -150,7 +177,9 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setReminder((n.positions.find(obj => obj.name === 'reminder')).show)
                 setTodo((n.positions.find(obj => obj.name === 'todo')).show)
                 setSettings(n.settings);
-                setGrid(n.settings[0])
+                setGrid(n.settings[0]);
+                setStickers(n.stickers);
+                updateList();
               }
             })
             .catch( (err) => {
@@ -188,12 +217,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         }
     }, [grid])
 
-    
-
-    useEffect(() => {
-
-    }, [addPic, today]);
-
     useEffect(() => {
         if (userId && editMode === false) {
             change();
@@ -201,29 +224,36 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     }, [editMode]);
 
     useEffect(() => {
-
-    }, [stickerList, stickersOn, imgSrc, square, rect, circle]);
-
+        if (!addPic){
+            setImageSrc(null);
+            setRotation(0);
+            setCroppedAreaPixels(null);
+            setAngle(null);
+            console.log("stickerlist: ", stickerList)
+        }
+    }, [addPic])
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
     }, []);
+    
 
     const showCroppedImage = useCallback(async () => {
         try {
-            const croppedImage = await getCroppedImg(
-                imgSrc,
-                croppedAreaPixels,
-                rotation
-            )
-            console.log('done', { croppedImage })
-            await setStickerList([...stickerList, croppedImage])
-            await setStickersOn([...stickersOn, true]);
-            await setRoundStickers([...roundStickers, circle])
-            console.log(roundStickers)
-            setAddPic(false);
-            setImageSrc(null);
-            console.log("stickerlist: ", stickerList)
+                setStickers([...stickers, {name: `Sticker ${stickers.length + 1}`, imgSrc: imgSrc, 
+                round: circle, croppedAreaPixels: croppedAreaPixels, rotation: rotation, angle: angle ? angle : 0, show: true, x: 0, y: 0}])
+                // const croppedImage = await getCroppedImg(
+                //     imgSrc,
+                //     croppedAreaPixels,
+                //     rotation
+                // )
+                // console.log('done', { croppedImage })
+                // await setStickerList([...stickerList, croppedImage])
+                // await setStickersOn([...stickersOn, true]);
+                // await setRoundStickers([...roundStickers, circle])
+
+                setStickerList([...stickerList, {name: `Sticker ${stickers.length + 1}`, imgSrc: await getCroppedImg(imgSrc, croppedAreaPixels, rotation)}]);
+                setAddPic(false);
         } catch (e) {
           console.error(e)
         }
@@ -240,22 +270,33 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const onFileChange = async (e) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0]
-            let imageDataUrl = await readFile(file)
+            // console.log(file)
+            // let imageDataUrl = await readFile(file)
       
-            // apply rotation if needed
+            // // apply rotation if needed
             const orientation = await getOrientation(file)
-            const rotation = ORIENTATION_TO_ANGLE[orientation]
-            if (rotation) {
-            imageDataUrl = await getRotatedImage(imageDataUrl, rotation)
-            }
-    
-            setImageSrc(imageDataUrl)
+            const rotation = ORIENTATION_TO_ANGLE[orientation];
+            setAngle(rotation);
+            // if (rotation) {
+            //     imageDataUrl = await getRotatedImage(imageDataUrl, rotation)
+            // }
+            // setImageSrc(imageDataUrl)
+
+            const formData = new FormData();
+            formData.append("image", file);
+            const res = await axios({
+                method: 'POST',
+                url: '/upload',
+                data: formData,
+                header: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'multipart/form-data',
+                },
+                withCredentials: true,
+            });
+            setImageSrc(res?.data);
         }
     }
-
-    // useEffect(() => {
-    //     console.log(positions);
-    // })
 
     return(
         <div className="leftInnerBorder">
@@ -278,13 +319,13 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                                 position={reminderPosition ? {x: Object.values(reminderPosition)[0] > width-322 ? width-322 : Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1] > height-(247) ? height-(247) : Object.values(reminderPosition)[1]}  : {x: 0, y: 0}}
                                                 onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
                         <div className="stickers">
-                            {stickerList?.length > 0 &&
-                                stickerList.map((value, index) => {
-                                    if (stickersOn[index]) {
+                            {stickers?.length > 0 &&
+                                stickers.map((sticker, index) => {
+                                    if (sticker.show) {
                                         return (
                                             <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}} handle="strong">
                                                 <div className="stickerWidget">
-                                                    <img alt={"sticker" + index} src={value} style={roundStickers[index] ? {borderRadius: "50%"} : {}}/>
+                                                    <img alt={sticker.name} src={stickerList?.length === stickers?.length && stickerList[index].imgSrc} style={{borderRadius: sticker.round && "50%"}}/>
                                                     {editMode && <strong>
                                                         <OpenWithSharpIcon sx={{fontSize: '7rem'}}/>
                                                     </strong>}
@@ -396,13 +437,14 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                                 position={reminderPosition ? {x: Object.values(reminderPosition)[0] > width-322 ? width-322 : Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1] > height-(247) ? height-(247) : Object.values(reminderPosition)[1]}  : {x: 0, y: 0}}
                                                 onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
                         <div className="stickers">
-                            {stickerList?.length > 0 &&
-                                stickerList.map((value, index) => {
-                                    if (stickersOn[index]) {
+                            {stickers?.length > 0 &&
+                                stickers.map((sticker, index) => {
+                                    if (sticker.show) {
                                         return (
                                             <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}} handle="strong">
                                                 <div className="stickerWidget">
-                                                    <img alt={"sticker" + index} src={value} style={roundStickers[index] ? {borderRadius: "50%"} : {}}/>
+                                                    <img alt={sticker.name} src={getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation)} 
+                                                        style={sticker.round ? {borderRadius: "50%"} : {}}/>
                                                     {editMode && <strong>
                                                         <OpenWithSharpIcon sx={{fontSize: '7rem'}}/>
                                                     </strong>}

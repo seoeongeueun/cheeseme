@@ -35,6 +35,19 @@ const userSchema = new mongoose.Schema(
                 date: Number
             }
         ],
+        stickers: [
+            {
+                name: String,
+                imgSrc: String,
+                round: Boolean,
+                croppedAreaPixels: {width: Number, height: Number, x: Number, y: Number},
+                rotation: Number,
+                show: Boolean,
+                x: Number,
+                y: Number
+
+            }
+        ],
         token: {type: String}
     }
 );

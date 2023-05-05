@@ -41,7 +41,8 @@ userRouter.post('/add', asyncHandler(async(req, res) => {
     const positions = req.body.positions;
     const settings = req.body.settings;
     const notifications = req.body.notifications;
-    await User.create({ name, email, password, friends, isAdmin, positions, settings, notifications })
+    const stickers = req.body.stickers;
+    await User.create({ name, email, password, friends, isAdmin, positions, settings, notifications, stickers })
     res.send('Created')
 }));
 
@@ -58,8 +59,9 @@ userRouter.post('/update/:userId', asyncHandler(async(req, res) => {
     const positions = req.body.positions;
     const settings = req.body.settings;
     const notifications = req.body.notifications;
-    await User.updateOne({_id: mongoose.Types.ObjectId(req.params.userId)}, 
-    {email: email, password: password, friends: friends, isAdmin: isAdmin, positions: positions, settings: settings, notifications: notifications});
+    const stickers = req.body.stickers;
+    await User.updateOne({_id: mongoose.Types.ObjectId(req.params.userId)},
+    {email: email, password: password, friends: friends, isAdmin: isAdmin, positions: positions, settings: settings, notifications: notifications, stickers: stickers});
     res.send('Updated')
 }))
 
@@ -72,8 +74,9 @@ userRouter.post('/updateWithName/:name', asyncHandler(async(req, res) => {
     const positions = req.body.positions;
     const settings = req.body.settings;
     const notifications = req.body.notifications;
+    const stickers = req.body.stickers;
     await User.updateOne({name: req.params.name}, 
-    {email: email, password: password, friends: friends, isAdmin: isAdmin, positions: positions, settings: settings, notifications: notifications});
+    {email: email, password: password, friends: friends, isAdmin: isAdmin, positions: positions, settings: settings, notifications: notifications, stickers: stickers});
     res.send('Updated')
 }))
 
