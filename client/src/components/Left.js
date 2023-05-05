@@ -220,6 +220,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     useEffect(() => {
         if (userId && editMode === false) {
             change();
+            changeStickers();
         }
     }, [editMode]);
 
@@ -319,13 +320,22 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                                 position={reminderPosition ? {x: Object.values(reminderPosition)[0] > width-322 ? width-322 : Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1] > height-(247) ? height-(247) : Object.values(reminderPosition)[1]}  : {x: 0, y: 0}}
                                                 onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
                         <div className="stickers">
-                            {stickers?.length > 0 &&
-                                stickers.map((sticker, index) => {
+                            {stickerList?.length > 0 &&
+                                stickerList.map((sticker, index) => {
                                     if (sticker.show) {
                                         return (
-                                            <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}} handle="strong">
+                                            <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}}
+                                                position={{x: stickers[index].x > width-70 ? width-70 : stickers[index].x, y: stickers[index].y > height-112 ? height-112 : stickers[index].y}}
+                                                onStop={(e, {x, y}) => {stickers[index].x = x; stickers[index].y = y;
+                                                    setStickers(prev => 
+                                                        prev.map(obj => {
+                                                            if (obj.name === sticker.name) {
+                                                                return {...obj, x: x, y: y};
+                                                            }
+                                                            return obj;
+                                                        }))}} handle="strong">
                                                 <div className="stickerWidget">
-                                                    <img alt={sticker.name} src={stickerList?.length === stickers?.length && stickerList[index].imgSrc} style={{borderRadius: sticker.round && "50%"}}/>
+                                                    <img alt={sticker.name} src={sticker.imgSrc} style={{borderRadius: stickers[index].round && "50%"}}/>
                                                     {editMode && <strong>
                                                         <OpenWithSharpIcon sx={{fontSize: '7rem'}}/>
                                                     </strong>}
@@ -443,8 +453,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                         return (
                                             <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}} handle="strong">
                                                 <div className="stickerWidget">
-                                                    <img alt={sticker.name} src={getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation)} 
-                                                        style={sticker.round ? {borderRadius: "50%"} : {}}/>
+                                                    <img alt={sticker.name} src={stickerList?.length === stickers?.length && stickerList[index].imgSrc} style={{borderRadius: sticker.round && "50%"}}/>
                                                     {editMode && <strong>
                                                         <OpenWithSharpIcon sx={{fontSize: '7rem'}}/>
                                                     </strong>}
