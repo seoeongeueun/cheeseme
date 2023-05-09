@@ -282,7 +282,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             //     imageDataUrl = await getRotatedImage(imageDataUrl, rotation)
             // }
             // setImageSrc(imageDataUrl)
-
+            console.log('file: ', file)
             const formData = new FormData();
             formData.append("image", file);
             const res = await axios({
@@ -297,6 +297,16 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             });
             setImageSrc(res?.data);
         }
+    }
+
+    const handleCancel = async() => {
+        console.log('gg', imgSrc.replace(/^images\\/i, ''))
+        axios.post('/deleteImg/' + imgSrc.replace(/^images\\/i, ''))
+            .then((res) => {
+                console.log(res);
+        })
+        setAddPic(false);
+        setImageSrc('');
     }
 
     return(
@@ -405,6 +415,13 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                   color="primary"
                                   style={{fontSize: "1.5rem"}}>
                                   Done
+                                </Button>
+                                <Button
+                                  onClick={() => handleCancel()}
+                                  variant="contained"
+                                  color="neutral"
+                                  style={{fontSize: "1.5rem"}}>
+                                  Cancel
                                 </Button>
                               </div>
                             </div>
