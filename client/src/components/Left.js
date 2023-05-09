@@ -259,6 +259,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setStickerList([...stickerList, {name: stickerName, imgSrc: await getCroppedImg(imgSrc, croppedAreaPixels, rotation), show: true}]);
                 setAddPic(false);
                 setMessage('');
+                setCircle(false);
         } catch (e) {
           console.error(e)
         }
@@ -300,6 +301,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 withCredentials: true,
             });
             setImageSrc(res?.data);
+            setShowStickerSettings(false);
         }
     }
 
@@ -310,7 +312,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         })
         setAddPic(false);
         setImageSrc('');
-        setMessage('')
+        setMessage('');
+        setCircle(false);
     }
 
     return(
@@ -321,8 +324,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(319), bottom: height-(360)}}
                                                 position={calPosition ? {x: Object.values(calPosition)[0] > width-319 ? width-319 : Object.values(calPosition)[0], y: Object.values(calPosition)[1] > height-(360) ? height-(360) : Object.values(calPosition)[1]}  : {x: 0, y: 0}}
                                                 onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
-                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-(222), bottom: height-(317)}}
-                                            position={todoPosition ? {x: Object.values(todoPosition)[0] > width-222 ? width-222 : Object.values(todoPosition)[0], y: Object.values(todoPosition)[1] > height-(317) ? height-(317) : Object.values(todoPosition)[1]}  : {x: 0, y: 0}}
+                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-(222), bottom: height-(200)}}
+                                            position={todoPosition ? {x: Object.values(todoPosition)[0] > width-222 ? width-222 : Object.values(todoPosition)[0], y: Object.values(todoPosition)[1] > height-(200) ? height-(200) : Object.values(todoPosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setTodoPosition({x, y})} handle="strong"><div><TodosContainer move={editMode} date={date}/></div></Draggable>} 
                         {notes && <Draggable bounds={{top: 0, left: 0, right: width-(202), bottom: height-(249)}}
                                             position={notePosition ? {x: Object.values(notePosition)[0] > width-202 ? width-202 : Object.values(notePosition)[0], y: Object.values(notePosition)[1] > height-(249) ? height-(249) : Object.values(notePosition)[1]}  : {x: 0, y: 0}}
@@ -414,9 +417,9 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                     <div className="stickersShaper">
                                         <Typography variant="overline">Crop Shape</Typography>
                                         <div className="stickerShape">
-                                            <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(!circle); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
-                                            <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(!square); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
-                                            <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(!rect); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                            <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(true); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                            <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(true); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                            <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(true); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
                                         </div>
                                     </div>
                                 </div>
@@ -554,9 +557,9 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                 <div className="stickersShaper">
                                     <Typography variant="overline" classes='sliderLabel'>Crop Shape</Typography>
                                     <div className="stickerShape">
-                                        <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(!circle); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
-                                        <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(!square); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
-                                        <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(!rect); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                        <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(true); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                        <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(true); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                        <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(true); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
                                     </div>
                                 </div>
                                 <Button
