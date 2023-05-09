@@ -1186,7 +1186,7 @@ main {
 .checkboxButton {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 5px;
 }
 
@@ -1256,12 +1256,13 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-start;
   background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid black;
   border-radius: 5px;
   position: absolute;
   bottom: 0px;
-  width: 30rem;
+  width: 40rem;
   align-items: center;
   left: 50%;
   bottom: 0px;
@@ -1289,6 +1290,33 @@ main {
 .sliders {
   width: 30%;
 }
+
+.stickerDetail {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+  align-items: center;
+}
+
+.stickerName {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.stickersShaper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.checkboxStickers {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
 /* end of stickerWidget */
 
 /* start of calendar widget */

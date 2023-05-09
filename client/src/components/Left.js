@@ -29,11 +29,14 @@ import NotesContainer from '../containers/NotesContainer';
 import CalendarContainer from '../containers/CalendarContainer';
 import ReminderContainer from '../containers/ReminderContainer.js';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
+import StickerIcon from '../icons/sticker.png';
 import axios from 'axios';
+import StickerSettings from '../modals/StickerSettings';
 
 function Left({editMode, setEditMode, date, userId, positions, onChangePositions}){
     const [showSettings, setShowSettings] = useState(false);
     const [showWidgetSettings, setShowWidgetSettings] = useState(false);
+    const [showStickerSettings, setShowStickerSettings] = useState(false);
 
     const [grid, setGrid] = useState(false);
 
@@ -53,8 +56,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [zoom, setZoom] = useState(1)
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [stickerList, setStickerList] = useState([]);
-    const [stickersOn, setStickersOn] = useState([]);
-    const [roundStickers, setRoundStickers] = useState([]);
 
     const [stickers, setStickers] = useState([]);
 
@@ -85,6 +86,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
 
     const [id, setId] = useState("");
+    const [message, setMessage] = useState('');
 
     const ORIENTATION_TO_ANGLE = {
         '3': 180,
@@ -111,7 +113,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         });
     };
 
-    async function updateList() {
+    const updateList = async() => {
         const tmp = [];
         for (const sticker of stickers) {
             tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
@@ -125,8 +127,10 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     useEffect(() => {
         if (stickers?.length !== stickerList?.length) {
-            updateList();
+            updateList().catch((err) => console.log(err));
             changeStickers();
+        } else if (stickers?.length > 0) {
+            updateList().catch((err) => console.log(err));
         }
     }, [stickers]);
 
@@ -150,7 +154,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setSettings(n.settings);
                 setGrid(n.settings[0]);
                 setStickers(n.stickers);
-                updateList();
+                updateList().catch((err) => console.log(err));
               }
             })
             .catch( (err) => {
@@ -179,7 +183,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setSettings(n.settings);
                 setGrid(n.settings[0]);
                 setStickers(n.stickers);
-                updateList();
+                updateList().catch((err) => console.log(err));
+
               }
             })
             .catch( (err) => {
@@ -230,7 +235,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             setRotation(0);
             setCroppedAreaPixels(null);
             setAngle(null);
-            console.log("stickerlist: ", stickerList)
         }
     }, [addPic])
 
@@ -240,21 +244,21 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     
 
     const showCroppedImage = useCallback(async () => {
-        try {
-                setStickers([...stickers, {name: `Sticker ${stickers.length + 1}`, imgSrc: imgSrc, 
+        try {   
+                let stickerName = document.getElementById('stickerName').value;
+                if (stickerName === '') {
+                    setMessage('Name required');
+                    return
+                }
+                else if (stickers.filter(s => s.name === stickerName).length >= 1) {
+                    setMessage('Name already taken')
+                    return
+                }
+                setStickers([...stickers, {name: stickerName, imgSrc: imgSrc, 
                 round: circle, croppedAreaPixels: croppedAreaPixels, rotation: rotation, angle: angle ? angle : 0, show: true, x: 0, y: 0}])
-                // const croppedImage = await getCroppedImg(
-                //     imgSrc,
-                //     croppedAreaPixels,
-                //     rotation
-                // )
-                // console.log('done', { croppedImage })
-                // await setStickerList([...stickerList, croppedImage])
-                // await setStickersOn([...stickersOn, true]);
-                // await setRoundStickers([...roundStickers, circle])
-
-                setStickerList([...stickerList, {name: `Sticker ${stickers.length + 1}`, imgSrc: await getCroppedImg(imgSrc, croppedAreaPixels, rotation), show: true}]);
+                setStickerList([...stickerList, {name: stickerName, imgSrc: await getCroppedImg(imgSrc, croppedAreaPixels, rotation), show: true}]);
                 setAddPic(false);
+                setMessage('');
         } catch (e) {
           console.error(e)
         }
@@ -300,13 +304,13 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     }
 
     const handleCancel = async() => {
-        console.log('gg', imgSrc.replace(/^images\\/i, ''))
         axios.post('/deleteImg/' + imgSrc.replace(/^images\\/i, ''))
             .then((res) => {
                 console.log(res);
         })
         setAddPic(false);
         setImageSrc('');
+        setMessage('')
     }
 
     return(
@@ -332,7 +336,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         <div className="stickers">
                             {stickerList?.length > 0 &&
                                 stickerList.map((sticker, index) => {
-                                    if (sticker.show) {
+                                    if (sticker?.show) {
                                         return (
                                             <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}}
                                                 position={{x: stickers[index].x > width-70 ? width-70 : stickers[index].x, y: stickers[index].y > height-112 ? height-112 : stickers[index].y}}
@@ -401,12 +405,19 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                       />
                                     </div>
                                 </div>
-                                <div className="stickersShaper">
-                                    <Typography variant="overline">Crop Shape</Typography>
-                                    <div className="stickerShape">
-                                        <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(!circle); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
-                                        <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(!square); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
-                                        <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(!rect); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                <div className='stickerDetail'>
+                                    <div className='stickerName'>
+                                        <Typography variant="overline">Sticker Name</Typography>
+                                        <input type='text' id='stickerName' required placeholder='sticker 1' style={{border: message !== '' && '1px solid red', fontSize: '1.5rem'}}/>
+                                        <span style={{color: 'red', fontSize: '2rem'}}>{message}</span>
+                                    </div>
+                                    <div className="stickersShaper">
+                                        <Typography variant="overline">Crop Shape</Typography>
+                                        <div className="stickerShape">
+                                            <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(!circle); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                            <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(!square); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                            <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(!rect); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                        </div>
                                     </div>
                                 </div>
                                 <Button
@@ -419,8 +430,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                 <Button
                                   onClick={() => handleCancel()}
                                   variant="contained"
-                                  color="neutral"
-                                  style={{fontSize: "1.5rem"}}>
+                                  style={{fontSize: "1.5rem", color: 'rgba(0, 0, 0, 0.87)'}}>
                                   Cancel
                                 </Button>
                               </div>
@@ -429,15 +439,19 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
-                            <button onClick={() => setAddPic(!addPic)}><AddPhotoAlternateOutlinedIcon sx={ addPic ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
+                            <button onClick={() => {setAddPic(!addPic); setShowStickerSettings(false);}}><AddPhotoAlternateOutlinedIcon sx={ addPic ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                             {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
+                        </div>
+                        <div className="leftWidget">
+                            <button onClick={() => setShowStickerSettings(!showStickerSettings)}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
+                            {showStickerSettings && <StickerSettings userId={userId} stickers={stickers} setStickers={setStickers} stickerList={stickerList} setStickerList={setStickerList}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setEditMode()}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                            {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
+                            {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
@@ -566,7 +580,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                            {showWidgetSettings && <WidgetSettingsLeft onChangePositions={onChangePositions} userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} stickersOn={stickersOn} setStickersOn={setStickersOn} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
+                            {showWidgetSettings && <WidgetSettingsLeft onChangePositions={onChangePositions} userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>

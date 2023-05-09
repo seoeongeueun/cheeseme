@@ -76,7 +76,7 @@ const fileFilter = (req,file,cb) => {
 
 app.post('/upload', multer({storage :fileStorage, fileFilter:fileFilter}).single('image'), (req, res) => {
     const image = req.file;
-    console.log("yeeee: ", image)
+    console.log("uploaded image: ", image)
     const imgUrl = image.path;
     res.send(imgUrl);
 });
@@ -121,6 +121,18 @@ app.post('/login', asyncHandler(async(req, res) => {
         })
     })
 }))
+
+app.post('/deleteImg/:src', (req, res) => {
+    console.log(req.params.src)
+    fs.unlink(`./images/${req.params.src}`, (err) => {
+      if (err) {
+        res.status(500).json({ error: err });
+        return;
+      }
+      res.status(200).json({ message: 'Image deleted' });
+    });
+});
+
 
 app.listen(port, () => {
     console.log(`server at http://localhost:${port}`)

@@ -6,7 +6,6 @@ function WidgetSettingsLeft(props){
     const [todo, setTodo] = useState(props.todo);
     const [calendar, setCalendar] = useState(props.calendar);
     const [notes, setNotes] = useState(props.notes);
-    const [stickersOn, setStickersOn] = useState(props.stickersOn);
     const [ddayCounter, setDdayCounter] = useState(props.ddayCounter);
     const [reminder, setReminder] = useState(props.reminder);
     const [positions, setPositions] = useState([])
@@ -181,18 +180,6 @@ function WidgetSettingsLeft(props){
         }
     }
 
-    const handleStickerClick = (index) => {
-        let tmp = [...stickersOn];
-        if (tmp[index]){
-            tmp[index] = false;
-        }
-        else{
-            tmp[index] = true;
-        }
-        setStickersOn( tmp );
-        props.setStickersOn( tmp );
-    }
-
     return(
         <div className="settingsbox">
             <span className='settingsboxTitle'>Widget Settings</span>
@@ -217,12 +204,6 @@ function WidgetSettingsLeft(props){
                     <input type="checkbox" name="checkTodo" checked={props.reminder} onChange={(e) => handleReminderClick(e.target.checked)}/>
                     <label>Reminder</label>
                 </div>
-                {stickersOn?.length > 0 && props.stickersOn.map((value, index) => 
-                    <div className="checkboxButton">
-                        <input type="checkbox" name="checkTodo" checked={stickersOn[index]} onChange={() => handleStickerClick(index)}/>
-                        <label>Sticker {index + 1}</label>
-                    </div>
-                )}
             </div>
         </div>
     );
