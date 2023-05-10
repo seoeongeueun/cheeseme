@@ -14,12 +14,12 @@ function StickerSettings(props){
 
     useEffect(() => {
         
-        if (stickers && props.userId) {
+        if (stickers?.length > 0 && props.userId) {
             update();
         }
     }, [stickers])
 
-    const handleStickerDelete = (name) => {
+    const handleStickerDelete = async(name) => {
         let imgSrc = stickers.find(s => s.name === name).imgSrc;
         axios.post('/deleteImg/' + imgSrc.replace(/^images\\/i, ''))
             .then((res) => {
@@ -28,6 +28,11 @@ function StickerSettings(props){
         setStickers(stickers.filter(s=> s.name !== name));
         props.setStickers(stickers.filter(s=> s.name !== name));
         props.setStickerList(props.stickerList.filter(s => s.name !== name));
+        if (stickers.filter(s=> s.name !== name).length === 0) {
+            let res = await FetchAPIPost('/api/users/update/' + props.userId, {
+                stickers: []
+            });
+        }
     }
 
     const handleStickerClick = (name) => {

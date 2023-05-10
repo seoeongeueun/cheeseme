@@ -66,9 +66,14 @@ function App() {
         .then((res) => {
           const n = res?.data;
           if (n) {
+            console.log('n: ', n)
             onChangeNotis(n.notifications);
             onChangeFriends(n.friends);
-            onChangePositions(n.positions);
+            onChangePositions(n.positions?.length === 0 ? [{name: 'cal', x: 0, y: 0, show: true},
+              {name: 'dday', x: 0, y: 0, show: true},
+              {name: 'note', x: 0, y: 0, show: true},
+              {name: 'todo', x: 0, y: 0, show: true},
+              {name: 'reminder', x: 0, y: 0, show: true}] : n.positions);
             onCurrentNameChange(n.name);
           }
         })

@@ -42,6 +42,7 @@ const userSchema = new mongoose.Schema(
                 round: Boolean,
                 croppedAreaPixels: {width: Number, height: Number, x: Number, y: Number},
                 rotation: Number,
+                angle: Number,
                 show: Boolean,
                 x: Number,
                 y: Number

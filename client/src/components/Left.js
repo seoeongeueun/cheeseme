@@ -134,34 +134,38 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         }
     }, [stickers]);
 
-    useEffect(() => {
-        if (userId) {
-            axios.get('/api/users/find/' + userId)
-            .then((res) => {
-              const n = res?.data;
-              if (n) {
-                onChangePositions(n.positions);
-                setCalPosition({x: Object.values(n.positions[0])[1], y: Object.values(n.positions[0])[2]});
-                setDdayPosition({x: Object.values(n.positions[1])[1], y: Object.values(n.positions[1])[2]});
-                setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
-                setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
-                setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
-                setCalendar((n.positions.find(obj => obj.name === 'cal')).show)
-                setDdayCounter((n.positions.find(obj => obj.name === 'dday')).show)
-                setNotes((n.positions.find(obj => obj.name === 'note')).show)
-                setReminder((n.positions.find(obj => obj.name === 'reminder')).show)
-                setTodo((n.positions.find(obj => obj.name === 'todo')).show)
-                setSettings(n.settings);
-                setGrid(n.settings[0]);
-                setStickers(n.stickers);
-                updateList().catch((err) => console.log(err));
-              }
-            })
-            .catch( (err) => {
-                console.log('Error loading positions');
-            })
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (userId) {
+    //         axios.get('/api/users/find/' + userId)
+    //         .then((res) => {
+    //           const n = res?.data;
+    //           if (n) {
+    //             onChangePositions(n.positions?.length === 0 ? [{name: 'cal', x: 0, y: 0, show: true},
+    //                 {name: 'dday', x: 0, y: 0, show: true},
+    //                 {name: 'note', x: 0, y: 0, show: true},
+    //                 {name: 'todo', x: 0, y: 0, show: true},
+    //                 {name: 'reminder', x: 0, y: 0, show: true}] : n.positions);
+    //             setCalPosition({x: Object.values(n.positions[0])[1], y: Object.values(n.positions[0])[2]});
+    //             setDdayPosition({x: Object.values(n.positions[1])[1], y: Object.values(n.positions[1])[2]});
+    //             setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
+    //             setTodoPosition({x: Object.values(n.positions[3])[1], y: Object.values(n.positions[3])[2]});
+    //             setReminderPosition({x: Object.values(n.positions[4])[1], y: Object.values(n.positions[4])[2]});
+    //             setCalendar((n.positions.find(obj => obj.name === 'cal')).show)
+    //             setDdayCounter((n.positions.find(obj => obj.name === 'dday')).show)
+    //             setNotes((n.positions.find(obj => obj.name === 'note')).show)
+    //             setReminder((n.positions.find(obj => obj.name === 'reminder')).show)
+    //             setTodo((n.positions.find(obj => obj.name === 'todo')).show)
+    //             setSettings(n.settings);
+    //             setGrid(n.settings[0]);
+    //             setStickers(n.stickers);
+    //             updateList().catch((err) => console.log(err));
+    //           }
+    //         })
+    //         .catch( (err) => {
+    //             console.log('Error loading positions');
+    //         })
+    //     }
+    // }, [])
 
     useEffect(() => {
         if (userId) {
@@ -169,7 +173,11 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             .then((res) => {
               const n = res?.data;
               if (n) {
-                onChangePositions(n.positions);
+                onChangePositions(n.positions?.length === 0 ? [{name: 'cal', x: 0, y: 0, show: true},
+                    {name: 'dday', x: 0, y: 0, show: true},
+                    {name: 'note', x: 0, y: 0, show: true},
+                    {name: 'todo', x: 0, y: 0, show: true},
+                    {name: 'reminder', x: 0, y: 0, show: true}] : n.positions);
                 setCalPosition({x: Object.values(n.positions[0])[1], y: Object.values(n.positions[0])[2]});
                 setDdayPosition({x: Object.values(n.positions[1])[1], y: Object.values(n.positions[1])[2]});
                 setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
@@ -468,8 +476,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(319), bottom: height-(360)}}
                                                 position={calPosition ? {x: Object.values(calPosition)[0] > width-319 ? width-319 : Object.values(calPosition)[0], y: Object.values(calPosition)[1] > height-(360) ? height-(360) : Object.values(calPosition)[1]}  : {x: 0, y: 0}}
                                                 onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
-                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-(222), bottom: height-(317)}}
-                                            position={todoPosition ? {x: Object.values(todoPosition)[0] > width-222 ? width-222 : Object.values(todoPosition)[0], y: Object.values(todoPosition)[1] > height-(317) ? height-(317) : Object.values(todoPosition)[1]}  : {x: 0, y: 0}}
+                        {todo && <Draggable bounds={{top: 0, left: 0, right: width-(222), bottom: height-(200)}}
+                                            position={todoPosition ? {x: Object.values(todoPosition)[0] > width-222 ? width-222 : Object.values(todoPosition)[0], y: Object.values(todoPosition)[1] > height-(200) ? height-(200) : Object.values(todoPosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setTodoPosition({x, y})} handle="strong"><div><TodosContainer move={editMode} date={date}/></div></Draggable>} 
                         {notes && <Draggable bounds={{top: 0, left: 0, right: width-(202), bottom: height-(249)}}
                                             position={notePosition ? {x: Object.values(notePosition)[0] > width-202 ? width-202 : Object.values(notePosition)[0], y: Object.values(notePosition)[1] > height-(249) ? height-(249) : Object.values(notePosition)[1]}  : {x: 0, y: 0}}
@@ -483,7 +491,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         <div className="stickers">
                             {stickerList?.length > 0 &&
                                 stickerList.map((sticker, index) => {
-                                    if (sticker.show) {
+                                    if (sticker?.show) {
                                         return (
                                             <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}}
                                                 position={{x: stickers[index].x > width-70 ? width-70 : stickers[index].x, y: stickers[index].y > height-112 ? height-112 : stickers[index].y}}
@@ -536,11 +544,10 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                         step={0.1}
                                         aria-labelledby="Zoom"
                                         onChange={(e, zoom) => setZoom(zoom)}
-                                        sx={{color: '#F9D876'}}
                                       />
                                     </div>
                                     <div className='stickerSliderContainer'>
-                                      <Typography variant="overline" classes='sliderLabel'>
+                                      <Typography variant="overline">
                                         Rotation
                                       </Typography>
                                       <Slider
@@ -550,16 +557,22 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                         step={1}
                                         aria-labelledby="Rotation"
                                         onChange={(e, rotation) => setRotation(rotation)}
-                                        sx={{color: '#F9D876'}}
                                       />
                                     </div>
                                 </div>
-                                <div className="stickersShaper">
-                                    <Typography variant="overline" classes='sliderLabel'>Crop Shape</Typography>
-                                    <div className="stickerShape">
-                                        <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(true); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
-                                        <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(true); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
-                                        <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(true); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                <div className='stickerDetail'>
+                                    <div className='stickerName'>
+                                        <Typography variant="overline">Sticker Name</Typography>
+                                        <input type='text' id='stickerName' required placeholder='sticker 1' style={{border: message !== '' && '1px solid red', fontSize: '1.5rem'}}/>
+                                        <span style={{color: 'red', fontSize: '2rem'}}>{message}</span>
+                                    </div>
+                                    <div className="stickersShaper">
+                                        <Typography variant="overline">Crop Shape</Typography>
+                                        <div className="stickerShape">
+                                            <button style={ circle ? {borderColor: "black"} : {} } onClick={() => {setCircle(true); setSquare(false); setRect(false);}}><CircleOutlinedIcon sx={ circle ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                            <button style={ square ? {borderColor: "black"} : {} } onClick={() => {setSquare(true); setCircle(false); setRect(false);}}><CropSquareSharpIcon sx={ square ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                            <button style={ rect ? {borderColor: "black"} : {} } onClick={() => {setRect(true); setSquare(false); setCircle(false);}}><CropPortraitSharpIcon sx={ rect ? {size: "30px"} : {size: "30px", color: "#d2d2d2"}}/></button>
+                                        </div>
                                     </div>
                                 </div>
                                 <Button
@@ -568,6 +581,12 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                   color="primary"
                                   style={{fontSize: "1.5rem"}}>
                                   Done
+                                </Button>
+                                <Button
+                                  onClick={() => handleCancel()}
+                                  variant="contained"
+                                  style={{fontSize: "1.5rem", color: 'rgba(0, 0, 0, 0.87)'}}>
+                                  Cancel
                                 </Button>
                               </div>
                             </div>

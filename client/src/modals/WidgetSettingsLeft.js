@@ -33,8 +33,7 @@ function WidgetSettingsLeft(props){
     }
 
     useEffect(() => {
-        
-        if (positions && props.userId) {
+        if (positions?.length > 0 && props.userId) {
             update();
         }
     }, [positions])
