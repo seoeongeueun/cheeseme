@@ -550,6 +550,10 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         setOpen(false);
         if (date) {
             let res = await FetchApiDelete('/api/right/delete/' + date);
+            axios.post('/deleteImg/' + imgUrl.replace(/^images\\/i, ''))
+                .then((res) => {
+                    console.log(res);
+            })
             setBody('');
             setTitle('');
             setHeart(false);
@@ -564,7 +568,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setPostImage(false);
             setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`);
             setAllPosts(allPosts.filter(e => e.date !== date));
-            setIndex(0)
+            setIndex(0);
         }
     };
 
@@ -874,162 +878,161 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                             </div>}
                 </div>
             </GridLines> :
-            <div className="rightContent">
-                {friendId === '' && !openBookmark ? <div className='marker'>
-                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
-                </div>
-                : <div className='marker2' onClick={() => handleClickHome()} style={{top: '6rem', background: 'rgba(249, 216, 118, 0.8)' }}>
-                    <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
-                </div>}
-                {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '12rem', background: 'rgba(249, 216, 118, 0.8)'}}>
-                    <span><PeopleRoundedIcon style={{fontSize: '1.7rem'}}/></span>
-                </div>
-                : <div className='marker2'/>}
-                {showBookMark ? <div className='marker4'>
-                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
-                </div>
-                :
-                <div className='marker3' onClick={() => {setOpenBookmark(true); setShowBookMark(true);}}>
-                    <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
-                </div>}
-                
-                {openBookmark ? <BookmarkPosts allPosts={allPosts} setOpenBookmark={setOpenBookmark} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId}/>
-                : <div className='rightBodyAndHeader'>
-                    {edit ? <div className="rightHeader">
-                        <input id='rightTitle' type="text" defaultValue={title}/>
-                    </div> : <span style={{textAlign: 'center'}}>{title}</span>}
-                    <div className="rightBody" style={{maxHeight: (plain && edit) && '90%', justifyContent: (plain && !edit) && 'flex-start'}}>
-                        <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
-                            <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
-                            <div className='weatherMood'>
-                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('sunny')} disabled={friendId !== '' || !edit ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
-                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('cloud')} disabled={friendId !== '' || !edit ? true : false}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
-                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('rainy')} disabled={friendId !== '' || !edit ? true : false}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
-                                <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('snowy')} disabled={friendId !== '' || !edit ? true : false}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
-                            </div>
-                        </div>
-                        
-                            {plain ?
-                            <div className='plainRight'>
-                            <ReactQuill 
-                                ref={quillRef} 
-                                readOnly={closeQuill}
-                                style={{border: 'none', height: edit && '100%'}}
-                                modules={closeQuill ? Right.modules2 : Right.modules}
-                                formats={Right.formats}
-                                placeholder="Let's start writing!"
-                                value={tmpBody ? tmpBody : body}>
-                                <div className="ql-container" style={{height: edit && '80%', border: '1px solid black'}}/>
-                            </ReactQuill>
-                            {!closeQuill ?
-                                <div className="inputButtons">
-                                    <button className="save" onClick={handleSave}>SAVE</button>
-                                    <button className="cancel" onClick={handleCancel}>CANCEL</button>
-                                </div> :
-                                <div className="postButtons" style={{padding: '0rem'}}>
-                                    <div className="postButtonsLeft">
-                                        <button onClick={onClickBookmark} disabled={friendId !== '' ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                        <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                        {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                        : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
-                                    </div>
-                                    <div className="postButtonsRight">
-                                        <button onClick={() => {handleEdit(); setShowSettings(false);}} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
-                                        <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                        <Dialog className="dialogBox" open={open} onClose={handleClose}>
-                                            <div className='muiModal'>
-                                                <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
-                                                <div className='dialogContent'>
-                                                    <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
-                                                </div>
-                                                <div className='dialogActions'>
-                                                    <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
-                                                    <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
-                                                </div>
-                                            </div>
-                                        </Dialog>
-                                        <div className='leftWidget'>
-                                            <button onClick={()=> setShowSettings(!showSettings)}  className='tooltip' disabled={friendId !== '' ? true : false}>
-                                                <span className='tooltiptext'>Settings apply separately for each post</span>
-                                                {showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date} setAllPosts={setAllPosts} userId={userId}/>}
-                                        </div>
-                                    </div>
+                <div className="rightContent">
+                    {friendId === '' && !openBookmark ? <div className='marker'>
+                        <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                    </div>
+                    : <div className='marker2' onClick={() => handleClickHome()} style={{top: '6rem', background: 'rgba(249, 216, 118, 0.8)' }}>
+                        <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
+                    </div>}
+                    {(friendId !== '' && currentFriendName !== '') ? <div className='marker' style={{top: '12rem', background: 'rgba(249, 216, 118, 0.8)'}}>
+                        <span><PeopleRoundedIcon style={{fontSize: '1.7rem'}}/></span>
+                    </div>
+                    : <div className='marker2'/>}
+                    {showBookMark ? <div className='marker4'>
+                        <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
+                    </div>
+                    :
+                    <div className='marker3' onClick={() => {setOpenBookmark(true); setShowBookMark(true);}}>
+                        <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
+                    </div>}
+                    {openBookmark ? <BookmarkPosts allPosts={allPosts} setOpenBookmark={setOpenBookmark} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId}/>
+                        : <div className='rightBodyAndHeader'>
+                        {edit ? <div className="rightHeader">
+                            <input id='rightTitle' type="text" defaultValue={title}/>
+                        </div> : <span style={{textAlign: 'center'}}>{title}</span>}
+                        <div className="rightBody" style={{maxHeight: (plain && edit) && '90%', justifyContent: (plain && !edit) && 'flex-start'}}>
+                            <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
+                                <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
+                                <div className='weatherMood'>
+                                    <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('sunny')} disabled={friendId !== '' || !edit ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
+                                    <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('cloud')} disabled={friendId !== '' || !edit ? true : false}><img alt= "cloud" src={weather === 'cloud' ? CloudColor : CloudPlain}/></button>
+                                    <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('rainy')} disabled={friendId !== '' || !edit ? true : false}><img alt= "rainy" src={weather === 'rainy' ? UmbColor : UmbPlain}/></button>
+                                    <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('snowy')} disabled={friendId !== '' || !edit ? true : false}><img alt= "snowy" src={weather === 'snowy' ? SnowColor : SnowPlain}/></button>
                                 </div>
-                            }
                             </div>
-                            :
-                            <div className="rightBodyMain">
-                                {postImage ?
-                                    <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
-                                        <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                        <img src={edit ? selectedImage ? URL.createObjectURL(selectedImage) : imgUrl : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
-                                    </IconButton>
-                                :   
-                                    <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
-                                        <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                        {edit && <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>}
-                                    </IconButton>}
-                                <div className="postButtons">
-                                    <div className="postButtonsLeft">
-                                        <button onClick={onClickBookmark} disabled={friendId !== '' || edit ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                        <button onClick={onClickHeart} disabled={edit ? true : false}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                        {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                        : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
-                                    </div>
-                                    <div className="postButtonsRight">
-                                        <button onClick={() => {handleEdit(); setShowSettings(false);}} disabled={friendId !== '' || edit ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
-                                        <button onClick={handleClickOpen} disabled={friendId !== '' || edit ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
-                                        <Dialog className="dialogBox" open={open} onClose={handleClose}>
-                                            <div className='muiModal'>
-                                                <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
-                                                <div className='dialogContent'>
-                                                    <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
-                                                </div>
-                                                <div className='dialogActions'>
-                                                    <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
-                                                    <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
-                                                </div>
-                                            </div>
-                                        </Dialog>
-                                        <div className='leftWidget'>
-                                            <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' || edit ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                                            {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date} setAllPosts={setAllPosts} userId={userId}/>}
-                                        </div>
-                                    </div>
-                                </div>
-                                {(message !== '' && !edit) && <span className='errorMessage'>{message.toUpperCase()}</span>}
-
-                                {edit ? 
-                                <div className="postInput">
-                                    <textarea id="text" name="text" rows="12" cols="50" defaultValue={body}/>
+                            
+                                {plain ?
+                                <div className='plainRight'>
+                                <ReactQuill 
+                                    ref={quillRef} 
+                                    readOnly={closeQuill}
+                                    style={{border: 'none', height: edit && '100%'}}
+                                    modules={closeQuill ? Right.modules2 : Right.modules}
+                                    formats={Right.formats}
+                                    placeholder="Let's start writing!"
+                                    value={tmpBody ? tmpBody : body}>
+                                    <div className="ql-container" style={{height: edit && '80%', border: '1px solid black'}}/>
+                                </ReactQuill>
+                                {!closeQuill ?
                                     <div className="inputButtons">
-                                        <button className="save" onClick={handleSave}>Save</button>
-                                        <button className="cancel" onClick={handleCancel}>Cancel</button>
+                                        <button className="save" onClick={handleSave}>SAVE</button>
+                                        <button className="cancel" onClick={handleCancel}>CANCEL</button>
+                                    </div> :
+                                    <div className="postButtons" style={{padding: '0rem'}}>
+                                        <div className="postButtonsLeft">
+                                            <button onClick={onClickBookmark} disabled={friendId !== '' ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                            <button onClick={onClickHeart}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                            {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                            : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
+                                        </div>
+                                        <div className="postButtonsRight">
+                                            <button onClick={() => {handleEdit(); setShowSettings(false);}} disabled={friendId !== '' ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                            <button onClick={handleClickOpen} disabled={friendId !== '' ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                            <Dialog className="dialogBox" open={open} onClose={handleClose}>
+                                                <div className='muiModal'>
+                                                    <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
+                                                    <div className='dialogContent'>
+                                                        <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
+                                                    </div>
+                                                    <div className='dialogActions'>
+                                                        <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
+                                                        <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
+                                                    </div>
+                                                </div>
+                                            </Dialog>
+                                            <div className='leftWidget'>
+                                                <button onClick={()=> setShowSettings(!showSettings)}  className='tooltip' disabled={friendId !== '' ? true : false}>
+                                                    <span className='tooltiptext'>Settings apply separately for each post</span>
+                                                    {showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                                {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date} setAllPosts={setAllPosts} userId={userId}/>}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div> : <div className='postInput2'>
-                                            <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
-                                        </div>}
-                            </div>}
-                        </div>
-                    </div>}
-                    {(!edit && !openBookmark) && <div className='rightFooter'>
-                                <div className='pageSlider'>
-                                    <Box sx={{ width: '100%' }}>
-                                        <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-                                            <span style={{marginBottom: '-1.3rem'}}>{allPosts?.length < 1 ? 0 : 1}</span>
-                                            <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}} valueLabelDisplay='auto' valueLabelFormat={value => <div>{value + 1}</div>}/>
-                                            <span style={{marginBottom: '-2.2rem'}}>{allPosts?.length}</span>
-                                        </Stack>
-                                    </Box>
+                                }
                                 </div>
-                                <div className='pageSliderButtons'>
-                                    <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                    <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : `@ ${name}`} </span>
-                                    <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                </div>
+                                :
+                                <div className="rightBodyMain">
+                                    {postImage ?
+                                        <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                            <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
+                                            <img src={edit ? selectedImage ? URL.createObjectURL(selectedImage) : imgUrl : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                        </IconButton>
+                                    :   
+                                        <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
+                                            <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
+                                            {edit && <PhotoCamera sx={{fontSize: "5rem", color: "#929292"}}/>}
+                                        </IconButton>}
+                                    <div className="postButtons">
+                                        <div className="postButtonsLeft">
+                                            <button onClick={onClickBookmark} disabled={friendId !== '' || edit ? true : false}>{bookmark ? <BookmarkTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <BookmarkBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                            <button onClick={onClickHeart} disabled={edit ? true : false}><span className='likes' style={{left: likes?.length > 10 && '59px', color: 'black'}}>{likes?.length}</span>{heart ? <FavoriteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}></FavoriteTwoToneIcon> : <FavoriteBorderOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                            {friendId === '' ? <button onClick={onClickLock} className='tooltip'>{hide? <span className='tooltiptext'>Only you can view this post</span> : <span className='tooltiptext'>Your friends can view this post</span>}{hide ? <LockTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                            : <button disabled={true} className='tooltip'><LockOpenRoundedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/></button>}
+                                        </div>
+                                        <div className="postButtonsRight">
+                                            <button onClick={() => {handleEdit(); setShowSettings(false);}} disabled={friendId !== '' || edit ? true : false}><CreateOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>
+                                            <button onClick={handleClickOpen} disabled={friendId !== '' || edit ? true : false}>{open ? <DeleteTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DeleteOutlinedIcon sx={{fontSize: "2.3rem", color: "#000000"}}/>}</button>
+                                            <Dialog className="dialogBox" open={open} onClose={handleClose}>
+                                                <div className='muiModal'>
+                                                    <span style={{fontSize: '3.5rem'}}>Delete this post?</span>
+                                                    <div className='dialogContent'>
+                                                        <span style={{marginBottom: '1.2rem'}}>This post will be deleted permanently.</span>
+                                                    </div>
+                                                    <div className='dialogActions'>
+                                                        <button className='save' onClick={handleDelete} type='submit'><span>Confirm</span></button>
+                                                        <button className='cancel' onClick={handleClose}><span>Cancel</span></button>
+                                                    </div>
+                                                </div>
+                                            </Dialog>
+                                            <div className='leftWidget'>
+                                                <button onClick={()=> setShowSettings(!showSettings)} disabled={friendId !== '' || edit ? true : false}>{showSettings ? <SettingsTwoToneIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                                                {showSettings && <DisplaySettings grid={grid} setGrid={setGrid} setPlain={setPlain} plain={plain} date={date} setAllPosts={setAllPosts} userId={userId}/>}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {(message !== '' && !edit) && <span className='errorMessage'>{message.toUpperCase()}</span>}
+    
+                                    {edit ? 
+                                    <div className="postInput">
+                                        <textarea id="text" name="text" rows="12" cols="50" defaultValue={body}/>
+                                        <div className="inputButtons">
+                                            <button className="save" onClick={handleSave}>Save</button>
+                                            <button className="cancel" onClick={handleCancel}>Cancel</button>
+                                        </div>
+                                    </div> : <div className='postInput2'>
+                                                <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
+                                            </div>}
+                                </div>}
+                            </div>
+                        </div>}
+                        {(!edit && !openBookmark) && <div className='rightFooter'>
+                                    <div className='pageSlider'>
+                                        <Box sx={{ width: '100%' }}>
+                                            <Stack className='pageSliderStack' spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                                                <span style={{marginBottom: '-1.3rem'}}>{allPosts?.length < 1 ? 0 : 1}</span>
+                                                <Slider aria-label="Posts" key={`slider-${value}`} min={0} max={allPosts?.length-1} defaultValue={value} onChange={handleChange} sx={{color: '#F9D876'}} valueLabelDisplay='auto' valueLabelFormat={value => <div>{value + 1}</div>}/>
+                                                <span style={{marginBottom: '-2.2rem'}}>{allPosts?.length}</span>
+                                            </Stack>
+                                        </Box>
+                                    </div>
+                                    <div className='pageSliderButtons'>
+                                        <button onClick={() => setValue(value < 1 ? 0 : value-1)}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                        <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : `@ ${name}`} </span>
+                                        <button onClick={() => setValue(value > allPosts?.length ? allPosts?.length : value + 1)}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                    </div>
+                                </div>}
                     </div>}
-                </div>}
             </div>
         );
     }
