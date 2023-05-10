@@ -1438,7 +1438,7 @@ input.todoElem::placeholder {
 /* end of todo widget */
 
 /* start of notes widget */
-.notesWidget {
+/* .notesWidget {
   width: 20rem;
   border: 1px solid #d2d2d2;
   height: 25rem;
@@ -1490,6 +1490,38 @@ input.todoElem::placeholder {
   color: rgb(164, 164, 164);
   margin-right: -0.5rem;
   margin-bottom: 0.25rem;
+} */
+
+.notesWidget {
+  width: 20rem;
+  border: 1px solid #d2d2d2;
+  height: 25rem;
+  overflow-y: overlay;
+  position: absolute;
+  top: 2rem;
+  max-height: 17rem;
+  left: 0rem;
+  background-color: white;
+}
+
+.notesHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.7rem 0.7rem 0.7rem 1rem;
+  background-color: #F9D876;
+  color: black;
+  align-items: center;
+  height: 2rem;
+}
+
+.notesHeader button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .notesContent {
