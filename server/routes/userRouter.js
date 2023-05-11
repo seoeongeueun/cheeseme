@@ -91,23 +91,6 @@ let auth = async(req, res, next) => {
     })
 }
 
-// userRouter.post('/login', asyncHandler(async(req, res) => {
-//     const user = await User.findOne({ name: req.body.name });
-//     if (!user) return res.json({ loginSuccess: false, message: "No user found with username " + req.body.name });
-
-//     user.comparePassword("testing", (err, isMatch) => {
-//         if (!isMatch) return res.json({ loginSuccess: false, message: "Incorrect Password"});
-
-//         user.generateToken((err, user) => {
-//             if (err) return res.status(400).send(err);
-
-//             res.cookie("x_auth", user.token)
-//                 .status(200)
-//                 .json({ loginSuccess: true, userId: user._id });
-//         })  
-//     })
-// }))
-
 userRouter.get('/auth', auth, (req, res) => {
     res.status(200).json({
         _id: req.user._id,

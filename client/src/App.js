@@ -58,7 +58,11 @@ function App() {
       onCurrentUserChange(localStorage.getItem('token'));
       onSetFriendId('');
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    console.log(document.cookie)
+  })
 
   useEffect(() => {
     if (userId) {

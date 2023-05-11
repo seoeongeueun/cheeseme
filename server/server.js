@@ -133,6 +133,11 @@ app.post('/deleteImg/:src', (req, res) => {
     });
 });
 
+app.get('/checkCookie', (req, res) => {
+    const xAuthCookieExists = !!req.cookies['x_auth'];
+    res.send(xAuthCookieExists);
+});
+
 
 app.listen(port, () => {
     console.log(`server at http://localhost:${port}`)
