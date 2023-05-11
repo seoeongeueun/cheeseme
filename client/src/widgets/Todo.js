@@ -20,7 +20,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     const [editMode, setEditMode] = useState(false);
     const [happy, setHappy] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [allTodos, setAllTodos] = useState([]);
+    const [allTodos, setAllTodos] = useState([{date: new Date().setHours(0, 0, 0, 0), goals: [{id: 1, text: 'walk my dog', check: false}, {id: 2, text: 'do laundry', check: true}]}]);
     const [_id, setId] = useState('');
 
     //change to redux later
@@ -33,7 +33,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                 setLoading(true);
                 const n = res?.data;
                 if (n) {
-                    setAllTodos(n)
+                    setAllTodos(n);
                 }
                 else {
                     setAllTodos([]);
@@ -58,7 +58,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                     setAllTodos(n)
                 }
                 else {
-                    setAllTodos([])
+                    setAllTodos([]);
                 }
                 return;
             })
@@ -84,6 +84,8 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
             }
         } else {
             setId('');
+            setGoals([]);
+            setHappy(false);
             setLoading(true);
         }
     }, [allTodos]);
@@ -107,11 +109,6 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
             setLoading(true);
         }
     }, [date]);
-
-    useEffect(() => {
-        
-    }, [count, editMode, move, happy, goals])
-
 
     const handleAddTodo = () => {
         onCreate('')

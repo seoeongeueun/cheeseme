@@ -26,14 +26,14 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                     setReminders(res?.data.reminders);
                 } else {
                     setNotFound(true);
+                    setReminders([])
                 }
             })
             .catch((err) => {
                 console.log('Error loading reminders')
             })
         } else {
-            setReminders([{title: 'Log in', detail: 'This is guest mode!', check: false, _id: 0}, {title: 'Order new monitor', detail: 'check amazon shopping cart', check: true, _id: 1}]);
-            setNotFound(true)
+            setReminders([{title: 'Log in', detail: 'This is guest mode!', check: false, _id: 0}, {title: 'Order new monitor', detail: 'check amazon shopping cart', check: true, _id: 1}])
         }
     }, [userId]);
 

@@ -159,7 +159,7 @@ function App() {
         </div>
         {!userId && <div className='warning'>
           <WarningIcon sx={{fontSize: '2.3rem', color: '#f73939', marginRight: '0.5rem'}}/>
-          <span>Guest Mode: Your progress will not be saved. Please log in start using CheeseMe!</span>
+          <span>Guest Mode: Your progress will not be saved. Please log in to start using CheeseMe!</span>
         </div>}
       </header>
 

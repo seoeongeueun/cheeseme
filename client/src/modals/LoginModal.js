@@ -49,8 +49,8 @@ export default function LoginModal(props) {
             <input className='dialogInput' placeholder='username' onChange={(e) => setUsername(e.target.value)} value={username} pattern="[a-zA-Z0-9]+" required></input>
           </div>
           <div className='dialogContent'>
-            <span>Password (6 - 12 characters)</span>
-            <input type='password' className='dialogInput' placeholder='password' onChange={(e) => setPw(e.target.value)} minLength="6" maxLength="12" required></input>
+            <span>Password (6 - 20 characters))</span>
+            <input type='password' className='dialogInput' placeholder='password' onChange={(e) => setPw(e.target.value)} minLength="6" maxLength="20" required></input>
           </div>
           <div className='dialogActions'>
             <button className='save' onClick={handleSend} type='submit'><span>Confirm</span></button>

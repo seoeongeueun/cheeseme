@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre('save', function (next) {
     var user = this;
     if (user.isModified('password')) {
-        bcrypt.genSalt(process.env.SALTROUNDS, function (err, salt) {
+        bcrypt.genSalt(parseInt(process.env["SALTROUNDS"], 10), function (err, salt) {
             if (err) { return next(err) };
             bcrypt.hash(user.password, salt, function (err, hash) {
                 if (err) { return next(err) };

@@ -84,7 +84,7 @@ export default function Signup(props) {
       friends: [],
       isAdmin: false,
       positions: [{name: 'cal', x: 0, y: 0, show: true}, {name: 'todo', x: 0, y: 0, show: true}, {name: 'note', x: 0, y: 0, show: true}, {name: 'dday', x: 0, y: 0, show: true}, {name: 'reminder', x: 0, y: 0, show: true}],
-      settings: [false, false, true],
+      settings: [true, false, true],
       notifications: [{notiType: 'signUp', from: 'admin', to: username, done: false, date: new Date().setHours(0, 0, 0, 0)}],
       stickers: []
     });
@@ -189,8 +189,8 @@ export default function Signup(props) {
             <input type='email' className='dialogInput' placeholder='email' onChange={(e) => setEmail(e.target.value)} required></input>
           </div>
           <div className='dialogContent'>
-            <span>Enter your password (6 - 12 characters)</span>
-            <input type='password' className='dialogInput' placeholder='password' onChange={(e) => setPw(e.target.value)} minLength="6" maxLength="12" required></input>
+            <span>Enter your password (6 - 20 characters)</span>
+            <input type='password' className='dialogInput' placeholder='password' onChange={(e) => setPw(e.target.value)} minLength="6" maxLength="20" required></input>
           </div>
           <div className='dialogContent'>
             <span>Doule check your password.</span>

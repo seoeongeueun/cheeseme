@@ -32,6 +32,9 @@ import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 import StickerIcon from '../icons/sticker.png';
 import axios from 'axios';
 import StickerSettings from '../modals/StickerSettings';
+import CloudSticker from '../icons/cloudSticker.png';
+import Ghost1 from '../icons/ghost1.png';
+import Glitter from '../icons/glitter.png';
 
 function Left({editMode, setEditMode, date, userId, positions, onChangePositions}){
     const [showSettings, setShowSettings] = useState(false);
@@ -66,12 +69,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [imgSrc, setImageSrc] = useState();
 
     const [today, setToday] = useState(0);
-
-    // const [calPosition, setCalPosition] = useState({x: 0, y: 0})
-    // const [todoPosition, setTodoPosition] = useState({x: 0, y: 0})
-    // const [ddayPosition, setDdayPosition] = useState({x: 0, y: 0})
-    // const [notePosition, setNotePosition] = useState({x: 0, y: 0})
-    // const [reminderPosition, setReminderPosition] = useState({x: 0, y: 0});
 
     
     const [calPosition, setCalPosition] = useState({x: positions[0].x, y: positions[0].y})
@@ -128,10 +125,10 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     }, [id]);
 
     useEffect(() => {
-        if (stickers?.length !== stickerList?.length) {
+        if (stickers?.length !== stickerList?.length && userId) {
             updateList().catch((err) => console.log(err));
             changeStickers();
-        } else if (stickers?.length > 0) {
+        } else if (stickers?.length > 0 && userId) {
             updateList().catch((err) => console.log(err));
         }
     }, [stickers]);
@@ -179,8 +176,15 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             setReminder(true);
             setTodo(true);
             setGrid(true);
-            setStickers([]);
-            setStickerList([]);
+            setStickers([{name: 'cloud', show: true, x: 140, y: 530, round: true},
+                {name: 'ghost', show: true, x: 325, y: 430, round: true},
+                {name: 'glitter', show: true, x: 360, y: 210, round: false}]);
+            async function stickerListUpdate() {
+                setStickerList([{name: 'cloud', show: true, imgSrc: await getCroppedImg(CloudSticker, {width: 500, height: 500, x: 0, y: 0}, 0)},
+                {name: 'ghost', show: true, imgSrc: await getCroppedImg(Ghost1, {width: 455, height: 455, x: 22, y: 14}, 0)},
+                {name: 'glitter', show: true, imgSrc: await getCroppedImg(Glitter, {width: 333, height: 333, x: 74, y: 95}, 0)}]);
+            }
+            stickerListUpdate();
         }
     }, [userId]);
 

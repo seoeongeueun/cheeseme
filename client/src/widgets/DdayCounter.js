@@ -73,8 +73,10 @@ function DdayCounter(props) {
             setLoading(false);
         }
         else {
-            addNew();
-            setLoading(false);
+            if (props.userId) {
+                addNew();
+                setLoading(false);
+            }
         }
         setLoading(false);
     }, [edit, end])
