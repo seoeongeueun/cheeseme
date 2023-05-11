@@ -189,6 +189,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     useEffect(() => {
         if (!userId && body) {
             setMessage('');
+            setImgUrl('')
         }
     }, [body]);
 
@@ -196,6 +197,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         if (!userId && !edit) {
             setBody('');
             setTitle('');
+            setImgUrl('');
+            setSelectedImage(null);
+            setPostImage(false);
         }
     }, [date])
 
@@ -610,7 +614,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         let tmpTitle = document.getElementById("rightTitle").value;
         let imgPath = '';
         console.log('heee: ', selectedImage)
-        if (selectedImage) {
+        if (selectedImage && userId) {
             const formData = new FormData();
             formData.append("image", selectedImage);
             const res = await axios({
@@ -628,7 +632,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setSelectedImage(null);
         }
         
-        if (_id === ''){
+        if (_id === '' && userId){
             let res = await FetchAPIPost('/api/right/add/', {
                 owner: userId,
                 date: date,
@@ -655,28 +659,32 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 console.log('Error loading posts')
             })
         } else {
-            let res = await FetchAPIPost('/api/right/updateById/' + _id, {
-                like: heart,
-                bookmark: bookmark,
-                title: tmpTitle,
-                text: plain ? tmp : tmpText,
-                weather: weather,
-                hide: hide,
-                likes: likes,
-                imgUrl: imgPath !== '' ? imgPath : imgUrl,
-                grid: grid,
-                plain: plain
-            });
-            console.log("updated");
-            if (res) axios.get('/api/right/getByOwner/' + userId)
-            .then((res) => {
-                const n = res?.data;
-                if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
-                else setAllPosts([])
-            })
-            .catch((err) => {
-                console.log('Error loading posts')
-            })
+            if (userId) {
+                let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+                    like: heart,
+                    bookmark: bookmark,
+                    title: tmpTitle,
+                    text: plain ? tmp : tmpText,
+                    weather: weather,
+                    hide: hide,
+                    likes: likes,
+                    imgUrl: imgPath !== '' ? imgPath : imgUrl,
+                    grid: grid,
+                    plain: plain
+                });
+                console.log("updated");
+                if (res) axios.get('/api/right/getByOwner/' + userId)
+                    .then((res) => {
+                        const n = res?.data;
+                        if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
+                        else setAllPosts([])
+                    })
+                    .catch((err) => {
+                        console.log('Error loading posts')
+                })
+            }
+            
+            
         }
         setTmpBody(null);
 
@@ -823,7 +831,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                 {postImage ?
                                     <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                        <img src={edit ? selectedImage ? URL.createObjectURL(selectedImage) : imgUrl : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                        <img src={edit ? (selectedImage ? URL.createObjectURL(selectedImage) : imgUrl) : (userId && selectedImage ? imgUrl : selectedImage && URL.createObjectURL(selectedImage))} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                     </IconButton>
                                 :   
                                     <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
@@ -979,7 +987,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                     {postImage ?
                                         <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                             <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                            <img src={edit ? selectedImage ? URL.createObjectURL(selectedImage) : imgUrl : imgUrl} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                            <img src={edit ? (selectedImage ? URL.createObjectURL(selectedImage) : imgUrl) : (userId && selectedImage ? imgUrl : selectedImage && URL.createObjectURL(selectedImage))} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                         </IconButton>
                                     :   
                                         <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>

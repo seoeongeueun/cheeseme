@@ -178,7 +178,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             setGrid(true);
             setStickers([{name: 'cloud', show: true, x: 140, y: 530, round: true},
                 {name: 'ghost', show: true, x: 325, y: 430, round: true},
-                {name: 'glitter', show: true, x: 360, y: 210, round: false}]);
+                {name: 'glitter', show: true, x: 360, y: 200, round: false}]);
             async function stickerListUpdate() {
                 setStickerList([{name: 'cloud', show: true, imgSrc: await getCroppedImg(CloudSticker, {width: 500, height: 500, x: 0, y: 0}, 0)},
                 {name: 'ghost', show: true, imgSrc: await getCroppedImg(Ghost1, {width: 455, height: 455, x: 22, y: 14}, 0)},
