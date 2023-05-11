@@ -61,10 +61,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(document.cookie)
-  })
-
-  useEffect(() => {
+    axios.get('/checkCookie')
+          .then((res) => {
+            if (res?.data === false) {
+              onCurrentUserChange(null);
+              onCurrentNameChange(null);
+              onSetFriendId('');
+              localStorage.removeItem('token');
+          }
+    })
     if (userId) {
       axios.get('/api/users/find/' + userId)
         .then((res) => {
