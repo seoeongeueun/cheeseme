@@ -15,7 +15,9 @@ function StickerSettings(props){
     useEffect(() => {
         
         if (stickers?.length > 0 && props.userId) {
-            update();
+            if (stickers !== [{name: 'cloud', show: true, x: 140, y: 530, round: true},
+            {name: 'ghost', show: true, x: 325, y: 430, round: true},
+            {name: 'glitter', show: true, x: 360, y: 200, round: false}]) update();
         }
     }, [stickers])
 

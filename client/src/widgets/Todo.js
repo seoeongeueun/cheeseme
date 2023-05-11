@@ -20,7 +20,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     const [editMode, setEditMode] = useState(false);
     const [happy, setHappy] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [allTodos, setAllTodos] = useState([{date: new Date().setHours(0, 0, 0, 0), goals: [{id: 1, text: 'walk my dog', check: false}, {id: 2, text: 'do laundry', check: true}]}]);
+    const [allTodos, setAllTodos] = useState([{date: new Date().setHours(0, 0, 0, 0), goals: [{id: 1, text: 'order new sim card', check: false}, {id: 2, text: 'do laundry', check: true}]}]);
     const [_id, setId] = useState('');
 
     //change to redux later
@@ -44,7 +44,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                 console.log('Error loading todos');
             })
         } else {
-            setAllTodos([{date: new Date().setHours(0, 0, 0, 0), goals: [{id: 1, text: 'walk my dog', check: false}, {id: 2, text: 'do laundry', check: true}]}])
+            setAllTodos([{date: new Date().setHours(0, 0, 0, 0), goals: [{id: 1, text: 'order new sim card', check: false}, {id: 2, text: 'do laundry', check: true}]}])
         }
     }, [userId]);
 

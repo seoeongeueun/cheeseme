@@ -30,6 +30,7 @@ import CalendarContainer from '../containers/CalendarContainer';
 import ReminderContainer from '../containers/ReminderContainer.js';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 import StickerIcon from '../icons/sticker.png';
+import StickerColor from '../icons/stickerColor.png';
 import axios from 'axios';
 import StickerSettings from '../modals/StickerSettings';
 import CloudSticker from '../icons/cloudSticker.png';
@@ -156,7 +157,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setTodo((n.positions.find(obj => obj.name === 'todo')).show)
                 setSettings(n.settings);
                 setGrid(n.settings[0]);
-                setStickers(n.stickers);
+                setStickers(n.stickers?.length <= 0 ? [] : n.stickers);
                 updateList().catch((err) => console.log(err));
 
               }
@@ -328,7 +329,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                                 position={reminderPosition ? {x: Object.values(reminderPosition)[0] > width-322 ? width-322 : Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1] > height-(247) ? height-(247) : Object.values(reminderPosition)[1]}  : {x: 0, y: 0}}
                                                 onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
                         <div className="stickers">
-                            {stickerList?.length > 0 &&
+                            {(stickerList?.length > 0 && stickerList?.length === stickers?.length) &&
                                 stickerList.map((sticker, index) => {
                                     if (sticker?.show) {
                                         return (
@@ -437,7 +438,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                             {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
                         </div>
                         <div className="leftWidget">
-                            <button onClick={() => setShowStickerSettings(!showStickerSettings)}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
+                            {!showStickerSettings ? <button onClick={() => setShowStickerSettings(true)}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
+                                : <button onClick={() => setShowStickerSettings(false)}><img src={StickerColor} alt='stickerWidget' style={{width: '2.05rem'}}/></button>}
                             {showStickerSettings && <StickerSettings userId={userId} stickers={stickers} setStickers={setStickers} stickerList={stickerList} setStickerList={setStickerList}/>}
                         </div>
                         <div className="leftWidget">
@@ -472,7 +474,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                             position={reminderPosition ? {x: Object.values(reminderPosition)[0] > width-322 ? width-322 : Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1] > height-(247) ? height-(247) : Object.values(reminderPosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
                     <div className="stickers">
-                        {stickerList?.length > 0 &&
+                        {(stickerList?.length > 0 && stickerList?.length === stickers?.length) &&
                             stickerList.map((sticker, index) => {
                                 if (sticker?.show) {
                                     return (
@@ -581,7 +583,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
                     </div>
                     <div className="leftWidget">
-                        <button onClick={() => setShowStickerSettings(!showStickerSettings)}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
+                        {!showStickerSettings ? <button onClick={() => setShowStickerSettings(true)}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
+                                : <button onClick={() => setShowStickerSettings(false)}><img src={StickerColor} alt='stickerWidget' style={{width: '2.05rem'}}/></button>}
                         {showStickerSettings && <StickerSettings userId={userId} stickers={stickers} setStickers={setStickers} stickerList={stickerList} setStickerList={setStickerList}/>}
                     </div>
                     <div className="leftWidget">

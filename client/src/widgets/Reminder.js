@@ -33,7 +33,7 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                 console.log('Error loading reminders')
             })
         } else {
-            setReminders([{title: 'Log in', detail: 'This is guest mode!', check: false, _id: 0}, {title: 'Order new monitor', detail: 'check amazon shopping cart', check: true, _id: 1}])
+            setReminders([{title: 'This is guest mode', detail: 'You can test things out as guest but your changes will not be saved!', check: false, _id: 0}, {title: 'debit card expiration date 06/23', detail: 'card renewal required', check: true, _id: 1}])
         }
     }, [userId]);
 
