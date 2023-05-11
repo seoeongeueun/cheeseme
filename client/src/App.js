@@ -158,22 +158,26 @@ function App() {
       </header>
       <main>
           <div className="mainLeft">
-            {userId  ? 
+            {/* {userId  ? 
               search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> 
               : <EditModeLeftContainer/>
             : <div className="leftInnerBorderGuest">
                 <img src={BigCheese} alt='bigCheese' style={{width: '10rem', height: '10rem'}}/>
                 <span>Login Required</span>
-              </div>}
+              </div>} */}
+              {search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> 
+              : <EditModeLeftContainer/>}
           </div>
           <div className="mainRight">
-            {userId ?
+            {/* {userId ?
               search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/>
               : <RightContainer/>
             : <div className='rightInnerBorderGuest'>
                 <img src={SmallCheese} alt='smallCheese' style={{width: '10rem', height: '10rem'}}/>
                 <span>Login Required</span>
-              </div>}
+              </div>} */}
+              {search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/>
+              : <RightContainer/>}
           </div>
       </main>
     </div>

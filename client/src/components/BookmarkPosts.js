@@ -63,7 +63,7 @@ function BookmarkPosts(props){
                                 <span style={{marginLeft: '3rem'}}>{removeTags(p.text).substring(0, 200).length >= 200 ? removeTags(p.text).substring(0, 200) + '...' : removeTags(p.text).substring(0, 200)}</span>
                             </div>
                         </div>
-                    )) : <div className='foundSearchItemNotFound'><span>No Bookmarked Posts Yet</span></div>}
+                    )) : <div className='foundSearchItemNotFound'>{props.userId ? <span>No Bookmarked Posts Yet</span> : <span>Login Required</span>}</div>}
                 </div>
             </div>
         </div>

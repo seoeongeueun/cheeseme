@@ -30,6 +30,16 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
                     onCurrentNameChange(null);
                     onSetFriendId('');
                     localStorage.removeItem('token');
+                } else  {
+                    axios.get('/checkCookie')
+                        .then((res) => {
+                            if (res?.data === false) {
+                                onCurrentUserChange(null);
+                                onCurrentNameChange(null);
+                                onSetFriendId('');
+                                localStorage.removeItem('token');
+                            }
+                        })
                 }
             })
             .catch( (err) => {
@@ -39,10 +49,6 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
 
     const handleLogin = () => {
         setLogin(true);
-    }
-
-    const handleSignup = () => {
-
     }
 
     return (
