@@ -461,9 +461,9 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                     {notes && <Draggable bounds={{top: 0, left: 0, right: width-(202), bottom: height-(249)}}
                                         position={notePosition ? {x: Object.values(notePosition)[0] > width-202 ? width-202 : Object.values(notePosition)[0], y: Object.values(notePosition)[1] > height-(249) ? height-(249) : Object.values(notePosition)[1]}  : {x: 0, y: 0}}
                                         onStop={(e, {x, y}) => setNotePosition({x, y})} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
-                    {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: width-(152), bottom: height-(239)}} 
-                                                position={ddayPosition ? {x: Object.values(ddayPosition)[0] > width-152 ? width-152 : Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1] > height-(239) ? height-(239) : Object.values(ddayPosition)[1]}  : {x: 0, y: 0}}
-                                                onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode} userId={userId}/></div></Draggable>}
+                    {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: ddayEdit ? width - (385) : width-(152), bottom: height-(239)}} 
+                                                    position={ddayPosition ? {x: Object.values(ddayPosition)[0] > width-152 ? width-152 : Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1] > height-(239) ? height-(239) : Object.values(ddayPosition)[1]}  : {x: 0, y: 0}}
+                                                    onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode} userId={userId} setDdayEdit={setDdayEdit}/></div></Draggable>}
                     {reminder && <Draggable bounds={{top: 0, left: 0, right: width-(322), bottom: height-(247)}}
                                             position={reminderPosition ? {x: Object.values(reminderPosition)[0] > width-322 ? width-322 : Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1] > height-(247) ? height-(247) : Object.values(reminderPosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}

@@ -43,6 +43,8 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
             .catch( (err) => {
                 console.log('Error loading todos');
             })
+        } else {
+            setAllTodos([{date: new Date().setHours(0, 0, 0, 0), goals: [{id: 1, text: 'walk my dog', check: false}, {id: 2, text: 'do laundry', check: true}]}])
         }
     }, [userId]);
 

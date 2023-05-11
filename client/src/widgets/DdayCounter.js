@@ -29,6 +29,11 @@ function DdayCounter(props) {
                         setEdit(true);
                     }
                 })
+        } else {
+            setTitle('');
+            setEnd(null);
+            setStart(new Date().setHours(0, 0, 0, 0));
+            setLeft(0)
         }
     }, [props.userId])
 

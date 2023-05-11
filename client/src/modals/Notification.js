@@ -46,21 +46,15 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
         if (friends){
             updateFriends();
         }
-    }, [friends])
+    }, [friends]);
 
     useEffect(() => {
         if (tmpObj) {
             updateFriendNoti()
         }
-    }, [friendsNoti])
+    }, [friendsNoti]);
 
     const handleAccept = async(id, from) => {
-        // const newState = props.noti.map(n => {
-        //     if (n._id === id) {
-        //         return {...n, done: true};
-        //     }
-        //     return n;
-        // });
         onAddNoti({notiType: 'acceptRequest', from: name, to: from, done: true, date: new Date().setHours(0, 0, 0, 0)})
         setFriendName(from);
         axios.get('/api/users/' + from)
@@ -87,31 +81,6 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
         setTmpObj({notiType: 'receiveDecline', from: name, to: from, done: false, date: new Date().setHours(0, 0, 0, 0)})
         onToggleNoti(id)
     }
-
-    // {props.noti?.length > 0 ? props.noti.map((n) => (
-    //     n.type === 'sendRequest' ?
-    //         <div className='notiItem'>
-    //             <span>{n.from} sent you a friend request</span>
-    //             {n.done === false && 
-    //                 <div className='notificationButtons'>
-    //                     <button className='save' onClick={() => handleAccept(n._id)}>Accept</button>
-    //                     <button className='cancel' onClick={() => handleDecline(n._id)}>Decline</button>
-    //                 </div>
-    //             }
-    //         </div>
-    //     : n.type === 'declineRequest' ? <div className='notiItem'>
-    //         <span>You declined {n.to}'s friend request</span>
-    //         </div>
-    //         : n.type === 'acceptRequest' ? <div className='notiItem'>
-    //             <span>You and {n.to} are now friends!</span>
-    //             </div>
-    //             : <span></span>
-    // ))
-    // : <span>No Notifications</span>}
-
-    
-    // {n.type === 'acceptRequest' && <div className='notiItem'><span>You and {n.to} are now friends!</span></div>}
-    // {n.type === 'declineRequest' && <div className='notiItem'><span>You decliend {n.to}'s friend request</span></div>}
 
     return (
         <div className='settingsboxHeader'>

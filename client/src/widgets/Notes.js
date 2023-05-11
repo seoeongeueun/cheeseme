@@ -31,6 +31,8 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
                 .catch((err) => {
                     console.log('Error loading notes: ', err)
                 })
+        } else {
+            setAllNotes([{date: new Date().setHours(0, 0, 0, 0), text: 'This is an example note'}]);
         }
     }, [userId]);
 

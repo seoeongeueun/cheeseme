@@ -31,6 +31,9 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
             .catch((err) => {
                 console.log('Error loading reminders')
             })
+        } else {
+            setReminders([{title: 'Log in', detail: 'This is guest mode!', check: false, _id: 0}, {title: 'Order new monitor', detail: 'check amazon shopping cart', check: true, _id: 1}]);
+            setNotFound(true)
         }
     }, [userId]);
 
@@ -75,7 +78,12 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
     const handleAdd = () => {
         setEditMode(true);
         onCreate('', '');
-        setReminders([...reminders, {title: '', detail: '', check: false}])
+        if (userId) {
+            setReminders([...reminders, {title: '', detail: '', check: false}])
+        } else {
+            setReminders([...reminders, {title: '', detail: '', check: false, _id: reminders.length}])
+        }
+
     }
 
     const handleEditReminder = (i, title) => {
@@ -112,6 +120,14 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
         })
     }
 
+    const handleCheckTitleGuest = async(i) => {
+        const newState = reminders.map(r => {
+            if (r._id === i) return {...r, check: !r.check};
+            return r;
+        });
+        setReminders(newState);
+    }
+
     const handleDelete = (i) => {
         setReminders(reminders.filter( e => reminders.indexOf(e) !== i));
     }
@@ -134,7 +150,7 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
                             <button style={{backgroundColor: colorCode[i%colorCode.length]}}>
                                 {editMode ? 
                                 <><input className='reminderInput' value={r.title} onChange={(e) => handleEditReminder(i, e.target.value)}/><ClearRoundedIcon onClick={() => handleDelete(i)} sx={{fontSize: '1.2rem', color: '#f73939'}}/></>
-                                : <label style={{textDecorationLine: r.check ? 'line-through' : 'none', cursor: 'pointer', textDecorationThickness: '1px'}} onClick={() => handleCheckTitle(r._id)}>{r.title}</label>}
+                                : <label style={{textDecorationLine: r.check ? 'line-through' : 'none', cursor: 'pointer', textDecorationThickness: '1px'}} onClick={() => userId ? handleCheckTitle(r._id) : handleCheckTitleGuest(i)}>{r.title}</label>}
                             </button>
                             <button onClick={() => handleTitleClick()} style={{width: '10%', backgroundColor: colorCode[i%colorCode.length]}}>{show ? <ArrowDropUpIcon sx={{fontSize: '1.5rem'}}/> : <ArrowDropDownIcon sx={{fontSize: '1.7rem'}}/>}</button>
                         </div>
