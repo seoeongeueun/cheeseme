@@ -349,7 +349,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                 stickerList.map((sticker, index) => {
                                     if (sticker?.show) {
                                         return (
-                                            <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}}
+                                            <Draggable key={index} bounds={{top: 0, left: 0, right: width-70, bottom: height-112}}
                                                 position={{x: stickers[index].x > width-70 ? width-70 : stickers[index].x, y: stickers[index].y > height-112 ? height-112 : stickers[index].y}}
                                                 onStop={(e, {x, y}) => {stickers[index].x = x; stickers[index].y = y;
                                                     setStickers(prev => 
@@ -493,7 +493,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                 stickerList.map((sticker, index) => {
                                     if (sticker?.show) {
                                         return (
-                                            <Draggable bounds={{top: 0, left: 0, right: width-70, bottom: height-112}}
+                                            <Draggable key={index} bounds={{top: 0, left: 0, right: width-70, bottom: height-112}}
                                                 position={{x: stickers[index].x > width-70 ? width-70 : stickers[index].x, y: stickers[index].y > height-112 ? height-112 : stickers[index].y}}
                                                 onStop={(e, {x, y}) => {stickers[index].x = x; stickers[index].y = y;
                                                     setStickers(prev => 

@@ -66,7 +66,6 @@ function App() {
         .then((res) => {
           const n = res?.data;
           if (n) {
-            console.log('n: ', n)
             onChangeNotis(n.notifications);
             onChangeFriends(n.friends);
             onChangePositions(n.positions?.length === 0 ? [{name: 'cal', x: 0, y: 0, show: true},
