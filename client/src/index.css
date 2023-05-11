@@ -26,7 +26,7 @@ html {
 .container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 5rem 1fr min-content; /*header body footer*/
+  grid-template-rows: 7rem 1fr min-content; /*header body footer*/
   height: 100%
 }
 
@@ -34,8 +34,7 @@ header {
   padding: 3rem 0rem 0rem 0rem;
   font-size: 3rem;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   z-index: 1;
 }
@@ -44,6 +43,26 @@ header a {
   color: #000000;
   text-decoration: none;
   margin-right: 3rem;
+}
+
+.fill {
+  width: 11%;
+}
+
+.warning span {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.warning {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid #f73939;
+  border-radius: 10px;
+  padding: 0.5rem;
+  background-color: rgba(247, 57, 57, 0.1);
+  margin-top: 1rem;
 }
 
 /* checkbox setting */
@@ -92,6 +111,7 @@ textarea {
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
 .title {

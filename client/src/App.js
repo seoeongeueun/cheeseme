@@ -27,6 +27,7 @@ import { currentPositions } from './modules/positionsList';
 import NotiContainer from './containers/NotiContainer';
 import { setFriendId } from './modules/viewFriend.js';
 import { currentName } from './modules/nameInfo.js';
+import WarningIcon from '@mui/icons-material/Warning';
 
 import axios from 'axios';
 
@@ -37,7 +38,7 @@ function App() {
   const [showNoti, setShowNoti] = useState(false);
   const [noti, setNoti] = useState([]);
   const [unRead, setUnread] = useState(false);
-  const [showAccount, setShowAccount] = useState(false);
+  const [showAccount, setShowAccount] = useState(true);
   const [positions, setPositions] = useState([]);
   const inputRef = useRef(null);
 
@@ -67,6 +68,7 @@ function App() {
               onCurrentUserChange(null);
               onCurrentNameChange(null);
               onSetFriendId('');
+              onChangeNotis([]);
               localStorage.removeItem('token');
           }
     })
@@ -155,30 +157,35 @@ function App() {
             </div>
           </div>
         </div>
+        {!userId && <div className='warning'>
+          <WarningIcon sx={{fontSize: '2.3rem', color: '#f73939', marginRight: '0.5rem'}}/>
+          <span>Guest Mode: Your progress will not be saved. Please log in start using CheeseMe!</span>
+        </div>}
       </header>
+
       <main>
-          <div className="mainLeft">
-            {/* {userId  ? 
-              search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> 
-              : <EditModeLeftContainer/>
-            : <div className="leftInnerBorderGuest">
-                <img src={BigCheese} alt='bigCheese' style={{width: '10rem', height: '10rem'}}/>
-                <span>Login Required</span>
-              </div>} */}
-              {search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> 
-              : <EditModeLeftContainer/>}
-          </div>
-          <div className="mainRight">
-            {/* {userId ?
-              search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/>
-              : <RightContainer/>
-            : <div className='rightInnerBorderGuest'>
-                <img src={SmallCheese} alt='smallCheese' style={{width: '10rem', height: '10rem'}}/>
-                <span>Login Required</span>
-              </div>} */}
-              {search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/>
-              : <RightContainer/>}
-          </div>
+        <div className="mainLeft">
+          {/* {userId  ? 
+            search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> 
+            : <EditModeLeftContainer/>
+          : <div className="leftInnerBorderGuest">
+              <img src={BigCheese} alt='bigCheese' style={{width: '10rem', height: '10rem'}}/>
+              <span>Login Required</span>
+            </div>} */}
+            {search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> 
+            : <EditModeLeftContainer/>}
+        </div>
+        <div className="mainRight">
+          {/* {userId ?
+            search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/>
+            : <RightContainer/>
+          : <div className='rightInnerBorderGuest'>
+              <img src={SmallCheese} alt='smallCheese' style={{width: '10rem', height: '10rem'}}/>
+              <span>Login Required</span>
+            </div>} */}
+            {search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/>
+            : <RightContainer/>}
+        </div>
       </main>
     </div>
   );
