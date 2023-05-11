@@ -15,31 +15,6 @@ function DdayCounter(props) {
     const [loading, setLoading] = useState(true);
     const [date, setDate] = useState();
 
-    //change it to today later
-
-    // useEffect(() => {
-    //     let tmp = new Date().setHours(0, 0, 0, 0);
-    //     setStart(tmp)
-    //     setLoading(true);
-    //     axios.get('/api/dday/' + tmp)
-    //         .then( (res) => {
-    //             const n = res?.data;
-    //             if (n) {
-    //                 setDate(n.date)
-    //                 setEnd(n.end)
-    //                 setTitle(n.text)
-    //                 setLoading(false);
-    //             }
-    //             else{
-    //                 setDate(tmp)
-    //             }
-    //             return;
-    //         })
-    //         .catch( (err) => {
-    //             console.log('Error loading note')
-    //         })
-    // }, []);
-
     useEffect(() => {
         if (props.userId) {
             axios.get('/api/dday/getByOwner/' + props.userId)
@@ -126,13 +101,13 @@ function DdayCounter(props) {
                 {title ? <span style={{marginTop: '-0.8rem'}}>{title}</span> : <span style={{color: "#929292", marginTop: '-0.6rem'}}>name your d-day!</span>}
                 {end ? <span style={{color: "#929292", fontSize: '1.5rem'}}>{new Date(end).getMonth()+1}/{new Date(end).getDate()}/{new Date(end).getFullYear()}</span>
                     : <span style={{color: "#929292", fontSize: '1.5rem'}}>{new Date().getMonth()+1}/{new Date().getDate()}/{new Date().getFullYear()}</span>}
-                {edit ? <button onClick={() => setEdit(!edit)}><ExpandLessRoundedIcon sx={{fontSize: '18px', color: '#f73939', marginBottom: '-6px'}}/></button>
-                    : <button onClick={() => setEdit(!edit)}><ExpandMoreRoundedIcon sx={{fontSize: '18px', color: '#f73939', marginBottom: '5px', marginTop: '0px'}}/></button>}
+                {edit ? <button onClick={() => {setEdit(!edit); props.setDdayEdit(false)}}><ExpandLessRoundedIcon sx={{fontSize: '18px', color: '#f73939', marginBottom: '-6px'}}/></button>
+                    : <button onClick={() => {setEdit(!edit); props.setDdayEdit(true)}}><ExpandMoreRoundedIcon sx={{fontSize: '18px', color: '#f73939', marginBottom: '5px', marginTop: '0px'}}/></button>}
             </div>
             {edit && <div className='ddayCollapse'>
             <div className="endDate">
                 <span>End</span>
-                <DatePicker onChange={(e) => setEnd(e.getTime())} value={end ? new Date(end) : new Date()}/>
+                <DatePicker onCalendarOpen={() => props.setDdayEdit(true)} onCalendaarClose={() => props.setDdayEdit(false)} onChange={(e) => setEnd(e.getTime())} value={end ? new Date(end) : new Date()}/>
             </div>
             <div className='ddayTitle'>
                 <span>Title</span>
