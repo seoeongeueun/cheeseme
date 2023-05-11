@@ -235,7 +235,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
                 </div>
             </div>
             <div className="todoList">
-                {!editMode ? goals.map((value, key) => (<div className="checkboxButton">
+                {!editMode ? goals.map((value, key) => (<div className="checkboxButton" key={key}>
                     {value.check ? <CheckBoxRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(value.id, false)}/>
                     : <CheckBoxOutlineBlankRoundedIcon className='checkbox' sx={{fontSize: '1.5rem'}} onClick={() => handleCheck(value.id, true)}/>}
                     {value.text==='' ? <input onChange={(e) => handleEditTodo(value.id, e.target.value)} onKeyPress={handleKeyPress}/>

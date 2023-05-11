@@ -184,7 +184,20 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setImgUrl('');
             setPostImage(false);
         }
-    }, [imgUrl])
+    }, [imgUrl]);
+
+    useEffect(() => {
+        if (!userId && body) {
+            setMessage('');
+        }
+    }, [body]);
+
+    useEffect(() => {
+        if (!userId && !edit) {
+            setBody('');
+            setTitle('');
+        }
+    }, [date])
 
     useEffect(() => {
         if (allPosts?.length > 0 && date) {
@@ -284,7 +297,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setId('');
             setLoading(true);
             if (allPosts.length === 0) {
-                console.log('check1');
                 setIndex(-1)
                 setBody('');
                 setTitle('');
@@ -402,7 +414,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setId('');
             setLoading(true);
             setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`);
-            console.log('check2')
 
         }
     }, [date]);
@@ -414,7 +425,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 onChangeDate(post?.date);
             }
             else{
-                console.log('no post1');
+
             }
         }
         else if (value === 0){
@@ -423,7 +434,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 onChangeDate(post?.date);
             }
             else{
-                console.log('no post2');
             }
         }
     }, [value]);
