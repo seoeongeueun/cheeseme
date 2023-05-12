@@ -9,6 +9,7 @@ import notisList from './notisList';
 import nameInfo from './nameInfo';
 import positionsList from './positionsList';
 import viewFriend from './viewFriend';
+import stickers from './stickers';
 
 const rootReducer = combineReducers({
     goals,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     notisList,
     nameInfo,
     positionsList,
-    viewFriend
+    viewFriend,
+    stickers
     //add more reducers
 });
 

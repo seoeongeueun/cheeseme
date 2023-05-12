@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleLeft } from '../modules/editMode';
 import { currentPositions } from '../modules/positionsList';
+import { currentStickers, editSticker } from '../modules/stickers';
 import Left from '../components/Left.js';
 
 function EditModeLeftContainer() {
@@ -18,13 +19,16 @@ function EditModeLeftContainer() {
     }));
 
     const positions = useSelector(state => state.positionsList);
+    const stickers = useSelector(state => state.stickers);
 
     const dispatch = useDispatch();
     const onToggleLeft = () => dispatch(toggleLeft());
     const onChangePositions = positions => dispatch(currentPositions(positions));
+    const onChangeStickers = stickers => dispatch(currentStickers(stickers));
+    const onEdit = useCallback((id, x, y) => dispatch(editSticker(id, x, y)), [dispatch])
 
     return (
-        <Left userId={userId} positions={positions} editMode={editMode} setEditMode={onToggleLeft} date={date} onChangePositions={onChangePositions}/>
+        <Left userId={userId} positions={positions} editMode={editMode} setEditMode={onToggleLeft} date={date} onChangePositions={onChangePositions} stickers={stickers} onChangeStickers={onChangeStickers} onEdit={onEdit}/>
     )
 }
 

@@ -19,8 +19,8 @@ ddayRouter.get('/getByOwner/:owner', asyncHandler(async(req, res) => {
     res.send(dday);
 }));
 
-ddayRouter.post('/add', asyncHandler(async(req, res) => {
-    const owner = req.body.owner;
+ddayRouter.post('/add/:owner', asyncHandler(async(req, res) => {
+    const owner = req.params.owner;
     const text = req.body.text;
     const end = req.body.end;
     const start = req.body.start;

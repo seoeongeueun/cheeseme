@@ -21,7 +21,7 @@ function WidgetSettingsLeft(props){
               }
             })
             .catch( (err) => {
-                console.log('Error loading positions')
+                console.log('Error loading positions: ', props.userId)
             })
         }
     }, [props.userId]);

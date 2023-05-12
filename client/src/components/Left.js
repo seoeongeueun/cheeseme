@@ -37,11 +37,10 @@ import CloudSticker from '../icons/cloudSticker.png';
 import Ghost1 from '../icons/ghost1.png';
 import Glitter from '../icons/glitter.png';
 
-function Left({editMode, setEditMode, date, userId, positions, onChangePositions}){
+function Left({editMode, setEditMode, date, userId, positions, onChangePositions, stickers, onChangeStickers, onEdit}){
     const [showSettings, setShowSettings] = useState(false);
     const [showWidgetSettings, setShowWidgetSettings] = useState(false);
     const [showStickerSettings, setShowStickerSettings] = useState(false);
-
     const [grid, setGrid] = useState(true);
 
     const [todo, setTodo] = useState(positions.find(obj => obj.name === 'todo').show)
@@ -59,9 +58,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [rotation, setRotation] = useState(0)
     const [zoom, setZoom] = useState(1)
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-    const [stickerList, setStickerList] = useState([]);
 
-    const [stickers, setStickers] = useState([]);
+    const [stickerList, setStickerList] = useState([]);
 
     const [square, setSquare] = useState(false);
     const [rect, setRect] = useState(true);
@@ -114,11 +112,15 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     };
 
     const updateList = async() => {
-        const tmp = [];
-        for (const sticker of stickers) {
-            tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
-        };
-        setStickerList(tmp);
+        if (stickers?.length === 0) {
+            setStickerList([])
+        } else {
+            const tmp = [];
+            for (const sticker of stickers) {
+                tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
+            };
+            setStickerList(tmp);
+        }
     }
     
     useEffect(() => {
@@ -126,9 +128,9 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     }, [id]);
 
     useEffect(() => {
-        if (stickers?.length !== stickerList?.length && userId) {
+        if (stickers?.length !== stickerList?.length && stickers?.length !== 0) {
             updateList().catch((err) => console.log(err));
-            changeStickers();
+            if (userId) changeStickers();
         } else if (stickers?.length > 0 && userId) {
             updateList().catch((err) => console.log(err));
         }
@@ -157,9 +159,9 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setTodo((n.positions.find(obj => obj.name === 'todo')).show)
                 setSettings(n.settings);
                 setGrid(n.settings[0]);
-                setStickers(n.stickers?.length <= 0 ? [] : n.stickers);
-                updateList().catch((err) => console.log(err));
-
+                onChangeStickers(n.stickers?.length <= 0 ? [] : n.stickers);
+                if (n.stickers?.length <= 0) setStickerList([]);
+                else updateList().catch((err) => console.log(err));
               }
             })
             .catch( (err) => {
@@ -177,15 +179,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             setReminder(true);
             setTodo(true);
             setGrid(true);
-            setStickers([{name: 'cloud', show: true, x: 140, y: 530, round: true},
-                {name: 'ghost', show: true, x: 325, y: 430, round: true},
-                {name: 'glitter', show: true, x: 360, y: 200, round: false}]);
-            async function stickerListUpdate() {
-                setStickerList([{name: 'cloud', show: true, imgSrc: await getCroppedImg(CloudSticker, {width: 500, height: 500, x: 0, y: 0}, 0)},
-                {name: 'ghost', show: true, imgSrc: await getCroppedImg(Ghost1, {width: 455, height: 455, x: 22, y: 14}, 0)},
-                {name: 'glitter', show: true, imgSrc: await getCroppedImg(Glitter, {width: 333, height: 333, x: 74, y: 95}, 0)}]);
-            }
-            stickerListUpdate();
         }
     }, [userId]);
 
@@ -250,7 +243,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                     setMessage('Name already taken')
                     return
                 }
-                setStickers([...stickers, {name: stickerName, imgSrc: imgSrc, 
+                onChangeStickers([...stickers, {name: stickerName, imgSrc: imgSrc, 
                 round: circle, croppedAreaPixels: croppedAreaPixels, rotation: rotation, angle: angle ? angle : 0, show: true, x: 0, y: 0}])
                 setStickerList([...stickerList, {name: stickerName, imgSrc: await getCroppedImg(imgSrc, croppedAreaPixels, rotation), show: true}]);
                 setAddPic(false);
@@ -336,13 +329,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                             <Draggable key={index} bounds={{top: 0, left: 0, right: width-70, bottom: height-112}}
                                                 position={{x: stickers[index].x > width-70 ? width-70 : stickers[index].x, y: stickers[index].y > height-112 ? height-112 : stickers[index].y}}
                                                 onStop={(e, {x, y}) => {stickers[index].x = x; stickers[index].y = y;
-                                                    setStickers(prev => 
-                                                        prev.map(obj => {
-                                                            if (obj.name === sticker.name) {
-                                                                return {...obj, x: x, y: y};
-                                                            }
-                                                            return obj;
-                                                        }))}} handle="strong">
+                                                    onEdit(sticker.name, x, y)}} handle="strong">
                                                 <div className="stickerWidget">
                                                     <img alt={sticker.name} src={sticker.imgSrc} style={{borderRadius: stickers[index].round && "50%"}}/>
                                                     {editMode && <strong>
@@ -440,7 +427,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         <div className="leftWidget">
                             {!showStickerSettings ? <button onClick={() => setShowStickerSettings(true)}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
                                 : <button onClick={() => setShowStickerSettings(false)}><img src={StickerColor} alt='stickerWidget' style={{width: '2.05rem'}}/></button>}
-                            {showStickerSettings && <StickerSettings userId={userId} stickers={stickers} setStickers={setStickers} stickerList={stickerList} setStickerList={setStickerList}/>}
+                            {showStickerSettings && <StickerSettings userId={userId} stickers={stickers} onChangeStickers={onChangeStickers} stickerList={stickerList} setStickerList={setStickerList}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setEditMode()}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
@@ -481,13 +468,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                         <Draggable key={index} bounds={{top: 0, left: 0, right: width-70, bottom: height-112}}
                                             position={{x: stickers[index].x > width-70 ? width-70 : stickers[index].x, y: stickers[index].y > height-112 ? height-112 : stickers[index].y}}
                                             onStop={(e, {x, y}) => {stickers[index].x = x; stickers[index].y = y;
-                                                setStickers(prev => 
-                                                    prev.map(obj => {
-                                                        if (obj.name === sticker.name) {
-                                                            return {...obj, x: x, y: y};
-                                                        }
-                                                        return obj;
-                                                    }))}} handle="strong">
+                                                onEdit(sticker.name, x, y)}} handle="strong">
                                             <div className="stickerWidget">
                                                 <img alt={sticker.name} src={sticker.imgSrc} style={{borderRadius: stickers[index].round && "50%"}}/>
                                                 {editMode && <strong>
@@ -585,7 +566,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                     <div className="leftWidget">
                         {!showStickerSettings ? <button onClick={() => setShowStickerSettings(true)}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
                                 : <button onClick={() => setShowStickerSettings(false)}><img src={StickerColor} alt='stickerWidget' style={{width: '2.05rem'}}/></button>}
-                        {showStickerSettings && <StickerSettings userId={userId} stickers={stickers} setStickers={setStickers} stickerList={stickerList} setStickerList={setStickerList}/>}
+                        {showStickerSettings && <StickerSettings userId={userId} stickers={stickers} onChangeStickers={onChangeStickers} stickerList={stickerList} setStickerList={setStickerList}/>}
                     </div>
                     <div className="leftWidget">
                         <button onClick={() => setEditMode()}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>

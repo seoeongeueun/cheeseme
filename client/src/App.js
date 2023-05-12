@@ -27,7 +27,11 @@ import { currentPositions } from './modules/positionsList';
 import NotiContainer from './containers/NotiContainer';
 import { setFriendId } from './modules/viewFriend.js';
 import { currentName } from './modules/nameInfo.js';
+import { currentStickers } from './modules/stickers.js';
 import WarningIcon from '@mui/icons-material/Warning';
+import CloudSticker from './icons/cloudSticker.png';
+import Ghost1 from './icons/ghost1.png';
+import Glitter from './icons/glitter.png';
 
 import axios from 'axios';
 
@@ -53,6 +57,7 @@ function App() {
   const onCurrentUserChange = id => dispatch(currentUser(id));
   const onSetFriendId = friendId => dispatch(setFriendId(friendId));
   const onCurrentNameChange = name => dispatch(currentName(name));
+  const onChangeStickers = stickers => dispatch(currentStickers(stickers));
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -69,6 +74,9 @@ function App() {
               onCurrentNameChange(null);
               onSetFriendId('');
               onChangeNotis([]);
+              onChangeStickers([{name: 'cloud', x: 140, y: 530, show: true, imgSrc: CloudSticker, croppedAreaPixels: {width: 500, height: 500, x: 0, y: 0}, rotation: 0},
+              {name: 'ghost', x: 325, y: 430, show: true, imgSrc: Ghost1, croppedAreaPixels: {width: 455, height: 455, x: 22, y: 14}, rotation: 0},
+              {name: 'glitter', x: 360, y: 200, show: true, imgSrc: Glitter, croppedAreaPixels: {width: 333, height: 333, x: 74, y: 95}, rotation: 0}])
               localStorage.removeItem('token');
           }
     })
@@ -85,10 +93,11 @@ function App() {
               {name: 'todo', x: 0, y: 0, show: true},
               {name: 'reminder', x: 0, y: 0, show: true}] : n.positions);
             onCurrentNameChange(n.name);
+            onChangeStickers(n.stickers?.length === 0 ? [] : n.stickers);
           }
         })
         .catch( (err) => {
-            console.log('Error loading note')
+            console.log('Error loading note');
         })
     }
   }, [userId])

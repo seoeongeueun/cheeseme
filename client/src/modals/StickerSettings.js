@@ -13,11 +13,8 @@ function StickerSettings(props){
     }
 
     useEffect(() => {
-        
         if (stickers?.length > 0 && props.userId) {
-            if (stickers !== [{name: 'cloud', show: true, x: 140, y: 530, round: true},
-            {name: 'ghost', show: true, x: 325, y: 430, round: true},
-            {name: 'glitter', show: true, x: 360, y: 200, round: false}]) update();
+            update();
         }
     }, [stickers])
 
@@ -25,10 +22,10 @@ function StickerSettings(props){
         let imgSrc = stickers.find(s => s.name === name).imgSrc;
         axios.post('/deleteImg/' + imgSrc.replace(/^images\\/i, ''))
             .then((res) => {
-                console.log(res);
+                console.log('Sticker deleted');
         })
         setStickers(stickers.filter(s=> s.name !== name));
-        props.setStickers(stickers.filter(s=> s.name !== name));
+        props.onChangeStickers(stickers.filter(s=> s.name !== name));
         props.setStickerList(props.stickerList.filter(s => s.name !== name));
         if (stickers.filter(s=> s.name !== name).length === 0) {
             let res = await FetchAPIPost('/api/users/update/' + props.userId, {
@@ -43,7 +40,7 @@ function StickerSettings(props){
                 ? { ...s, show: !s.show}
                 : s
         ))
-        props.setStickers(stickers.map(s =>
+        props.onChangeStickers(stickers.map(s =>
             s.name === name
             ? { ...s, show: !s.show}
             : s

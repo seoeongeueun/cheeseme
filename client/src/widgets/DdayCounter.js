@@ -60,8 +60,7 @@ function DdayCounter(props) {
             });
         }
         const addNew = async () => {
-            let res = await FetchAPIPost('/api/dday/add/', {
-                owner: props.userId,
+            let res = await FetchAPIPost('/api/dday/add/' + props.userId, {
                 start: new Date().setHours(0, 0, 0, 0),
                 text: title,
                 end: end
