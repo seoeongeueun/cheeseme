@@ -90,6 +90,11 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
 
     useEffect(() => {
+        console.log(allPosts)
+        console.log(date)
+        console.log(`${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
+    }, [allPosts])
+    useEffect(() => {
         if (userId) {
             axios.get('/api/right/getByOwner/' + userId)
                 .then((res) => {
@@ -206,7 +211,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     useEffect(() => {
         if (allPosts?.length > 0 && date) {
             if ((userId === friendId && userId !== '') || (friendId === '' && userId !== '')) {
-                const post = allPosts.find(p => p.date === date);
+                const post = allPosts.find(p => `${new Date(p.date).getMonth()+1}.${new Date(p.date).getDate()}.${new Date(p.date).getFullYear()}` === `${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`);
                 if (post) {
                     setIndex(allPosts.indexOf(post))
                     setBody(post?.text);
@@ -242,7 +247,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 }
             }
             else {
-                const post = allPosts.find(p => p.date === date);
+                const post = allPosts.find(p => `${new Date(p.date).getMonth()+1}.${new Date(p.date).getDate()}.${new Date(p.date).getFullYear()}` === `${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`);
                 if (post) {
                     if (post.hide) {
                         setIndex(post ? allPosts.indexOf(post) : 0)
@@ -322,7 +327,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     useEffect(() => {
         if (allPosts?.length > 0 && date) {
             if ((userId === friendId && userId !== '') || (friendId === '' && userId !== '')) {
-                const post = allPosts.find(p => p.date === date);
+                const post = allPosts.find(p => `${new Date(p.date).getMonth()+1}.${new Date(p.date).getDate()}.${new Date(p.date).getFullYear()}` === `${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`);
                 // console.log(new Date(date).toString());
                 if (post) {
                     setIndex(allPosts.indexOf(post))
@@ -359,7 +364,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 }
             }
             else {
-                const post = allPosts.find(p => p.date === date);
+                const post = allPosts.find(p => `${new Date(p.date).getMonth()+1}.${new Date(p.date).getDate()}.${new Date(p.date).getFullYear()}` === `${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`);
                 if (post) {
                     if (post.hide) {
                         setIndex(post ? allPosts.indexOf(post) : 0)
