@@ -155,5 +155,6 @@ app.get('/', function (req, res) {
   });
 
 app.get('*', function (req, res) {
+    console.log('!!: ', process.env.CLIENT_BUILD_PATH)
   res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
