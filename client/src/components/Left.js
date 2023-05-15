@@ -186,12 +186,18 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         const resizeObserver = new ResizeObserver((event) => {
             // Depending on the layout, you may need to swap inlineSize with blockSize
             // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry/contentBoxSize
-            setWidth(event[0].contentBoxSize[0].inlineSize);
-            const bodyRef = document.getElementById("leftContent");
-            if (bodyRef){
-                setHeight(bodyRef.clientHeight)
+            window.requestAnimationFrame(() => {
+                if (!Array.isArray(event) || !event.length) {
+                  return;
+                }
+                setWidth(event[0].contentBoxSize[0].inlineSize);
+                const bodyRef = document.getElementById("leftContent");
+                if (bodyRef){
+                    setHeight(bodyRef.clientHeight)
 
-            }
+                }
+            });
+            
             //setHeight(event[0].contentBoxSize[0].blockSize);
             //console.log("height: ", event[0].contentBoxSize[0].blockSize)
             //console.log("width: ", event[0].contentBoxSize[0].inlineSize)

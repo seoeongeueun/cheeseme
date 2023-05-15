@@ -1,6 +1,6 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
 import { Dialog, AppBar, Toolbar, IconButton, Typography, Slide } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
 const styles = {
