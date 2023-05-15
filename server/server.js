@@ -40,11 +40,8 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, '../client/build')));
 
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+
 
 app.use('/api/seed', seedRouter);
 app.use('/api/notes', notesRouter);
@@ -150,6 +147,13 @@ app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 });
 
-app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+const clientBuildPath = process.env.CLIENT_BUILD_PATH || path.join(__dirname, '../client/build');
+app.use(express.static(clientBuildPath));
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
   });
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
+});
