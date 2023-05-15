@@ -148,3 +148,7 @@ app.get('/checkCookie', (req, res) => {
 app.listen(port, () => {
     console.log(`server at http://localhost:${port}`)
 });
+
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
