@@ -25,7 +25,7 @@ const port = process.env.PORT || 3001;
 const ORIGIN = process.env.ORIGIN ? process.env.ORIGIN : "127.0.0.1:3000";
 const __dirname = path.resolve();
 
-require('dotenv').config();
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
