@@ -1,12 +1,7 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import Dialog from '@material-ui/core/Dialog'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import Typography from '@material-ui/core/Typography'
-import CloseIcon from '@material-ui/icons/Close'
-import Slide from '@material-ui/core/Slide'
+import { Dialog, AppBar, Toolbar, IconButton, Typography, Slide } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const styles = {
   appBar: {

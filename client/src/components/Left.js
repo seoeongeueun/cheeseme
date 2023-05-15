@@ -15,9 +15,9 @@ import OpenWithRoundedIcon from '@mui/icons-material/OpenWithRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import Cropper from 'react-easy-crop';
-import Slider from '@material-ui/core/Slider';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { Slider } from '@mui/material';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import { getCroppedImg, getRotatedImage } from '../modals/cropImage';
 import { getOrientation } from 'get-orientation/browser'
 import CropSquareRoundedIcon from '@mui/icons-material/CropSquareRounded';

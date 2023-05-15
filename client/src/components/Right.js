@@ -90,11 +90,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
 
     useEffect(() => {
-        console.log(allPosts)
-        console.log(date)
-        console.log(`${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`)
-    }, [allPosts])
-    useEffect(() => {
         if (userId) {
             axios.get('/api/right/getByOwner/' + userId)
                 .then((res) => {
