@@ -1,6 +1,9 @@
 {
   "name": "server",
-  "proxy": "cheeseme-seoeongeueun.koyeb.app/",
+  "proxy": "http://localhost:3001",
+  "engines": {
+    "node": "19.2.0"
+  },
   "type": "module",
   "version": "1.0.0",
   "description": "",
