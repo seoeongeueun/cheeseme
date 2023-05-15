@@ -60,7 +60,9 @@ const imagesDir = path.join(__dirname, "images");
 if (!fs.existsSync("images")) {
     console.error("Images folder does not exist. Creating images folder...");
     fs.mkdirSync(imagesDir);
-  }
+} else {
+    console.log('Images folder exists')
+}
 
 const fileStorage = multer.diskStorage({
     destination: (req,file,cb)=>{
