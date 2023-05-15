@@ -147,12 +147,8 @@ app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 });
 
-const buildPath = path.join(__dirname, '..', 'client', 'build');
-app.use(express.static(buildPath));
+app.use(express.static(path.join(__dirname, process.env.CLIENT_BUILD_PATH)));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(buildPath, 'index.html'));
-});
-app.get('*', function (req, res) {
-  res.sendFile(path.join(buildPath, 'index.html'));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, process.env.CLIENT_BUILD_PATH, 'index.html'));
 });
