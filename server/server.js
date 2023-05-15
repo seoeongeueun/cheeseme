@@ -56,11 +56,12 @@ app.use('/api/right', rightRouter);
 app.use('/api/users', userRouter);
 app.use('/api/reminder', reminderRouter);
 
+const imagesDir = path.join(__dirname, "images");
 try {
-  fs.readdirSync("images");
+  fs.readdirSync(imagesDir);
 } catch (err) {
   console.error("Images folder does not exist. Creating images folder...");
-  fs.mkdirSync("images");
+  fs.mkdirSync(imagesDir);
 }
 
 const fileStorage = multer.diskStorage({
