@@ -147,7 +147,7 @@ app.get('/checkCookie', (req, res) => {
 
 
 app.listen(port, () => {
-    console.log(`server at http://localhost:${port}`)
+    console.log(`Server listening on port ${port}`)
 });
 
 app.get('*', function (req, res) {
