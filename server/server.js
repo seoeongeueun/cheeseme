@@ -1,7 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import seedRouter from './routes/seedRoutes.js';
 import notesRouter from './routes/notesRouter.js';
 import todosRouter from './routes/todosRouter.js';
 import ddayRouter from './routes/ddayRouter.js';
@@ -40,10 +39,6 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-
-
-
-app.use('/api/seed', seedRouter);
 app.use('/api/notes', notesRouter);
 app.use('/api/todos', todosRouter);
 app.use('/api/dday', ddayRouter);

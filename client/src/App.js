@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState, useRef } from 'react';
-// import Left from './components/Left';
 import EditModeLeftContainer from './containers/EditModeLeftContainer';
 import RightContainer from './containers/RightContainer';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
