@@ -1,0 +1,26 @@
+# fly.toml app configuration file generated for cheese-me on 2023-05-16T17:52:01+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "cheese-me"
+primary_region = "nrt"
+
+[env]
+  PORT = "8080"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[build]
+  name = "default"
+  dir = "."  # Path to the root folder (server folder)
+  buildCommand = "npm install && (cd ../client && npm install && npm run build)"
+
+# Configure your deployment
+[deploy]
+  runCommand = "node server.js"
