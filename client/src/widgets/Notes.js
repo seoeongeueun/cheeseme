@@ -37,7 +37,7 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
     }, [userId]);
 
     useEffect(() => {
-        if (_id === '') {
+        if (_id === '' && userId) {
             axios.get('/api/notes/getByOwner/' + userId)
             .then((res) => {
                 setLoading(true);

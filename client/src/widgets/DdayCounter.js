@@ -67,7 +67,7 @@ function DdayCounter(props) {
             });
             setStart(new Date().setHours(0, 0, 0, 0));
         }
-        if (start) {
+        if (start && props.userId) {
             change();
             setLoading(false);
         }

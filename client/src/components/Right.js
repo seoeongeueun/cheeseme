@@ -107,7 +107,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     }, [userId]);
 
     useEffect(() => {
-        if (friendId !== '' && friendId !== undefined) {
+        if (friendId !== '' && friendId !== undefined && userId) {
             axios.get('/api/right/getByOwner/' + friendId)
                 .then((res) => {
                     const n = res?.data;
@@ -127,7 +127,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     useEffect(() => {
         if (_id === '') {
-            if (friendId !== '') {
+            if (friendId !== '' && userId) {
                 axios.get('/api/right/getByOwner/' + friendId)
                 .then((res) => {
                     setLoading(true);
@@ -145,35 +145,37 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 })
             }
             else {
-                axios.get('/api/right/getByOwner/' + userId)
-                .then((res) => {
-                    setLoading(true);
-                    const n = res?.data;
-                    if (n) {
-                        setAllPosts(n.sort((a, b) => a.date - b.date))
-                    }
-                    else {
-                        setAllPosts([]);
-                        setIndex(-1)
-                        setBody('');
-                        setTitle('');
-                        setHeart(false);
-                        setImgUrl('');
-                        setBookmark(false);
-                        setHide(false);
-                        setLikes([]);
-                        setWeather('');
-                        setId('');
-                        setPostImage(false);
-                        setGrid(false);
-                        setPlain(false);
-                        setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
-                    }
-                    return;
-                })
-                .catch( (err) => {
-                    console.log('Error loading posts: ', err);
-                })
+                if (userId) {
+                    axios.get('/api/right/getByOwner/' + userId)
+                        .then((res) => {
+                        setLoading(true);
+                        const n = res?.data;
+                        if (n) {
+                            setAllPosts(n.sort((a, b) => a.date - b.date))
+                        }
+                        else {
+                            setAllPosts([]);
+                            setIndex(-1)
+                            setBody('');
+                            setTitle('');
+                            setHeart(false);
+                            setImgUrl('');
+                            setBookmark(false);
+                            setHide(false);
+                            setLikes([]);
+                            setWeather('');
+                            setId('');
+                            setPostImage(false);
+                            setGrid(false);
+                            setPlain(false);
+                            setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+                        }
+                        return;
+                    })
+                    .catch( (err) => {
+                        console.log('Error loading posts: ', err);
+                    })
+                }
             }
             
         }
