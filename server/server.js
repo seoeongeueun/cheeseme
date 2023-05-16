@@ -151,5 +151,6 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 // Serve the index.html file
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    res.render(__dirname);
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
