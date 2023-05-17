@@ -44,6 +44,9 @@ function App() {
   const [showAccount, setShowAccount] = useState(true);
   const [positions, setPositions] = useState([]);
   const inputRef = useRef(null);
+  const instance = axios.create({
+    baseURL: "https://cheese-me.fly.dev/",
+  });
 
   const { userId } = useSelector(state => ({
     userId: state.loginInfo.userId,
@@ -66,7 +69,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    axios.get('/checkCookie')
+    instance.get('/checkCookie')
           .then((res) => {
             if (res?.data === false) {
               onCurrentUserChange(null);
@@ -79,8 +82,11 @@ function App() {
               localStorage.removeItem('token');
           }
     })
+    .catch( (err) => {
+      console.log('Error: ', err);
+    })
     if (userId) {
-      axios.get('/api/users/find/' + userId)
+      instance.get('/api/users/find/' + userId)
         .then((res) => {
           const n = res?.data;
           if (n) {

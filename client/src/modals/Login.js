@@ -31,6 +31,9 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
                                 localStorage.removeItem('token');
                             }
                         })
+                        .catch( (err) => {
+                            console.log('Error: ', err);
+                        })
                 }
             })
             .catch( (err) => {
