@@ -11,6 +11,9 @@ function DisplaySettings(props){
     const { date } = useSelector(state => ({
         date: state.datePick.date,
     }));
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     const handleGridClick = async(bool) => {
         props.setGrid(bool)
@@ -19,7 +22,7 @@ function DisplaySettings(props){
             grid: bool
         });
         if (props.userId && res) {
-            axios.get('/api/right/getByOwner/' + props.userId)
+            instance.get('/api/right/getByOwner/' + props.userId)
                 .then((res) => {
                     const n = res?.data;
                     if (n) props.setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -37,7 +40,7 @@ function DisplaySettings(props){
             plain: bool,
         });
         if (props.userId && res) {
-            axios.get('/api/right/getByOwner/' + props.userId)
+            instance.get('/api/right/getByOwner/' + props.userId)
                 .then((res) => {
                     const n = res?.data;
                     if (n) props.setAllPosts(n.sort((a, b) => a.date - b.date))

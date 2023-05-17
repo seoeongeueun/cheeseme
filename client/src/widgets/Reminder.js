@@ -18,9 +18,12 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
     const [colorCode, setColorCode] = useState(['rgba(103, 235, 250, 0.3)', 'rgba(250, 169, 157, 0.3)', 'rgba(253, 223, 126, 0.3)', 'rgba(206, 151, 251, 0.3)'])
     const [colorCodeLight, setColorCodeLight] = useState(['rgba(103, 235, 250, 0.1)', 'rgba(250, 169, 157, 0.1)', 'rgba(253, 223, 126, 0.1)', 'rgba(206, 151, 251, 0.1)'])
     //rgba(250, 169, 157, 0.4) rgba(253, 223, 126, 0.4) rgba(155, 251, 225, 0.4) rgba(103, 235, 250, 0.4)
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
     useEffect(() => {
         if (userId) {
-            axios.get('/api/reminder/' + userId)
+            instance.get('/api/reminder/' + userId)
             .then((res) => {
                 if (res?.data){
                     setReminders(res?.data.reminders);

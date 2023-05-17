@@ -14,10 +14,13 @@ function DdayCounter(props) {
     const [edit, setEdit] = useState(false);
     const [loading, setLoading] = useState(true);
     const [date, setDate] = useState();
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     useEffect(() => {
         if (props.userId) {
-            axios.get('/api/dday/getByOwner/' + props.userId)
+            instance.get('/api/dday/getByOwner/' + props.userId)
                 .then((res) => {
                     if (res?.data) {
                         setTitle(res?.data.text);

@@ -21,6 +21,9 @@ export default function Signup(props) {
   const [foundEmail, setFoundEmail] = React.useState(false)
   const [send, setSend] = React.useState(false);
   const [checked, setChecked] = React.useState(false);
+  const instance = axios.create({
+    baseURL: "https://cheese-me.fly.dev/",
+  });
 
 
   React.useEffect(() => {
@@ -120,7 +123,7 @@ export default function Signup(props) {
 
   const handleSend = async() => {
     let tmp = ''
-    axios.get('/api/users/' + username)
+    instance.get('/api/users/' + username)
             .then( (res) => {
                 const n = res?.data;
                 if (n) {
@@ -131,7 +134,7 @@ export default function Signup(props) {
             .catch( (err) => {
                 console.log('Error finding user: ', err);
             });
-    axios.get('/api/users/search/' + email)
+    instance.get('/api/users/search/' + email)
           .then( (res) => {
               const n = res?.data;
               if (n) {

@@ -8,10 +8,13 @@ import LoginModal from './LoginModal.js';
 function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId, name}){
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false);
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     const handleLogout = () => {
         setLogin(false);
-        axios.get('/logout')
+        instance.get('/logout')
             .then( (res) => {
                 if (res?.data.success) {
                     onCurrentUserChange(null);
@@ -19,7 +22,7 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
                     onSetFriendId('');
                     localStorage.removeItem('token');
                 } else  {
-                    axios.get('/checkCookie')
+                    instance.get('/checkCookie')
                         .then((res) => {
                             if (res?.data === false) {
                                 onCurrentUserChange(null);

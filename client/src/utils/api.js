@@ -10,7 +10,7 @@ export const FetchAPIPost = async (url, params) => {
             params = {};
         }
 
-        const res = await axios({
+        const res = await instance({
             method: 'POST',
             url: url,
             data: params,
@@ -34,7 +34,7 @@ export const FetchAPIPostImg = async (url, params) => {
             params = {};
         }
 
-        const res = await axios({
+        const res = await instance({
             method: 'POST',
             url: url,
             data: params,
@@ -64,7 +64,7 @@ export const FetchAPIPostLogin = async (url, params) => {
             url: url,
             data: params,
             header: {
-                'Access-Control-Allow-Origin': 'https://main--cheeseme.netlify.app/login',
+                'Access-Control-Allow-Origin': 'https://main--cheeseme.netlify.app',
                 'Content-Type': 'application/json'
             },
             withCredentials: true,
@@ -116,7 +116,7 @@ export const FetchApiDelete = async (url, params) => {
 
         if (params == undefined) params = {};
 
-        const response = await axios({
+        const response = await instance({
             method: "Delete",
             url: url,
             data: params,

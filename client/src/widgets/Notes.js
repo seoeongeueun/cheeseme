@@ -15,10 +15,13 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
     const quillRef = useRef();
     const [allNotes, setAllNotes] = useState([]);
     const [_id, setId] = useState('');
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     useEffect(() => {
         if (userId) {
-            axios.get('/api/notes/getByOwner/' + userId)
+            instance.get('/api/notes/getByOwner/' + userId)
                 .then((res) => {
                     const n = res?.data;
                     if (n) {
@@ -38,7 +41,7 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
 
     useEffect(() => {
         if (_id === '' && userId) {
-            axios.get('/api/notes/getByOwner/' + userId)
+            instance.get('/api/notes/getByOwner/' + userId)
             .then((res) => {
                 setLoading(true);
                 const n = res?.data;

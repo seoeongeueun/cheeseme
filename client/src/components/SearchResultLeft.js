@@ -9,7 +9,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
 
     useEffect(() => {
         if (keyword && userId) {
-            axios.get('/api/notes/getByOwner/' + userId)
+            instance.get('/api/notes/getByOwner/' + userId)
             .then( (res) => {
                 const n = res?.data;
                 if (n) setFoundNotes(res?.data.filter(n => n.text.toLowerCase().includes(keyword.toLowerCase())));
@@ -18,7 +18,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
             .catch( (err) => {
                 console.log('Error loading notes: ', err)
             });
-            axios.get('/api/todos/getByOwner/' + userId)
+            instance.get('/api/todos/getByOwner/' + userId)
             .then( (res) => {
                 const n = res?.data;
                 if (n) setFoundTodos(res?.data.filter(t => t.goals.find(g => g.text.toLowerCase().includes(keyword.toLowerCase()))));

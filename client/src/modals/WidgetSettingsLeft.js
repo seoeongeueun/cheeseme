@@ -12,7 +12,7 @@ function WidgetSettingsLeft(props){
 
     useEffect(() => {
         if (props.userId) {
-            axios.get('/api/users/find/' + props.userId)
+            instance.get('/api/users/find/' + props.userId)
             .then((res) => {
               const n = res?.data;
               if (n) {

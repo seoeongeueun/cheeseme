@@ -88,10 +88,13 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const quillRef = useRef();
     
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+    });
 
     useEffect(() => {
         if (userId) {
-            axios.get('/api/right/getByOwner/' + userId)
+            instance.get('/api/right/getByOwner/' + userId)
                 .then((res) => {
                     const n = res?.data;
                     if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -108,7 +111,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     useEffect(() => {
         if (friendId !== '' && friendId !== undefined && userId) {
-            axios.get('/api/right/getByOwner/' + friendId)
+            instance.get('/api/right/getByOwner/' + friendId)
                 .then((res) => {
                     const n = res?.data;
                     if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -117,7 +120,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 .catch((err) => {
                     console.log('Error loading posts: ', err)
                 })
-            axios.get('/api/users/find/' + friendId)
+            instance.get('/api/users/find/' + friendId)
                 .then((res) => {
                     const n = res?.data;
                     if (n) setCurrentFriendName(n.name);
@@ -128,7 +131,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     useEffect(() => {
         if (_id === '') {
             if (friendId !== '' && userId) {
-                axios.get('/api/right/getByOwner/' + friendId)
+                instance.get('/api/right/getByOwner/' + friendId)
                 .then((res) => {
                     setLoading(true);
                     const n = res?.data;
@@ -146,7 +149,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             }
             else {
                 if (userId) {
-                    axios.get('/api/right/getByOwner/' + userId)
+                    instance.get('/api/right/getByOwner/' + userId)
                         .then((res) => {
                         setLoading(true);
                         const n = res?.data;
@@ -516,7 +519,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                     bookmark: false,
                 });
-                if (res) axios.get('/api/right/getByOwner/' + userId)
+                if (res) instance.get('/api/right/getByOwner/' + userId)
                     .then((res) => {
                     const n = res?.data;
                     if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -530,7 +533,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                     bookmark: true,
                 });
-                if (res) axios.get('/api/right/getByOwner/' + userId)
+                if (res) instance.get('/api/right/getByOwner/' + userId)
                     .then((res) => {
                     const n = res?.data;
                     if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -651,7 +654,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             });
             console.log("created");
             setMessage('');
-            if (res) axios.get('/api/right/getByOwner/' + userId)
+            if (res) instance.get('/api/right/getByOwner/' + userId)
             .then((res) => {
                 const n = res?.data;
                 if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -675,7 +678,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     plain: plain
                 });
                 console.log("updated");
-                if (res) axios.get('/api/right/getByOwner/' + userId)
+                if (res) instance.get('/api/right/getByOwner/' + userId)
                     .then((res) => {
                         const n = res?.data;
                         if (n) setAllPosts(n.sort((a, b) => a.date - b.date))

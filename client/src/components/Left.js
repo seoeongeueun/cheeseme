@@ -86,6 +86,9 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     const [id, setId] = useState("");
     const [message, setMessage] = useState('');
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     const ORIENTATION_TO_ANGLE = {
         '3': 180,
@@ -139,7 +142,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     useEffect(() => {
         if (userId) {
-            axios.get('/api/users/find/' + userId)
+            instance.get('/api/users/find/' + userId)
             .then((res) => {
               const n = res?.data;
               if (n) {

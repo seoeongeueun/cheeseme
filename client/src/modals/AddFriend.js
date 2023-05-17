@@ -96,7 +96,7 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
         return
       }
       else {
-        axios.get('/api/users/' + friendName)
+        instance.get('/api/users/' + friendName)
           .then((res) => {
             if (res?.data) {
               setFriendsNoti(res?.data.notifications);

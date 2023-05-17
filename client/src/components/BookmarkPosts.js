@@ -10,13 +10,16 @@ function BookmarkPosts(props){
     const [clicked, setClicked] = useState();
     const dispatch = useDispatch();
     const onChangeDate = d => dispatch(changeDate(d));
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     useEffect(() => {
         if (props.allPosts && props.friendId === '') {
             console.log(props.allPosts)
             setFoundPosts(props.allPosts.filter(p => p.bookmark === true))
         } else {
-            axios.get('/api/right/getByOwner/' + props.userId)
+            instance.get('/api/right/getByOwner/' + props.userId)
                 .then((res) => {
                     const n = res?.data;
                     if (n) {

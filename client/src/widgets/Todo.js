@@ -22,13 +22,16 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     const [loading, setLoading] = useState(true);
     const [allTodos, setAllTodos] = useState([{date: new Date().setHours(0, 0, 0, 0), goals: [{id: 1, text: 'order new sim card', check: false}, {id: 2, text: 'do laundry', check: true}]}]);
     const [_id, setId] = useState('');
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     //change to redux later
     const [goals, setGoals] = useState([]);
 
     useEffect(() => {
         if (userId) {
-            axios.get('/api/todos/getByOwner/' + userId)
+            instance.get('/api/todos/getByOwner/' + userId)
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;
@@ -50,8 +53,8 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     }, [userId]);
 
     useEffect(() => {
-        if (_id === '') {
-            axios.get('/api/todos/getByOwner/' + userId)
+        if (_id === '' && userId) {
+            instance.get('/api/todos/getByOwner/' + userId)
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;

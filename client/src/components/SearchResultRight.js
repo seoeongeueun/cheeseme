@@ -10,11 +10,14 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
     const [clicked, setClicked] = useState();
     const [searchBy, setSearchBy] = useState('Content');
     const [showOption, setShowOption] = useState(false);
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     useEffect(() => {
         if (keyword && userId) {
             if (searchBy === 'Title'){
-                axios.get('/api/right/getByOwner/' + userId)
+                instance.get('/api/right/getByOwner/' + userId)
                 .then( (res) => {
                     const n = res?.data;
                     if (n) setFoundPosts(res?.data.filter(n => n.title.toLowerCase().includes(keyword.toLowerCase())));
@@ -25,7 +28,7 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
                 });
             }
             else if (searchBy === 'Content'){
-                axios.get('/api/right/getByOwner/' + userId)
+                instance.get('/api/right/getByOwner/' + userId)
                 .then( (res) => {
                     const n = res?.data;
                     if (n) setFoundPosts(res?.data.filter(n => n.text.toLowerCase().includes(keyword.toLowerCase())));

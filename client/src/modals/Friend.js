@@ -21,6 +21,9 @@ function Friend({userId, name, friends, onChangeFriends, onAddFriend, onRemoveFr
     const [bye, setBye] = useState('');
     const [friendName, setFriendName] = useState('');
     const [friendFriends, setFriendFriends] = useState(null);
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
     
     const updateList = async() => {
         let res = await FetchAPIPost('/api/users/update/' + userId, {
@@ -52,7 +55,7 @@ function Friend({userId, name, friends, onChangeFriends, onAddFriend, onRemoveFr
 
     useEffect(() => {
         if (bye !== ''){
-            axios.get('/api/users/' + bye)
+            instance.get('/api/users/' + bye)
                 .then((res) => {
                 setFriendFriends(res?.data.friends);
             })
@@ -73,7 +76,7 @@ function Friend({userId, name, friends, onChangeFriends, onAddFriend, onRemoveFr
 
     const handleClickFriend = async(name) => {
         setClicked(name);
-        axios.get('/api/users/' + name)
+        instance.get('/api/users/' + name)
             .then((res) => {
                 onSetFriendId(res?.data._id.toString());
             })
