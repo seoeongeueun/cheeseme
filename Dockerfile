@@ -24,20 +24,16 @@ WORKDIR /app/client
 COPY client/package*.json ./
 RUN npm install --production
 
-# Install react-scripts globally
-RUN npm install -g react-scripts
-
-# Copy the client source code
-COPY client/ .
-
 # Build client
 #RUN npm run build
 
 # Switch back to the server directory
 WORKDIR /app/server
 
-# Install production dependencies for server
-RUN npm install --production
+# RUN rm -rf /app/server/node_modules
+
+# # Install production dependencies for server
+ RUN npm install --production
 
 # Expose the desired port
 EXPOSE 3000

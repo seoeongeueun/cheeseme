@@ -18,7 +18,7 @@ primary_region = "nrt"
 
 [build]
   name = "default"
-  dir = "/app/client"
+  dir = "/client"
   buildCommand = "npm install && npm run build"
 
 [deploy]
