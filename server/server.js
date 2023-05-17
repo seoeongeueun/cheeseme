@@ -143,9 +143,11 @@ app.listen(port, () => {
 });
 
 // Serve static files from the client/build directory
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 // Serve the index.html file
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    console.log('cwd: ', process.cwd())
+    console.log('current: ', __dirname)
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });

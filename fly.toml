@@ -18,9 +18,8 @@ primary_region = "nrt"
 
 [build]
   name = "default"
-  dir = "."  # Path to the root folder (server folder)
-  buildCommand = "npm install && (cd ../client && npm install && npm run build)"
+  dir = "/client"
+  buildCommand = "npm install && npm run build"
 
-# Configure your deployment
 [deploy]
   runCommand = "node server.js"
