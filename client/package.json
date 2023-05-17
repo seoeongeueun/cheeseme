@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "proxy": "http://localhost:3001",
+  "proxy": "https://cheese-me.fly.dev/",
   "version": "0.1.0",
 
   "private": true,

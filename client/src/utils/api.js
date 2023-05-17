@@ -1,4 +1,7 @@
 import axios from "axios";
+const instance = axios.create({
+    baseURL: "https://cheese-me.fly.dev/",
+  });
 
 export const FetchAPIPost = async (url, params) => {
     try{
@@ -57,6 +60,7 @@ export const FetchAPIPostLogin = async (url, params) => {
 
         const res = await axios({
             method: 'POST',
+            baseURL: "https://cheese-me.fly.dev/",
             url: url,
             data: params,
             header: {

@@ -24,6 +24,8 @@ WORKDIR /app/client
 COPY client/package*.json ./
 RUN npm install --production
 
+COPY client/ .
+
 # Build client
 #RUN npm run build
 

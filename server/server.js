@@ -143,11 +143,19 @@ app.listen(port, () => {
 });
 
 // Serve static files from the client/build directory
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, 'client', 'public')));
+
+const clientFolderContents = fs.readdirSync('../client/public');
+console.log('Contents of /app/client/public folder:', clientFolderContents);
+
+const indexPath = path.join(__dirname, '..', 'client', 'public', 'index.html');
+
+console.log('Index file path:', indexPath);
+console.log('Index file exists:', fs.existsSync(indexPath));
 
 // Serve the index.html file
 app.get('/', (req, res) => {
     console.log('cwd: ', process.cwd())
     console.log('current: ', __dirname)
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'client', 'public', 'index.html'));
 });

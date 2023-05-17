@@ -9,18 +9,6 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false);
 
-    // useEffect(() => {
-    //     if (userId) {
-    //         axios.get('/api/users/info/' + userId)
-    //         .then( (res) => {
-    //             setUsername(res?.data.name);
-    //         })
-    //         .catch( (err) => {
-    //             console.log('Error loading User info: ', err);
-    //         })
-    //     }
-    // }, [userId])
-
     const handleLogout = () => {
         setLogin(false);
         axios.get('/logout')
