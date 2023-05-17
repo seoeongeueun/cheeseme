@@ -9,6 +9,9 @@ function WidgetSettingsLeft(props){
     const [ddayCounter, setDdayCounter] = useState(props.ddayCounter);
     const [reminder, setReminder] = useState(props.reminder);
     const [positions, setPositions] = useState([])
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     useEffect(() => {
         if (props.userId) {

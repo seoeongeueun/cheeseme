@@ -6,6 +6,9 @@ function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
     const [foundNotes, setFoundNotes] = useState();
     const [foundTodos, setFoundTodos] = useState();
     const [clicked, setClicked] = useState();
+    const instance = axios.create({
+        baseURL: "https://cheese-me.fly.dev/",
+      });
 
     useEffect(() => {
         if (keyword && userId) {
