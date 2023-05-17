@@ -32,9 +32,7 @@ export default function LoginModal(props) {
       props.onCurrentNameChange(username);
       props.setLogin(false);
       props.onSetFriendId('');
-      console.log(res.userId)
       await localStorage.setItem('token', res.userId)
-      localStorage.getItem('token')
     } else {
       console.log('Login Failed')
       setError(true);
