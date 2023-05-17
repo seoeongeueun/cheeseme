@@ -58,9 +58,8 @@ export const FetchAPIPostLogin = async (url, params) => {
             params = {};
         }
 
-        const res = await axios({
+        const res = await instance({
             method: 'POST',
-            baseURL: "https://cheese-me.fly.dev/",
             url: url,
             data: params,
             header: {
