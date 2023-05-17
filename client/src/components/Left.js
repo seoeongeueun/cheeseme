@@ -1,4 +1,5 @@
-import { useEffect, useState, useCallback, useRef } from 'react'
+import React from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import GridLines from 'react-gridlines';
 import DisplaySettingsLeft from '../modals/DisplaySettingsLeft';
 import AddPicSettings from '../modals/AddPicSettings';
@@ -286,7 +287,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 url: '/upload',
                 data: formData,
                 header: {
-                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Origin': 'https://main--cheeseme.netlify.app',
                     'Content-Type': 'multipart/form-data',
                 },
                 withCredentials: true,

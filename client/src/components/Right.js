@@ -624,7 +624,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 url: '/upload',
                 data: formData,
                 header: {
-                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Origin': 'https://main--cheeseme.netlify.app',
                     'Content-Type': 'multipart/form-data',
                 },
                 withCredentials: true,
