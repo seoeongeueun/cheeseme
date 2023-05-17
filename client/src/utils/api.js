@@ -64,7 +64,7 @@ export const FetchAPIPostLogin = async (url, params) => {
             url: url,
             data: params,
             header: {
-                'Access-Control-Allow-Origin': "https://main--cheeseme.netlify.app/",
+                'Access-Control-Allow-Origin': 'https://main--cheeseme.netlify.app',
                 'Content-Type': 'application/json'
             },
             withCredentials: true,

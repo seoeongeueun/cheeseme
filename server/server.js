@@ -26,7 +26,14 @@ const __dirname = path.resolve();
 
 dotenv.config();
 
-app.use(cors());
+const corsOptions = {
+    origin: 'https://main--cheeseme.netlify.app/',
+    credentials: true,
+
+}
+app.use(cors(corsOptions));
+
+//app.use(cors());
 app.use(express.json());
 
 
