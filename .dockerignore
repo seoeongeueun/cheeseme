@@ -3,3 +3,5 @@ Dockerfile
 .dockerignore
 node_modules
 .git
+./server/.git
+./server/node_modules

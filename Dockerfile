@@ -33,7 +33,7 @@ WORKDIR /app/server
 # RUN rm -rf /app/server/node_modules
 
 # # Install production dependencies for server
-# RUN npm install --production
+ RUN npm install --production
 
 # Expose the desired port
 EXPOSE 3000
