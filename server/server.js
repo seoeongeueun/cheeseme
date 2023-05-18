@@ -26,16 +26,14 @@ const __dirname = path.resolve();
 
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors({
+    origin: ['https://main--cheeseme.netlify.app', 'https://main--cheeseme.netlify.app/', 'https://cheeseme.netlify.app', 'https://cheeseme.netlify.app/'],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+  }));
 app.use(cookieParser());
-
-const corsOptions = {
-    origin: ['https://main--cheeseme.netlify.app', 'https://main--cheeseme.netlify.app/', 'https://cheeseme.netlify.app/', 'https://cheeseme.netlify.app'],
-    credentials: true,
-  };
-
-app.use(cors(corsOptions));
-
-//app.use(cors());
 app.use(express.json());
 
 
@@ -106,7 +104,7 @@ app.get('/logout', auth, (req, res) => {
         maxAge: 0,
     });
 })
-
+app.options('/login', cors());
 app.post('/login', asyncHandler(async(req, res) => {
     const user = await User.findOne({ name: req.body.name });
     if (!user) return res.json({ loginSuccess: false, message: "No user found with username " + req.body.name });
@@ -120,8 +118,8 @@ app.post('/login', asyncHandler(async(req, res) => {
             res.cookie("x_auth", user.token, {
                     maxAge: 1000 * 60 * 60 * 24 * 2,
                     httpOnly: true,
-                    sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
-                    secure: process.env.NODE_ENV === "production",
+                    sameSite: 'none',
+                    secure: true,
                 })
                 .status(200)
                 .json({ loginSuccess: true, userId: user._id });
