@@ -21,7 +21,9 @@ function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
             .catch( (err) => {
                 console.log('Error loading notes: ', err)
             });
-            instance.get('/api/todos/getByOwner/' + userId)
+            instance.get('/api/todos/getByOwner/' + userId, {
+                withCredentials: true
+            })
             .then( (res) => {
                 const n = res?.data;
                 if (n) setFoundTodos(res?.data.filter(t => t.goals.find(g => g.text.toLowerCase().includes(keyword.toLowerCase()))));

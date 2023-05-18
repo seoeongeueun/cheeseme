@@ -23,7 +23,9 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
       });
     useEffect(() => {
         if (userId) {
-            instance.get('/api/reminder/' + userId)
+            instance.get('/api/reminder/' + userId, {
+                withCredentials: true
+            })
             .then((res) => {
                 if (res?.data){
                     setReminders(res?.data.reminders);

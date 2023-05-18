@@ -94,7 +94,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     useEffect(() => {
         if (userId) {
-            instance.get('/api/right/getByOwner/' + userId)
+            instance.get('/api/right/getByOwner/' + userId, {
+                withCredentials: true
+            })
                 .then((res) => {
                     const n = res?.data;
                     if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -111,7 +113,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     useEffect(() => {
         if (friendId !== '' && friendId !== undefined && userId) {
-            instance.get('/api/right/getByOwner/' + friendId)
+            instance.get('/api/right/getByOwner/' + friendId, {
+                withCredentials: true
+            })
                 .then((res) => {
                     const n = res?.data;
                     if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -120,7 +124,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 .catch((err) => {
                     console.log('Error loading posts: ', err)
                 })
-            instance.get('/api/users/find/' + friendId)
+            instance.get('/api/users/find/' + friendId, {
+                withCredentials: true
+            })
                 .then((res) => {
                     const n = res?.data;
                     if (n) setCurrentFriendName(n.name);
@@ -131,7 +137,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     useEffect(() => {
         if (_id === '') {
             if (friendId !== '' && userId) {
-                instance.get('/api/right/getByOwner/' + friendId)
+                instance.get('/api/right/getByOwner/' + friendId, {
+                    withCredentials: true
+                })
                 .then((res) => {
                     setLoading(true);
                     const n = res?.data;
@@ -149,7 +157,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             }
             else {
                 if (userId) {
-                    instance.get('/api/right/getByOwner/' + userId)
+                    instance.get('/api/right/getByOwner/' + userId, {
+                        withCredentials: true
+                    })
                         .then((res) => {
                         setLoading(true);
                         const n = res?.data;
@@ -519,7 +529,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                     bookmark: false,
                 });
-                if (res) instance.get('/api/right/getByOwner/' + userId)
+                if (res) instance.get('/api/right/getByOwner/' + userId, {
+                    withCredentials: true
+                })
                     .then((res) => {
                     const n = res?.data;
                     if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -533,7 +545,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 let res = await FetchAPIPost('/api/right/updateById/' + _id, {
                     bookmark: true,
                 });
-                if (res) instance.get('/api/right/getByOwner/' + userId)
+                if (res) instance.get('/api/right/getByOwner/' + userId, {
+                    withCredentials: true
+                })
                     .then((res) => {
                     const n = res?.data;
                     if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -654,7 +668,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             });
             console.log("created");
             setMessage('');
-            if (res) instance.get('/api/right/getByOwner/' + userId)
+            if (res) instance.get('/api/right/getByOwner/' + userId, {
+                withCredentials: true
+            })
             .then((res) => {
                 const n = res?.data;
                 if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -678,7 +694,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     plain: plain
                 });
                 console.log("updated");
-                if (res) instance.get('/api/right/getByOwner/' + userId)
+                if (res) instance.get('/api/right/getByOwner/' + userId, {
+                    withCredentials: true
+                })
                     .then((res) => {
                         const n = res?.data;
                         if (n) setAllPosts(n.sort((a, b) => a.date - b.date))

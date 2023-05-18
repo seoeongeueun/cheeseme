@@ -14,7 +14,9 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
 
     const handleLogout = () => {
         setLogin(false);
-        instance.get('/logout')
+        instance.get('/logout', {
+            withCredentials: true
+        })
             .then( (res) => {
                 if (res?.data.success) {
                     localStorage.removeItem('token');

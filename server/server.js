@@ -102,6 +102,9 @@ app.get('/logout', auth, (req, res) => {
     )
     res.cookie('x_auth', null, {
         maxAge: 0,
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
     });
 })
 app.options('/login', cors());
@@ -140,7 +143,6 @@ app.post('/deleteImg/:src', (req, res) => {
 
 app.get('/checkCookie', (req, res) => {
     const xAuthCookieExists = !!req.cookies['x_auth'];
-    console.log('?????: ', xAuthCookieExists)
     res.send(xAuthCookieExists);
 });
 

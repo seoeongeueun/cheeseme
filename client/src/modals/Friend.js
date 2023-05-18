@@ -55,7 +55,9 @@ function Friend({userId, name, friends, onChangeFriends, onAddFriend, onRemoveFr
 
     useEffect(() => {
         if (bye !== ''){
-            instance.get('/api/users/' + bye)
+            instance.get('/api/users/' + bye, {
+                withCredentials: true
+            })
                 .then((res) => {
                 setFriendFriends(res?.data.friends);
             })
@@ -76,7 +78,9 @@ function Friend({userId, name, friends, onChangeFriends, onAddFriend, onRemoveFr
 
     const handleClickFriend = async(name) => {
         setClicked(name);
-        instance.get('/api/users/' + name)
+        instance.get('/api/users/' + name, {
+            withCredentials: true
+        })
             .then((res) => {
                 onSetFriendId(res?.data._id.toString());
             })

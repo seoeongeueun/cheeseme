@@ -21,7 +21,9 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
 
     useEffect(() => {
         if (userId) {
-            instance.get('/api/notes/getByOwner/' + userId)
+            instance.get('/api/notes/getByOwner/' + userId, {
+                withCredentials: true
+            })
                 .then((res) => {
                     const n = res?.data;
                     if (n) {
@@ -41,7 +43,9 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
 
     useEffect(() => {
         if (_id === '' && userId) {
-            instance.get('/api/notes/getByOwner/' + userId)
+            instance.get('/api/notes/getByOwner/' + userId, {
+                withCredentials: true
+            })
             .then((res) => {
                 setLoading(true);
                 const n = res?.data;

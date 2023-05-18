@@ -17,7 +17,9 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
     useEffect(() => {
         if (keyword && userId) {
             if (searchBy === 'Title'){
-                instance.get('/api/right/getByOwner/' + userId)
+                instance.get('/api/right/getByOwner/' + userId, {
+                    withCredentials: true
+                })
                 .then( (res) => {
                     const n = res?.data;
                     if (n) setFoundPosts(res?.data.filter(n => n.title.toLowerCase().includes(keyword.toLowerCase())));
@@ -28,7 +30,9 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
                 });
             }
             else if (searchBy === 'Content'){
-                instance.get('/api/right/getByOwner/' + userId)
+                instance.get('/api/right/getByOwner/' + userId, {
+                    withCredentials: true
+                })
                 .then( (res) => {
                     const n = res?.data;
                     if (n) setFoundPosts(res?.data.filter(n => n.text.toLowerCase().includes(keyword.toLowerCase())));

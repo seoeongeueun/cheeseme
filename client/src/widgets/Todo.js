@@ -31,7 +31,9 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
 
     useEffect(() => {
         if (userId) {
-            instance.get('/api/todos/getByOwner/' + userId)
+            instance.get('/api/todos/getByOwner/' + userId, {
+                withCredentials: true
+            })
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;
@@ -54,7 +56,9 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
 
     useEffect(() => {
         if (_id === '' && userId) {
-            instance.get('/api/todos/getByOwner/' + userId)
+            instance.get('/api/todos/getByOwner/' + userId, {
+                withCredentials: true
+            })
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;

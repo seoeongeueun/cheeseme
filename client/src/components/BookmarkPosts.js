@@ -19,7 +19,9 @@ function BookmarkPosts(props){
             console.log(props.allPosts)
             setFoundPosts(props.allPosts.filter(p => p.bookmark === true))
         } else {
-            instance.get('/api/right/getByOwner/' + props.userId)
+            instance.get('/api/right/getByOwner/' + props.userId, {
+                withCredentials: true
+            })
                 .then((res) => {
                     const n = res?.data;
                     if (n) {

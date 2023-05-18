@@ -89,7 +89,9 @@ function App() {
       console.log('Error: ', err);
     })
     if (userId) {
-      instance.get('/api/users/find/' + userId)
+      instance.get('/api/users/find/' + userId, {
+          withCredentials: true
+      })
         .then((res) => {
           const n = res?.data;
           if (n) {

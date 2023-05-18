@@ -22,7 +22,9 @@ function DisplaySettings(props){
             grid: bool
         });
         if (props.userId && res) {
-            instance.get('/api/right/getByOwner/' + props.userId)
+            instance.get('/api/right/getByOwner/' + props.userId, {
+                withCredentials: true
+            })
                 .then((res) => {
                     const n = res?.data;
                     if (n) props.setAllPosts(n.sort((a, b) => a.date - b.date))
@@ -40,7 +42,9 @@ function DisplaySettings(props){
             plain: bool,
         });
         if (props.userId && res) {
-            instance.get('/api/right/getByOwner/' + props.userId)
+            instance.get('/api/right/getByOwner/' + props.userId, {
+                withCredentials: true
+            })
                 .then((res) => {
                     const n = res?.data;
                     if (n) props.setAllPosts(n.sort((a, b) => a.date - b.date))

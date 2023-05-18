@@ -99,7 +99,9 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
         return
       }
       else {
-        instance.get('/api/users/' + friendName)
+        instance.get('/api/users/' + friendName, {
+          withCredentials: true
+        })
           .then((res) => {
             if (res?.data) {
               setFriendsNoti(res?.data.notifications);

@@ -15,7 +15,9 @@ function WidgetSettingsLeft(props){
 
     useEffect(() => {
         if (props.userId) {
-            instance.get('/api/users/find/' + props.userId)
+            instance.get('/api/users/find/' + props.userId, {
+                withCredentials: true
+            })
             .then((res) => {
               const n = res?.data;
               if (n) {

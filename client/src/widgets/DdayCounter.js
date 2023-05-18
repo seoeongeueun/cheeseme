@@ -20,7 +20,9 @@ function DdayCounter(props) {
 
     useEffect(() => {
         if (props.userId) {
-            instance.get('/api/dday/getByOwner/' + props.userId)
+            instance.get('/api/dday/getByOwner/' + props.userId, {
+                withCredentials: true
+            })
                 .then((res) => {
                     if (res?.data) {
                         setTitle(res?.data.text);

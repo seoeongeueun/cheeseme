@@ -60,7 +60,9 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
     const handleAccept = async(id, from) => {
         onAddNoti({notiType: 'acceptRequest', from: name, to: from, done: true, date: new Date().setHours(0, 0, 0, 0)})
         setFriendName(from);
-        instance.get('/api/users/' + from)
+        instance.get('/api/users/' + from, {
+            withCredentials: true
+        })
             .then((res) => {
             if (res) {
                 setFriendsNoti(res?.data.notifications);
@@ -74,7 +76,9 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
     const handleDecline = (id, from) => {
         onAddNoti({notiType: 'declineRequest', from: name, to: from, done: true, date: new Date().setHours(0, 0, 0, 0)})
         setFriendName(from);
-        instance.get('/api/users/' + from)
+        instance.get('/api/users/' + from, {
+            withCredentials: true
+        })
             .then((res) => {
             if (res) {
                 setFriendsNoti(res?.data.notifications);

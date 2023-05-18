@@ -123,7 +123,9 @@ export default function Signup(props) {
 
   const handleSend = async() => {
     let tmp = ''
-    instance.get('/api/users/' + username)
+    instance.get('/api/users/' + username, {
+      withCredentials: true
+    })
             .then( (res) => {
                 const n = res?.data;
                 if (n) {
@@ -134,7 +136,9 @@ export default function Signup(props) {
             .catch( (err) => {
                 console.log('Error finding user: ', err);
             });
-    instance.get('/api/users/search/' + email)
+    instance.get('/api/users/search/' + email, {
+      withCredentials: true
+    })
           .then( (res) => {
               const n = res?.data;
               if (n) {
