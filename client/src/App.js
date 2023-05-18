@@ -69,7 +69,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    instance.get('/checkCookie')
+    instance.get('/checkCookie', {
+        withCredentials: true
+        })
           .then((res) => {
             console.log('cookie?: ', res?.data)
             if (res?.data === false) {

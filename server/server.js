@@ -120,7 +120,6 @@ app.post('/login', asyncHandler(async(req, res) => {
                     httpOnly: true,
                     sameSite: 'none',
                     secure: true,
-                    domain: '.netlify.app'
                 })
                 .status(200)
                 .json({ loginSuccess: true, userId: user._id });
@@ -141,6 +140,7 @@ app.post('/deleteImg/:src', (req, res) => {
 
 app.get('/checkCookie', (req, res) => {
     const xAuthCookieExists = !!req.cookies['x_auth'];
+    console.log('?????: ', xAuthCookieExists)
     res.send(xAuthCookieExists);
 });
 

@@ -17,18 +17,20 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
         instance.get('/logout')
             .then( (res) => {
                 if (res?.data.success) {
-                    //localStorage.removeItem('token');
+                    localStorage.removeItem('token');
                     onCurrentUserChange(null);
                     onCurrentNameChange(null);
                     onSetFriendId('');
                 } else  {
-                    instance.get('/checkCookie')
+                    instance.get('/checkCookie', {
+                        withCredentials: true
+                    })
                         .then((res) => {
                             if (res?.data === false) {
                                 onCurrentUserChange(null);
                                 onCurrentNameChange(null);
                                 onSetFriendId('');
-                                //localStorage.removeItem('token');
+                                localStorage.removeItem('token');
                             }
                         })
                         .catch( (err) => {
