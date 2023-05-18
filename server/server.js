@@ -25,12 +25,14 @@ const ORIGIN = process.env.ORIGIN ? process.env.ORIGIN : "127.0.0.1:3000";
 const __dirname = path.resolve();
 
 dotenv.config();
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 const corsOptions = {
-    origin: 'https://main--cheeseme.netlify.app',
+    origin: ['https://main--cheeseme.netlify.app', 'https://main--cheeseme.netlify.app/', 'https://cheeseme.netlify.app/', 'https://cheeseme.netlify.app'],
     credentials: true,
+  };
 
-}
 app.use(cors(corsOptions));
 
 //app.use(cors());
@@ -42,9 +44,6 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 }).catch( err => {
     console.log(err.message);
 });
-
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 app.use('/api/notes', notesRouter);
 app.use('/api/todos', todosRouter);
@@ -121,6 +120,8 @@ app.post('/login', asyncHandler(async(req, res) => {
             res.cookie("x_auth", user.token, {
                     maxAge: 1000 * 60 * 60 * 24 * 2,
                     httpOnly: true,
+                    sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+                    secure: process.env.NODE_ENV === "production",
                 })
                 .status(200)
                 .json({ loginSuccess: true, userId: user._id });

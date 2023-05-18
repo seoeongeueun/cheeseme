@@ -17,10 +17,10 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
         instance.get('/logout')
             .then( (res) => {
                 if (res?.data.success) {
+                    localStorage.removeItem('token');
                     onCurrentUserChange(null);
                     onCurrentNameChange(null);
                     onSetFriendId('');
-                    localStorage.removeItem('token');
                 } else  {
                     instance.get('/checkCookie')
                         .then((res) => {

@@ -9,6 +9,8 @@ LABEL fly_launch_runtime="NodeJS"
 # Set production environment
 ENV NODE_ENV=production
 
+RUN df -h
+
 # Create app directory
 WORKDIR /app
 

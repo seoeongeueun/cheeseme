@@ -28,11 +28,11 @@ export default function LoginModal(props) {
       console.log('Login Success');
       setSuccess(true);
       setError(false);
-      props.onCurrentUserChange(res.userId);
+      localStorage.setItem('token', res.userId).then(props.onCurrentUserChange(res.userId));
+      //props.onCurrentUserChange(res.userId);
       props.onCurrentNameChange(username);
       props.setLogin(false);
       props.onSetFriendId('');
-      await localStorage.setItem('token', res.userId)
     } else {
       console.log('Login Failed')
       setError(true);
