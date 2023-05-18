@@ -146,6 +146,12 @@ app.get('/checkCookie', (req, res) => {
     res.send(xAuthCookieExists);
 });
 
+app.get('/images/:imageName', (req, res) => {
+    const imageName = req.params.imageName;
+    const imagePath = path.join(__dirname, 'images', imageName);
+    res.sendFile(imagePath);
+});
+
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
