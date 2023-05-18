@@ -62,6 +62,7 @@ function App() {
   const onChangeStickers = stickers => dispatch(currentStickers(stickers));
 
   useEffect(() => {
+    localStorage.setItem('test', 'hey')
     if (localStorage.getItem('token')) {
       onCurrentUserChange(localStorage.getItem('token'));
       onSetFriendId('');
