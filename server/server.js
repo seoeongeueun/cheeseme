@@ -28,7 +28,7 @@ dotenv.config();
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    origin: ['https://cheeseme.netlify.app', 'https://cheeseme.netlify.app/'],
+    origin: ['https://cheeseme.netlify.app', 'https://cheeseme.netlify.app/', 'https://cheeseme.netlify.app/login'],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true

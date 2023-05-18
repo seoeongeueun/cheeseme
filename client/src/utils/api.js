@@ -14,9 +14,6 @@ export const FetchAPIPost = async (url, params) => {
             method: 'POST',
             url: url,
             data: params,
-            header: {
-                'Access-Control-Allow-Origin': 'https://cheeseme.netlify.app/'
-            },
             withCredentials: true,
         });
         if (res.status != 200) {
@@ -39,7 +36,6 @@ export const FetchAPIPostImg = async (url, params) => {
             url: url,
             data: params,
             header: {
-                'Access-Control-Allow-Origin': 'https://cheeseme.netlify.app/',
                 'Content-Type': 'multipart/form-data',
             },
             withCredentials: true,
@@ -64,7 +60,6 @@ export const FetchAPIPostLogin = async (url, params) => {
             url: url,
             data: params,
             header: {
-                'Access-Control-Allow-Origin': 'https://cheeseme.netlify.app/',
                 'Content-Type': 'application/json'
             },
             withCredentials: true,
@@ -96,9 +91,6 @@ export const FetchApiGet = async (url, params) => {
             method:  "GET",
             url: url,
             data: urlSearchParams,
-            headers: {
-                "Access-Control-Allow-Origin": "https://cheeseme.netlify.app/",
-            },
             withCredentials: true,
         });
         if (response.status != 200) {
@@ -120,9 +112,6 @@ export const FetchApiDelete = async (url, params) => {
             method: "Delete",
             url: url,
             data: params,
-            headers: {
-                "Access-Control-Allow-Origin": "https://cheeseme.netlify.app/",
-            },
             withCredentials: true,
         });
         if (response.status != 200) {
