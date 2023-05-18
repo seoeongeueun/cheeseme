@@ -28,7 +28,7 @@ dotenv.config();
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    origin: ['https://cheeseme.netlify.app', 'https://cheeseme.netlify.app/', 'https://cheeseme.netlify.app/login'],
+    origin: ['https://cheeseme.netlify.app', 'https://cheeseme.netlify.app/'],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -120,7 +120,7 @@ app.post('/login', asyncHandler(async(req, res) => {
                     httpOnly: true,
                     sameSite: 'none',
                     secure: true,
-                    credentials: 'include'
+                    domain: '.netlify.app'
                 })
                 .status(200)
                 .json({ loginSuccess: true, userId: user._id });

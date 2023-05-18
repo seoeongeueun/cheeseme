@@ -72,6 +72,7 @@ function App() {
     instance.get('/checkCookie')
           .then((res) => {
             if (res?.data === false) {
+              console.log('cookie?: ', res?.data)
               onCurrentUserChange(null);
               onCurrentNameChange(null);
               onSetFriendId('');
