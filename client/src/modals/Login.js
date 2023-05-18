@@ -17,7 +17,7 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
         instance.get('/logout')
             .then( (res) => {
                 if (res?.data.success) {
-                    localStorage.removeItem('token');
+                    //localStorage.removeItem('token');
                     onCurrentUserChange(null);
                     onCurrentNameChange(null);
                     onSetFriendId('');
@@ -28,7 +28,7 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
                                 onCurrentUserChange(null);
                                 onCurrentNameChange(null);
                                 onSetFriendId('');
-                                localStorage.removeItem('token');
+                                //localStorage.removeItem('token');
                             }
                         })
                         .catch( (err) => {
