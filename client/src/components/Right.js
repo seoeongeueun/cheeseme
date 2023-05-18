@@ -586,7 +586,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         setOpen(false);
         if (date) {
             let res = await FetchApiDelete('/api/right/delete/' + date);
-            axios.post('/deleteImg/' + imgUrl.replace(/^images\\/i, ''))
+            instance.post('/deleteImg/' + imgUrl.replace(/^images\\/i, ''), {
+                withCredentials: true
+            })
                 .then((res) => {
                     console.log(res);
             })
@@ -636,12 +638,11 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         if (selectedImage && userId) {
             const formData = new FormData();
             formData.append("image", selectedImage);
-            const res = await axios({
+            const res = await instance({
                 method: 'POST',
                 url: '/upload',
                 data: formData,
                 header: {
-                    'Access-Control-Allow-Origin': 'https://cheeseme.netlify.app',
                     'Content-Type': 'multipart/form-data',
                 },
                 withCredentials: true,

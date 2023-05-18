@@ -28,8 +28,6 @@ export default function LoginModal(props) {
       console.log('Login Success');
       setSuccess(true);
       setError(false);
-      console.log(localStorage);
-      console.log(res?.userId)
       localStorage.setItem('token', res.userId)
       props.onCurrentUserChange(res.userId);
       props.onCurrentNameChange(username);

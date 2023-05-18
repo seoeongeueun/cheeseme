@@ -37,7 +37,6 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
             .then( (res) => {
                 setLoading(true);
                 const n = res?.data;
-                console.log('!: ', n)
                 if (n) {
                     setAllTodos(n);
                 }

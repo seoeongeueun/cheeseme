@@ -73,7 +73,6 @@ function App() {
         withCredentials: true
         })
           .then((res) => {
-            console.log('cookie?: ', res?.data)
             if (res?.data === false) {
               onCurrentUserChange(null);
               onCurrentNameChange(null);
