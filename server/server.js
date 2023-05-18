@@ -152,6 +152,10 @@ app.get('/images/:imageName', (req, res) => {
     res.sendFile(imagePath);
 });
 
+app.get('/manifest.json', (req, res) => {
+    const filePath = path.join(__dirname, '..', 'client', 'public', 'manifest.json');
+    res.sendFile(filePath);
+  });
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
