@@ -71,8 +71,8 @@ function App() {
   useEffect(() => {
     instance.get('/checkCookie')
           .then((res) => {
+            console.log('cookie?: ', res?.data)
             if (res?.data === false) {
-              console.log('cookie?: ', res?.data)
               onCurrentUserChange(null);
               onCurrentNameChange(null);
               onSetFriendId('');
