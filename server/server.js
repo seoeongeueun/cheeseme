@@ -16,7 +16,6 @@ import cookieParser from 'cookie-parser';
 import { auth } from './routes/userRouter.js';
 import multer from 'multer';
 import path from 'path';
-import fs from "fs";
 import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 
