@@ -17,7 +17,7 @@ import { auth } from './routes/userRouter.js';
 import multer from 'multer';
 import path from 'path';
 import multerS3 from 'multer-s3';
-import AWS from 'aws-sdk';
+import AWS from '@aws-sdk/client-s3';
 
 
 const app = express();
@@ -53,15 +53,15 @@ app.use('/api/right', rightRouter);
 app.use('/api/users', userRouter);
 app.use('/api/reminder', reminderRouter);
 
-AWS.config.update({
+const myConfig = new AWS.Config({
     accessKeyId: process.env.AWS_ID,
     secretAccessKey: process.env.AWS_KEY,
     region: process.env.AWS_REGION,
-});
+  });
 
 const upload = multer({
   storage: multerS3({
-    s3: new AWS.S3(),
+    s3: new AWS.S3(myConfig),
     bucket: 'cheeseme-bucket',
     key(req, file, cb) {
       cb(null, `images/${Date.now()}_${path.basename(file.originalname)}`);
