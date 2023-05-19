@@ -292,7 +292,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 url: '/upload',
                 data: formData,
                 header: {
-                    'Access-Control-Allow-Origin': 'https://cheeseme.netlify.app',
                     'Content-Type': 'multipart/form-data',
                 },
                 withCredentials: true,

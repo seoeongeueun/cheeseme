@@ -17,6 +17,8 @@ import { auth } from './routes/userRouter.js';
 import multer from 'multer';
 import path from 'path';
 import fs from "fs";
+import multerS3 from 'multer-s3';
+import AWS from 'aws-sdk';
 
 
 const app = express();
@@ -52,39 +54,69 @@ app.use('/api/right', rightRouter);
 app.use('/api/users', userRouter);
 app.use('/api/reminder', reminderRouter);
 
-const imagesDir = path.join(__dirname, "images");
-if (!fs.existsSync("images")) {
-    console.error("Images folder does not exist. Creating images folder...");
-    fs.mkdirSync(imagesDir);
-} else {
-    console.log('Images folder exists')
-}
+AWS.config.update({
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_KEY,
+    region: process.env.AWS_REGION,
+});
 
-const fileStorage = multer.diskStorage({
-    destination: (req,file,cb)=>{
-        cb(null, 'images');
+const upload = multer({
+  storage: multerS3({
+    s3: new AWS.S3(),
+    bucket: 'cheeseme-bucket',
+    key(req, file, cb) {
+      cb(null, `images/${Date.now()}_${path.basename(file.originalname)}`);
     },
-    filename: (req,file,cb)=>{ 
-        cb(null, new Date().valueOf() + path.extname(file.originalname));
-    }
-});
-const fileFilter = (req,file,cb) => {
-    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
-        cb(null,true); 
-    }
-    else{
-        cb(null,false);
-    }
-};
-
-app.post('/upload', multer({storage :fileStorage, fileFilter:fileFilter}).single('image'), (req, res) => {
-    const image = req.file;
-    console.log("uploaded image: ", image)
-    const imgUrl = image.path;
-    res.send(imgUrl);
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
 
-app.use('/images',express.static(path.join(__dirname,'images')))
+app.post('/deleteImg/:src', asyncHandler(async(req, res) => {
+    const img = await s3.deleteObject({Bucket: 'cheeseme-bucket', Key: `images/${req.params.id}`})
+    if (!img) return res.json({error: err})
+    res.json({message: 'Image Deleted'});
+}));
+
+app.post('/upload', upload.single('image'), async (req, res) => {
+    return res.json(req.file.location);
+});
+
+// const fileStorage = multer.diskStorage({
+//     destination: (req,file,cb)=>{
+//         cb(null, 'images');
+//     },
+//     filename: (req,file,cb)=>{ 
+//         cb(null, new Date().valueOf() + path.extname(file.originalname));
+//     }
+// });
+// const fileFilter = (req,file,cb) => {
+//     if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
+//         cb(null,true); 
+//     }
+//     else{
+//         cb(null,false);
+//     }
+// };
+
+// app.post('/upload', multer({storage :fileStorage, fileFilter:fileFilter}).single('image'), (req, res) => {
+//     const image = req.file;
+//     console.log("uploaded image: ", image)
+//     const imgUrl = image.path;
+//     res.send(imgUrl);
+// });
+
+// app.post('/deleteImg/:src', (req, res) => {
+//     console.log(req.params.src)
+//     fs.unlink(`./images/${req.params.src}`, (err) => {
+//       if (err) {
+//         res.status(500).json({ error: err });
+//         return;
+//       }
+//       res.status(200).json({ message: 'Image deleted' });
+//     });
+// });
+
+// app.use('/images',express.static(path.join(__dirname,'images')))
 
 
 
@@ -129,17 +161,6 @@ app.post('/login', asyncHandler(async(req, res) => {
         })
     })
 }))
-
-app.post('/deleteImg/:src', (req, res) => {
-    console.log(req.params.src)
-    fs.unlink(`./images/${req.params.src}`, (err) => {
-      if (err) {
-        res.status(500).json({ error: err });
-        return;
-      }
-      res.status(200).json({ message: 'Image deleted' });
-    });
-});
 
 app.get('/checkCookie', (req, res) => {
     const xAuthCookieExists = !!req.cookies['x_auth'];

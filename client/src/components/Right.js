@@ -855,7 +855,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                 {postImage ?
                                     <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                         <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                        <img src={edit ? (selectedImage ? URL.createObjectURL(selectedImage) : "https://cheese-me.fly.dev/" + imgUrl.replace(/\\/g, '/')) : (userId && imgUrl ? "https://cheese-me.fly.dev/" + imgUrl.replace(/\\/g, '/') : selectedImage && URL.createObjectURL(selectedImage))} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                        <img src={edit ? (selectedImage ? URL.createObjectURL(selectedImage) : imgUrl) : (userId && imgUrl ? imgUrl : selectedImage && URL.createObjectURL(selectedImage))} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                     </IconButton>
                                 :   
                                     <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
@@ -1011,7 +1011,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                     {postImage ?
                                         <IconButton disabled={!edit} className="uploadIconWithImage" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
                                             <input hidden accept="image/*" type="file" alt='postImage' onChange={onUploadImage}/>
-                                            <img src={edit ? (selectedImage ? URL.createObjectURL(selectedImage) : "https://cheese-me.fly.dev/" + imgUrl.replace(/\\/g, '/')) : (userId && imgUrl ? "https://cheese-me.fly.dev/" + imgUrl.replace(/\\/g, '/') : selectedImage && URL.createObjectURL(selectedImage))} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
+                                            <img src={edit ? (selectedImage ? URL.createObjectURL(selectedImage) : imgUrl) : (userId && imgUrl ? imgUrl : selectedImage && URL.createObjectURL(selectedImage))} alt="Thumb" style={{width: "100%", maxHeight: "100%", objectFit: "cover", objectPosition: "initial", overflow: "hidden"}}/>
                                         </IconButton>
                                     :   
                                         <IconButton disabled={!edit} className="uploadIcon" color="primary" aria-label="upload picture" component="label" style={{borderRadius: "0", backgroundColor: "#e9e9e9", border: "1px solid #a4a4a4", color: "#F9D876"}}>
