@@ -53,7 +53,7 @@ app.use('/api/right', rightRouter);
 app.use('/api/users', userRouter);
 app.use('/api/reminder', reminderRouter);
 
-const myConfig = new AWS.Config({
+const myS3 = new AWS.S3({
     accessKeyId: process.env.AWS_ID,
     secretAccessKey: process.env.AWS_KEY,
     region: process.env.AWS_REGION,
@@ -61,7 +61,7 @@ const myConfig = new AWS.Config({
 
 const upload = multer({
   storage: multerS3({
-    s3: new AWS.S3(myConfig),
+    s3: myS3,
     bucket: 'cheeseme-bucket',
     key(req, file, cb) {
       cb(null, `images/${Date.now()}_${path.basename(file.originalname)}`);
