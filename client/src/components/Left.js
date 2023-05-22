@@ -88,8 +88,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [message, setMessage] = useState('');
     const instance = axios.create({
         baseURL: "https://cheese-me.fly.dev/",
-      });
-
+    });
+    const regex = "/\.com\/images\/([^/]+)$/";
     const ORIENTATION_TO_ANGLE = {
         '3': 180,
         '6': 90,
@@ -302,7 +302,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     }
 
     const handleCancel = async() => {
-        axios.post('/deleteImg/' + imgSrc.replace(/^images\\/i, ''))
+        axios.post('/deleteImg/' + imgSrc.match(regex)[1] )
             .then((res) => {
                 console.log(res);
         })

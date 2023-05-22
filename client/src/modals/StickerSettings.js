@@ -4,7 +4,8 @@ import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import axios from 'axios';
 
 function StickerSettings(props){
-    const [stickers, setStickers] = useState(props.stickers)
+    const [stickers, setStickers] = useState(props.stickers);
+    const regex = "/\.com\/images\/([^/]+)$/";
 
     const update = async() => {
         let res = await FetchAPIPost('/api/users/update/' + props.userId, {
@@ -20,7 +21,7 @@ function StickerSettings(props){
 
     const handleStickerDelete = async(name) => {
         let imgSrc = stickers.find(s => s.name === name).imgSrc;
-        axios.post('/deleteImg/' + imgSrc.replace(/^images\\/i, ''))
+        axios.post('/deleteImg/' + imgSrc.match(regex)[1])
             .then((res) => {
                 console.log('Sticker deleted');
         })

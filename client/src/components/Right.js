@@ -91,6 +91,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const instance = axios.create({
         baseURL: "https://cheese-me.fly.dev/",
     });
+    const regex = "/\.com\/images\/([^/]+)$/";
 
     useEffect(() => {
         if (userId) {
@@ -586,7 +587,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         setOpen(false);
         if (date) {
             let res = await FetchApiDelete('/api/right/delete/' + date);
-            instance.post('/deleteImg/' + imgUrl.replace(/^images\\/i, ''), {
+            instance.post('/deleteImg/' + imgUrl.match(regex)[1], {
                 withCredentials: true
             })
                 .then((res) => {

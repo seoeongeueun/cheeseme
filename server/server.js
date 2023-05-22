@@ -54,29 +54,33 @@ app.use('/api/users', userRouter);
 app.use('/api/reminder', reminderRouter);
 
 const myS3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ID,
-    secretAccessKey: process.env.AWS_KEY,
     region: process.env.AWS_REGION,
-  });
+    credentials: {
+      accessKeyId: process.env.AWS_ID,
+      secretAccessKey: process.env.AWS_KEY
+    }
+});
 
 const upload = multer({
   storage: multerS3({
     s3: myS3,
-    bucket: 'cheeseme-bucket',
+    bucket: 'cheesemebucket',
     key(req, file, cb) {
       cb(null, `images/${Date.now()}_${path.basename(file.originalname)}`);
     },
   }),
   limits: { fileSize: 20 * 1024 * 1024 },
+  acl: 'public-read-write'
 });
 
 app.post('/deleteImg/:src', asyncHandler(async(req, res) => {
-    const img = await s3.deleteObject({Bucket: 'cheeseme-bucket', Key: `images/${req.params.id}`})
+    const img = await s3.deleteObject({Bucket: 'cheesemebucket', Key: `images/${req.params.id}`})
     if (!img) return res.json({error: err})
     res.json({message: 'Image Deleted'});
 }));
 
 app.post('/upload', upload.single('image'), async (req, res) => {
+    console.log(req.file.loctaion)
     return res.json(req.file.location);
 });
 
