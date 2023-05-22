@@ -24,7 +24,6 @@ const app = express();
 const port = process.env.PORT || 8080;
 const ORIGIN = process.env.ORIGIN ? process.env.ORIGIN : "127.0.0.1:3000";
 const __dirname = path.resolve();
-const randomInt = Math.floor(Math.random() * 100) + 1;
 
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
@@ -67,7 +66,9 @@ const upload = multer({
     s3: myS3,
     bucket: 'cheesemebucket',
     key(req, file, cb) {
-      cb(null, `images/${Date.now()}_${randomInt}`);
+    const randomInt = Math.floor(Math.random() * 100) + 1;
+    const fileExtension = path.extname(file.originalname);
+      cb(null, `images/${Date.now()}_${randomInt}${fileExtension}`);
     },
   }),
   limits: { fileSize: 20 * 1024 * 1024 },

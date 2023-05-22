@@ -302,7 +302,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     }
 
     const handleCancel = async() => {
-        axios.post('/deleteImg/' + imgSrc.split("/").pop())
+        instance.post('/deleteImg/' + imgSrc.split("/").pop())
             .then((res) => {
                 console.log(res);
         })
