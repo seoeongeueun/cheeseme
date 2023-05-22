@@ -24,6 +24,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 const ORIGIN = process.env.ORIGIN ? process.env.ORIGIN : "127.0.0.1:3000";
 const __dirname = path.resolve();
+const randomInt = Math.floor(Math.random() * 100) + 1;
 
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
@@ -66,17 +67,17 @@ const upload = multer({
     s3: myS3,
     bucket: 'cheesemebucket',
     key(req, file, cb) {
-      cb(null, `images/${Date.now()}_${path.basename(file.originalname)}`);
+      cb(null, `images/${Date.now()}_${randomInt}`);
     },
   }),
   limits: { fileSize: 20 * 1024 * 1024 },
   acl: 'public-read-write'
 });
 
-app.post('/deleteImg/:src', asyncHandler(async(req, res) => {
-    const img = await s3.deleteObject({Bucket: 'cheesemebucket', Key: `images/${req.params.src}`})
-    if (!img) return res.json({error: err})
-    res.json({message: 'Image Deleted'});
+app.post('/deleteImg/:src', asyncHandler(async (req, res) => {
+    const img = await s3.deleteObject({ Bucket: 'cheesemebucket', Key: `images/${req.params.src}` }, (err) => console.log(err));
+    if (!img) return res.json({ error: 'Failed to delete image' });
+    res.json({ message: 'Image deleted successfully' });
 }));
 
 app.post('/upload', upload.single('image'), async (req, res) => {
