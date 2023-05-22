@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
     origin: ['https://cheeseme.netlify.app', 'https://cheeseme.netlify.app/'],
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
   }));
