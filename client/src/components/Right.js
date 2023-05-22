@@ -586,7 +586,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const handleDelete = async() => {
         setOpen(false);
         if (date) {
-            instance.post('/deleteImg/' + imgUrl.match(regex)[1], {
+            instance.post('/deleteImg/' + imgUrl.split("/").pop(), {
                 withCredentials: true
             })
                 .then((res) => {

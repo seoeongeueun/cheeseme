@@ -21,7 +21,7 @@ function StickerSettings(props){
 
     const handleStickerDelete = async(name) => {
         let imgSrc = stickers.find(s => s.name === name).imgSrc;
-        axios.post('/deleteImg/' + imgSrc.match(regex)[1])
+        axios.post('/deleteImg/' + imgSrc.split("/").pop())
             .then((res) => {
                 console.log('Sticker deleted');
         })
