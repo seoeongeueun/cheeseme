@@ -586,13 +586,13 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const handleDelete = async() => {
         setOpen(false);
         if (date) {
-            let res = await FetchApiDelete('/api/right/delete/' + date);
             instance.post('/deleteImg/' + imgUrl.match(regex)[1], {
                 withCredentials: true
             })
                 .then((res) => {
                     console.log(res);
-            })
+            });
+            let res = await FetchApiDelete('/api/right/delete/' + date);
             setBody('');
             setTitle('');
             setHeart(false);

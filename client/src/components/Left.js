@@ -287,7 +287,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             console.log('file: ', file)
             const formData = new FormData();
             formData.append("image", file);
-            const res = await axios({
+            const res = await instance({
                 method: 'POST',
                 url: '/upload',
                 data: formData,

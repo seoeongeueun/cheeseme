@@ -87,7 +87,7 @@ export const FetchApiGet = async (url, params) => {
         console.log(urlSearchParams.toString());
         if (params == undefined) params = {};
 
-        const response = await axios({
+        const response = await instance({
             method:  "GET",
             url: url,
             data: urlSearchParams,
