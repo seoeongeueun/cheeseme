@@ -93,47 +93,8 @@ app.post('/upload', upload.single('image'), async (req, res) => {
     return res.json(req.file.location);
 });
 
-// const fileStorage = multer.diskStorage({
-//     destination: (req,file,cb)=>{
-//         cb(null, 'images');
-//     },
-//     filename: (req,file,cb)=>{ 
-//         cb(null, new Date().valueOf() + path.extname(file.originalname));
-//     }
-// });
-// const fileFilter = (req,file,cb) => {
-//     if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
-//         cb(null,true); 
-//     }
-//     else{
-//         cb(null,false);
-//     }
-// };
-
-// app.post('/upload', multer({storage :fileStorage, fileFilter:fileFilter}).single('image'), (req, res) => {
-//     const image = req.file;
-//     console.log("uploaded image: ", image)
-//     const imgUrl = image.path;
-//     res.send(imgUrl);
-// });
-
-// app.post('/deleteImg/:src', (req, res) => {
-//     console.log(req.params.src)
-//     fs.unlink(`./images/${req.params.src}`, (err) => {
-//       if (err) {
-//         res.status(500).json({ error: err });
-//         return;
-//       }
-//       res.status(200).json({ message: 'Image deleted' });
-//     });
-// });
-
-// app.use('/images',express.static(path.join(__dirname,'images')))
-
-
 
 app.get('/logout', auth, (req, res) => {
-    //미들웨어에서 가져옴
     User.findOneAndUpdate(
         { _id: mongoose.Types.ObjectId(req.user._id) },
         { token: '' },
@@ -194,7 +155,7 @@ app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 });
 
-// Serve static files from the client/build directory
+// Serve static files from the client/public directory
 app.use(express.static(path.join(__dirname, 'client', 'public')));
 
 const indexPath = path.join(__dirname, '..', 'client', 'public', 'index.html');

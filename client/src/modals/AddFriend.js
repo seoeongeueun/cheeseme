@@ -43,24 +43,11 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
     }
   }
 
-  // useEffect(() => {
-  //   if (friendsNoti) {
-  //     if (!error) updateNotis();
-  //   }
-  // }, [friendsNoti])
-
   useEffect(() => {
     if (error === false && entered !== '' && message === '') {
       updateNotis()
     }
   }, [error]);
-  
-  // useEffect(() => {
-  //   if (error){
-  //     setError(false);
-  //     setMessage('');
-  //   }
-  // }, [entered]);
 
   const handleClickOpen = (name) => {
     setOpen(true);

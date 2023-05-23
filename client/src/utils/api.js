@@ -75,7 +75,6 @@ export const FetchAPIPostLogin = async (url, params) => {
 
 export const FetchApiGet = async (url, params) => {
     try {
-        // Json Data를 URLSearchParams Data로 변환
         const urlSearchParams = new URLSearchParams();
         if (params) {
             Object.keys(params).forEach(key => {

@@ -52,7 +52,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
-    // const [editMode, setEditMode] = useState(false);
     const [addPic, setAddPic] = useState(false);
 
     const [crop, setCrop] = useState({ x: 0, y: 0 })
@@ -139,15 +138,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         setToday(new Date().setHours(0, 0, 0, 0));
     }, [id]);
 
-    // useEffect(() => {
-    //     if (stickers?.length !== stickerList?.length && stickers?.length !== 0) {
-    //         updateList(stickers).catch((err) => console.log(err));
-    //         if (userId) changeStickers();
-    //     } else if (stickers?.length > 0 && userId) {
-    //         updateList(stickers).catch((err) => console.log(err));
-    //     }
-    // }, [stickers]);
-
     useEffect(() => {
         if (userId) {
             instance.get('/api/users/find/' + userId, {
@@ -198,7 +188,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     useEffect(() => {
         const resizeObserver = new ResizeObserver((event) => {
             // Depending on the layout, you may need to swap inlineSize with blockSize
-            // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry/contentBoxSize
             window.requestAnimationFrame(() => {
                 if (!Array.isArray(event) || !event.length) {
                   return;
@@ -210,10 +199,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
                 }
             });
-            
-            //setHeight(event[0].contentBoxSize[0].blockSize);
-            //console.log("height: ", event[0].contentBoxSize[0].blockSize)
-            //console.log("width: ", event[0].contentBoxSize[0].inlineSize)
         });
         resizeObserver.observe(document.getElementById("leftBody"));
     });
@@ -284,8 +269,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const onFileChange = async (e) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0]
-            // console.log(file)
-            // let imageDataUrl = await readFile(file)
       
             // // apply rotation if needed
             const orientation = await getOrientation(file)

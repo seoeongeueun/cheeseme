@@ -24,11 +24,6 @@ positionRouter.post('/add', asyncHandler(async(req, res) => {
     res.send('Created')
 }));
 
-// positionRouter.delete("/delete/:date", asyncHandler(async(req, res) => {
-//     await Dday.deleteOne({date: req.params.date});
-//     res.send('Deleted');
-// }));
-
 positionRouter.post('/update/:id', asyncHandler(async(req, res) => {
     const cal = req.body.cal;
     const todo = req.body.todo;

@@ -81,7 +81,7 @@ function App() {
               onChangeStickers([{name: 'cloud', x: 140, y: 530, show: true, imgSrc: CloudSticker, croppedAreaPixels: {width: 500, height: 500, x: 0, y: 0}, rotation: 0},
               {name: 'ghost', x: 325, y: 430, show: true, imgSrc: Ghost1, croppedAreaPixels: {width: 455, height: 455, x: 22, y: 14}, rotation: 0},
               {name: 'glitter', x: 360, y: 200, show: true, imgSrc: Glitter, croppedAreaPixels: {width: 333, height: 333, x: 74, y: 95}, rotation: 0}])
-              //localStorage.removeItem('token');
+              localStorage.removeItem('token');
           }
     })
     .catch( (err) => {

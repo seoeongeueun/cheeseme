@@ -44,41 +44,6 @@ export default function Signup(props) {
     }
   }, [pw, checkPw])
 
-  // React.useEffect(() => {
-  //   if (send) {
-  //     isUnique(username);
-  //     isUniqueEmail(email);
-  //     if (checkPw !== pw){
-  //       setErrorType('notMatch');
-  //       return
-  //     }
-  //     else if (username === ''){
-  //       setErrorType('noName')
-  //       return
-  //     }
-  //     else if (checkPw === ''){
-  //       setErrorType('noPwCheck')
-  //       return
-  //     }
-  //     else if (pw === ''){
-  //       setErrorType('noPw')
-  //       return
-  //     }
-  //     else if (pw.length < 6) {
-  //       setErrorType('shortPw')
-  //       return
-  //     }
-  //     else if (email.length < 3) {
-  //       setErrorType('noEmail')
-  //       return
-  //     }
-  //   } else {
-  //     setErrorType('')
-  //     setFoundUser(false);
-  //     setFoundEmail(false);
-  //   }
-  // }, [send])
-
   const addUser = async() => {
     let res = await FetchAPIPost('/api/users/add', {
       name: username,

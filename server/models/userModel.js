@@ -88,7 +88,6 @@ userSchema.methods.generateToken = function (cb) {
 
 userSchema.statics.findByToken = function (token, cb) {
     var user = this;
-
     //token decoded
     jsonwebtoken.verify(token, process.env.JWT_KEY, function (err, decoded) {
         user.findOne({ _id: mongoose.Types.ObjectId(decoded), "token": token }, function (err, user) {

@@ -16,7 +16,6 @@ import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
 function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     const [count, setCount] = useState(1);
-    // const [goals, setGoals] = useState([{id: 'cse323', check: false}, {id: 'eat', check: false}]);
     const [editMode, setEditMode] = useState(false);
     const [happy, setHappy] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -25,8 +24,6 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     const instance = axios.create({
         baseURL: "https://cheese-me.fly.dev/",
       });
-
-    //change to redux later
     const [goals, setGoals] = useState([]);
 
     useEffect(() => {
@@ -227,8 +224,6 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
             }
         }
     }
-
-    //<input type="checkbox" name={key} onChange={(e) => handleCheck(key, e.target.checked)} defaultChecked={value.check}/>
 
     return (
         <div className="todoWidget">

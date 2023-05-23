@@ -23,7 +23,6 @@ const rootReducer = combineReducers({
     positionsList,
     viewFriend,
     stickers
-    //add more reducers
 });
 
 export default rootReducer;

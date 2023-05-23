@@ -339,7 +339,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         if (allPosts?.length > 0 && date) {
             if ((userId === friendId && userId !== '') || (friendId === '' && userId !== '')) {
                 const post = allPosts.find(p => `${new Date(p.date).getMonth()+1}.${new Date(p.date).getDate()}.${new Date(p.date).getFullYear()}` === `${new Date(date).getMonth()+1}.${new Date(date).getDate()}.${new Date(date).getFullYear()}`);
-                // console.log(new Date(date).toString());
                 if (post) {
                     setIndex(allPosts.indexOf(post))
                     setBody(post?.text);
@@ -586,12 +585,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     const handleDelete = async() => {
         setOpen(false);
         if (date) {
-            // instance.post('/deleteImg/' + imgUrl.split("/").pop(), {
-            //     withCredentials: true
-            // })
-            //     .then((res) => {
-            //         console.log(res);
-            // });
             let response = await FetchAPIPost('/deleteImg/' + imgUrl.split("/").pop());
             let res = await FetchApiDelete('/api/right/delete/' + date);
             setBody('');

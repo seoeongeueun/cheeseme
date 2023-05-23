@@ -23,11 +23,6 @@ widgetRouter.post('/add', asyncHandler(async(req, res) => {
     res.send('Created')
 }));
 
-// positionRouter.delete("/delete/:date", asyncHandler(async(req, res) => {
-//     await Dday.deleteOne({date: req.params.date});
-//     res.send('Deleted');
-// }));
-
 widgetRouter.post('/update/:name', asyncHandler(async(req, res) => {
     await Position.findOneAndUpdate({ name: req.params.name } , {name: req.body.name, imgUrl: req.body.imgUrl, show: req.body.show, round: req.body.round});
     res.send('Updated')

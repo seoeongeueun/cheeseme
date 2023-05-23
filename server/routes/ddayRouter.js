@@ -9,11 +9,6 @@ ddayRouter.get('/', asyncHandler(async(req, res) => {
     res.send(dday);
 }));
 
-// ddayRouter.get('/:date', asyncHandler(async(req, res) => {
-//     const dday = await Dday.findOne({date: req.params.date});
-//     res.send(dday);
-// }));
-
 ddayRouter.get('/getByOwner/:owner', asyncHandler(async(req, res) => {
     const dday = await Dday.findOne({ owner: req.params.owner });
     res.send(dday);
