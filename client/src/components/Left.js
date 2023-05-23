@@ -113,6 +113,9 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         let res = await FetchAPIPost('/api/users/update/' + userId, {
             stickers: stickers
         });
+        setRotation(0);
+        setAngle(0);
+        setCircle(false);
     };
 
     const updateList = async() => {

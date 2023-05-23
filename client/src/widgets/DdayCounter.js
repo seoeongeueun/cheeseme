@@ -72,12 +72,12 @@ function DdayCounter(props) {
             });
             setStart(new Date().setHours(0, 0, 0, 0));
         }
-        if (start && props.userId) {
+        if (start && props.userId && title) {
             change();
             setLoading(false);
         }
         else {
-            if (props.userId) {
+            if (props.userId && title) {
                 addNew();
                 setLoading(false);
             }
@@ -122,7 +122,7 @@ function DdayCounter(props) {
             </div>
             <div className='ddayTitle'>
                 <span>Title</span>
-                <input type="text" value={title ? title : ""} onChange={(e) => setTitle(e.target.value)} placeholder="name your d-day!" onKeyPress={handleKeyPress}/>
+                <input type="text" value={title ? title : ""} onChange={(e) => setTitle(e.target.value)} placeholder="name your d-day!" onKeyPress={handleKeyPress} style={{border: title === '' && '1px solid #f73939'}}/>
             </div>
             </div>}
             {props.move && <strong><OpenWithSharpIcon sx={{fontSize: '7rem'}}/></strong>}

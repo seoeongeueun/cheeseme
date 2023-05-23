@@ -636,7 +636,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         let tmpText = document.getElementById("text")?.value;
         let tmpTitle = document.getElementById("rightTitle").value;
         let imgPath = '';
-        console.log('heee: ', selectedImage)
         if (selectedImage && userId) {
             const formData = new FormData();
             formData.append("image", selectedImage);
@@ -655,6 +654,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         }
         
         if (_id === '' && userId){
+            setMessage('');
             let res = await FetchAPIPost('/api/right/add/', {
                 owner: userId,
                 date: date,
@@ -670,7 +670,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 plain: plain
             });
             console.log("created");
-            setMessage('');
             if (res) instance.get('/api/right/getByOwner/' + userId, {
                 withCredentials: true
             })

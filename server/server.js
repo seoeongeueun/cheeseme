@@ -77,7 +77,7 @@ const upload = multer({
 
 app.post('/deleteImg/:src', asyncHandler(async (req, res) => {
     try {
-        const img = await s3.deleteObject({ Bucket: 'cheesemebucket', Key: `images/${req.params.src}` });
+        const img = await myS3.deleteObject({ Bucket: 'cheesemebucket', Key: `images/${req.params.src}` });
         if (!img) {
           return res.json({ error: 'Failed to delete image' });
         }
