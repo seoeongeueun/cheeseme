@@ -128,6 +128,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             };
             setStickerList(tmp);
         }
+        console.log(stickerList)
     }
     
     useEffect(() => {
@@ -142,6 +143,10 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             updateList().catch((err) => console.log(err));
         }
     }, [stickers]);
+
+    useEffect(() => {
+        console.log('stickerList: ', stickerList)
+    }, [stickerList])
 
     useEffect(() => {
         if (userId) {
