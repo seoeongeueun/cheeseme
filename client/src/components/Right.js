@@ -592,7 +592,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             //     .then((res) => {
             //         console.log(res);
             // });
-            let response = await FetchApiDelete('/deleteImg/' + imgUrl.split("/").pop());
+            let response = await FetchAPIPost('/deleteImg/' + imgUrl.split("/").pop());
             let res = await FetchApiDelete('/api/right/delete/' + date);
             setBody('');
             setTitle('');

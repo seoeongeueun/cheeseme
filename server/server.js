@@ -75,7 +75,7 @@ const upload = multer({
   acl: 'public-read-write'
 });
 
-app.delete('/deleteImg/:src', asyncHandler(async (req, res) => {
+app.post('/deleteImg/:src', asyncHandler(async (req, res) => {
     try {
         const img = await s3.deleteObject({ Bucket: 'cheesemebucket', Key: `images/${req.params.src}` });
         if (!img) {
@@ -86,7 +86,7 @@ app.delete('/deleteImg/:src', asyncHandler(async (req, res) => {
         console.error(error);
         return res.status(500).json({ error: 'Internal server error' });
       }
-))
+    }))
 
 app.post('/upload', upload.single('image'), async (req, res) => {
     console.log(req.file.loctaion)
