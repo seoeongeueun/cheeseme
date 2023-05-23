@@ -118,9 +118,9 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         setCircle(false);
     };
 
-    const updateList = async(sList) => {
+    const updateList = async() => {
         const tmp = [];
-        for (const sticker of sList) {
+        for (const sticker of stickers) {
             tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
         };
         setStickerList(tmp);
