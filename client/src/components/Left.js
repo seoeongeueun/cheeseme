@@ -119,30 +119,36 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     };
 
     const updateList = async(sList) => {
+        const tmp = [];
+        for (const sticker of sList) {
+            tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
+        };
+        setStickerList(tmp);
+        console.log(stickerList);
+    }
+
+    useEffect(() => {
         if (stickers?.length === 0) {
             setStickerList([])
         } else {
-            const tmp = [];
-            for (const sticker of sList) {
-                tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
-            };
-            setStickerList(tmp);
+            updateList()
         }
-        console.log(stickerList)
-    }
+        console.log(stickerList);
+        if (userId) changeStickers();
+    }, [stickers])
     
     useEffect(() => {
         setToday(new Date().setHours(0, 0, 0, 0));
     }, [id]);
 
-    useEffect(() => {
-        if (stickers?.length !== stickerList?.length && stickers?.length !== 0) {
-            updateList(stickers).catch((err) => console.log(err));
-            if (userId) changeStickers();
-        } else if (stickers?.length > 0 && userId) {
-            updateList(stickers).catch((err) => console.log(err));
-        }
-    }, [stickers]);
+    // useEffect(() => {
+    //     if (stickers?.length !== stickerList?.length && stickers?.length !== 0) {
+    //         updateList(stickers).catch((err) => console.log(err));
+    //         if (userId) changeStickers();
+    //     } else if (stickers?.length > 0 && userId) {
+    //         updateList(stickers).catch((err) => console.log(err));
+    //     }
+    // }, [stickers]);
 
     useEffect(() => {
         console.log('stickerList: ', stickerList)
@@ -175,7 +181,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setGrid(n.settings[0]);
                 onChangeStickers(n.stickers?.length <= 0 ? [] : n.stickers);
                 if (n.stickers?.length <= 0) setStickerList([]);
-                else updateList(n.stickers).catch((err) => console.log(err));
               }
             })
             .catch( (err) => {
