@@ -75,7 +75,7 @@ const upload = multer({
   acl: 'public-read-write'
 });
 
-app.post('/deleteImg/:src', asyncHandler(async (req, res) => {
+app.delete('/deleteImg/:src', asyncHandler(async (req, res) => {
     const img = await s3.deleteObject({ Bucket: 'cheesemebucket', Key: `images/${req.params.src}` }, (err) => console.log(err));
     if (!img) return res.json({ error: 'Failed to delete image' });
     res.json({ message: 'Image deleted successfully' });
