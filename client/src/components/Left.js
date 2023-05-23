@@ -124,7 +124,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
         };
         setStickerList(tmp);
-        console.log(stickerList);
     }
 
     useEffect(() => {
@@ -133,7 +132,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         } else {
             updateList()
         }
-        console.log(stickerList);
         if (userId) changeStickers();
     }, [stickers])
     
@@ -149,10 +147,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     //         updateList(stickers).catch((err) => console.log(err));
     //     }
     // }, [stickers]);
-
-    useEffect(() => {
-        console.log('stickerList: ', stickerList)
-    }, [stickerList])
 
     useEffect(() => {
         if (userId) {
