@@ -760,7 +760,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     return(
         <div className="rightInnerBorder">
-            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#e1e1e1"}>
+            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#DEDEDE"}>
             <div className="rightContent">
                 {friendId === '' && !openBookmark ? <div className='marker'>
                     <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
@@ -894,7 +894,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         <button className="cancel" onClick={handleCancel}>Cancel</button>
                                     </div>
                                 </div> : <div className='postInput2'>
-                                            <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
+                                            <span style={{maxHeight: (selectedImage || imgUrl !== '') && '240px'}}>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
                                         </div>}
                             </div>}
                         </div>
@@ -1050,7 +1050,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                             <button className="cancel" onClick={handleCancel}>Cancel</button>
                                         </div>
                                     </div> : <div className='postInput2'>
-                                                <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
+                                                <span style={{maxHeight: (selectedImage || imgUrl !== '') && '240px'}}>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
                                             </div>}
                                 </div>}
                             </div>

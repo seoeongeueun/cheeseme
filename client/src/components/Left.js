@@ -304,7 +304,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     return(
         <div className="leftInnerBorder">
-            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#e1e1e1"}>
+            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#DEDEDE"}>
             <div className="leftContent" id="leftContent">
                     <div className="leftBody" id="leftBody">
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(319), bottom: height-(360)}}
