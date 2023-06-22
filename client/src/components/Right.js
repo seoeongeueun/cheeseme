@@ -780,7 +780,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>}
                 {openBookmark ? <BookmarkPosts allPosts={allPosts} setOpenBookmark={setOpenBookmark} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId}/>
-                    : <div className='rightBodyAndHeader'>
+                    : <div className='rightBodyAndHeader' style={{height: edit && '100% !important'}}>
                     {edit ? <div className="rightHeader">
                         <input id='rightTitle' type="text" defaultValue={title}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
@@ -894,7 +894,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         <button className="cancel" onClick={handleCancel}>Cancel</button>
                                     </div>
                                 </div> : <div className='postInput2'>
-                                            <span style={{maxHeight: (selectedImage || imgUrl !== '') && '240px'}}>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
+                                            <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
                                         </div>}
                             </div>}
                         </div>
@@ -936,7 +936,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         <span><BookmarkIcon sx={{fontSize: '1.7rem'}}/></span>
                     </div>}
                     {openBookmark ? <BookmarkPosts allPosts={allPosts} setOpenBookmark={setOpenBookmark} userId={userId} friendId={friendId} onSetFriendId={onSetFriendId}/>
-                        : <div className='rightBodyAndHeader'>
+                        : <div className='rightBodyAndHeader' style={{height: edit && '100% !important'}}>
                         {edit ? <div className="rightHeader">
                             <input id='rightTitle' type="text" defaultValue={title}/>
                         </div> : <span style={{textAlign: 'center'}}>{title}</span>}
@@ -1050,7 +1050,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                             <button className="cancel" onClick={handleCancel}>Cancel</button>
                                         </div>
                                     </div> : <div className='postInput2'>
-                                                <span style={{maxHeight: (selectedImage || imgUrl !== '') && '240px'}}>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
+                                                <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
                                             </div>}
                                 </div>}
                             </div>
