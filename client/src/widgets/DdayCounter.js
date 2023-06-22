@@ -27,7 +27,7 @@ function DdayCounter(props) {
                     if (res?.data) {
                         setTitle(res?.data.text);
                         setEnd(res?.data.end);
-                        setStart(res?.data.start);
+                        setStart(new Date().setHours(0, 0, 0, 0));
                         setLoading(false)
                     }
                     else {

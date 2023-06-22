@@ -28,7 +28,7 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
                 let res2 = await FetchAPIPost('/api/users/update/' + userId, {
                     notifications: notis.length > 5 ? notis.slice(0, 5) : notis
                 });
-                if (res2 && tmpObj.notiType !== 'receiveDecline') {
+                if (tmpObj.notiType === 'receiveAccept') {
                     onAddFriend(friendName);
                     let res3 = await FetchAPIPost('/api/users/updateWithName/' + friendName, {
                         friends: friendFriends.concat({name: name, fav: false})
