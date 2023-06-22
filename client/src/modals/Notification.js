@@ -13,7 +13,7 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
     const [friendsNoti, setFriendsNoti] = useState();
     const [tmpObj, setTmpObj] = useState();
     const [friendName, setFriendName] = useState('');
-    const [friendFriends, setFriendFriends] = useState();
+    const [friendFriends, setFriendFriends] = useState([]);
     const instance = axios.create({
         baseURL: "https://cheese-me.fly.dev/",
       });
@@ -52,7 +52,7 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
     }, [friends]);
 
     useEffect(() => {
-        if (tmpObj) {
+        if (tmpObj && friendFriends) {
             updateFriendNoti()
         }
     }, [friendsNoti]);
