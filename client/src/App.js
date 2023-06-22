@@ -87,6 +87,7 @@ function App() {
     .catch( (err) => {
       console.log('Error: ', err);
     })
+    onChangeStickers([]);
     if (userId) {
       instance.get('/api/users/find/' + userId, {
           withCredentials: true
