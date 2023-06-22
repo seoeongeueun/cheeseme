@@ -87,7 +87,6 @@ function App() {
     .catch( (err) => {
       console.log('Error: ', err);
     })
-    onChangeStickers([]);
     if (userId) {
       instance.get('/api/users/find/' + userId, {
           withCredentials: true
@@ -103,7 +102,7 @@ function App() {
               {name: 'todo', x: 0, y: 0, show: true},
               {name: 'reminder', x: 0, y: 0, show: true}] : n.positions);
             onCurrentNameChange(n.name);
-            onChangeStickers(n.stickers?.length === 0 ? [] : n.stickers);
+            onChangeStickers(n.stickers?.length <= 0 ? [] : n.stickers);
           }
         })
         .catch( (err) => {

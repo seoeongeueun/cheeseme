@@ -1066,9 +1066,9 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         </Box>
                                     </div>
                                     <div className='pageSliderButtons'>
-                                        <button onClick={() => {value <= 0 ? onChangeDate(date - 86400000) : setValue(value < 1 ? 0 : value-1);}}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
-                                        <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : userId ? `@ ${name}` : 'Login Required'} </span>
-                                        <button onClick={() => {value >= allPosts?.length - 1 ? onChangeDate(date + 86400000) : setValue(value > allPosts?.length ? allPosts?.length : value + 1);}}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                    <button onClick={() => {value <= 0 ? onChangeDate(date - 86400000) : setValue(value < 1 ? 0 : value-1);}}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                    <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : userId ? `@ ${name}` : 'Login Required'} </span>
+                                    <button onClick={() => {value >= allPosts?.length - 1 ? onChangeDate(date + 86400000) : setValue(value > allPosts?.length ? allPosts?.length : value + 1);}}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                     </div>
                                 </div>}
                     </div>}
