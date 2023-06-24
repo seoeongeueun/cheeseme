@@ -9,7 +9,7 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
     const [login, setLogin] = useState(false);
     const [signup, setSignup] = useState(false);
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
 
     const handleLogout = () => {

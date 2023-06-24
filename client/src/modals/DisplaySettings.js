@@ -12,7 +12,7 @@ function DisplaySettings(props){
         date: state.datePick.date,
     }));
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080//' : "https://cheese-me.fly.dev/",
       });
 
     const handleGridClick = async(bool) => {

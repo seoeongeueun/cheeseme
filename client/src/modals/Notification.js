@@ -15,7 +15,7 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
     const [friendName, setFriendName] = useState('');
     const [friendFriends, setFriendFriends] = useState([]);
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
 
     const updateFriendNoti = async() => {

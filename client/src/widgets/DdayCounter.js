@@ -15,7 +15,7 @@ function DdayCounter(props) {
     const [loading, setLoading] = useState(true);
     const [date, setDate] = useState();
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
 
     useEffect(() => {

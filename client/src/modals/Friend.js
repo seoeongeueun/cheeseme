@@ -22,7 +22,7 @@ function Friend({userId, name, friends, onChangeFriends, onAddFriend, onRemoveFr
     const [friendName, setFriendName] = useState('');
     const [friendFriends, setFriendFriends] = useState(null);
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
     
     const updateList = async() => {

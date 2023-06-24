@@ -10,7 +10,7 @@ function WidgetSettingsLeft(props){
     const [reminder, setReminder] = useState(props.reminder);
     const [positions, setPositions] = useState([])
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
 
     useEffect(() => {

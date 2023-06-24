@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "https://cheese-me.fly.dev/",
+    baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080/' : "https://cheese-me.fly.dev/",
   });
 
 export const FetchAPIPost = async (url, params) => {

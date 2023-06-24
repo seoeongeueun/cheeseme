@@ -86,7 +86,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [id, setId] = useState("");
     const [message, setMessage] = useState('');
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080//' : "https://cheese-me.fly.dev/",
     });
     const regex = "/\.com\/images\/([^/]+)$/";
     const ORIENTATION_TO_ANGLE = {

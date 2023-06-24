@@ -11,8 +11,8 @@ function BookmarkPosts(props){
     const dispatch = useDispatch();
     const onChangeDate = d => dispatch(changeDate(d));
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
-      });
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080//' : "https://cheese-me.fly.dev/",
+    });
 
     useEffect(() => {
         if (props.allPosts && props.friendId === '') {

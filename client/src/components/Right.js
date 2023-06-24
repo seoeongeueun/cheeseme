@@ -89,7 +89,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     
     const colorCode = ['rgba(253, 223, 126, 0.5)', 'rgba(103, 235, 250, 0.5)', 'rgba(250, 169, 157, 0.5)', 'rgba(206, 151, 251, 0.5)'];
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080//' : "https://cheese-me.fly.dev/",
     });
     const regex = "/\.com\/images\/([^/]+)$/";
 

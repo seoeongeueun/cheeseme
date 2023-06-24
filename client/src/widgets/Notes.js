@@ -16,7 +16,7 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
     const [allNotes, setAllNotes] = useState([]);
     const [_id, setId] = useState('');
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
 
     useEffect(() => {

@@ -16,7 +16,7 @@ export default function AddFriend({name, setAddFriend, friends, notis}) {
   const [message, setMessage] = useState('');
   const [friendsNoti, setFriendsNoti] = useState();
   const instance = axios.create({
-    baseURL: "https://cheese-me.fly.dev/",
+    baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080//' : "https://cheese-me.fly.dev/",
   });
 
   const updateNotis = async() => {
