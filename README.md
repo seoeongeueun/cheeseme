@@ -1,6 +1,6 @@
-<div align=left><h1>CHEESEME </h1></div>
-    <b>ABOUT</b><br>
-    CheeseMe is a personalized and customizable journal application for PC that brings together convenient widgets, journal entries, and social connections all in one place. While there are other blog-like applications out there, very few offer all those features within a single interface, along with the freedom to creatively decorate your pages.<br>
+# CHEESEME  
+**About**  
+CheeseMe is a personalized and customizable journal application for PC that brings together convenient widgets, journal entries, and social connections all in one place. While there are other blog-like applications out there, very few offer all those features within a single interface, along with the freedom to creatively decorate your pages.<br>
     Below are the features that CheeseMe offers:<br>
     <div align=left>
       <ul>
@@ -21,13 +21,12 @@
       🧀 친구를 추가하고 친구의 일기장 둘러보기<br>
       </ul>
     </div>
-<div align=left><h1>Deployment</h1></div>
-    <b>URL</b>
-    https://cheeseme.netlify.app/<br>
-    Deployed using Netlify for frontend and Fly.io for backend
-      
-<div align=left><h1>STACKS USED</h1></div>
-  <b>FRONTEND</b>
+## Deployment  
+**URL** https://cheeseme.netlify.app/  
+Deployed using Netlify for frontend and Fly.io for backend
+
+## Stacks   
+**FRONTEND**
   <div align=left>
     <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
     <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
@@ -37,7 +36,8 @@
     <img src="https://img.shields.io/badge/mui-007FFF?style=for-the-badge&logo=html5&logoColor=white">
  </div>
  <br>
-<b>BACKEND</b>
+ 
+**BACKEND**  
 <div align=left>
   <img src="https://img.shields.io/badge/mongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white">
   <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">
@@ -45,28 +45,73 @@
   <img src="https://img.shields.io/badge/amazons3-FF9900?style=for-the-badge&logo=AmazonS3&logoColor=white">
 </div>
 <br>
-<b>DEPLOYMENT</b>
+
+**DEPLOYMENT**  
 <div align=left>
   <img src="https://img.shields.io/badge/netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=white">
   <img src="https://img.shields.io/badge/fly.io-8D33E8?style=for-the-badge&logo=express&logoColor=white">
+  <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
 </div>
-<div align=left><h1>HOW TO RUN</h1></div>
-    ### npm start
-<div align=left><h1>PAGES</h1></div>
-  <b>SCHEDULER SIDE (LEFT)</b>
-  <b>JOURNAL SIDE (RIGHT)</b>
-<div align=left><h1>MORE</h1></div>
-    <b>IN PROGRESS</b><br>
-    추가 중인 기능입니다
+
+# Pages Help  
+[1. Main Page](#main-page)  
+[2. Socials](#socials)  
+[3. Scheduler](#scheduler)  
+[4. Journal](#journal)  
+[5. Search](#search)  
+[6. Bookmark](#bookmark)
+
+## Main Page      
+
+## Socials     
+### Sign Up  
+### Log In / Out  
+### Add Friends  
+### Delete Friends  
+
+## Scheduler   
+### Contents  
+[1. Calendar](#1-calendar)  
+[2. D-day Counter](#2-d-day-counter)  
+[3. World Clock](#3-world-clock)  
+[4. Notes](#4-notes)  
+[5. Reminder](#5-reminder)  
+[6. Todo List](#6-todo-list)  
+[7. Stickers](#7-stickers)  
+[8. Settings](#8-settings)   
+
+### 1. Calendar  
+### 2. D-day Counter   
+### 3. World Clock   
+### 4. Notes   
+### 5. Reminder   
+### 6. Todo List  
+### 7. Stickers  
+### 8. Settings  
+
+## Journal     
+### 1. Writing Posts
+### 2. Navigating Pages  
+### 3. Settings  
+### 4. View Friends' Posts
+
+## Search    
+### 1. Widgets    
+### 2. Journal  
+
+## Bookmark   
+
+
+## More  
+**In Progress**  
     <ul>
     🧀 Click > on the jounral slider to move to current date<br>
+    🧀 World clock
     </ul>
-    <b>IN THE FUTURE</b><br>
-    작업 예정인 기능입니다
+**IN THE FUTURE**  
     <ul>
     🧀 Change password<br>
     🧀 Adjust image position when uploading<br>
     🧀 Enlarge image on click<br>
     🧀 Leave comments on friend's journal post<br>
-    🧀 World clock
     </ul>
