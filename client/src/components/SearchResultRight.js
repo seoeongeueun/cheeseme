@@ -11,7 +11,7 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
     const [searchBy, setSearchBy] = useState('Content');
     const [showOption, setShowOption] = useState(false);
     const instance = axios.create({
-        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080//' : "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
 
     useEffect(() => {

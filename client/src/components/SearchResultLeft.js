@@ -7,7 +7,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
     const [foundTodos, setFoundTodos] = useState();
     const [clicked, setClicked] = useState();
     const instance = axios.create({
-        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080//' : "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
 
     useEffect(() => {

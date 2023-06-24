@@ -32,7 +32,7 @@ app.use(cors({
     origin: ['https://cheeseme.netlify.app', 'https://cheeseme.netlify.app/', "https://cheesemebucket.s3.ap-northeast-2.amazonaws.com/", "https://cheesemebucket.s3.ap-northeast-2.amazonaws.com",
         process.env.NODE_ENV !== 'production' && 'http://localhost:3000'],
     methods: ['GET', 'POST', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', process.env.NODE_ENV !== 'production' && '*'],
     credentials: true
   }));
 app.use(cookieParser());

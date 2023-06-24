@@ -19,7 +19,7 @@ function Reminder({move, onCreate, onToggle, onEdit, onDelete, userId}){
     const [colorCodeLight, setColorCodeLight] = useState(['rgba(103, 235, 250, 0.1)', 'rgba(250, 169, 157, 0.1)', 'rgba(253, 223, 126, 0.1)', 'rgba(206, 151, 251, 0.1)'])
     //rgba(250, 169, 157, 0.4) rgba(253, 223, 126, 0.4) rgba(155, 251, 225, 0.4) rgba(103, 235, 250, 0.4)
     const instance = axios.create({
-        baseURL: "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
     useEffect(() => {
         if (userId) {

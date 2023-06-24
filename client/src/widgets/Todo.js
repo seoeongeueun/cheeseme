@@ -22,7 +22,7 @@ function Todo({move, onCreate, onToggle, onDelete, date, userId}){
     const [allTodos, setAllTodos] = useState([{date: new Date().setHours(0, 0, 0, 0), goals: [{id: 1, text: 'order new sim card', check: false}, {id: 2, text: 'do laundry', check: true}]}]);
     const [_id, setId] = useState('');
     const instance = axios.create({
-        baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080/' : "https://cheese-me.fly.dev/",
+        baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
     const [goals, setGoals] = useState([]);
 

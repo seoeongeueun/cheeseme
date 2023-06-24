@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "proxy": "https://cheese-me.fly.dev/",
+  "proxy": "http://localhost:8080/",
   "engines": {
     "node": "19.2.0"
   },
