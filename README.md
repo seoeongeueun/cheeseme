@@ -11,8 +11,7 @@
       🧀 View and like your friend's journal
       </ul>
     </div>
-    CheeseMe는 전자기기에서만 사용할 수 있는 편리한 체계적인 위젯과 자유롭게 꾸미고 커스터마이징할 수 있는 실제 종이 일기장의 장점을 합쳐 만든 PC 스케쥴러입니다.<br>
-    CheeseMe의 주요 기능은 다음과 같습니다:<br>
+    CheeseMe는 전자기기에서만 사용할 수 있는 편리한 체계적인 위젯과 자유롭게 꾸미고 커스터마이징할 수 있는 실제 종이 일기장의 장점을 합쳐 만든 PC 스케쥴러입니다. CheeseMe의 주요 기능은 다음과 같습니다:<br>
     <div align=left>
       <ul>
       🧀 일기장 게시글 작성<br>
@@ -22,9 +21,11 @@
       🧀 친구를 추가하고 친구의 일기장 둘러보기<br>
       </ul>
     </div>
-    
-    
-    
+<div align=left><h1>Deployment</h1></div>
+    <b>URL</b>
+    https://cheeseme.netlify.app/<br>
+    Deployed using Netlify for frontend and Fly.io for backend
+      
 <div align=left><h1>STACKS USED</h1></div>
   <b>FRONTEND</b>
   <div align=left>
@@ -49,12 +50,23 @@
   <img src="https://img.shields.io/badge/netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=white">
   <img src="https://img.shields.io/badge/fly.io-8D33E8?style=for-the-badge&logo=express&logoColor=white">
 </div>
-
+<div align=left><h1>HOW TO RUN</h1></div>
+    ### npm start
 <div align=left><h1>PAGES</h1></div>
-  <b>MAIN PAGE (GUEST MODE)</b>
-  <b>LOGIN</b>
-  <b>WIDGETS</b>
-  <b>STICKERS</b>
-  <b>POSTS</b>
-  <b>FRIENDS</b>
-  <b>SEARCH</b>
+  <b>SCHEDULER SIDE (LEFT)</b>
+  <b>JOURNAL SIDE (RIGHT)</b>
+<div align=left><h1>MORE</h1></div>
+    <b>IN PROGRESS</b><br>
+    추가 중인 기능입니다
+    <ul>
+    🧀 Click > on the jounral slider to move to current date<br>
+    </ul>
+    <b>IN THE FUTURE</b><br>
+    작업 예정인 기능입니다
+    <ul>
+    🧀 Change password<br>
+    🧀 Adjust image position when uploading<br>
+    🧀 Enlarge image on click<br>
+    🧀 Leave comments on friend's journal post<br>
+    🧀 World clock
+    </ul>
