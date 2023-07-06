@@ -40,9 +40,11 @@ import Ghost1 from '../icons/ghost1.png';
 import Glitter from '../icons/glitter.png';
 
 function Left({editMode, setEditMode, date, userId, positions, onChangePositions, stickers, onChangeStickers, onEdit}){
+    const [addPic, setAddPic] = useState(false);
+    const [showStickerSettings, setShowStickerSettings] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [showWidgetSettings, setShowWidgetSettings] = useState(false);
-    const [showStickerSettings, setShowStickerSettings] = useState(false);
+
     const [grid, setGrid] = useState(true);
 
     const [todo, setTodo] = useState(positions.find(obj => obj.name === 'todo').show)
@@ -53,8 +55,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [clock, setClock] = useState(positions.find(obj => obj.name === 'clock').show);
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
-
-    const [addPic, setAddPic] = useState(false);
 
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [rotation, setRotation] = useState(0)
@@ -238,7 +238,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             setCroppedAreaPixels(null);
             setAngle(null);
         }
-    }, [addPic])
+    }, [addPic]);
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
@@ -434,23 +434,25 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                     </div>
                     <div className="leftFooter">
                         <div className="leftWidget">
-                            <button onClick={() => {setAddPic(!addPic); setShowStickerSettings(false);}}><AddPhotoAlternateOutlinedIcon sx={ addPic ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
+                            <button onClick={() => {setAddPic(!addPic); setShowStickerSettings(false); setShowWidgetSettings(false); setShowSettings(false);}}><AddPhotoAlternateOutlinedIcon sx={ addPic ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                             {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
                         </div>
                         <div className="leftWidget">
-                            {!showStickerSettings ? <button onClick={() => setShowStickerSettings(true)}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
+                            {!showStickerSettings ? <button onClick={() => {setShowStickerSettings(true); setShowWidgetSettings(false); setShowSettings(false); setAddPic(false);}}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
                                 : <button onClick={() => setShowStickerSettings(false)}><img src={StickerColor} alt='stickerWidget' style={{width: '2.05rem'}}/></button>}
                             {showStickerSettings && <StickerSettings userId={userId} stickers={stickers} onChangeStickers={onChangeStickers} stickerList={stickerList} setStickerList={setStickerList}/>}
                         </div>
                         <div className="leftWidget">
-                            <button onClick={() => setEditMode()}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
+                            <button onClick={editMode ? () => setEditMode() : () => {setEditMode(); setShowSettings(false); setShowWidgetSettings(false); setShowStickerSettings(false);}}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                         </div>
                         <div className="leftWidget">
-                            <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                            {showWidgetSettings ? <button onClick={() => setShowWidgetSettings(false)}><DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/></button>
+                                 : <button onClick={() => {setShowWidgetSettings(true); setShowStickerSettings(false); setShowSettings(false); setAddPic(false);}}><DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>}
                             {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} setDdayCounter={setDdayCounter} setClock={setClock} clock={clock} ddayCounter={ddayCounter}/>}
                         </div>
                         <div className="leftWidget">
-                            <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                        {showSettings ? <button onClick={() => setShowSettings(false)}><SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/></button> 
+                            : <button onClick={() => {setShowSettings(true); setShowWidgetSettings(false); setShowStickerSettings(false); setAddPic(false);}}><SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>}
                             {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
                         </div>
                     </div>
@@ -576,23 +578,25 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 </div>
                 <div className="leftFooter">
                     <div className="leftWidget">
-                        <button onClick={() => {setAddPic(!addPic); setShowStickerSettings(false);}}><AddPhotoAlternateOutlinedIcon sx={ addPic ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
+                        <button onClick={() => {setAddPic(!addPic); setShowStickerSettings(false); setShowWidgetSettings(false); setShowSettings(false);}}><AddPhotoAlternateOutlinedIcon sx={ addPic ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                         {addPic && <input type="file" onChange={onFileChange} accept="image/*" />}
                     </div>
                     <div className="leftWidget">
-                        {!showStickerSettings ? <button onClick={() => setShowStickerSettings(true)}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
+                        {!showStickerSettings ? <button onClick={() => {setShowStickerSettings(true); setShowWidgetSettings(false); setShowSettings(false); setAddPic(false);}}><img src={StickerIcon} alt='stickerWidget' style={{width: '2.05rem'}}/></button>
                                 : <button onClick={() => setShowStickerSettings(false)}><img src={StickerColor} alt='stickerWidget' style={{width: '2.05rem'}}/></button>}
                         {showStickerSettings && <StickerSettings userId={userId} stickers={stickers} onChangeStickers={onChangeStickers} stickerList={stickerList} setStickerList={setStickerList}/>}
                     </div>
                     <div className="leftWidget">
-                        <button onClick={() => setEditMode()}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
+                        <button onClick={editMode ? () => setEditMode() : () => {setEditMode(); setShowSettings(false); setShowWidgetSettings(false); setShowStickerSettings(false);}}><OpenWithRoundedIcon sx={ editMode ? {fontSize: '2.3rem', color: '#F9D876'} : {fontSize: '2.3rem'}}/></button>
                     </div>
                     <div className="leftWidget">
-                        <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                        {showWidgetSettings ? <button onClick={() => setShowWidgetSettings(false)}><DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/></button>
+                                 : <button onClick={() => {setShowWidgetSettings(true); setShowStickerSettings(false); setShowSettings(false); setAddPic(false);}}><DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>}
                         {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter} setClock={setClock} clock={clock}/>}
                     </div>
                     <div className="leftWidget">
-                        <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
+                        {showSettings ? <button onClick={() => setShowSettings(false)}><SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/></button> 
+                            : <button onClick={() => {setShowSettings(true); setShowWidgetSettings(false); setShowStickerSettings(false); setAddPic(false);}}><SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/></button>}
                         {showSettings && <DisplaySettingsLeft grid={grid} setGrid={setGrid}/>}
                     </div>
                 </div>

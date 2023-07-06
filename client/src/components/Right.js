@@ -121,6 +121,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     const n = res?.data;
                     if (n) setAllPosts(n.sort((a, b) => a.date - b.date))
                     else setAllPosts([])
+                    if (showSettings) setShowSettings(false);
                 })
                 .catch((err) => {
                     console.log('Error loading posts: ', err)
@@ -150,6 +151,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     else {
                         setAllPosts([]);
                     }
+                    if (showSettings) setShowSettings(false);
                     return;
                 })
                 .catch( (err) => {
