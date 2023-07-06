@@ -756,6 +756,16 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         setValue(newValue);
     };
 
+    const moveDate = () =>{
+
+        console.log(value)
+        if (date === new Date().setHours(0, 0, 0, 0)){
+            setValue(value+1);
+        } else {
+            onChangeDate(date + 86400000);
+        }
+    }
+
     /*<span className="profileArea"/>*/
 
     return(
@@ -912,7 +922,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                 <div className='pageSliderButtons'>
                                     <button onClick={() => {value <= 0 ? onChangeDate(date - 86400000) : setValue(value < 1 ? 0 : value-1);}}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                     <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : userId ? `@ ${name}` : 'Login Required'} </span>
-                                    <button onClick={() => {value >= allPosts?.length - 1 ? onChangeDate(date + 86400000) : setValue(value > allPosts?.length ? allPosts?.length : value + 1);}}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                    <button onClick={() => {(value >= allPosts?.length - 1 || value === -1) ? moveDate() : setValue(value + 1);}}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                 </div>
                             </div>}
                 </div>
@@ -1068,7 +1078,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                     <div className='pageSliderButtons'>
                                     <button onClick={() => {value <= 0 ? onChangeDate(date - 86400000) : setValue(value < 1 ? 0 : value-1);}}><ArrowBackIosNewRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                     <span style={{marginBottom: '2rem'}}>{currentFriendName !== '' ? `@ ${currentFriendName}` : userId ? `@ ${name}` : 'Login Required'} </span>
-                                    <button onClick={() => {value >= allPosts?.length - 1 ? onChangeDate(date + 86400000) : setValue(value > allPosts?.length ? allPosts?.length : value + 1);}}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
+                                    <button onClick={() => {(value >= allPosts?.length - 1 || value === -1) ? moveDate() : setValue(value + 1);}}><ArrowForwardIosRoundedIcon sx={{fontSize: '1.7rem'}}/></button>
                                     </div>
                                 </div>}
                     </div>}
