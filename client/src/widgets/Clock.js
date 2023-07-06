@@ -198,19 +198,19 @@ function Clock({move, userId}){
             </div>
             {settings && <div className='countries' style={{marginTop: '0.8rem'}}>
                 <div className={my ? 'country' : 'countryOff'}>
-                    <button onClick={() => handleCountryClick(0)}>
+                    <button onClick={userId ? () => handleCountryClick(0) : () => setMy(!my)}>
                         <img src={Cheese} alt='cheese'/>
                         <span>MY TIME</span>
                     </button>
                 </div>
                 <div className={ny ? 'country' : 'countryOff'}>
-                    <button onClick={() => handleCountryClick(1)}>
+                    <button onClick={userId ? () => handleCountryClick(1) : () => setNy(!ny)}>
                         <img src={Liberty} alt='ny'/>
                         <span>NEW YORK</span>
                     </button>
                 </div>
                 <div className={kor ? 'country' : 'countryOff'}>
-                    <button onClick={() => handleCountryClick(2)}>
+                    <button onClick={userId ? () => handleCountryClick(2) : () => setKor(!kor)}>
                         <img src={Kpop} alt='kor'/>
                         <span>KOREA</span>
                     </button>
@@ -218,19 +218,19 @@ function Clock({move, userId}){
             </div>}
             {settings && <div className='countries'>
                 <div className={van ? 'country' : 'countryOff'}>
-                    <button onClick={() => handleCountryClick(3)}>
+                    <button onClick={userId ? () => handleCountryClick(3) : () => setVan(!van)}>
                         <img src={Maple} alt='van'/>
                         <span>VANCOUVER</span>
                     </button>
                 </div>
                 <div className={bei ? 'country' : 'countryOff'}>
-                    <button onClick={() => handleCountryClick(4)}>
+                    <button onClick={userId ? () => handleCountryClick(4) : () => setBei(!bei)}>
                         <img src={Panda} alt='bei'/>
                         <span>BEIJING</span>
                     </button>
                 </div>
                 <div className={par ? 'country' : 'countryOff'}>
-                    <button onClick={() => handleCountryClick(5)}>
+                    <button onClick={userId ? () => handleCountryClick(5) : () => setPar(!par)}>
                         <img src={Eiffel} alt='paris'/>
                         <span>PARIS</span>
                     </button>

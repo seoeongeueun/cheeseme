@@ -154,8 +154,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                     {name: 'dday', x: 377, y: 42, show: true},
                     {name: 'note', x: 402, y: 249, show: true},
                     {name: 'todo', x: 358.5, y: 460, show: true},
-                    {name: 'reminder', x: 31, y: 301, show: true},
-                    {name: 'clock', x: 0, y: 0, show: true}] : n.positions);
+                    {name: 'reminder', x: 31, y: 401, show: true},
+                    {name: 'clock', x: 600, y: 20, show: true}] : n.positions);
                 setCalPosition({x: Object.values(n.positions[0])[1], y: Object.values(n.positions[0])[2]});
                 setDdayPosition({x: Object.values(n.positions[1])[1], y: Object.values(n.positions[1])[2]});
                 setNotePosition({x: Object.values(n.positions[2])[1], y: Object.values(n.positions[2])[2]});
@@ -182,8 +182,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             setDdayPosition({x: 377, y: 42});
             setNotePosition({x: 402, y: 249});
             setTodoPosition({x: 358.5, y: 460});
-            setReminderPosition({x: 21, y: 301});
-            setClockPosition({x: 0, y: 0});
+            setReminderPosition({x: 21, y: 401});
+            setClockPosition({x: 600, y: 20});
             setCalendar(true);
             setDdayCounter(true);
             setNotes(true);
