@@ -85,6 +85,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     const [ddayEdit, setDdayEdit] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
 
     const [id, setId] = useState("");
     const [message, setMessage] = useState('');
@@ -278,6 +280,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const onFileChange = async (e) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0]
+            setLoading(true);
       
             // // apply rotation if needed
             const orientation = await getOrientation(file)
@@ -309,6 +312,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         setImageSrc('');
         setMessage('');
         setCircle(false);
+        setLoading(false);
     }
 
     return(
@@ -316,6 +320,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#DEDEDE"}>
             <div className="leftContent" id="leftContent">
                     <div className="leftBody" id="leftBody">
+                        {(addPic && loading && !imgSrc) && <span className='loading'>LOADING . . .</span>}
                         {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(319), bottom: height-(360)}}
                                             position={calPosition ? {x: Object.values(calPosition)[0] > width-319 ? width-319 : Object.values(calPosition)[0], y: Object.values(calPosition)[1] > height-(360) ? height-(360) : Object.values(calPosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
@@ -334,7 +339,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         {clock && <Draggable bounds={{top: 0, left: 0, right: width-(212), bottom: height-(156)}}
                                             position={todoPosition ? {x: Object.values(clockPosition)[0] > width-212 ? width-212 : Object.values(clockPosition)[0], y: Object.values(clockPosition)[1] > height-(156) ? height-(156) : Object.values(clockPosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setClockPosition({x, y})} handle="strong"><div><ClockContainer move={editMode} date={date}/></div></Draggable>} 
-                    <div className="stickers">
+                        <div className="stickers">
                             {(stickerList?.length > 0 && stickerList?.length === stickers?.length) &&
                                 stickerList.map((sticker, index) => {
                                     if (sticker?.show) {
@@ -418,14 +423,13 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                                 <Button
                                   onClick={showCroppedImage}
                                   variant="contained"
-                                  color="primary"
-                                  style={{fontSize: "1.5rem"}}>
+                                  style={{fontSize: "1rem", marginLeft: '1rem'}}>
                                   Done
                                 </Button>
                                 <Button
                                   onClick={() => handleCancel()}
-                                  variant="contained"
-                                  style={{fontSize: "1.5rem", color: 'rgba(0, 0, 0, 0.87)'}}>
+                                  variant="outlined"
+                                  style={{fontSize: "1rem", marginLeft: '1rem'}}>
                                   Cancel
                                 </Button>
                               </div>
@@ -562,14 +566,13 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                             <Button
                               onClick={showCroppedImage}
                               variant="contained"
-                              color="primary"
-                              style={{fontSize: "1.5rem"}}>
+                              style={{fontSize: "1rem", marginLeft: '1rem'}}>
                               Done
                             </Button>
                             <Button
                               onClick={() => handleCancel()}
-                              variant="contained"
-                              style={{fontSize: "1.5rem", color: 'rgba(0, 0, 0, 0.87)'}}>
+                              variant="outlined"
+                              style={{fontSize: "1rem", marginLeft: '1rem'}}>
                               Cancel
                             </Button>
                           </div>
