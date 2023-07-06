@@ -447,7 +447,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                            {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
+                            {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} setDdayCounter={setDdayCounter} setClock={setClock} clock={clock} ddayCounter={ddayCounter}/>}
                         </div>
                         <div className="leftWidget">
                             <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
@@ -589,7 +589,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                     </div>
                     <div className="leftWidget">
                         <button onClick={() => setShowWidgetSettings(!showWidgetSettings)}>{showWidgetSettings ? <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <DashboardCustomizeOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
-                        {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter}/>}
+                        {showWidgetSettings && <WidgetSettingsLeft userId={userId} reminder={reminder} setReminder={setReminder} todo={todo} setTodo={setTodo} calendar={calendar} setCalendar={setCalendar} notes={notes} setNotes={setNotes} setDdayCounter={setDdayCounter} ddayCounter={ddayCounter} setClock={setClock} clock={clock}/>}
                     </div>
                     <div className="leftWidget">
                         <button onClick={() => setShowSettings(!showSettings)}>{showSettings ? <SettingsOutlinedIcon sx={{fontSize: "2.3rem", color: "#F9D876"}}/> : <SettingsOutlinedIcon sx={{fontSize: "2.3rem"}}/>}</button>
