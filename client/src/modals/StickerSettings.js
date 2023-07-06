@@ -6,6 +6,9 @@ import axios from 'axios';
 function StickerSettings(props){
     const [stickers, setStickers] = useState(props.stickers);
     const regex = "/\.com\/images\/([^/]+)$/";
+    const instance = axios.create({
+        baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
+    });
 
     const update = async() => {
         let res = await FetchAPIPost('/api/users/update/' + props.userId, {
@@ -21,7 +24,7 @@ function StickerSettings(props){
 
     const handleStickerDelete = async(name) => {
         let imgSrc = stickers.find(s => s.name === name).imgSrc;
-        axios.post('/deleteImg/' + imgSrc.split("/").pop())
+        instance.post('/deleteImg/' + imgSrc.split("/").pop())
             .then((res) => {
                 console.log('Sticker deleted');
         })
