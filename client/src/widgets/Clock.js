@@ -71,6 +71,13 @@ function Clock({move, userId}){
             }
         }
     }, [show, addNew]);
+
+    useEffect(() => {
+        if (userId && addNew) {
+            add()
+            setAddNew(false);
+        }
+    }, [addNew]);
   
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -127,7 +134,7 @@ function Clock({move, userId}){
                     </div>
                 </div>}
                 <div className='clocks'>
-                    {my && <div class='timeZone'>
+                    {my && <div className='timeZone'>
                         <div className='time'>
                             <img src={Cheese} alt='cheese'/>
                             <span>{date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
@@ -137,7 +144,7 @@ function Clock({move, userId}){
                             <span style={{color: (date.getDay() === 0 || date.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[date.getDay()]}</span>
                         </div>
                     </div>}
-                    {ny && <div class='timeZone'>
+                    {ny && <div className='timeZone'>
                         <div className='time'>
                             <img src={Liberty} alt='liberty'/>
                             <span>{nyDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
@@ -147,7 +154,7 @@ function Clock({move, userId}){
                             <span style={{color: (nyDate.getDay() === 0 || nyDate.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[nyDate.getDay()]}</span>
                         </div>
                     </div>}
-                    {kor && <div class='timeZone'>
+                    {kor && <div className='timeZone'>
                         <div className='time'>
                             <img src={Kpop} alt='kpop'/>
                             <span>{korDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
@@ -157,7 +164,7 @@ function Clock({move, userId}){
                             <span style={{color: (korDate.getDay() === 0 || korDate.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[korDate.getDay()]}</span>
                         </div>
                     </div>}
-                    {van && <div class='timeZone'>
+                    {van && <div className='timeZone'>
                         <div className='time'>
                             <img src={Maple} alt='maple'/>
                             <span>{vanDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
@@ -167,7 +174,7 @@ function Clock({move, userId}){
                             <span style={{color: (vanDate.getDay() === 0 || vanDate.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[vanDate.getDay()]}</span>
                         </div>
                     </div>}
-                    {bei && <div class='timeZone'>
+                    {bei && <div className='timeZone'>
                         <div className='time'>
                             <img src={Panda} alt='earth'/>
                             <span>{beiDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
@@ -177,7 +184,7 @@ function Clock({move, userId}){
                             <span style={{color: (beiDate.getDay() === 0 || beiDate.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[beiDate.getDay()]}</span>
                         </div>
                     </div>}
-                    {par && <div class='timeZone'>
+                    {par && <div className='timeZone'>
                         <div className='time'>
                             <img src={Eiffel} alt='eiffel'/>
                             <span>{parDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
@@ -191,19 +198,19 @@ function Clock({move, userId}){
             </div>
             {settings && <div className='countries' style={{marginTop: '0.8rem'}}>
                 <div className={my ? 'country' : 'countryOff'}>
-                    <button onClick={() => setMy(!my)}>
+                    <button onClick={() => handleCountryClick(0)}>
                         <img src={Cheese} alt='cheese'/>
                         <span>MY TIME</span>
                     </button>
                 </div>
                 <div className={ny ? 'country' : 'countryOff'}>
-                    <button onClick={() => setNy(!ny)}>
+                    <button onClick={() => handleCountryClick(1)}>
                         <img src={Liberty} alt='ny'/>
                         <span>NEW YORK</span>
                     </button>
                 </div>
                 <div className={kor ? 'country' : 'countryOff'}>
-                    <button onClick={() => setKor(!kor)}>
+                    <button onClick={() => handleCountryClick(2)}>
                         <img src={Kpop} alt='kor'/>
                         <span>KOREA</span>
                     </button>
@@ -211,19 +218,19 @@ function Clock({move, userId}){
             </div>}
             {settings && <div className='countries'>
                 <div className={van ? 'country' : 'countryOff'}>
-                    <button onClick={() => setVan(!van)}>
+                    <button onClick={() => handleCountryClick(3)}>
                         <img src={Maple} alt='van'/>
                         <span>VANCOUVER</span>
                     </button>
                 </div>
                 <div className={bei ? 'country' : 'countryOff'}>
-                    <button onClick={() => setBei(!bei)}>
+                    <button onClick={() => handleCountryClick(4)}>
                         <img src={Panda} alt='bei'/>
                         <span>BEIJING</span>
                     </button>
                 </div>
                 <div className={par ? 'country' : 'countryOff'}>
-                    <button onClick={() => setPar(!par)}>
+                    <button onClick={() => handleCountryClick(5)}>
                         <img src={Eiffel} alt='paris'/>
                         <span>PARIS</span>
                     </button>

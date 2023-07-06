@@ -12,7 +12,7 @@ clockRouter.get('/getByOwner/:owner', asyncHandler(async(req, res) => {
 clockRouter.post('/add/:owner', asyncHandler(async(req, res) => {
     const owner = req.params.owner;
     const show = req.params.show;
-    await Clock.create({ owner, list })
+    await Clock.create({ owner, show })
     res.send('Created')
 }));
 
