@@ -894,7 +894,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                         <button className="cancel" onClick={handleCancel}>Cancel</button>
                                     </div>
                                 </div> : <div className='postInput2'>
-                                            <span style={{maxHeight: (selectedImage || imgUrl !== '') && '235px'}}>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
+                                            <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
                                         </div>}
                             </div>}
                         </div>
@@ -1050,7 +1050,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                                             <button className="cancel" onClick={handleCancel}>Cancel</button>
                                         </div>
                                     </div> : <div className='postInput2'>
-                                                <span style={{maxHeight: (selectedImage || imgUrl !== '') && '235px'}}>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
+                                                <span>{body && body.replace(/<[^>]*>([^<]*)<\/[^>]*>/g, "$1\r\n").replace(/<[^>]*>/g, "")}</span>
                                             </div>}
                                 </div>}
                             </div>

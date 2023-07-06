@@ -305,6 +305,7 @@ main {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  z-index: 2;
 }
 
 .leftWidget {
@@ -593,8 +594,7 @@ main {
   justify-content: space-between;
   position: relative;
   align-items: center;
-  max-height: 98.5%;
-  min-height: 100% !important;
+  height: 100% !important;
 }
 
 .rightContent span{
@@ -860,7 +860,7 @@ main {
 }
 
 .stickerMaker img {
-  z-index: 2 !important;
+  z-index: 3 !important;
 }
 
 .reactEasyCrop_CropArea {
@@ -876,7 +876,7 @@ main {
 
 .uploadIcon {
   width: 100%;
-  height: 250px;
+  height: 30vh;
   background-color: #e9e9e9;
   border: 1px solid #a4a4a4;
   display: inline-block;
@@ -886,7 +886,7 @@ main {
 
 .uploadIconWithImage {
   width: 100%;
-  height: 45%;
+  height: 30vh;
   background-color: #e9e9e9;
   border: 1px solid #a4a4a4;
   padding: 0 !important;
@@ -939,16 +939,15 @@ main {
 
 .postInput2 {
   min-width: 100%;
-  /*height: 35%;*/
   display: flex;
   flex-direction: column;
   align-items: space-between;
   overflow-y: hidden;
+  height: 25vh;
 }
 
 .postInput2 span{
   margin: 0;
-  height: 300px;
   word-break:break-all;
   white-space: pre-line;
 }
@@ -1338,6 +1337,110 @@ main {
 }
 
 /* end of stickerWidget */
+
+/* start of clockWidget */
+.clockWidget {
+  position: absolute;
+  top: 2rem;
+  width: 22rem;
+}
+
+.settingMode {
+  cursor: pointer;
+}
+.clockTop {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.clocks {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  background-color: white;
+}
+.timeZone {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  border: 1px solid rgb(164, 164, 164);
+  height: 3rem;
+  border-radius: 50px;
+  padding: 0.5rem 1.3rem 0.5rem 1.3rem;
+  margin-top: 0.5rem;
+}
+
+.time {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.time span {
+  font-size: 3rem;
+}
+
+.time img {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.7rem;
+  margin-top: 3px;
+}
+
+.timeDate {
+  font-size: 1.7rem;
+  margin-bottom: 3px;
+}
+
+.countries {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.country button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.1rem;
+  width: 6rem;
+  border: 1px solid rgb(164, 164, 164);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.countryOff button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.1rem;
+  width: 6rem;
+  font-size: 1.2rem;
+  border: 1px solid #d2d2d2;
+  color: rgb(164, 164, 164);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.countryOff img {
+  width: 1.2rem;
+  height: 1.2rem;
+  opacity: 0.5;
+}
+
+.country span {
+  font-size: 1.2rem;
+}
+
+.country img {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+/* end of clockWidget */
 
 /* start of calendar widget */
 .calendarWidget {
