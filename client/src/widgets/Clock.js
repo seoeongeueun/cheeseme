@@ -212,7 +212,7 @@ function Clock({move, userId}){
                 <div className={kor ? 'country' : 'countryOff'}>
                     <button onClick={userId ? () => handleCountryClick(2) : () => setKor(!kor)}>
                         <img src={Kpop} alt='kor'/>
-                        <span>KOREA</span>
+                        <span>SEOUL</span>
                     </button>
                 </div>
             </div>}
