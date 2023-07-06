@@ -8,7 +8,8 @@ function WidgetSettingsLeft(props){
     const [notes, setNotes] = useState(props.notes);
     const [ddayCounter, setDdayCounter] = useState(props.ddayCounter);
     const [reminder, setReminder] = useState(props.reminder);
-    const [positions, setPositions] = useState([])
+    const [clock, setClock] = useState(props.clock);
+    const [positions, setPositions] = useState([]);
     const instance = axios.create({
         baseURL: process.env.NODE_ENV !== 'production' ? 'https://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
@@ -184,6 +185,34 @@ function WidgetSettingsLeft(props){
         }
     }
 
+        const handleClockClick = async(value) => {
+        if (value) {
+            setClock(true);
+            props.setClock(true);
+            if (positions) {
+                const newState = positions.map(p => {
+                    if (p.name === 'clock') {
+                        return {...p, show: true};
+                    }
+                    return p;
+                })
+                setPositions(newState);
+            }
+        } else {
+            setClock(false);
+            props.setClock(false);
+            if (positions) {
+                const newState = positions.map(p => {
+                    if (p.name === 'clock') {
+                        return {...p, show: false};
+                    }
+                    return p;
+                })
+                setPositions(newState);
+            }
+        }
+    }
+
     return(
         <div className="settingsbox">
             <span className='settingsboxTitle'>Widget Settings</span>
@@ -207,6 +236,10 @@ function WidgetSettingsLeft(props){
                 <div className="checkboxButton">
                     <input type="checkbox" name="checkTodo" checked={props.reminder} onChange={(e) => handleReminderClick(e.target.checked)}/>
                     <label>Reminder</label>
+                </div>
+                <div className="checkboxButton">
+                    <input type="checkbox" name="checkTodo" checked={props.clock} onChange={(e) => handleClockClick(e.target.checked)}/>
+                    <label>World Clock</label>
                 </div>
             </div>
         </div>

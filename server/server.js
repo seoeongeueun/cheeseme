@@ -8,6 +8,7 @@ import positionRouter from './routes/positionRouter.js';
 import widgetRouter from './routes/widgetRouter.js';
 import rightRouter from './routes/rightRouter.js'
 import reminderRouter from './routes/reminderRouter.js'
+import clockRouter from './routes/clockRouter.js';
 import cors from 'cors';
 import userRouter from './routes/userRouter.js';
 import asyncHandler from './utils/asyncHandler.js';
@@ -18,7 +19,6 @@ import multer from 'multer';
 import path from 'path';
 import multerS3 from 'multer-s3';
 import AWS from '@aws-sdk/client-s3';
-
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -53,6 +53,7 @@ app.use('/api/widget', widgetRouter);
 app.use('/api/right', rightRouter);
 app.use('/api/users', userRouter);
 app.use('/api/reminder', reminderRouter);
+app.use('/api/clock', clockRouter);
 
 const myS3 = new AWS.S3({
     region: process.env.AWS_REGION,

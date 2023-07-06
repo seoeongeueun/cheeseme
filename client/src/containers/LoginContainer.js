@@ -4,6 +4,7 @@ import Login from '../modals/Login.js';
 import { currentUser } from '../modules/loginInfo.js';
 import { currentName } from '../modules/nameInfo.js';
 import { setFriendId } from '../modules/viewFriend.js';
+import { currentStickers } from '../modules/stickers.js';
 
 function LoginContainer(props) {
     const { userId } = useSelector(state => ({
@@ -18,7 +19,9 @@ function LoginContainer(props) {
     const onCurrentUserChange = id => dispatch(currentUser(id));
     const onCurrentNameChange = name => dispatch(currentName(name));
     const onSetFriendId = friendId => dispatch(setFriendId(friendId));
-    return <Login name={name} onSetFriendId={onSetFriendId} onCurrentNameChange={onCurrentNameChange} onCurrentUserChange={onCurrentUserChange} userId={userId}/>;
+    const onChangeStickers = stickers => dispatch(currentStickers(stickers));
+
+    return <Login name={name} onSetFriendId={onSetFriendId} onCurrentNameChange={onCurrentNameChange} onCurrentUserChange={onCurrentUserChange} onChangeStickers={onChangeStickers} userId={userId}/>;
 }
 
 export default LoginContainer;

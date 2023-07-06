@@ -5,7 +5,9 @@ const positionSchema = new mongoose.Schema({
     cal: [{ type: Number, type: Number}],
     todo: [{ type: Number, type: Number}],
     note: [{ type: Number, type: Number}],
-    dday: [{ type: Number, type: Number}]
+    dday: [{ type: Number, type: Number}],
+    reminder: [{ type: Number, type: Number}],
+    clock: [{type: Number, type: Number}]
 });
 
 const Position = mongoose.model("Position", positionSchema);

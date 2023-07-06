@@ -785,7 +785,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         <input id='rightTitle' type="text" defaultValue={title}/>
                     </div> : <span style={{textAlign: 'center'}}>{title}</span>}
                     <div className="rightBody" style={{maxHeight: (plain && edit) && '90%', justifyContent: (plain && !edit) && 'flex-start'}}>
-                        <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
+                        <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 0.5rem 0' }}>
                             <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
                             <div className='weatherMood'>
                                 <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('sunny')} disabled={friendId !== '' || !edit ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>
@@ -941,7 +941,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                             <input id='rightTitle' type="text" defaultValue={title}/>
                         </div> : <span style={{textAlign: 'center'}}>{title}</span>}
                         <div className="rightBody" style={{maxHeight: (plain && edit) && '90%', justifyContent: (plain && !edit) && 'flex-start'}}>
-                            <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 1rem 0' }}>
+                            <div className="rightBodyHeader" style={{margin: (title !== '' && !edit) && '0.1rem 0 0.5rem 0' }}>
                                 <span>{new Date(date).getMonth()+1}/{new Date(date).getDate()}/{new Date(date).getFullYear()}</span>
                                 <div className='weatherMood'>
                                     <button style={{cursor: edit && 'pointer'}} onClick={() => handleWeather('sunny')} disabled={friendId !== '' || !edit ? true : false}><img alt= "sunny" src={weather === 'sunny' ? SunColor : SunPlain}/></button>

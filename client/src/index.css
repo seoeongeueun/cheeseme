@@ -817,7 +817,7 @@ main {
 }
 
 .rightBodyHeader {
-  /* margin: 1rem 0 1rem 0; */
+  margin: 1rem 0 0.5rem 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1342,7 +1342,18 @@ main {
 .clockWidget {
   position: absolute;
   top: 2rem;
-  width: 22rem;
+  width: 19rem;
+  background-color: white;
+  border: 1px solid #d2d2d2;
+  padding: 1rem;
+}
+.clockWidgetTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.8rem;
+  width: 100%;
 }
 
 .settingMode {
@@ -1350,27 +1361,31 @@ main {
 }
 .clockTop {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .clocks {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   background-color: white;
 }
+
 .timeZone {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
-  border: 1px solid rgb(164, 164, 164);
-  height: 3rem;
+  align-items: center;
+  height: 2.5rem;
   border-radius: 50px;
-  padding: 0.5rem 1.3rem 0.5rem 1.3rem;
+  padding: 0.2rem 1rem 0.5rem 0.5rem;
   margin-top: 0.5rem;
+  background-color: #78d2fa;
+  box-shadow: 0 0 0 1px white inset;
+  border: 2px solid #78d2fa;
 }
 
 .time {
@@ -1380,19 +1395,32 @@ main {
 }
 
 .time span {
-  font-size: 3rem;
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  margin-left: 0.2rem;
+  color: white;
+  text-shadow:
+    -1px 0px 0px white,
+    1px 0px 0px white,
+    0px -1px 0px white,
+    0px 1px 0px white;
+    color: black;
 }
 
 .time img {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.5rem;
+  height: 1.5rem;
   margin-right: 0.7rem;
-  margin-top: 3px;
+  margin-top: 0.2rem;
+  background-color: white;
+  border-radius: 100%;
+  padding: 0.5rem;
 }
 
 .timeDate {
-  font-size: 1.7rem;
-  margin-bottom: 3px;
+  font-size: 1.5rem;
+  margin-bottom: 0px;
+  color: white;
 }
 
 .countries {

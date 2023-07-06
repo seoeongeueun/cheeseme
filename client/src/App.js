@@ -100,7 +100,8 @@ function App() {
               {name: 'dday', x: 0, y: 0, show: true},
               {name: 'note', x: 0, y: 0, show: true},
               {name: 'todo', x: 0, y: 0, show: true},
-              {name: 'reminder', x: 0, y: 0, show: true}] : n.positions);
+              {name: 'reminder', x: 0, y: 0, show: true},
+              {name: 'clock', x: 0, y: 0, show: true}] : n.positions);
             onCurrentNameChange(n.name);
             onChangeStickers(n.stickers?.length <= 0 ? [] : n.stickers);
           }

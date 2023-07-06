@@ -1,12 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import "../../node_modules/quill/dist/quill.snow.css";
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import axios from 'axios';
-import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
+import { FetchAPIPost } from '../utils/api.js';
 
 function Notes({move, onEdit, note, onCreate, date, userId}){
     const [body, setBody] = useState();
@@ -17,7 +16,7 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
     const [_id, setId] = useState('');
     const instance = axios.create({
         baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
-      });
+    });
 
     useEffect(() => {
         if (userId) {
