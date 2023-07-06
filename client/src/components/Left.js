@@ -288,7 +288,6 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             const orientation = await getOrientation(file)
             const rotation = ORIENTATION_TO_ANGLE[orientation];
             setAngle(rotation);
-            console.log('file: ', file)
             const formData = new FormData();
             formData.append("image", file);
             const res = await instance({
@@ -308,7 +307,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const handleCancel = async() => {
         instance.post('/deleteImg/' + imgSrc.split("/").pop())
             .then((res) => {
-                console.log(res);
+                console.log('Image Deleted');
         })
         setAddPic(false);
         setImageSrc('');
