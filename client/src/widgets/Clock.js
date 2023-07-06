@@ -21,6 +21,7 @@ function Clock({move, userId}){
     const [parDate, setParDate] = useState(new Date());
     const [vanDate, setVanDate] = useState(new Date());
     const [show, setShow] = useState([]);
+    const [addNew, setAddNew] = useState(false);
     const [my, setMy] = useState(true);
     const [ny, setNy] = useState(false);
     const [kor, setKor] = useState(false);
@@ -42,6 +43,8 @@ function Clock({move, userId}){
                     const n = res?.data;
                     if (n) {
                         setShow(n.show);
+                    } else {
+                        setAddNew(true);
                     }
                     return;
                 })
@@ -59,14 +62,15 @@ function Clock({move, userId}){
             setVan(show[3]);
             setBei(show[4]);
             setPar(show[5]);
-            const change = async () => {
-                let res = await FetchAPIPost('/api/clock/update/' + userId, {
-                    show: show
-                });
-            };
-            change();
+
+            if (addNew) {
+                add();
+                setAddNew(false);
+            } else {
+                change();
+            }
         }
-    }, [show]);
+    }, [show, addNew]);
   
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -80,6 +84,18 @@ function Clock({move, userId}){
         }, 10000)
     return () => clearInterval(intervalId);
     }, []);
+
+    const change = async () => {
+        let res = await FetchAPIPost('/api/clock/update/' + userId, {
+            show: show
+        });
+    };
+
+    const add = async () => {
+        let res = await FetchAPIPost('/api/clock/add/' + userId, {
+            show: show
+        });
+    };
 
     const handleCountryClick = (index) => {
         const tmp = show.map((bool, i) => {
