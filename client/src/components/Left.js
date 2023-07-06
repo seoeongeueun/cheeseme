@@ -264,6 +264,8 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setAddPic(false);
                 setMessage('');
                 setCircle(false);
+                setLoading(false);
+                setImageSrc(null);
         } catch (e) {
           console.error(e)
         }
@@ -464,6 +466,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             </GridLines> :
                 <div className="leftContent" id="leftContent">
                 <div className="leftBody" id="leftBody">
+                    {(addPic && loading && !imgSrc) && <span className='loading'>LOADING . . .</span>}
                     {calendar && <Draggable bounds={{top: 0, left: 0, right: width-(319), bottom: height-(360)}}
                                             position={calPosition ? {x: Object.values(calPosition)[0] > width-319 ? width-319 : Object.values(calPosition)[0], y: Object.values(calPosition)[1] > height-(360) ? height-(360) : Object.values(calPosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setCalPosition({x, y})} handle="strong"><div><CalendarContainer move={editMode}/></div></Draggable>}
