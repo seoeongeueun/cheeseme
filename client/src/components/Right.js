@@ -759,8 +759,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     };
 
     const moveDate = () =>{
-
-        console.log(value)
         if (date === new Date().setHours(0, 0, 0, 0)){
             setValue(value+1);
         } else {

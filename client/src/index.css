@@ -1428,9 +1428,14 @@ main {
 }
 
 .timeDate {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-bottom: 0px;
-  color: white;
+  text-shadow:
+    -1px 0px 0px white,
+    1px 0px 0px white,
+    0px -1px 0px white,
+    0px 1px 0px white;
+    color: #78d2fa;
 }
 
 .countries {
