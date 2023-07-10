@@ -1,6 +1,9 @@
 @font-face {
   font-family: 'school';
-  src: local('school'), url(./fonts/school.ttf) format('truetype');
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_08@1.0/Middleschool_student.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
 @font-face {

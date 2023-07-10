@@ -41,6 +41,7 @@ function Clock({move, userId}){
             })
                 .then((res) => {
                     const n = res?.data;
+                    console.log(n)
                     if (n) {
                         setShow(n.show);
                     } else {
@@ -100,8 +101,9 @@ function Clock({move, userId}){
 
     const add = async () => {
         let res = await FetchAPIPost('/api/clock/add/' + userId, {
-            show: show
+            show: [true, false, false, false, false, false]
         });
+        setShow([true, false, false, false, false, false]);
     };
 
     const handleCountryClick = (index) => {
