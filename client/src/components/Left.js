@@ -123,13 +123,21 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         setCircle(false);
     };
 
-    const updateList = async() => {
+    const updateList = async(l) => {
         const tmp = [];
         console.log('stickers: ', stickers)
-        for (const sticker of stickers) {
-            tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
-        };
-        setStickerList(tmp);
+        if (l) {
+            for (const sticker of l) {
+                tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
+            };
+            setStickerList(tmp);
+        } else {
+            for (const sticker of stickers) {
+                tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
+            };
+            setStickerList(tmp);
+        }
+        
     }
 
     useEffect(() => {
@@ -178,7 +186,11 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setSettings(n.settings);
                 setGrid(n.settings[0]);
                 onChangeStickers(n.stickers?.length <= 0 ? [] : n.stickers);
-                if (n.stickers?.length <= 0) setStickerList([]);
+                if (n.stickers?.length <= 0) {
+                    setStickerList([]);
+                } else {
+                    updateList(n.stickers);
+                }
               }
             })
             .catch( (err) => {
