@@ -41,9 +41,8 @@ function Clock({move, userId}){
             })
                 .then((res) => {
                     const n = res?.data;
-                    console.log(n)
                     if (n) {
-                        setShow(n.show);
+                        setShow(n.show === [] ? [true, false, false, false, false, false] : n.show);
                     } else {
                         setAddNew(true);
                     }
@@ -104,6 +103,7 @@ function Clock({move, userId}){
             show: [true, false, false, false, false, false]
         });
         setShow([true, false, false, false, false, false]);
+        setAddNew(false);
     };
 
     const handleCountryClick = (index) => {

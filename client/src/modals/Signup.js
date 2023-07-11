@@ -54,7 +54,8 @@ export default function Signup(props) {
       positions: [{name: 'cal', x: 0, y: 0, show: true}, {name: 'todo', x: 0, y: 0, show: true}, {name: 'note', x: 0, y: 0, show: true}, {name: 'dday', x: 0, y: 0, show: true}, {name: 'reminder', x: 0, y: 0, show: true}, {name: 'clock', x: 0, y: 0, show: true}],
       settings: [true, false, true],
       notifications: [{notiType: 'signUp', from: 'admin', to: username, done: false, date: new Date().setHours(0, 0, 0, 0)}],
-      stickers: []
+      stickers: [],
+      clock: [true, false, false, false, false, false],
     });
   }
 

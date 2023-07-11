@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Highlighter from "react-highlight-words";
+import GridLines from 'react-gridlines';
 
 function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
     const [foundNotes, setFoundNotes] = useState();
     const [foundTodos, setFoundTodos] = useState();
     const [clicked, setClicked] = useState();
+    const colorCode = ['rgba(250, 169, 157, 0.2)', 'rgba(103, 235, 250, 0.2)', 'rgba(253, 223, 126, 0.2)', 'rgba(155, 251, 225, 0.3)', 'rgba(206, 151, 251, 0.2)'];
     const instance = axios.create({
         baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
@@ -118,6 +120,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
 
     return (
         <div className='leftInnerBorder'>
+            <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#eeeeee"} lineColor={"#d9d9d9"}>
             <div className="leftContentSearch">
                 <p style={{textAlign: "center"}}>Searching Widgets for <b>{keyword}</b></p>
                 <div className='foundWidgetCategory'>
@@ -125,31 +128,36 @@ function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
                         <span>Notes </span>
                         <div className="line-yellow-short"/>
                     </div>
-                    {foundNotes?.length > 0 ? foundNotes.map((note) => (
-                        <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
-                            <span className='foundDate'>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
-                            <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text, keyword)} />
-                        </div>
-                    )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
+                    <div className='foundSearchItems'>
+                        {foundNotes?.length > 0 ? foundNotes.map((note, index) => (
+                            <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
+                                <span className='foundDate'>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
+                                <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text, keyword)} highlightStyle={{backgroundColor: colorCode[index%colorCode.length]}}/>
+                            </div>
+                        )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
+                    </div>
                 </div>
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
                         <span>Todos </span>
                         <div className="line-yellow-short"/>
                     </div>
-                    {foundTodos?.length > 0 ? foundTodos.map((todo) => (
-                        <div className='foundSearchItem' onClick={() => handleClick(todo.date)}>
-                            <span className='foundDate'>{new Date(todo.date).getMonth()+1}.{new Date(todo.date).getDate()}.{new Date(todo.date).getFullYear()}</span>
-                            {todo.goals.map((g) => (
-                                <div className="foundTodos">
-                                    <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={g.text} />
-                                </div>
-                            ))}
-                        </div>
-                    )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
+                    <div className='foundSearchItems'>
+                        {foundTodos?.length > 0 ? foundTodos.map((todo, index) => (
+                            <div className='foundSearchItem' onClick={() => handleClick(todo.date)}>
+                                <span className='foundDate'>{new Date(todo.date).getMonth()+1}.{new Date(todo.date).getDate()}.{new Date(todo.date).getFullYear()}</span>
+                                {todo.goals.map((g) => (
+                                    <div className="foundTodos">
+                                        <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={g.text} highlightStyle={{backgroundColor: colorCode[index%colorCode.length]}}/>
+                                    </div>
+                                ))}
+                            </div>
+                        )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
+                    </div>
                 </div>
                 
             </div>
+            </GridLines>
         </div>
     )
 }

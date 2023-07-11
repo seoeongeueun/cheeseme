@@ -318,7 +318,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     return(
         <div className="leftInnerBorder">
-            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#DEDEDE"}>
+            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#e8e8e8"} lineColor={"#d9d9d9"}>
             <div className="leftContent" id="leftContent">
                     <div className="leftBody" id="leftBody">
                         {(addPic && loading && !imgSrc) && <span className='loading'>LOADING . . .</span>}

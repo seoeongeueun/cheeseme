@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Highlighter from "react-highlight-words";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import GridLines from 'react-gridlines';
 
 
 function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
@@ -10,6 +11,7 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
     const [clicked, setClicked] = useState();
     const [searchBy, setSearchBy] = useState('Content');
     const [showOption, setShowOption] = useState(false);
+    const colorCode = ['rgba(250, 169, 157, 0.2)', 'rgba(103, 235, 250, 0.2)', 'rgba(253, 223, 126, 0.2)', 'rgba(155, 251, 225, 0.3)', 'rgba(206, 151, 251, 0.2)'];
     const instance = axios.create({
         baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
@@ -44,10 +46,6 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
             }
         }
     }, [keyword, searchBy, userId])
-
-    useEffect(() => {
-        console.log(foundPosts)
-    }, [foundPosts])
 
     function removeTags(str) {
         if ((str===null) || (str===''))
@@ -161,12 +159,13 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
 
     return (
         <div className='leftInnerBorder'>
+            <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#eeeeee"} lineColor={"#d9d9d9"}>
             <div className="leftContentSearch">
                 <p style={{textAlign: "center"}}>Searching Posts for <b>{keyword}</b></p>
                 <div className="searchOption">
                     <div className='searchOptionHeader' onClick={() => handleSearchOption()}>
                         <span style={{marginRight: "1rem"}}>Search by</span>
-                        <span style={{color: "#F9D876"}}>{showOption ? '' : searchBy}</span>
+                        {!showOption && <button><span style={{fontSize: '2rem'}}>{searchBy.toUpperCase()}</span></button>}
                     </div>
                     <div className='searchOptionContent'>
                         <div className='searchOptionDrop'>
@@ -180,18 +179,21 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
                         <span>Posts</span>
                         <div class="line-yellow-short"/>
                     </div>
-                    {foundPosts?.length > 0 ? foundPosts.map((note) => (
-                        <div className='foundSearchItem' onClick={() => handleClick(note.date)}>
+                    <div className='foundSearchItems'>
+                    {foundPosts?.length > 0 ? foundPosts.map((note, index) => (
+                        <div className='foundSearchItem' onClick={() => handleClick(note.date)} style={{marginTop: index === 0 && '0.5rem'}}>
                             <span className='foundDate'>{new Date(note.date).getMonth()+1}.{new Date(note.date).getDate()}.{new Date(note.date).getFullYear()}</span>
                             <div className='foundContent'>
-                                {note.title.length <= 0 ? <span>제목없음</span> : <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={note.title} />}
+                                {note.title.length <= 0 ? <span style={{backgroundColor: colorCode[index%colorCode.length]}}>제목없음</span> : searchBy === 'Title' ? <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={note.title} style={{width: 'max-content', backgroundColor: colorCode[index%colorCode.length]}}/> : <span style={{width: 'max-content', backgroundColor: colorCode[index%colorCode.length]}}>{note.title}</span>}
                                 {searchBy === 'Title' ? <span>{removeTags(note.text).substring(0, 100).length >= 100 ? removeTags(note.text).substring(0, 100) + '...' : removeTags(note.text).substring(0, 100)}</span>
-                                : <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text, keyword)} />}
+                                : <Highlighter highlightTag={"b"} searchWords={[keyword]} textToHighlight={cutString(note.text, keyword)} highlightStyle={{backgroundColor: colorCode[index%colorCode.length]}}/>}
                             </div>
                         </div>
                     )) : <div className='foundSearchItemNotFound'><span>No Result</span></div>}
+                    </div>
                 </div>
             </div>
+            </GridLines>
         </div>
     )
 }
