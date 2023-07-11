@@ -3,6 +3,7 @@ import DatePicker from 'react-date-picker';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import axios from 'axios';
 import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
@@ -57,21 +58,6 @@ function DdayCounter(props) {
     }, [end, start]);
 
     useEffect(() => {
-        const change = async () => {
-            let res = await FetchAPIPost('/api/dday/update/' + props.userId, {
-                start: new Date().setHours(0, 0, 0, 0),
-                text: title,
-                end: end && end
-            });
-        }
-        const add = async () => {
-            let res = await FetchAPIPost('/api/dday/add/' + props.userId, {
-                start: new Date().setHours(0, 0, 0, 0),
-                text: title,
-                end: end && end
-            });
-            setStart(new Date().setHours(0, 0, 0, 0));
-        }
         if (addNew) {
             if (props.userId) {
                 add();
@@ -82,9 +68,23 @@ function DdayCounter(props) {
             change();
             setAddNew(false);
         }
-    }, [edit, end])
+    }, [edit, end]);
 
-
+    const change = async () => {
+        let res = await FetchAPIPost('/api/dday/update/' + props.userId, {
+            start: new Date().setHours(0, 0, 0, 0),
+            text: title,
+            end: end && end
+        });
+    }
+    const add = async () => {
+        let res = await FetchAPIPost('/api/dday/add/' + props.userId, {
+            start: new Date().setHours(0, 0, 0, 0),
+            text: title,
+            end: end && end
+        });
+        setStart(new Date().setHours(0, 0, 0, 0));
+    }
 
     const handleKeyPress = async(event) => {
         if(event.key === 'Enter'){
@@ -111,7 +111,7 @@ function DdayCounter(props) {
                 {title ? <span style={{marginTop: '-0.8rem'}}>{title}</span> : <span style={{color: "#929292", marginTop: '-0.6rem'}}>name your d-day!</span>}
                 {end ? <span style={{color: "#929292", fontSize: '1.5rem'}}>{new Date(end).getMonth()+1}/{new Date(end).getDate()}/{new Date(end).getFullYear()}</span>
                     : <span style={{color: "#929292", fontSize: '1.5rem'}}>{new Date().getMonth()+1}/{new Date().getDate()}/{new Date().getFullYear()}</span>}
-                {edit ? <button onClick={() => {setEdit(!edit); props.setDdayEdit(false)}}><ExpandLessRoundedIcon sx={{fontSize: '18px', color: '#f73939', marginBottom: '-6px'}}/></button>
+                {edit ? <button onClick={() => {setEdit(!edit); props.setDdayEdit(false)}}><CheckRoundedIcon sx={{fontSize: '18px', color: '#f73939', marginBottom: '-6px'}}/></button>
                     : <button onClick={() => {setEdit(!edit); props.setDdayEdit(true)}}><ExpandMoreRoundedIcon sx={{fontSize: '18px', color: '#f73939', marginBottom: '5px', marginTop: '0px'}}/></button>}
             </div>
             {edit && <div className='ddayCollapse'>

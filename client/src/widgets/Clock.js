@@ -42,9 +42,8 @@ function Clock({move, userId}){
                 .then((res) => {
                     const n = res?.data;
                     if (n) {
-                        if (n.show === []) {
+                        if (n.show.length === 0 || n.show === undefined) {
                             setShow([true, false, false, false, false, false]);
-                            setAddNew(true);
                         }
                         else {
                             setShow(n.show);
@@ -61,7 +60,7 @@ function Clock({move, userId}){
     }, [userId]);
 
     useEffect(() => {
-        if (show !== [] && userId){
+        if (show.length > 0 && userId){
             setMy(show[0]);
             setNy(show[1]);
             setKor(show[2]);
@@ -80,7 +79,7 @@ function Clock({move, userId}){
 
     useEffect(() => {
         if (userId && addNew) {
-            add()
+            add();
             setAddNew(false);
         }
     }, [addNew]);
