@@ -7,7 +7,7 @@ function SearchResultLeft({onChangeDate, keyword, setSearch, userId}){
     const [foundNotes, setFoundNotes] = useState();
     const [foundTodos, setFoundTodos] = useState();
     const [clicked, setClicked] = useState();
-    const colorCode = ['rgba(250, 169, 157, 0.2)', 'rgba(103, 235, 250, 0.2)', 'rgba(253, 223, 126, 0.2)', 'rgba(155, 251, 225, 0.3)', 'rgba(206, 151, 251, 0.2)'];
+    const colorCode = ['rgba(253, 223, 126, 0.3)', 'rgba(103, 235, 250, 0.3)', 'rgba(250, 169, 157, 0.3)', 'rgba(155, 251, 225, 0.3)', 'rgba(206, 151, 251, 0.3)'];
     const instance = axios.create({
         baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
       });

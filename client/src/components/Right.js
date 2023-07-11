@@ -743,7 +743,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     }
 
     const handleClickHome = () => {
-        console.log('ye?')
         setOpenBookmark(false);
         setShowBookMark(false);
         onSetFriendId('');
