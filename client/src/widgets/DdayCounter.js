@@ -8,12 +8,12 @@ import { FetchAPIPost, FetchApiDelete, FetchApiGet} from '../utils/api.js';
 
 function DdayCounter(props) {
     const [start, setStart] = useState();
-    const [end, setEnd] = useState();
+    const [end, setEnd] = useState(null);
     const [left, setLeft] = useState(0);
-    const [title, setTitle] = useState();
+    const [title, setTitle] = useState('');
     const [edit, setEdit] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [date, setDate] = useState();
+    const [addNew, setAddNew] = useState(false);
     const instance = axios.create({
         baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
@@ -28,10 +28,10 @@ function DdayCounter(props) {
                         setTitle(res?.data.text);
                         setEnd(res?.data.end);
                         setStart(new Date().setHours(0, 0, 0, 0));
-                        setLoading(false)
+                        setAddNew(false);
                     }
                     else {
-                        setEdit(true);
+                        setAddNew(true);
                     }
                 })
         } else {
@@ -61,28 +61,27 @@ function DdayCounter(props) {
             let res = await FetchAPIPost('/api/dday/update/' + props.userId, {
                 start: new Date().setHours(0, 0, 0, 0),
                 text: title,
-                end: end
+                end: end && end
             });
         }
-        const addNew = async () => {
+        const add = async () => {
             let res = await FetchAPIPost('/api/dday/add/' + props.userId, {
                 start: new Date().setHours(0, 0, 0, 0),
                 text: title,
-                end: end
+                end: end && end
             });
             setStart(new Date().setHours(0, 0, 0, 0));
         }
-        if (start && props.userId && title) {
-            change();
-            setLoading(false);
-        }
-        else {
-            if (props.userId && title) {
-                addNew();
-                setLoading(false);
+        if (addNew) {
+            if (props.userId) {
+                add();
+                setAddNew(false);
             }
         }
-        setLoading(false);
+        else if (start && props.userId && !addNew) {
+            change();
+            setAddNew(false);
+        }
     }, [edit, end])
 
 

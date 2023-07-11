@@ -125,6 +125,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     const updateList = async() => {
         const tmp = [];
+        console.log('stickers: ', stickers)
         for (const sticker of stickers) {
             tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
         };
@@ -138,7 +139,11 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             updateList()
         }
         if (userId) changeStickers();
-    }, [stickers])
+    }, [stickers]);
+
+    useEffect(() => {
+        console.log('stickerList: ', stickerList)
+    }, [stickerList])
     
     useEffect(() => {
         setToday(new Date().setHours(0, 0, 0, 0));

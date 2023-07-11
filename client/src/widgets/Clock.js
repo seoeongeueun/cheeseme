@@ -42,7 +42,13 @@ function Clock({move, userId}){
                 .then((res) => {
                     const n = res?.data;
                     if (n) {
-                        setShow(n.show === [] ? [true, false, false, false, false, false] : n.show);
+                        if (n.show === []) {
+                            setShow([true, false, false, false, false, false]);
+                            setAddNew(true);
+                        }
+                        else {
+                            setShow(n.show);
+                        }
                     } else {
                         setAddNew(true);
                     }

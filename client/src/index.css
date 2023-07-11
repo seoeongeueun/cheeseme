@@ -1896,7 +1896,7 @@ input.todoElem::placeholder {
 .searchOptionHeader button {
   border: 1px solid #f73939;
   background-color: transparent;
-  color: #f73939;
+  color: black;
   border-radius: 5px;
   cursor: pointer;
 }
