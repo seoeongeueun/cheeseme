@@ -70,7 +70,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [imgSrc, setImageSrc] = useState();
 
     const [today, setToday] = useState(0);
-
+    const [tmpStickers, setTmpStickers] = useState([]);
     
     const [calPosition, setCalPosition] = useState({x: positions[0].x, y: positions[0].y})
     const [ddayPosition, setDdayPosition] = useState({x: positions[1].x, y: positions[1].y})
@@ -125,8 +125,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     const updateList = async(l) => {
         const tmp = [];
-        console.log('stickers: ', stickers)
-        if (l) {
+        if (l?.length >= 0) {
             for (const sticker of l) {
                 tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
             };
@@ -137,21 +136,20 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
             };
             setStickerList(tmp);
         }
-        
     }
 
     useEffect(() => {
+        updateList(tmpStickers);
+    }, [])
+
+    useEffect(() => {
         if (stickers?.length === 0) {
-            setStickerList([])
+            setStickerList([]);
         } else {
-            updateList()
+            updateList();
         }
         if (userId) changeStickers();
     }, [stickers]);
-
-    useEffect(() => {
-        console.log('stickerList: ', stickerList)
-    }, [stickerList])
     
     useEffect(() => {
         setToday(new Date().setHours(0, 0, 0, 0));
@@ -186,6 +184,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setSettings(n.settings);
                 setGrid(n.settings[0]);
                 onChangeStickers(n.stickers?.length <= 0 ? [] : n.stickers);
+                setTmpStickers(n.stickers?.length <= 0 ? [] : n.stickers);
                 if (n.stickers?.length <= 0) {
                     setStickerList([]);
                 } else {
