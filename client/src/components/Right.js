@@ -228,7 +228,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 if (post) {
                     setIndex(allPosts.indexOf(post))
                     setBody(post?.text);
-                    setHeart(post?.like);
+                    setHeart(post?.likes.some(e => e === userId) ? true : false);
                     setBookmark(post?.bookmark);
                     setTitle(post?.title);
                     setWeather(post?.weather);
@@ -283,7 +283,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setIndex(allPosts.indexOf(post))
                         setBody(post?.text);
                         setImgUrl(post?.imgUrl);
-                        setHeart(post?.like);
+                        setHeart(post?.likes.some(e => e === userId) ? true : false);
                         setBookmark(post?.bookmark);
                         setPostImage(post?.imgUrl !== '' ? true : false);
                         setTitle(post?.title);
@@ -346,7 +346,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setBody(post?.text);
                     setImgUrl(post?.imgUrl);
                     setPostImage(post?.imgUrl !== '' ? true : false);
-                    setHeart(post?.like);
+                    setHeart(post?.likes.some(e => e === userId) ? true : false);
                     setBookmark(post?.bookmark);
                     setTitle(post?.title);
                     setWeather(post?.weather);
@@ -400,7 +400,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setBody(post?.text);
                         setImgUrl(post?.imgUrl);
                         setPostImage(post?.imgUrl !== '' ? true : false);
-                        setHeart(post?.like);
+                        setHeart(post?.likes.some(e => e === userId) ? true : false);
                         setBookmark(post?.bookmark);
                         setTitle(post?.title);
                         setWeather(post?.weather);
