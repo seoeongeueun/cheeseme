@@ -119,16 +119,17 @@ All widgets can set to be hidden, but it is recommended to leave the Calendar vi
 
 ### 2. D-day Counter
 ![D-day](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/dday.png)<br>
-This is a D-day Counter. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+This is a D-day Counter that shows the number of days left until the set d-day. Click on the down arrow to set the date.<br><br>
 
 ![D-day Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaypick.png)<br>
-The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+Pick the date from the date-picker to set your d-day.<br>
+[React-Date-Picker](https://github.com/wojtekmaj/react-date-picker) library was used. <br><br>
 
 ![D-day Title](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaytitle.png)<br>
-Click on the check button to save your note.<br><br>
+Give it a title and click on the check button to save.<br><br>
 
 ![D-day Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaydone.png)<br>
-Click on the check button to save your note.<br><br>
+The number of remaining days is displayed, and it will be deducted daily until it is the d-day and turns to 0.<br><br>
 
 ### 3. World Clock
 ![World Clock](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/clock.png)<br>
