@@ -79,6 +79,8 @@ function App() {
               onSetFriendId('');
               onChangeNotis([]);
               localStorage.removeItem('token');
+              console.log('cookie expired');
+              window.location.reload();
           }
     })
     .catch( (err) => {
