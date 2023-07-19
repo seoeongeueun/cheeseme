@@ -109,13 +109,83 @@ Your friend will not be alerted that you unfriended them, but they will not be a
 [7. Stickers](#7-stickers)  
 [8. Settings](#8-settings)   
 
-### 1. Calendar  
-### 2. D-day Counter   
-### 3. World Clock   
-### 4. Notes   
-### 5. Reminder   
-### 6. Todo List  
-### 7. Stickers  
+### 1. Calendar
+![Calenar](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/calendar.png)<br>
+This is the Calendar widget that will be used to change dates to display.<br>
+Today's date is colored yellow, and the currently selected (displayed) date is framed red.<br>
+When the displayed date and today's date are the same, then you will only see the red frame.<br>
+All widgets can set to be hidden, but it is recommended to leave the Calendar visible to navigate pages easily.<br>
+[React-Calendar](https://github.com/wojtekmaj/react-calendar) library was used for the base.<br>
+
+### 2. D-day Counter
+![D-day](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/dday.png)<br>
+This is a D-day Counter. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+
+![D-day Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaypick.png)<br>
+The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+
+![D-day Title](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaytitle.png)<br>
+Click on the check button to save your note.<br><br>
+
+![D-day Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaydone.png)<br>
+Click on the check button to save your note.<br><br>
+
+### 3. World Clock
+![World Clock](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/clock.png)<br>
+This is a D-day Counter. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+
+![World Clock Buttons](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/clockbutton.png)<br>
+The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+
+### 4. Notes
+![Note](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/notes.png)<br>
+This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+
+![Note Quill](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/notequill.png)<br>
+The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+
+![Note Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/noteedit.png)<br>
+Click on the check button to save your note.<br><br>
+
+### 5. Reminder
+![Reminder](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/reminder.png)<br>
+This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+
+![Reminder Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/reminderedit.png)<br>
+The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+
+![Reminder Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/reminderdone.png)<br>
+Click on the check button to save your note.<br><br>
+
+![Reminder More](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/remindermore.png)<br>
+Click on the check button to save your note.<br><br>
+
+
+### 6. Todo List
+![Todo](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/todolist.png)<br>
+This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+
+![Todo Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/todoadd.png)<br>
+The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+
+![Todo Check](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/todocheck.png)<br>
+Click on the check button to save your note.<br><br>
+
+
+### 7. Stickers
+![Add Pic](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/addpic.png)<br>
+This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+
+![Sticker](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickermaker.png)<br>
+This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+
+![Sticker Rotate](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickerrotate.png)<br>
+The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+
+![Sticker Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickermade.png)<br>
+Click on the check button to save your note.<br><br>
+
+
 ### 8. Settings  
 
 ## Diary     
