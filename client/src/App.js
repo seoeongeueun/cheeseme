@@ -74,13 +74,13 @@ function App() {
         })
           .then((res) => {
             if (res?.data === false) {
-              // onCurrentUserChange(null);
-              // onCurrentNameChange(null);
-              // onSetFriendId('');
-              // onChangeNotis([]);
+              onCurrentUserChange(null);
+              onCurrentNameChange(null);
+              onSetFriendId('');
+              onChangeNotis([]);
               localStorage.removeItem('token');
               console.log('cookie expired');
-              window.location.reload();
+              return;
           }
     })
     .catch( (err) => {
