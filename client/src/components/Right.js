@@ -228,7 +228,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 if (post) {
                     setIndex(allPosts.indexOf(post))
                     setBody(post?.text);
-                    setHeart(post?.like);
+                    setHeart(post?.likes.some(e => e === userId) ? true : false);
                     setBookmark(post?.bookmark);
                     setTitle(post?.title);
                     setWeather(post?.weather);
@@ -283,7 +283,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setIndex(allPosts.indexOf(post))
                         setBody(post?.text);
                         setImgUrl(post?.imgUrl);
-                        setHeart(post?.like);
+                        setHeart(post?.likes.some(e => e === userId) ? true : false);
                         setBookmark(post?.bookmark);
                         setPostImage(post?.imgUrl !== '' ? true : false);
                         setTitle(post?.title);
@@ -346,7 +346,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setBody(post?.text);
                     setImgUrl(post?.imgUrl);
                     setPostImage(post?.imgUrl !== '' ? true : false);
-                    setHeart(post?.like);
+                    setHeart(post?.likes.some(e => e === userId) ? true : false);
                     setBookmark(post?.bookmark);
                     setTitle(post?.title);
                     setWeather(post?.weather);
@@ -400,7 +400,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setBody(post?.text);
                         setImgUrl(post?.imgUrl);
                         setPostImage(post?.imgUrl !== '' ? true : false);
-                        setHeart(post?.like);
+                        setHeart(post?.likes.some(e => e === userId) ? true : false);
                         setBookmark(post?.bookmark);
                         setTitle(post?.title);
                         setWeather(post?.weather);
@@ -743,7 +743,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     }
 
     const handleClickHome = () => {
-        console.log('ye?')
         setOpenBookmark(false);
         setShowBookMark(false);
         onSetFriendId('');
@@ -759,8 +758,6 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
     };
 
     const moveDate = () =>{
-
-        console.log(value)
         if (date === new Date().setHours(0, 0, 0, 0)){
             setValue(value+1);
         } else {
@@ -772,7 +769,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     return(
         <div className="rightInnerBorder">
-            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#DEDEDE"}>
+            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#e8e8e8"} lineColor={"#d9d9d9"}>
             <div className="rightContent">
                 {friendId === '' && !openBookmark ? <div className='marker'>
                     <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>

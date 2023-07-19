@@ -70,7 +70,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
     const [imgSrc, setImageSrc] = useState();
 
     const [today, setToday] = useState(0);
-
+    const [tmpStickers, setTmpStickers] = useState([]);
     
     const [calPosition, setCalPosition] = useState({x: positions[0].x, y: positions[0].y})
     const [ddayPosition, setDdayPosition] = useState({x: positions[1].x, y: positions[1].y})
@@ -123,22 +123,33 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         setCircle(false);
     };
 
-    const updateList = async() => {
+    const updateList = async(l) => {
         const tmp = [];
-        for (const sticker of stickers) {
-            tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
-        };
-        setStickerList(tmp);
+        if (l?.length >= 0) {
+            for (const sticker of l) {
+                tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
+            };
+            setStickerList(tmp);
+        } else {
+            for (const sticker of stickers) {
+                tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
+            };
+            setStickerList(tmp);
+        }
     }
 
     useEffect(() => {
+        updateList(tmpStickers);
+    }, [])
+
+    useEffect(() => {
         if (stickers?.length === 0) {
-            setStickerList([])
+            setStickerList([]);
         } else {
-            updateList()
+            updateList();
         }
         if (userId) changeStickers();
-    }, [stickers])
+    }, [stickers]);
     
     useEffect(() => {
         setToday(new Date().setHours(0, 0, 0, 0));
@@ -173,7 +184,12 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                 setSettings(n.settings);
                 setGrid(n.settings[0]);
                 onChangeStickers(n.stickers?.length <= 0 ? [] : n.stickers);
-                if (n.stickers?.length <= 0) setStickerList([]);
+                setTmpStickers(n.stickers?.length <= 0 ? [] : n.stickers);
+                if (n.stickers?.length <= 0) {
+                    setStickerList([]);
+                } else {
+                    updateList(n.stickers);
+                }
               }
             })
             .catch( (err) => {
@@ -318,7 +334,7 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
 
     return(
         <div className="leftInnerBorder">
-            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={2} cellWidth2={12} lineColor={"#DEDEDE"}>
+            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#e8e8e8"} lineColor={"#d9d9d9"}>
             <div className="leftContent" id="leftContent">
                     <div className="leftBody" id="leftBody">
                         {(addPic && loading && !imgSrc) && <span className='loading'>LOADING . . .</span>}
@@ -331,15 +347,15 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                         {notes && <Draggable bounds={{top: 0, left: 0, right: width-(202), bottom: height-(236)}}
                                             position={notePosition ? {x: Object.values(notePosition)[0] > width-202 ? width-202 : Object.values(notePosition)[0], y: Object.values(notePosition)[1] > height-(236) ? height-(236) : Object.values(notePosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setNotePosition({x, y})} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
-                        {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: ddayEdit ? width - (385) : width-(152), bottom: height-(228)}} 
-                                                        position={ddayPosition ? {x: Object.values(ddayPosition)[0] > width-152 ? width-152 : Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1] > height-(228) ? height-(228) : Object.values(ddayPosition)[1]}  : {x: 0, y: 0}}
-                                                        onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode} userId={userId} setDdayEdit={setDdayEdit}/></div></Draggable>}
                         {reminder && <Draggable bounds={{top: 0, left: 0, right: width-(322), bottom: height-(247)}}
                                                 position={reminderPosition ? {x: Object.values(reminderPosition)[0] > width-322 ? width-322 : Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1] > height-(247) ? height-(247) : Object.values(reminderPosition)[1]}  : {x: 0, y: 0}}
                                                 onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
                         {clock && <Draggable bounds={{top: 0, left: 0, right: width-(212), bottom: height-(156)}}
                                             position={todoPosition ? {x: Object.values(clockPosition)[0] > width-212 ? width-212 : Object.values(clockPosition)[0], y: Object.values(clockPosition)[1] > height-(156) ? height-(156) : Object.values(clockPosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setClockPosition({x, y})} handle="strong"><div><ClockContainer move={editMode} date={date}/></div></Draggable>} 
+                        {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: ddayEdit ? width - (232) : width-(152), bottom: height-(228)}} 
+                                                        position={ddayPosition ? {x: ddayEdit ? Object.values(ddayPosition)[0] > width-232 ? width-232 : Object.values(ddayPosition)[0] : Object.values(ddayPosition)[0] > width-152 ? width-152 : Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1] > height-(228) ? height-(228) : Object.values(ddayPosition)[1]}  : {x: 0, y: 0}}
+                                                        onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode} userId={userId} setDdayEdit={setDdayEdit}/></div></Draggable>}
                         <div className="stickers">
                             {(stickerList?.length > 0 && stickerList?.length === stickers?.length) &&
                                 stickerList.map((sticker, index) => {
@@ -475,15 +491,15 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
                     {notes && <Draggable bounds={{top: 0, left: 0, right: width-(202), bottom: height-(236)}}
                                         position={notePosition ? {x: Object.values(notePosition)[0] > width-202 ? width-202 : Object.values(notePosition)[0], y: Object.values(notePosition)[1] > height-(236) ? height-(236) : Object.values(notePosition)[1]}  : {x: 0, y: 0}}
                                         onStop={(e, {x, y}) => setNotePosition({x, y})} handle="strong"><div><NotesContainer move={editMode} date={date}/></div></Draggable>}
-                    {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: ddayEdit ? width - (385) : width-(152), bottom: height-(228)}} 
-                                                    position={ddayPosition ? {x: Object.values(ddayPosition)[0] > width-152 ? width-152 : Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1] > height-(228) ? height-(228) : Object.values(ddayPosition)[1]}  : {x: 0, y: 0}}
-                                                    onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode} userId={userId} setDdayEdit={setDdayEdit}/></div></Draggable>}
                     {reminder && <Draggable bounds={{top: 0, left: 0, right: width-(322), bottom: height-(247)}}
                                             position={reminderPosition ? {x: Object.values(reminderPosition)[0] > width-322 ? width-322 : Object.values(reminderPosition)[0], y: Object.values(reminderPosition)[1] > height-(247) ? height-(247) : Object.values(reminderPosition)[1]}  : {x: 0, y: 0}}
                                             onStop={(e, {x, y}) => setReminderPosition({x, y})} handle="strong"><div><ReminderContainer move={editMode}/></div></Draggable>}
                     {clock && <Draggable bounds={{top: 0, left: 0, right: width-(212), bottom: height-(156)}}
                                         position={todoPosition ? {x: Object.values(clockPosition)[0] > width-212 ? width-212 : Object.values(clockPosition)[0], y: Object.values(clockPosition)[1] > height-(156) ? height-(156) : Object.values(clockPosition)[1]}  : {x: 0, y: 0}}
                                         onStop={(e, {x, y}) => setClockPosition({x, y})} handle="strong"><div><ClockContainer move={editMode} date={date}/></div></Draggable>} 
+                    {ddayCounter && <Draggable bounds={{top: 0, left: 0, right: ddayEdit ? width - (232) : width-(152), bottom: height-(228)}} 
+                                position={ddayPosition ? {x: ddayEdit ? Object.values(ddayPosition)[0] > width-232 ? width-232 : Object.values(ddayPosition)[0] : Object.values(ddayPosition)[0] > width-152 ? width-152 : Object.values(ddayPosition)[0], y: Object.values(ddayPosition)[1] > height-(228) ? height-(228) : Object.values(ddayPosition)[1]}  : {x: 0, y: 0}}
+                                onStop={(e, {x, y}) => setDdayPosition({x, y})} handle="strong"><div><DdayCounter move={editMode} userId={userId} setDdayEdit={setDdayEdit}/></div></Draggable>}
                     <div className="stickers">
                         {(stickerList?.length > 0 && stickerList?.length === stickers?.length) &&
                             stickerList.map((sticker, index) => {

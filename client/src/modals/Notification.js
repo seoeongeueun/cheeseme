@@ -31,7 +31,7 @@ function Notification({name, notis, userId, onAddNoti, onToggleNoti, friends, on
                 if (tmpObj.notiType === 'receiveAccept') {
                     onAddFriend(friendName);
                     let res3 = await FetchAPIPost('/api/users/updateWithName/' + friendName, {
-                        friends: friendFriends.concat({name: name, fav: false})
+                        friends: [...friendFriends, {name: name, fav: false}]
                     });
                 }
             }

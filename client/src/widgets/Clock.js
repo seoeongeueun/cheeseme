@@ -41,9 +41,13 @@ function Clock({move, userId}){
             })
                 .then((res) => {
                     const n = res?.data;
-                    console.log(n)
                     if (n) {
-                        setShow(n.show);
+                        if (n.show.length === 0 || n.show === undefined) {
+                            setShow([true, false, false, false, false, false]);
+                        }
+                        else {
+                            setShow(n.show);
+                        }
                     } else {
                         setAddNew(true);
                     }
@@ -56,7 +60,7 @@ function Clock({move, userId}){
     }, [userId]);
 
     useEffect(() => {
-        if (show !== [] && userId){
+        if (show.length > 0 && userId){
             setMy(show[0]);
             setNy(show[1]);
             setKor(show[2]);
@@ -75,7 +79,7 @@ function Clock({move, userId}){
 
     useEffect(() => {
         if (userId && addNew) {
-            add()
+            add();
             setAddNew(false);
         }
     }, [addNew]);
@@ -104,6 +108,7 @@ function Clock({move, userId}){
             show: [true, false, false, false, false, false]
         });
         setShow([true, false, false, false, false, false]);
+        setAddNew(false);
     };
 
     const handleCountryClick = (index) => {

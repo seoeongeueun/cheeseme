@@ -87,7 +87,7 @@ header a {
 }
 
 .line-yellow-short{
-  border-top: 1px solid #F9D876;
+  border-top: 1px solid #f73939;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -344,6 +344,15 @@ main {
 
 .ddayWidget span {
   font-size: 2rem;
+}
+
+.react-date-picker__calendar {
+  width: 350px;
+  max-width: 100vw;
+  position: absolute;
+  top: 100% !important;
+  left: -83% !important;
+  z-index: 1;
 }
 
 /* .ddayProgressHeader {
@@ -1428,9 +1437,14 @@ main {
 }
 
 .timeDate {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 0px;
-  color: white;
+  text-shadow:
+    -1px 0px 0px white,
+    1px 0px 0px white,
+    0px -1px 0px white,
+    0px 1px 0px white;
+    color: #78d2fa;
 }
 
 .countries {
@@ -1812,6 +1826,7 @@ input.todoElem::placeholder {
   width: 100%;
   flex-direction: column;
   height: 100%;
+  position: relative;
 }
 
 .foundWidgetHeader span {
@@ -1819,13 +1834,18 @@ input.todoElem::placeholder {
 }
 
 .leftContentSearch b{
-  background-color: #F9D876;
+  background-color: rgba(253, 223, 126, 0.3) ;
   font-weight: normal;
 }
 
 .foundWidgetCategory {
   display: flex;
   flex-direction: column;
+  max-height: 85%;
+}
+
+.foundSearchItems {
+  overflow-y: scroll;
 }
 
 .foundSearchItem {
@@ -1883,6 +1903,14 @@ input.todoElem::placeholder {
   flex-direction: row;
 }
 
+.searchOptionHeader button {
+  border: 1px solid #f73939;
+  background-color: transparent;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .searchOptionContent {
   display: flex;
   flex-direction: row;
@@ -1891,6 +1919,7 @@ input.todoElem::placeholder {
 .searchOptionDrop {
   display: flex;
   flex-direction: column;
+  color: #f73939;
 }
 /* end of search box right */
 
