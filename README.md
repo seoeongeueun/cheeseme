@@ -1,4 +1,5 @@
-# CHEESEME  
+# CHEESEME
+![Main Page Image](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/main.png)<br>
 **About**  
 CheeseMe is a personalized and customizable diary application for PC that brings together convenient widgets, daily diary entries, and social connections all in one place. While there are other blog-like applications out there, very few offer all those features within a single interface, along with the freedom to creatively decorate your pages.<br>
     Below are the features that CheeseMe offers:<br>
@@ -57,17 +58,45 @@ Deployed using Netlify for frontend and Fly.io for backend
 [1. Main Page](#main-page)  
 [2. Socials](#socials)  
 [3. Scheduler](#scheduler)  
-[4. Journal](#journal)  
+[4. Diary](#diary)  
 [5. Search](#search)  
 [6. Bookmark](#bookmark)
 
-## Main Page      
+## Main Page
+![Guest Mode](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/guestmode.png)<br>
+This is what the page would look like at first. On the left are the widgets and stickers, and on the right is your diary. Before logging in, the page is in Guest Mode where no changes made are saved.
 
 ## Socials     
-### Sign Up  
-### Log In / Out  
-### Add Friends  
-### Delete Friends  
+### Sign Up
+![Sign Up](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/project2-signup.png)
+Click on the sign up button on the top right. Fill in all the information, and if every information is valid, you can now log in.
+As of now, password change is not available.<br>
+
+### Log In / Out
+![Login](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/login.png)<br>
+Click on the profile icon on the top right to log in. <br><br>
+![Logout](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/logout.png)<br>
+Once you are logged in, you will see your username and the log out button. <br>
+
+### Add Friends
+![Friends](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/friends.png)<br>
+Click on the + button to add friends. <br><br>
+
+![FriendRequest](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/friendrequest.png)<br>
+Enter your friend's username. If the user exsits, you will see a message that the friend request is sent.<br>
+The user can accept or decline your friend request.<br>
+
+### Remove Friends  
+![Friend Name](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/friendlistwithfriend.png)<br>
+If your friend has accepted your request, you will see their name on your friend list.<br>
+If you wish to unfriend them, click on the - button.<br><br>
+
+![Friend Delete](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/frienddelete.png)<br>
+Now you can click on the x button next to your friend's name to remove them from your friend list.<br><br>
+
+![Delete Confirm](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/frienddeletemessage.png)<br>
+You will see a message that your friend is removed from your friend list.<br>
+Your friend will not be alerted that you unfriended them, but they will not be able to see your name on their friend lists.<br><br><br>
 
 ## Scheduler   
 ### Contents  
@@ -89,15 +118,15 @@ Deployed using Netlify for frontend and Fly.io for backend
 ### 7. Stickers  
 ### 8. Settings  
 
-## Journal     
-### 1. Writing Posts
+## Diary     
+### 1. Writing an Entry
 ### 2. Navigating Pages  
 ### 3. Settings  
-### 4. View Friends' Posts
+### 4. View Friends' Diary
 
 ## Search    
 ### 1. Widgets    
-### 2. Journal  
+### 2. Diary Entries  
 
 ## Bookmark   
 
@@ -105,7 +134,7 @@ Deployed using Netlify for frontend and Fly.io for backend
 ## More  
 **In Progress**  
     <ul>
-    🧀 <del>Click > on the jounral slider to move to current date</del> ✅<br>
+    🧀 <del>Click > on the jounral slider to move to a new date</del> ✅<br>
     🧀 <del>World Clock</del> ✅<br>
     🧀 Enlarge image on click<br>
     </ul>
