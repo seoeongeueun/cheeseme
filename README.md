@@ -182,22 +182,31 @@ You can move it around by turning on the [edit mode](#8-settings).<br><br>
 ### 8. Settings  
 **Edit Mode**<br>
 ![Edit Mode](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/movegif.gif)<br>
+Enable edit mode and click on the yellow cross on the center of each sticker or widget to drag to any position within the left page boundary. <br>
 
 **Stickers Settings**<br>
 ![Sticker Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickersetting.png)<br>
+Hide a sticker by clicking on the check box or delete it permanently by clicking on the x button.<br>
 
 **Widgets Settings**<br>
 ![Widgets Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/widgetsetting.png)<br>
+Click on the checkbox to make the corresponding widget visible/invisible.<br>Changes are saved to the database.<br>
 
 **Display Settings**<br>
 ![Display Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/gridsetting.png)<br>
+Enable grid background for the left page.<br><br>
 
 ## Diary     
 ### 1. Writing an Entry
 ![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightsettings.png)<br>
+Click on the pen button to start writing.<br>
+
 ### 2. Navigating Pages  
 ### 3. Settings
 ![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightstylesettings.png)<br>
+Enable grid background for the current entry.<br>
+Default style is Social Media style with an image, but you can change it to Plaintext style with no image.<br>
+
 ### 4. View Friends' Diary
 
 ## Search    
