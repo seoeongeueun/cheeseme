@@ -182,7 +182,8 @@ You can move it around by turning on the [edit mode](#8-settings).<br><br>
 ### 8. Settings  
 **Edit Mode**<br>
 ![Edit Mode](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/movegif.gif)<br>
-Enable edit mode and click on the yellow cross on the center of each sticker or widget to drag to any position within the left page boundary. <br>
+Enable edit mode and click on the yellow cross on the center of each sticker or widget to drag to any position within the left page boundary.<br>
+Turn off edit mode to save changes.<br>
 
 **Stickers Settings**<br>
 ![Sticker Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickersetting.png)<br>
@@ -208,12 +209,30 @@ Enable grid background for the current entry.<br>
 Default style is Social Media style with an image, but you can change it to Plaintext style with no image.<br>
 
 ### 4. View Friends' Diary
+Click on your friend's name on your friend list to view their diary.<br>
+
+Move the slider or pick a date on the Calendar widget to nagivate to entries written on a different date.<br>
+
+Like their entry by clicking on the heart button.<br>
+
+Contents for the entries that are set private by your friend will be invisible.<br>
+
+Click on the Home bookmark to go back to your own diary.<br><br>
 
 ## Search    
-### 1. Widgets    
+### 1. Widgets
+Type a keyword to look up notes and todo lists that contain the keyword.<br>
+It only looks up notes and todos because those are the widgets that are unique to each date.<br>
+Click on the found note/todo preview to view the entire content.<br><br>
+
 ### 2. Diary Entries  
+You can search the entries by their title or their content.<br>
+
+Click on the found entry preview to view the whole entry.<br><br>
 
 ## Bookmark   
+Click on the bookmark tag to see all bookmarked entries.<br>
+Click on the found entry preview to nagivate to the entry. <br><br>
 
 
 ## More  
