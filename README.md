@@ -29,7 +29,7 @@ Deployed using Netlify for frontend and Fly.io for backend<br>
 
 **TEST ACCOUNT** <br>
 Username: luckydoggo<br>
-P.W: doggotest
+P.W: doggotest<br>
 
 
 ## Stacks   
@@ -60,10 +60,10 @@ P.W: doggotest
   <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
 </div>
 
-# Pages Help  
+# Table Of Contents  
 [1. Main Page](#main-page)  
 [2. Socials](#socials)  
-[3. Scheduler](#scheduler)  
+[3. Widgets](#widgets)  
 [4. Diary](#diary)  
 [5. Search](#search)  
 [6. Bookmark](#bookmark)
@@ -104,7 +104,7 @@ Now you can click on the x button next to your friend's name to remove them from
 You will see a message that your friend is removed from your friend list.<br>
 Your friend will not be alerted that you unfriended them, but they will not be able to see your name on their friend lists.<br><br><br>
 
-## Scheduler   
+## Widgets  
 ### Contents  
 [1. Calendar](#1-calendar)  
 [2. D-day Counter](#2-d-day-counter)  
@@ -115,21 +115,20 @@ Your friend will not be alerted that you unfriended them, but they will not be a
 [7. Stickers](#7-stickers)  
 [8. Settings](#8-settings)   
 
+
 ### 1. Calendar
 ![Calendar](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/calendar.png)<br>
 This is the Calendar widget that will be used to change dates to display.<br>
 Today's date is colored yellow, and the currently selected (displayed) date is framed red.<br>
 When the displayed date and today's date are the same, then you will only see the red frame.<br>
-All widgets can set to be hidden, but it is recommended to leave the Calendar visible to navigate pages easily.<br>
-[React-Calendar](https://github.com/wojtekmaj/react-calendar) library was used for the base.<br>
+All widgets can set to be hidden, but it is recommended to leave the Calendar visible to navigate pages easily.<br><br>
 
 ### 2. D-day Counter
 ![D-day](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaydone.png)<br>
 This is a D-day Counter that shows the number of days left until the set d-day. Click on the down arrow to set the date.<br>
 
 ![D-day Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaypick.png)<br>
-Pick the date from the date-picker to set your d-day.<br>
-[React-Date-Picker](https://github.com/wojtekmaj/react-date-picker) library was used. <br>
+Pick the date to set your d-day.<br>
 
 ![D-day Title](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaytitle.png)<br>
 Give it a title and click on the check button to save.<br><br>
@@ -143,23 +142,23 @@ World Clock widget shows current time of some major cities. Click on the buttons
 This is a Note widget. You get one note a day. Click on the + button to add a note. <br>
 
 ![Note Quill](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/notequill.png)<br>
-The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. Click on the check button to save the note.<br><br>
+The note is scrollable and provides detailed text editing.<br>Click on the check button to save the note.<br><br>
 
 
 ### 5. Reminder
 ![Reminder](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/reminder.png)<br>
-The Reminder widget does not change, so it is useful to note down things that need constant reminding. Click on the + button to edit/add a reminder.<br>
+The Reminder widget does not change, so it is useful to note down things that need constant reminding.<br>Click on the + button to edit/add a reminder.<br>
 
 ![Reminder Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/reminderedit.png)<br>
-Write the reminder and click on the x button to delete, and the check to save. Optionally you can write more detailed description under.<br>
+Write the reminder and click on the x button to delete, and the check to save.<br>Optionally you can write more detailed description under.<br>
 
 ![Reminder More](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/remindermore.png)<br>
-Descriptions are hidden by default, but you can click on the arrow ▼ button to read more.<br>
+Descriptions are hidden by default, but you can click on the arrow ▼ button to read more.<br><br>
 
 
 ### 6. Todo List
 ![Todo](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/todolist.png)<br>
-The Todo list changes daily so that you have a different todo list everyday. Click on the + to add a todo. <br>
+The Todo list changes daily so that you have a different todo list everyday.<br>Click on the + to add a todo. <br>
 
 ![Todo Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/todoadd.png)<br>
 Click on the x to remove the todo, and check button to save the todo. <br>
@@ -170,19 +169,24 @@ When all the todos are checked done, the default frowning face turns into the sm
 
 ### 7. Stickers
 ![Add Pic](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/addpic.png)<br>
-This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
-
-![Sticker](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickermaker.png)<br>
-This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+Click on the Add Pic button on the bottom right of the Left page to select a picture to make a sticker with.<br>
 
 ![Sticker Rotate](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickerrotate.png)<br>
-The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+You can zoom in/out, rotate the picture and choose a rectangle/square/round frame. Name your sticker and click DONE.<br>
 
 ![Sticker Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickermade.png)<br>
-Click on the check button to save your note.<br><br>
+Then you will see the new sticker on the top left corner of the Left page. <br>
+You can move it around by turning on the [edit mode](#8-settings).<br><br>
 
 
 ### 8. Settings  
+**Edit Mode**
+
+**Stickers Settings**
+
+**Widgets Settings**
+
+**Display Settings**
 
 ## Diary     
 ### 1. Writing an Entry
