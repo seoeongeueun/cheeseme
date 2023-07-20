@@ -23,8 +23,14 @@ CheeseMe is a personalized and customizable diary application for PC that brings
       </ul>
     </div>
 ## Deployment  
-**URL** https://cheeseme.netlify.app/  
-Deployed using Netlify for frontend and Fly.io for backend
+**URL**<br>
+https://cheeseme.netlify.app/  
+Deployed using Netlify for frontend and Fly.io for backend<br>
+
+**TEST ACCOUNT** <br>
+Username: luckydoggo<br>
+P.W: doggotest
+
 
 ## Stacks   
 **FRONTEND**
@@ -74,7 +80,7 @@ As of now, password change is not available.<br>
 
 ### Log In / Out
 ![Login](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/login.png)<br>
-Click on the profile icon on the top right to log in. <br><br>
+Click on the profile icon on the top right to log in.<br><br>
 ![Logout](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/logout.png)<br>
 Once you are logged in, you will see your username and the log out button. <br>
 
@@ -110,7 +116,7 @@ Your friend will not be alerted that you unfriended them, but they will not be a
 [8. Settings](#8-settings)   
 
 ### 1. Calendar
-![Calenar](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/calendar.png)<br>
+![Calendar](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/calendar.png)<br>
 This is the Calendar widget that will be used to change dates to display.<br>
 Today's date is colored yellow, and the currently selected (displayed) date is framed red.<br>
 When the displayed date and today's date are the same, then you will only see the red frame.<br>
@@ -118,59 +124,48 @@ All widgets can set to be hidden, but it is recommended to leave the Calendar vi
 [React-Calendar](https://github.com/wojtekmaj/react-calendar) library was used for the base.<br>
 
 ### 2. D-day Counter
-![D-day](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/dday.png)<br>
-This is a D-day Counter that shows the number of days left until the set d-day. Click on the down arrow to set the date.<br><br>
+![D-day](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaydone.png)<br>
+This is a D-day Counter that shows the number of days left until the set d-day. Click on the down arrow to set the date.<br>
 
 ![D-day Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaypick.png)<br>
 Pick the date from the date-picker to set your d-day.<br>
-[React-Date-Picker](https://github.com/wojtekmaj/react-date-picker) library was used. <br><br>
+[React-Date-Picker](https://github.com/wojtekmaj/react-date-picker) library was used. <br>
 
 ![D-day Title](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaytitle.png)<br>
 Give it a title and click on the check button to save.<br><br>
 
-![D-day Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/ddaydone.png)<br>
-The number of remaining days is displayed, and it will be deducted daily until it is the d-day and turns to 0.<br><br>
-
 ### 3. World Clock
-![World Clock](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/clock.png)<br>
-This is a D-day Counter. You can add notes daily, meaning Click on the + button to add a note. <br><br>
-
-![World Clock Buttons](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/clockbutton.png)<br>
-The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+![World Clock](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/clockbutton.png)<br>
+World Clock widget shows current time of some major cities. Click on the buttons to display/hide the time zone.<br>
 
 ### 4. Notes
 ![Note](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/notes.png)<br>
-This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+This is a Note widget. You get one note a day. Click on the + button to add a note. <br>
 
 ![Note Quill](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/notequill.png)<br>
-The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. Click on the check button to save the note.<br><br>
 
-![Note Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/noteedit.png)<br>
-Click on the check button to save your note.<br><br>
 
 ### 5. Reminder
 ![Reminder](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/reminder.png)<br>
-This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+The Reminder widget does not change, so it is useful to note down things that need constant reminding. Click on the + button to edit/add a reminder.<br>
 
 ![Reminder Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/reminderedit.png)<br>
-The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
-
-![Reminder Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/reminderdone.png)<br>
-Click on the check button to save your note.<br><br>
+Write the reminder and click on the x button to delete, and the check to save. Optionally you can write more detailed description under.<br>
 
 ![Reminder More](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/remindermore.png)<br>
-Click on the check button to save your note.<br><br>
+Descriptions are hidden by default, but you can click on the arrow ▼ button to read more.<br>
 
 
 ### 6. Todo List
 ![Todo](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/todolist.png)<br>
-This is a Note widget. You can add notes daily, meaning Click on the + button to add a note. <br><br>
+The Todo list changes daily so that you have a different todo list everyday. Click on the + to add a todo. <br>
 
 ![Todo Edit](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/todoadd.png)<br>
-The note is scrollable and uses [React-Quill](https://github.com/zenoamaro/react-quill) library to provide detailed text editing. <br><br>
+Click on the x to remove the todo, and check button to save the todo. <br>
 
 ![Todo Check](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/todocheck.png)<br>
-Click on the check button to save your note.<br><br>
+When all the todos are checked done, the default frowning face turns into the smiley face.<br><br>
 
 
 ### 7. Stickers
