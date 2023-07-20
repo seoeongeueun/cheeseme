@@ -174,24 +174,30 @@ Click on the Add Pic button on the bottom right of the Left page to select a pic
 ![Sticker Rotate](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickerrotate.png)<br>
 You can zoom in/out, rotate the picture and choose a rectangle/square/round frame. Name your sticker and click DONE.<br>
 
-![Sticker Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickermade.png)<br>
+![Sticker Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickermade.png))<br>
 Then you will see the new sticker on the top left corner of the Left page. <br>
 You can move it around by turning on the [edit mode](#8-settings).<br><br>
 
 
 ### 8. Settings  
-**Edit Mode**
+**Edit Mode**<br>
+![Edit Mode](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/movegif.gif)<br>
 
-**Stickers Settings**
+**Stickers Settings**<br>
+![Sticker Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickersetting.png)<br>
 
-**Widgets Settings**
+**Widgets Settings**<br>
+![Widgets Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/widgetsetting.png)<br>
 
-**Display Settings**
+**Display Settings**<br>
+![Display Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/gridsetting.png)<br>
 
 ## Diary     
 ### 1. Writing an Entry
+![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightsettings.png)<br>
 ### 2. Navigating Pages  
-### 3. Settings  
+### 3. Settings
+![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightstylesettings.png)<br>
 ### 4. View Friends' Diary
 
 ## Search    
