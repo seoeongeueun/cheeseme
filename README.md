@@ -174,7 +174,7 @@ Click on the Add Pic button on the bottom right of the Left page to select a pic
 ![Sticker Rotate](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickerrotate.png)<br>
 You can zoom in/out, rotate the picture and choose a rectangle/square/round frame. Name your sticker and click DONE.<br>
 
-![Sticker Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickermade.png))<br>
+
 Then you will see the new sticker on the top left corner of the Left page. <br>
 You can move it around by turning on the [edit mode](#8-settings).<br><br>
 
