@@ -148,7 +148,7 @@ function Clock({move, userId}){
                         </div>
                         <div className='timeDate'>
                             <span>{date.getMonth()+1}/{date.getDate()}</span>
-                            <span style={{color: (date.getDay() === 0 || date.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[date.getDay()]}</span>
+                            <span style={{marginLeft: '5px'}}>{weekday[date.getDay()]}</span>
                         </div>
                     </div>}
                     {ny && <div className='timeZone'>
@@ -158,7 +158,7 @@ function Clock({move, userId}){
                         </div>
                         <div className='timeDate'>
                             <span>{nyDate.getMonth()+1}/{nyDate.getDate()}</span>
-                            <span style={{color: (nyDate.getDay() === 0 || nyDate.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[nyDate.getDay()]}</span>
+                            <span style={{marginLeft: '5px'}}>{weekday[nyDate.getDay()]}</span>
                         </div>
                     </div>}
                     {kor && <div className='timeZone'>
@@ -168,7 +168,7 @@ function Clock({move, userId}){
                         </div>
                         <div className='timeDate'>
                             <span>{korDate.getMonth()+1}/{korDate.getDate()}</span>
-                            <span style={{color: (korDate.getDay() === 0 || korDate.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[korDate.getDay()]}</span>
+                            <span style={{marginLeft: '5px'}}>{weekday[korDate.getDay()]}</span>
                         </div>
                     </div>}
                     {van && <div className='timeZone'>
@@ -178,7 +178,7 @@ function Clock({move, userId}){
                         </div>
                         <div className='timeDate'>
                             <span>{vanDate.getMonth()+1}/{vanDate.getDate()}</span>
-                            <span style={{color: (vanDate.getDay() === 0 || vanDate.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[vanDate.getDay()]}</span>
+                            <span style={{marginLeft: '5px'}}>{weekday[vanDate.getDay()]}</span>
                         </div>
                     </div>}
                     {bei && <div className='timeZone'>
@@ -188,7 +188,7 @@ function Clock({move, userId}){
                         </div>
                         <div className='timeDate'>
                             <span>{beiDate.getMonth()+1}/{beiDate.getDate()}</span>
-                            <span style={{color: (beiDate.getDay() === 0 || beiDate.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[beiDate.getDay()]}</span>
+                            <span style={{marginLeft: '5px'}}>{weekday[beiDate.getDay()]}</span>
                         </div>
                     </div>}
                     {par && <div className='timeZone'>
@@ -198,7 +198,7 @@ function Clock({move, userId}){
                         </div>
                         <div className='timeDate'>
                             <span>{parDate.getMonth()+1}/{parDate.getDate()}</span>
-                            <span style={{color: (parDate.getDay() === 0 || parDate.getDay() === 6) && 'black', marginLeft: '5px'}}>{weekday[parDate.getDay()]}</span>
+                            <span style={{marginLeft: '5px'}}>{weekday[parDate.getDay()]}</span>
                         </div>
                     </div>}
                 </div>

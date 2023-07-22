@@ -59,7 +59,7 @@ function BookmarkPosts(props){
     };
 
     return (
-        <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#eeeeee"} lineColor={"#d9d9d9"}>
+        <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#e1e1e1"} lineColor={"#d4d4d4"}>
             <div className='bookmarkInnerBorder'> 
                 <div className="rightBookmarkPosts">
                     <p style={{textAlign: "center", fontSize: '3rem'}}>Bookmarked Posts</p>

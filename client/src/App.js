@@ -62,30 +62,30 @@ function App() {
   const onChangeStickers = stickers => dispatch(currentStickers(stickers));
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      onCurrentUserChange(localStorage.getItem('token'));
-      onSetFriendId('');
-    }
-  }, []);
-
-  useEffect(() => {
     instance.get('/checkCookie', {
-        withCredentials: true
-        })
-          .then((res) => {
-            if (res?.data === false) {
-              onCurrentUserChange(null);
-              onCurrentNameChange(null);
-              onSetFriendId('');
-              onChangeNotis([]);
-              localStorage.removeItem('token');
-              console.log('cookie expired');
-              return;
-          }
+      withCredentials: true
     })
+      .then((res) => {
+        if (res?.data === false) {
+          onCurrentUserChange(null);
+          onCurrentNameChange(null);
+          onSetFriendId('');
+          onChangeNotis([]);
+          localStorage.removeItem('token');
+          console.log('cookie expired');
+          return;
+        } 
+        else {
+          onCurrentUserChange(localStorage.getItem('token'));
+          onSetFriendId('');
+        }
+      })
     .catch( (err) => {
       console.log('Error: ', err);
     })
+  }, []);
+
+  useEffect(() => {
     if (userId) {
       instance.get('/api/users/find/' + userId, {
           withCredentials: true

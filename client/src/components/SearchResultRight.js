@@ -162,7 +162,7 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
 
     return (
         <div className='leftInnerBorder'>
-            <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#eeeeee"} lineColor={"#d9d9d9"}>
+            <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#e1e1e1"} lineColor={"#d4d4d4"}>
             <div className="leftContentSearch">
                 <div className='marker' onClick={() => handleClickHome()}>
                     <span style={{margin: '0rem 1rem 1.5rem 0rem'}}><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>

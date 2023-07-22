@@ -769,7 +769,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
 
     return(
         <div className="rightInnerBorder">
-            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#e8e8e8"} lineColor={"#d9d9d9"}>
+            {grid ? <GridLines className="grid-area" cellWidth={60} strokeWidth={1} strokeWidth2={1} cellWidth2={12} lineColor2={"#e1e1e1"} lineColor={"#d4d4d4"}>
             <div className="rightContent">
                 {friendId === '' && !openBookmark ? <div className='marker'>
                     <span><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
