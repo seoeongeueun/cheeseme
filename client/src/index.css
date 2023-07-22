@@ -1746,6 +1746,13 @@ input.todoElem::placeholder {
   margin-bottom: 0rem;
 }
 
+.quill strong {
+  cursor: default;
+  color: black;
+  position:static;
+  transform: none;
+}
+
 .quill p {
   word-break:break-all;
 }

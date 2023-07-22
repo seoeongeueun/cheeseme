@@ -13,7 +13,7 @@ export const createNote = (date) => ({
 
 const initialState = {
     date: new Date(),
-    text: '안녕'
+    text: ''
 };
 
 export default function notes( state = initialState, action) {

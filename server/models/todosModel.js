@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const todosSchema = new mongoose.Schema({
     owner: {type: String, required: true},
-    date: {type: Number, required: true, unique: true},
+    date: {type: Number, required: true},
     goals: [
         { 
             id: Number,
