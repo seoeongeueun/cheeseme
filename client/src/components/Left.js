@@ -123,20 +123,32 @@ function Left({editMode, setEditMode, date, userId, positions, onChangePositions
         setCircle(false);
     };
 
-    const updateList = async(l) => {
+    const updateList = async (l) => {
         const tmp = [];
-        if (l?.length >= 0) {
+      
+        try {
+          if (l?.length >= 0) {
             for (const sticker of l) {
-                tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
-            };
-            setStickerList(tmp);
-        } else {
+              tmp.push({
+                name: sticker.name,
+                imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation),
+                show: sticker.show
+              });
+            }
+          } else {
             for (const sticker of stickers) {
-                tmp.push({name: sticker.name, imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation), show: sticker.show})
-            };
-            setStickerList(tmp);
+              tmp.push({
+                name: sticker.name,
+                imgSrc: await getCroppedImg(sticker.imgSrc, sticker.croppedAreaPixels, sticker.rotation),
+                show: sticker.show
+              });
+            }
+          }
+          setStickerList(tmp);
+        } catch (error) {
+          console.error('Error:', error);
         }
-    }
+    };
 
     useEffect(() => {
         updateList(tmpStickers);

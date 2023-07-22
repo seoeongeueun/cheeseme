@@ -133,9 +133,28 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
                     ref={quillRef}
                     readOnly={closeQuill}
                     style={closeQuill ? {border: "none"} : {border: "none"}}
-                    modules={closeQuill ? Notes.modules2 : Notes.modules}
+                    modules={!closeQuill ? {toolbar: [[{ 'header': [1, 2, false] }],
+                          ['bold', 'italic', 'underline','strike', 'blockquote'],
+                          [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+                          ['link']
+                        ]} : {toolbar: false}}
                     value={!loading && body}
-                    formats={Notes.formats}
+                    formats={[
+                        "header",
+                        "font",
+                        "size",
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strike",
+                        "blockquote",
+                        "list",
+                        "bullet",
+                        "link",
+                        "image",
+                        "video",
+                        "code-block"
+                    ]}
                 >
                     <div className="ql-container"/>
                 </ReactQuill>
@@ -145,35 +164,5 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
     )
 
 }
-
-Notes.modules = {
-    toolbar: [
-      [{ 'header': [1, 2, false] }],
-      ['bold', 'italic', 'underline','strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      ['link']
-    ],
-};
-
-Notes.modules2 = {
-    toolbar: false,
-};
-
-Notes.formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "link",
-    "image",
-    "video",
-    "code-block"
-];
 
 export default Notes;
