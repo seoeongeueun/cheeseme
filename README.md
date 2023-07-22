@@ -69,7 +69,7 @@ P.W: doggotest<br>
 [6. Bookmark](#bookmark)
 
 ## Main Page
-![Guest Mode](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/guestmode.png)<br>
+![Guest Mode](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/guestmodemain.png)<br>
 This is what the page would look like at first. On the left are the widgets and stickers, and on the right is your diary. Before logging in, the page is in Guest Mode where no changes made are saved.
 
 ## Socials     
@@ -174,7 +174,7 @@ Click on the Add Pic button on the bottom right of the Left page to select a pic
 ![Sticker Rotate](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickerrotate.png)<br>
 You can zoom in/out, rotate the picture and choose a rectangle/square/round frame. Name your sticker and click DONE.<br>
 
-
+![Sticker Done](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/stickerdone.png)<br>
 Then you will see the new sticker on the top left corner of the Left page. <br>
 You can move it around by turning on the [edit mode](#8-settings).<br><br>
 
@@ -202,7 +202,8 @@ Enable grid background for the left page.<br><br>
 ![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightsettings.png)<br>
 Click on the pen button to start writing.<br>
 
-### 2. Navigating Pages  
+### 2. Navigating Pages
+
 ### 3. Settings
 ![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightstylesettings.png)<br>
 Enable grid background for the current entry.<br>
