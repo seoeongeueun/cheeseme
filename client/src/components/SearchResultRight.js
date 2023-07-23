@@ -10,7 +10,7 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
     const [clicked, setClicked] = useState();
     const [searchBy, setSearchBy] = useState('Content');
     const [showOption, setShowOption] = useState(false);
-    const colorCode = ['rgba(253, 223, 126, 0.3)', 'rgba(103, 235, 250, 0.3)', 'rgba(250, 169, 157, 0.3)', 'rgba(155, 251, 225, 0.3)', 'rgba(206, 151, 251, 0.3)'];
+    const colorCode = ['rgba(103, 235, 250, 0.3)', 'rgba(253, 223, 126, 0.3)', 'rgba(250, 169, 157, 0.3)', 'rgba(155, 251, 225, 0.3)', 'rgba(206, 151, 251, 0.3)'];
     const instance = axios.create({
         baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
       });
@@ -167,7 +167,7 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
                 <div className='marker' onClick={() => handleClickHome()}>
                     <span style={{margin: '0rem 1rem 1.5rem 0rem'}}><HomeSharpIcon sx={{fontSize: '1.7rem'}}/></span>
                 </div>
-                <p style={{textAlign: "center"}}>Searching Posts for <b>{keyword}</b></p>
+                <p style={{textAlign: "center"}}>Searching Entries for <b>{keyword}</b></p>
                 <div className="searchOption">
                     <div className='searchOptionHeader' onClick={() => handleSearchOption()}>
                         <span style={{marginRight: "1rem"}}>Search by</span>
@@ -182,7 +182,7 @@ function SearchResultRight({onChangeDate, keyword, setSearch, userId}){
                 </div>
                 <div className='foundWidgetCategory'>
                     <div className='foundWidgetHeader'>
-                        <span>Posts</span>
+                        <span>Entries</span>
                         <div class="line-yellow-short"/>
                     </div>
                     <div className='foundSearchItems'>
