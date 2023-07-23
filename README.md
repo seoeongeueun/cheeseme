@@ -210,6 +210,7 @@ You can make your entry private by clicking on the lock button. And your friends
 
 ### 2. Navigating Pages
 ![Sliders](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/sliders.gif)<br>
+Click on the date on the Calendar or the arrows on the slider to view different entries on different dates.
 
 ### 3. Settings
 ![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightstylesettings.png)<br>
@@ -251,7 +252,7 @@ Click on the found item preview to view the entire content.<br><br>
 Click on the bookmark tag to see all bookmarked entries.<br>
 
 ![Bookmark](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/bookmark.png)<br>
-Click on the found entry preview to nagivate to the entry. <br><br>
+Click on the found entry preview to view the entry. <br><br>
 
 
 ## More  
