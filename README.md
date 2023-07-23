@@ -202,37 +202,52 @@ Enable grid background for the left page.<br><br>
 ![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightsettings.png)<br>
 Click on the pen button to start writing.<br>
 
+![Start Writing](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/writedone.png)<br>
+Give it a title, pick a weather, upload an image, and start writing!
+
+![Lock](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/locked.png)<br>
+You can make your entry private by clicking on the lock button. And your friends will not be able to view the content.
+
 ### 2. Navigating Pages
 
 ### 3. Settings
 ![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightstylesettings.png)<br>
-Enable grid background for the current entry.<br>
+Enable grid background or change the diary style for the current entry.<br>
+
+![Plain Text](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/plaintext.png)<br>
 Default style is Social Media style with an image, but you can change it to Plaintext style with no image.<br>
 
-### 4. View Friends' Diary
-Click on your friend's name on your friend list to view their diary.<br>
+![Grid Background](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightgrid.png)<br>
+This is what the diary would like with grid background enabled and plaintext disabled.
 
+![Delete](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/delete.png)<br>
+Click on the trash bin button to delete your entry. This will remove the image and the entry permanently from the database.
+
+### 4. View Friends' Diary
+![Friend's](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/friendpost.png)<br>
+Click on your friend's name on your friend list to view their diary.<br>
+You can tell whose diary it is by looking at the bottom @{friendname}. Here you are viewing your friend burgerpant's diary.<br>
+You can like their entry by clicking on the heart button.<br>
 Move the slider or pick a date on the Calendar widget to nagivate to entries written on a different date.<br>
 
-Like their entry by clicking on the heart button.<br>
-
+![Private](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/postprivate.png)<br>
 Contents for the entries that are set private by your friend will be invisible.<br>
 
+![Home Tag](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/homebookmark.png)<br>
 Click on the Home bookmark to go back to your own diary.<br><br>
 
-## Search    
-### 1. Widgets
-Type a keyword to look up notes and todo lists that contain the keyword.<br>
-It only looks up notes and todos because those are the widgets that are unique to each date.<br>
-Click on the found note/todo preview to view the entire content.<br><br>
+## Search
+![Search](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/search.png)<br>
+Type a keyword to look up widgets and entries that contain the keyword (capitalization does not matter). Here the keyword was 'guys'.<br>
+On the left side it looks up widgets containing the keyword. It only looks up notes and todos because those are the widgets that are unique to each date.<br>
+On the right side, you can search the entries by their title or content by changing the search option.<br>
+Click on the found item preview to view the entire content.<br><br>
 
-### 2. Diary Entries  
-You can search the entries by their title or their content.<br>
-
-Click on the found entry preview to view the whole entry.<br><br>
-
-## Bookmark   
+## Bookmark
+![Bookmark Tag](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/bookmarktag.png)<br>
 Click on the bookmark tag to see all bookmarked entries.<br>
+
+![Bookmark](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/bookmark.png)<br>
 Click on the found entry preview to nagivate to the entry. <br><br>
 
 
