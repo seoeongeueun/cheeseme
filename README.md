@@ -209,6 +209,7 @@ Give it a title, pick a weather, upload an image, and start writing!
 You can make your entry private by clicking on the lock button. And your friends will not be able to view the content.
 
 ### 2. Navigating Pages
+![Sliders](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/sliders.gif)<br>
 
 ### 3. Settings
 ![Style Settings](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/rightstylesettings.png)<br>
@@ -237,10 +238,12 @@ Contents for the entries that are set private by your friend will be invisible.<
 Click on the Home bookmark to go back to your own diary.<br><br>
 
 ## Search
-![Search](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/search.png)<br>
+![Search](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/searchresult.png)<br>
 Type a keyword to look up widgets and entries that contain the keyword (capitalization does not matter). Here the keyword was 'guys'.<br>
 On the left side it looks up widgets containing the keyword. It only looks up notes and todos because those are the widgets that are unique to each date.<br>
 On the right side, you can search the entries by their title or content by changing the search option.<br>
+
+![Search Nagivate](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/navigate.gif)<br>
 Click on the found item preview to view the entire content.<br><br>
 
 ## Bookmark
