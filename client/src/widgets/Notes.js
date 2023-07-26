@@ -36,7 +36,7 @@ function Notes({move, onEdit, note, onCreate, date, userId}){
                     console.log('Error loading notes: ', err)
                 })
         } else {
-            setAllNotes([{date: new Date().setHours(0, 0, 0, 0), text: 'This is an example note'}]);
+            setAllNotes([{date: new Date().setHours(0, 0, 0, 0), text: 'Welcome!<br>If you need help with using CheeseMe, visit <a href="https://github.com/seoeongeueun/cheeseme#table-of-contents">HERE</a>'}]);
         }
     }, [userId]);
 

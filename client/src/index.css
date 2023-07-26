@@ -1753,8 +1753,8 @@ input.todoElem::placeholder {
   transform: none;
 }
 
-.quill p {
-  word-break:break-all;
+.notesWidget a {
+  color: #F5BB56 !important;
 }
 
 .ql-container {
