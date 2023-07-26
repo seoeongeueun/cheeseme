@@ -184,7 +184,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                             setPostImage(false);
                             setGrid(false);
                             setPlain(false);
-                            setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+                            setMessage(`No Entry On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                         }
                         return;
                     })
@@ -255,7 +255,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setPostImage(false);
                     setGrid(false);
                     setPlain(false);
-                    setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+                    setMessage(`No Entry On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setLoading(true);
                 }
             }
@@ -275,7 +275,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setId('');
                         setGrid(false);
                         setPlain(false);
-                        setMessage('This post is private');
+                        setMessage('This Entry is Private');
                         setLoading(true);
                         setPostImage(false);
                     }
@@ -298,7 +298,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     }
                 }
                 else {
-                    setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+                    setMessage(`No Entry On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setIndex(-1)
                     setBody('');
                     setImgUrl('')
@@ -332,7 +332,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                 setGrid(false);
                 setPlain(false);
                 setPostImage(false);
-                setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+                setMessage(`No Entry On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
             }
         }
     }, [allPosts]);
@@ -371,7 +371,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     setId('');
                     setGrid(false);
                     setPlain(false);
-                    setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+                    setMessage(`No Entry On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setLoading(true)
                 }
             }
@@ -392,7 +392,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                         setPlain(false);
                         setWeather('');
                         setId('');
-                        setMessage('This post is private');
+                        setMessage('This Entry is Private');
                         setLoading(true)
                     }
                     else {
@@ -414,7 +414,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
                     }
                 }
                 else {
-                    setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
+                    setMessage(`No Entry On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`)
                     setIndex(-1)
                     setBody('');
                     setPostImage(false);
@@ -434,7 +434,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
         } else {
             setId('');
             setLoading(true);
-            setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`);
+            setMessage(`No Entry On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`);
 
         }
     }, [date]);
@@ -601,7 +601,7 @@ function Right({date, userId, friendId, onSetFriendId, onChangeDate, name}){
             setPlain(false);
             setId('')
             setPostImage(false);
-            setMessage(`No Post On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`);
+            setMessage(`No Entry On ${new Date(date).getMonth()+1}/${new Date(date).getDate()}/${new Date(date).getFullYear()}`);
             setAllPosts(allPosts.filter(e => e.date !== date));
             setIndex(0);
         }
