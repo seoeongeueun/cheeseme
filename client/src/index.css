@@ -338,8 +338,6 @@ main {
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  top: 2rem;
-
 }
 
 .ddayWidget span {
@@ -491,7 +489,6 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   position: absolute;
-  top: 2rem;
   padding: 1rem;
 }
 
@@ -1360,7 +1357,6 @@ main {
 /* start of clockWidget */
 .clockWidget {
   position: absolute;
-  top: 2rem;
   width: 19rem;
   background-color: white;
   border: 1px solid #d2d2d2;
@@ -1497,7 +1493,6 @@ main {
 /* start of calendar widget */
 .calendarWidget {
   position: absolute;
-  top: 2rem;
 }
 
 .react-calendar__tile--now {
@@ -1539,7 +1534,7 @@ abbr[title] {
   width: 20rem;
   border: 1px solid #d2d2d2;
   position: absolute;
-  top: 2rem;
+  top: 1rem;
   max-height: 22rem;
   background-color: white;
 }
@@ -1677,7 +1672,6 @@ input.todoElem::placeholder {
   height: 25rem;
   overflow-y: overlay;
   position: absolute;
-  top: 2rem;
   max-height: 17rem;
   left: 0rem;
   background-color: white;
