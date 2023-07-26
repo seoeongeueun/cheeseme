@@ -69,7 +69,7 @@ P.W: doggotest<br>
 [6. Bookmark](#bookmark)
 
 ## Main Page
-![Guest Mode](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/guestmodemain.png)<br>
+![Guest Mode](https://cheeseme-readme.s3.ap-southeast-2.amazonaws.com/guestmode.png)<br>
 This is what the page would look like at first. On the left are the widgets and stickers, and on the right is your diary. Before logging in, the page is in Guest Mode where no changes made are saved.
 
 ## Socials     
