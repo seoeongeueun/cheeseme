@@ -35,9 +35,6 @@ import StickerIcon from '../icons/sticker.png';
 import StickerColor from '../icons/stickerColor.png';
 import axios from 'axios';
 import StickerSettings from '../modals/StickerSettings';
-import CloudSticker from '../icons/cloudSticker.png';
-import Ghost1 from '../icons/ghost1.png';
-import Glitter from '../icons/glitter.png';
 
 function Left({editMode, setEditMode, date, userId, positions, onChangePositions, stickers, onChangeStickers, onEdit}){
     const [addPic, setAddPic] = useState(false);

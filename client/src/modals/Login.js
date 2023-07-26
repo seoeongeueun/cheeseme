@@ -6,6 +6,7 @@ import LoginModal from './LoginModal.js';
 import CloudSticker from '../icons/cloudSticker.png';
 import Ghost1 from '../icons/ghost1.png';
 import Glitter from '../icons/glitter.png';
+import Cheese from '../icons/cheeseicon2.png';
 
 function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId, name, onChangeStickers}){
     const [login, setLogin] = useState(false);
@@ -25,9 +26,10 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
                     onCurrentUserChange(null);
                     onCurrentNameChange(null);
                     onSetFriendId('');
-                    onChangeStickers([{name: 'cloud', x: 140, y: 530, show: true, imgSrc: CloudSticker, croppedAreaPixels: {width: 500, height: 500, x: 0, y: 0}, rotation: 0},
-                        {name: 'ghost', x: 325, y: 430, show: true, imgSrc: Ghost1, croppedAreaPixels: {width: 455, height: 455, x: 22, y: 14}, rotation: 0},
-                        {name: 'glitter', x: 360, y: 200, show: true, imgSrc: Glitter, croppedAreaPixels: {width: 333, height: 333, x: 74, y: 95}, rotation: 0}]);
+                    onChangeStickers([{name: 'cloud', x: 140, y: 580, show: true, imgSrc: CloudSticker, croppedAreaPixels: {width: 500, height: 500, x: 0, y: 0}, rotation: 0},
+                        {name: 'ghost', x: 300, y: 330, show: true, imgSrc: Ghost1, croppedAreaPixels: {width: 455, height: 455, x: 22, y: 14}, rotation: 0},
+                        {name: 'glitter', x: 360, y: 200, show: true, imgSrc: Glitter, croppedAreaPixels: {width: 333, height: 333, x: 74, y: 95}, rotation: 0},
+                        {name: 'cheese', x: 580, y: 410, show: true, imgSrc: Cheese, croppedAreaPixels: {width: 130, height: 130, x: 0, y: 0}, rotation: 0}]);
                     window.location.reload();
                 } else  {
                     instance.get('/checkCookie', {
@@ -39,6 +41,8 @@ function Login({onCurrentUserChange, userId, onCurrentNameChange, onSetFriendId,
                                 onCurrentNameChange(null);
                                 onSetFriendId('');
                                 localStorage.removeItem('token');
+                            } else {
+                                
                             }
                         })
                         .catch( (err) => {
