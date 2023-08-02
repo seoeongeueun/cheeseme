@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../modals/Notification.js';
 import { currentNotis, addNoti, toggleNoti } from '../modules/notisList.js';

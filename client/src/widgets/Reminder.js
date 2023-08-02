@@ -6,22 +6,21 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
-import Draggable from 'react-draggable';
 import axios from 'axios';
-import { FetchAPIPost, FetchApiDelete, FetchApiGet } from '../utils/api.js';
+import { FetchAPIPost } from '../utils/api.js';
 
-function Reminder({ move, onCreate, onToggle, onEdit, onDelete, userId }) {
+function Reminder({ move, onCreate, onToggle, userId }) {
   const [editMode, setEditMode] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [show, setShow] = useState(false);
   const [reminders, setReminders] = useState([]);
-  const [colorCode, setColorCode] = useState([
+  const [colorCode] = useState([
     'rgba(103, 235, 250, 0.3)',
     'rgba(250, 169, 157, 0.3)',
     'rgba(253, 223, 126, 0.3)',
     'rgba(206, 151, 251, 0.3)',
   ]);
-  const [colorCodeLight, setColorCodeLight] = useState([
+  const [colorCodeLight] = useState([
     'rgba(103, 235, 250, 0.1)',
     'rgba(250, 169, 157, 0.1)',
     'rgba(253, 223, 126, 0.1)',
@@ -49,7 +48,7 @@ function Reminder({ move, onCreate, onToggle, onEdit, onDelete, userId }) {
           }
         })
         .catch((err) => {
-          console.log('Error loading reminders');
+          console.log(err, 'Error loading reminders');
         });
     } else {
       setReminders([
@@ -77,13 +76,13 @@ function Reminder({ move, onCreate, onToggle, onEdit, onDelete, userId }) {
   }, [editMode]);
 
   const updateReminders = async () => {
-    let res = await FetchAPIPost('/api/reminder/update/' + userId, {
+    await FetchAPIPost('/api/reminder/update/' + userId, {
       reminders: reminders,
     });
   };
 
   const createReminders = async () => {
-    let res = await FetchAPIPost('/api/reminder/add', {
+    await FetchAPIPost('/api/reminder/add', {
       owner: userId,
       reminders: reminders,
     });
@@ -150,7 +149,7 @@ function Reminder({ move, onCreate, onToggle, onEdit, onDelete, userId }) {
       return r;
     });
     setReminders(newState);
-    let res = await FetchAPIPost('/api/reminder/update/' + userId, {
+    await FetchAPIPost('/api/reminder/update/' + userId, {
       reminders: newState,
     });
   };

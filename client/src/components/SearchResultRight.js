@@ -6,7 +6,6 @@ import HomeSharpIcon from '@mui/icons-material/HomeSharp';
 
 function SearchResultRight({ onChangeDate, keyword, setSearch, userId }) {
   const [foundPosts, setFoundPosts] = useState();
-  const [clicked, setClicked] = useState();
   const [searchBy, setSearchBy] = useState('Content');
   const [showOption, setShowOption] = useState(false);
   const colorCode = [
@@ -35,8 +34,8 @@ function SearchResultRight({ onChangeDate, keyword, setSearch, userId }) {
             if (n)
               setFoundPosts(
                 res?.data.filter((n) =>
-                  n.title.toLowerCase().includes(keyword.toLowerCase())
-                )
+                  n.title.toLowerCase().includes(keyword.toLowerCase()),
+                ),
               );
             return;
           })
@@ -53,8 +52,8 @@ function SearchResultRight({ onChangeDate, keyword, setSearch, userId }) {
             if (n)
               setFoundPosts(
                 res?.data.filter((n) =>
-                  n.text.toLowerCase().includes(keyword.toLowerCase())
-                )
+                  n.text.toLowerCase().includes(keyword.toLowerCase()),
+                ),
               );
             return;
           })
@@ -175,7 +174,6 @@ function SearchResultRight({ onChangeDate, keyword, setSearch, userId }) {
 
   const handleClick = (date) => {
     console.log(date);
-    setClicked(date);
     onChangeDate(date);
     setSearch(false);
   };
@@ -249,12 +247,13 @@ function SearchResultRight({ onChangeDate, keyword, setSearch, userId }) {
           <div className="foundWidgetCategory">
             <div className="foundWidgetHeader">
               <span>Entries</span>
-              <div class="line-yellow-short" />
+              <div className="line-yellow-short" />
             </div>
             <div className="foundSearchItems">
               {foundPosts?.length > 0 ? (
                 foundPosts.map((note, index) => (
                   <div
+                    key={index}
                     className="foundSearchItem"
                     onClick={() => handleClick(note.date)}
                     style={{ marginTop: index === 0 && '0.5rem' }}

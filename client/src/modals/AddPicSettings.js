@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import ReactDOM from 'react-dom';
 import Cropper from 'react-easy-crop';
 import { Slider, Typography } from '@mui/material';
 import { withStyles } from '@mui/styles';
@@ -31,7 +30,7 @@ const Demo = ({ classes }) => {
       const croppedImage = await getCroppedImg(
         imageSrc,
         croppedAreaPixels,
-        rotation
+        rotation,
       );
       console.log('done', { croppedImage });
       setCroppedImage(croppedImage);

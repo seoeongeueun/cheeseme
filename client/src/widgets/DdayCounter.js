@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-date-picker';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
-import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import axios from 'axios';
-import { FetchAPIPost, FetchApiDelete, FetchApiGet } from '../utils/api.js';
+import { FetchAPIPost } from '../utils/api.js';
 
 function DdayCounter(props) {
   const [start, setStart] = useState();
@@ -13,7 +12,7 @@ function DdayCounter(props) {
   const [left, setLeft] = useState(0);
   const [title, setTitle] = useState('');
   const [edit, setEdit] = useState(false);
-  const [date, setDate] = useState();
+  const [date] = useState();
   const [addNew, setAddNew] = useState(false);
   const instance = axios.create({
     baseURL:
@@ -73,14 +72,14 @@ function DdayCounter(props) {
   }, [edit, end]);
 
   const change = async () => {
-    let res = await FetchAPIPost('/api/dday/update/' + props.userId, {
+    await FetchAPIPost('/api/dday/update/' + props.userId, {
       start: new Date().setHours(0, 0, 0, 0),
       text: title,
       end: end && end,
     });
   };
   const add = async () => {
-    let res = await FetchAPIPost('/api/dday/add/' + props.userId, {
+    await FetchAPIPost('/api/dday/add/' + props.userId, {
       start: new Date().setHours(0, 0, 0, 0),
       text: title,
       end: end && end,
@@ -92,7 +91,7 @@ function DdayCounter(props) {
     if (event.key === 'Enter') {
       setEdit(false);
       if (date) {
-        let res = await FetchAPIPost('/api/dday/update/' + props.userId, {
+        await FetchAPIPost('/api/dday/update/' + props.userId, {
           text: title,
         });
       }

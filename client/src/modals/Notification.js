@@ -1,11 +1,4 @@
 import { useEffect, useState } from 'react';
-import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
-import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import AddFriend from './AddFriend.js';
 import { FetchAPIPost } from '../utils/api.js';
 import axios from 'axios';
 
@@ -16,7 +9,6 @@ function Notification({
   onAddNoti,
   onToggleNoti,
   friends,
-  onChangeFriends,
   onAddFriend,
 }) {
   const [friendsNoti, setFriendsNoti] = useState();
@@ -37,24 +29,21 @@ function Notification({
         notifications: newNoti.length > 5 ? newNoti.slice(0, 5) : newNoti,
       });
       if (res) {
-        let res2 = await FetchAPIPost('/api/users/update/' + userId, {
+        await FetchAPIPost('/api/users/update/' + userId, {
           notifications: notis.length > 5 ? notis.slice(0, 5) : notis,
         });
         if (tmpObj.notiType === 'receiveAccept') {
           onAddFriend(friendName);
-          let res3 = await FetchAPIPost(
-            '/api/users/updateWithName/' + friendName,
-            {
-              friends: [...friendFriends, { name: name, fav: false }],
-            }
-          );
+          await FetchAPIPost('/api/users/updateWithName/' + friendName, {
+            friends: [...friendFriends, { name: name, fav: false }],
+          });
         }
       }
     }
   };
 
   const updateFriends = async () => {
-    let res = await FetchAPIPost('/api/users/update/' + userId, {
+    await FetchAPIPost('/api/users/update/' + userId, {
       friends: friends,
     });
   };
@@ -166,8 +155,7 @@ function Notification({
                 {n.notiType === 'sendRequest' && (
                   <span
                     style={{
-                      color: i === 0 ? 'black' : '#a0a096',
-                      color: !n.done ? 'black' : '#a0a096',
+                      color: i === 0 ? 'black' : !n.done ? 'black' : '#a0a096',
                     }}
                   >
                     {n.from} sent you a friend request

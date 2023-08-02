@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import DisplaySettings from '../modals/DisplaySettings';
 import GridLines from 'react-gridlines';
-import PlainRight from './PlainRight';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import BookmarkTwoToneIcon from '@mui/icons-material/BookmarkTwoTone';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -11,18 +10,9 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import SadColor from '../icons/sad.png';
-import HappyColor from '../icons/happy.png';
-import SadPlain from '../icons/sad (1).png';
-import HappyPlain from '../icons/happy (1).png';
 import CloudColor from '../icons/cloud (1).png';
 import CloudPlain from '../icons/cloud.png';
 import UmbPlain from '../icons/umbrella (1).png';
@@ -32,7 +22,7 @@ import SunPlain from '../icons/sunny.png';
 import SnowPlain from '../icons/snowman (1).png';
 import SnowColor from '../icons/snowman.png';
 import HomeSharpIcon from '@mui/icons-material/HomeSharp';
-import { FetchAPIPost, FetchAPIPostImg, FetchApiDelete } from '../utils/api.js';
+import { FetchAPIPost, FetchApiDelete } from '../utils/api.js';
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -41,7 +31,6 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
-import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
@@ -52,54 +41,37 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
   const [showSettings, setShowSettings] = useState(false);
   const [grid, setGrid] = useState(false);
   const [plain, setPlain] = useState(false);
-
   const [heart, setHeart] = useState(false);
   const [bookmark, setBookmark] = useState(false);
   const [likes, setLikes] = useState([]);
-
   const [open, setOpen] = useState(false);
-
   const [postImage, setPostImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState();
-
   const [title, setTitle] = useState('');
   const [edit, setEdit] = useState(false);
   const [body, setBody] = useState();
   const [weather, setWeather] = useState('');
-
-  const [found, setFound] = useState(false);
-
   const [hide, setHide] = useState(false);
   const [loading, setLoading] = useState(true);
   const [allPosts, setAllPosts] = useState([]);
   const [_id, setId] = useState('');
   const [showBookMark, setShowBookMark] = useState(false);
-  const [showHome, setShowHome] = useState(true);
   const [currentFriendName, setCurrentFriendName] = useState('');
   const [index, setIndex] = useState(0);
-
   const [value, setValue] = useState(0);
   const [message, setMessage] = useState('');
   const [imgUrl, setImgUrl] = useState();
-
   const [closeQuill, setCloseQuill] = useState(true);
   const [tmpBody, setTmpBody] = useState(null);
   const [openBookmark, setOpenBookmark] = useState(false);
   const quillRef = useRef();
 
-  const colorCode = [
-    'rgba(253, 223, 126, 0.5)',
-    'rgba(103, 235, 250, 0.5)',
-    'rgba(250, 169, 157, 0.5)',
-    'rgba(206, 151, 251, 0.5)',
-  ];
   const instance = axios.create({
     baseURL:
       process.env.NODE_ENV !== 'production'
         ? 'http://localhost:8080/'
         : 'https://cheese-me.fly.dev/',
   });
-  const regex = '/.com/images/([^/]+)$/';
 
   useEffect(() => {
     if (userId) {
@@ -113,7 +85,7 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
           else setAllPosts([]);
         })
         .catch((err) => {
-          console.log('Error loading posts');
+          console.log(err, 'Error loading posts');
         });
     } else {
       setAllPosts([]);
@@ -196,8 +168,8 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
                 setPlain(false);
                 setMessage(
                   `No Entry On ${new Date(date).getMonth() + 1}/${new Date(
-                    date
-                  ).getDate()}/${new Date(date).getFullYear()}`
+                    date,
+                  ).getDate()}/${new Date(date).getFullYear()}`,
                 );
               }
               return;
@@ -243,11 +215,11 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
         const post = allPosts.find(
           (p) =>
             `${new Date(p.date).getMonth() + 1}.${new Date(
-              p.date
+              p.date,
             ).getDate()}.${new Date(p.date).getFullYear()}` ===
             `${new Date(date).getMonth() + 1}.${new Date(
-              date
-            ).getDate()}.${new Date(date).getFullYear()}`
+              date,
+            ).getDate()}.${new Date(date).getFullYear()}`,
         );
         if (post) {
           setIndex(allPosts.indexOf(post));
@@ -281,8 +253,8 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
           setPlain(false);
           setMessage(
             `No Entry On ${new Date(date).getMonth() + 1}/${new Date(
-              date
-            ).getDate()}/${new Date(date).getFullYear()}`
+              date,
+            ).getDate()}/${new Date(date).getFullYear()}`,
           );
           setLoading(true);
         }
@@ -290,11 +262,11 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
         const post = allPosts.find(
           (p) =>
             `${new Date(p.date).getMonth() + 1}.${new Date(
-              p.date
+              p.date,
             ).getDate()}.${new Date(p.date).getFullYear()}` ===
             `${new Date(date).getMonth() + 1}.${new Date(
-              date
-            ).getDate()}.${new Date(date).getFullYear()}`
+              date,
+            ).getDate()}.${new Date(date).getFullYear()}`,
         );
         if (post) {
           if (post.hide) {
@@ -333,8 +305,8 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
         } else {
           setMessage(
             `No Entry On ${new Date(date).getMonth() + 1}/${new Date(
-              date
-            ).getDate()}/${new Date(date).getFullYear()}`
+              date,
+            ).getDate()}/${new Date(date).getFullYear()}`,
           );
           setIndex(-1);
           setBody('');
@@ -371,8 +343,8 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
         setPostImage(false);
         setMessage(
           `No Entry On ${new Date(date).getMonth() + 1}/${new Date(
-            date
-          ).getDate()}/${new Date(date).getFullYear()}`
+            date,
+          ).getDate()}/${new Date(date).getFullYear()}`,
         );
       }
     }
@@ -387,11 +359,11 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
         const post = allPosts.find(
           (p) =>
             `${new Date(p.date).getMonth() + 1}.${new Date(
-              p.date
+              p.date,
             ).getDate()}.${new Date(p.date).getFullYear()}` ===
             `${new Date(date).getMonth() + 1}.${new Date(
-              date
-            ).getDate()}.${new Date(date).getFullYear()}`
+              date,
+            ).getDate()}.${new Date(date).getFullYear()}`,
         );
         if (post) {
           setIndex(allPosts.indexOf(post));
@@ -425,8 +397,8 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
           setPlain(false);
           setMessage(
             `No Entry On ${new Date(date).getMonth() + 1}/${new Date(
-              date
-            ).getDate()}/${new Date(date).getFullYear()}`
+              date,
+            ).getDate()}/${new Date(date).getFullYear()}`,
           );
           setLoading(true);
         }
@@ -434,11 +406,11 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
         const post = allPosts.find(
           (p) =>
             `${new Date(p.date).getMonth() + 1}.${new Date(
-              p.date
+              p.date,
             ).getDate()}.${new Date(p.date).getFullYear()}` ===
             `${new Date(date).getMonth() + 1}.${new Date(
-              date
-            ).getDate()}.${new Date(date).getFullYear()}`
+              date,
+            ).getDate()}.${new Date(date).getFullYear()}`,
         );
         if (post) {
           if (post.hide) {
@@ -477,8 +449,8 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
         } else {
           setMessage(
             `No Entry On ${new Date(date).getMonth() + 1}/${new Date(
-              date
-            ).getDate()}/${new Date(date).getFullYear()}`
+              date,
+            ).getDate()}/${new Date(date).getFullYear()}`,
           );
           setIndex(-1);
           setBody('');
@@ -501,8 +473,8 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
       setLoading(true);
       setMessage(
         `No Entry On ${new Date(date).getMonth() + 1}/${new Date(
-          date
-        ).getDate()}/${new Date(date).getFullYear()}`
+          date,
+        ).getDate()}/${new Date(date).getFullYear()}`,
       );
     }
   }, [date]);
@@ -512,13 +484,11 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
       const post = allPosts[value];
       if (post) {
         onChangeDate(post?.date);
-      } else {
       }
     } else if (value === 0) {
       const post = allPosts[0];
       if (post) {
         onChangeDate(post?.date);
-      } else {
       }
     }
   }, [value]);
@@ -557,7 +527,7 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
       if (heart) {
         setHeart(false);
         setLikes(likes.filter((e) => e !== userId));
-        let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+        await FetchAPIPost('/api/right/updateById/' + _id, {
           like: false,
           bookmark: bookmark,
           title: title,
@@ -572,7 +542,7 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
       } else {
         setHeart(true);
         setLikes([...likes, userId]);
-        let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+        await FetchAPIPost('/api/right/updateById/' + _id, {
           like: true,
           bookmark: bookmark,
           title: title,
@@ -606,7 +576,7 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
               else setAllPosts([]);
             })
             .catch((err) => {
-              console.log('Error loading posts');
+              console.log(err, 'Error loading posts');
             });
       } else {
         setBookmark(true);
@@ -624,7 +594,7 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
               else setAllPosts([]);
             })
             .catch((err) => {
-              console.log('Error loading posts');
+              console.log(err, 'Error loading posts');
             });
       }
     }
@@ -634,12 +604,12 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
     if (_id !== '') {
       if (hide) {
         setHide(false);
-        let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+        await FetchAPIPost('/api/right/updateById/' + _id, {
           hide: false,
         });
       } else {
         setHide(true);
-        let res = await FetchAPIPost('/api/right/updateById/' + _id, {
+        await FetchAPIPost('/api/right/updateById/' + _id, {
           hide: true,
         });
       }
@@ -655,10 +625,8 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
   const handleDelete = async () => {
     setOpen(false);
     if (date) {
-      let response = await FetchAPIPost(
-        '/deleteImg/' + imgUrl.split('/').pop()
-      );
-      let res = await FetchApiDelete('/api/right/delete/' + date);
+      await FetchAPIPost('/deleteImg/' + imgUrl.split('/').pop());
+      await FetchApiDelete('/api/right/delete/' + date);
       setBody('');
       setTitle('');
       setHeart(false);
@@ -673,8 +641,8 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
       setPostImage(false);
       setMessage(
         `No Entry On ${new Date(date).getMonth() + 1}/${new Date(
-          date
-        ).getDate()}/${new Date(date).getFullYear()}`
+          date,
+        ).getDate()}/${new Date(date).getFullYear()}`,
       );
       setAllPosts(allPosts.filter((e) => e.date !== date));
       setIndex(0);
@@ -750,7 +718,7 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
             else setAllPosts([]);
           })
           .catch((err) => {
-            console.log('Error loading posts');
+            console.log(err, 'Error loading posts');
           });
     } else {
       if (userId) {
@@ -778,7 +746,7 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
               else setAllPosts([]);
             })
             .catch((err) => {
-              console.log('Error loading posts');
+              console.log(err, 'Error loading posts');
             });
       }
     }
@@ -803,11 +771,6 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
     setEdit(true);
     if (plain) setCloseQuill(false);
   };
-
-  useEffect(() => {
-    if (tmpBody) {
-    }
-  }, [tmpBody]);
 
   const handleWeather = async (weatherOption) => {
     if (plain)
@@ -840,8 +803,6 @@ function Right({ date, userId, friendId, onSetFriendId, onChangeDate, name }) {
       onChangeDate(date + 86400000);
     }
   };
-
-  /*<span className="profileArea"/>*/
 
   return (
     <div className="rightInnerBorder">

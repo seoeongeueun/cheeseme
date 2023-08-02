@@ -7,7 +7,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import axios from 'axios';
 import { FetchAPIPost } from '../utils/api.js';
 
-function Notes({ move, onEdit, note, onCreate, date, userId }) {
+function Notes({ move, onEdit, date, userId }) {
   const [body, setBody] = useState();
   const [closeQuill, setCloseQuill] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -114,14 +114,14 @@ function Notes({ move, onEdit, note, onCreate, date, userId }) {
       setBody(tmp);
       await onEdit(tmp);
       if (loading) {
-        let res = await FetchAPIPost('/api/notes/add', {
+        await FetchAPIPost('/api/notes/add', {
           owner: userId,
           date: date,
           text: tmp,
         });
         setLoading(false);
       } else {
-        let res = await FetchAPIPost('/api/notes/updateById/' + _id, {
+        await FetchAPIPost('/api/notes/updateById/' + _id, {
           date: date,
           text: tmp,
         });

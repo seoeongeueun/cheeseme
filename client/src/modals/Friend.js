@@ -1,12 +1,8 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { FetchAPIPost } from '../utils/api.js';
-import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import AddFriend from './AddFriend.js';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import axios from 'axios';
 import Star from '../icons/star.png';
@@ -17,18 +13,14 @@ function Friend({
   userId,
   name,
   friends,
-  onChangeFriends,
-  onAddFriend,
   onRemoveFriend,
   onFavFriend,
   onSetFriendId,
 }) {
-  const [clicked, setClicked] = useState('');
   const [addFriend, setAddFriend] = useState(false);
   const [removeFriend, setRemoveFriend] = useState(false);
   const [username, setUsername] = useState('');
   const [bye, setBye] = useState('');
-  const [friendName, setFriendName] = useState('');
   const [friendFriends, setFriendFriends] = useState(null);
   const instance = axios.create({
     baseURL:
@@ -38,13 +30,13 @@ function Friend({
   });
 
   const updateList = async () => {
-    let res = await FetchAPIPost('/api/users/update/' + userId, {
+    await FetchAPIPost('/api/users/update/' + userId, {
       friends: friends,
     });
   };
 
   const updateFriendList = async () => {
-    let res = await FetchAPIPost('/api/users/updateWithName/' + bye, {
+    await FetchAPIPost('/api/users/updateWithName/' + bye, {
       friends: friendFriends.filter((e) => e.name !== name),
     });
     setFriendFriends(null);
@@ -90,7 +82,6 @@ function Friend({
   }, [friendFriends]);
 
   const handleClickFriend = async (name) => {
-    setClicked(name);
     instance
       .get('/api/users/' + name, {
         withCredentials: true,
@@ -99,11 +90,6 @@ function Friend({
         onSetFriendId(res?.data._id.toString());
       });
     console.log('Viewing ' + name + `'s Posts...`);
-  };
-
-  const handleAddFriend = () => {
-    setUsername('');
-    setAddFriend(true);
   };
 
   const handleRemove = async (name) => {
@@ -183,7 +169,7 @@ function Friend({
           </div>
         ) : (
           <span style={{ fontSize: '2rem', color: '#a0a096' }}>
-            Let's add new friends!
+            Let&apos;s add new friends!
           </span>
         )
       ) : (
@@ -196,7 +182,7 @@ function Friend({
       )}
       {bye !== '' && (
         <span style={{ color: '#f73939', fontSize: '1.7rem' }}>
-          You're no longer friends with {bye}
+          You&apos;re no longer friends with {bye}
         </span>
       )}
     </div>

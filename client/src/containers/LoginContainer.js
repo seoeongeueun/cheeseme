@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Login from '../modals/Login.js';
 import { currentUser } from '../modules/loginInfo.js';
@@ -6,7 +6,7 @@ import { currentName } from '../modules/nameInfo.js';
 import { setFriendId } from '../modules/viewFriend.js';
 import { currentStickers } from '../modules/stickers.js';
 
-function LoginContainer(props) {
+function LoginContainer() {
   const { userId } = useSelector((state) => ({
     userId: state.loginInfo.userId,
   }));

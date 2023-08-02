@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { FetchAPIPost, FetchApiDelete } from '../utils/api.js';
+import { FetchAPIPost } from '../utils/api.js';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import axios from 'axios';
 
 function StickerSettings(props) {
   const [stickers, setStickers] = useState(props.stickers);
-  const regex = '/.com/images/([^/]+)$/';
   const instance = axios.create({
     baseURL:
       process.env.NODE_ENV !== 'production'
@@ -14,7 +13,7 @@ function StickerSettings(props) {
   });
 
   const update = async () => {
-    let res = await FetchAPIPost('/api/users/update/' + props.userId, {
+    await FetchAPIPost('/api/users/update/' + props.userId, {
       stickers: stickers,
     });
   };
@@ -27,14 +26,14 @@ function StickerSettings(props) {
 
   const handleStickerDelete = async (name) => {
     let imgSrc = stickers.find((s) => s.name === name).imgSrc;
-    instance.post('/deleteImg/' + imgSrc.split('/').pop()).then((res) => {
-      console.log('Sticker deleted');
-    });
+    instance
+      .post('/deleteImg/' + imgSrc.split('/').pop())
+      .then(console.log('Sticker deleted'));
     setStickers(stickers.filter((s) => s.name !== name));
     props.onChangeStickers(stickers.filter((s) => s.name !== name));
     props.setStickerList(props.stickerList.filter((s) => s.name !== name));
     if (stickers.filter((s) => s.name !== name).length === 0) {
-      let res = await FetchAPIPost('/api/users/update/' + props.userId, {
+      await FetchAPIPost('/api/users/update/' + props.userId, {
         stickers: [],
       });
     }
@@ -42,10 +41,10 @@ function StickerSettings(props) {
 
   const handleStickerClick = (name) => {
     setStickers(
-      stickers.map((s) => (s.name === name ? { ...s, show: !s.show } : s))
+      stickers.map((s) => (s.name === name ? { ...s, show: !s.show } : s)),
     );
     props.onChangeStickers(
-      stickers.map((s) => (s.name === name ? { ...s, show: !s.show } : s))
+      stickers.map((s) => (s.name === name ? { ...s, show: !s.show } : s)),
     );
   };
 
@@ -55,7 +54,7 @@ function StickerSettings(props) {
       <div className="checkboxStickers">
         {stickers?.length > 0 &&
           stickers.map((s, index) => (
-            <div className="checkboxButton">
+            <div key={index} className="checkboxButton">
               <input
                 type="checkbox"
                 name="checkTodo"

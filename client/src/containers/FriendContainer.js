@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Friend from '../modals/Friend.js';
 import {
@@ -15,9 +15,6 @@ function FriendContainer() {
   }));
   const { name } = useSelector((state) => ({
     name: state.nameInfo.name,
-  }));
-  const { friendId } = useSelector((state) => ({
-    friendId: state.viewFriend.friendId,
   }));
   const dispatch = useDispatch();
   const onChangeFriends = (friends) => dispatch(currentFriends(friends));

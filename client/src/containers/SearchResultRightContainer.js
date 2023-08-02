@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SearchResultRight from '../components/SearchResultRight.js';
 import { changeDate } from '../modules/datePick';

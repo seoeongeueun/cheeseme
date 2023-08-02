@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function DisplaySettingsLeft(props) {
   const [grid, setGrid] = useState(props.grid);

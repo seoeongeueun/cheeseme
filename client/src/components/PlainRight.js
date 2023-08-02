@@ -15,10 +15,9 @@ import SnowPlain from '../icons/snowman (1).png';
 import SnowColor from '../icons/snowman.png';
 
 function PlainRight(props) {
-  const [body, setBody] = useState('');
   const [showSettings, setShowSettings] = useState(false);
   const [closeQuill, setCloseQuill] = useState(true);
-  const [date, setDate] = useState(props.date);
+  const [date] = useState(props.date);
   const [weather, setWeather] = useState('');
 
   useEffect(() => {}, [
@@ -29,10 +28,6 @@ function PlainRight(props) {
     props.edit,
     weather,
   ]);
-
-  const handleBody = (e) => {
-    setBody(e);
-  };
 
   const handleEdit = () => {
     setCloseQuill(false);

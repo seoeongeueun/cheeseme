@@ -5,16 +5,15 @@ import SadColor from '../icons/sad.png';
 import HappyColor from '../icons/happy.png';
 import SadPlain from '../icons/sad (1).png';
 import HappyPlain from '../icons/happy (1).png';
-import Draggable from 'react-draggable';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import OpenWithSharpIcon from '@mui/icons-material/OpenWithSharp';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
 import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
 import axios from 'axios';
-import { FetchAPIPost, FetchApiDelete, FetchApiGet } from '../utils/api.js';
+import { FetchAPIPost, FetchApiDelete } from '../utils/api.js';
 
-function Todo({ move, onCreate, onToggle, onDelete, date, userId }) {
+function Todo({ move, onCreate, onDelete, date, userId }) {
   const [count, setCount] = useState(1);
   const [editMode, setEditMode] = useState(false);
   const [happy, setHappy] = useState(false);
@@ -54,7 +53,7 @@ function Todo({ move, onCreate, onToggle, onDelete, date, userId }) {
           return;
         })
         .catch((err) => {
-          console.log('Error loading todos');
+          console.log(err, 'Error loading todos');
         });
     } else {
       setAllTodos([
@@ -86,7 +85,7 @@ function Todo({ move, onCreate, onToggle, onDelete, date, userId }) {
           return;
         })
         .catch((err) => {
-          console.log('Error loading todos');
+          console.log(err, 'Error loading todos');
         });
     }
   }, [loading]);
@@ -157,7 +156,7 @@ function Todo({ move, onCreate, onToggle, onDelete, date, userId }) {
   const handleEditMode = async () => {
     if (editMode && userId) {
       if (allTodos?.length === 0 || _id === '') {
-        let res = await FetchAPIPost('/api/todos/add', {
+        await FetchAPIPost('/api/todos/add', {
           owner: userId,
           date: date,
           goals: goals,
@@ -165,7 +164,7 @@ function Todo({ move, onCreate, onToggle, onDelete, date, userId }) {
         });
         setLoading(false);
       } else {
-        let res = await FetchAPIPost('/api/todos/updateById/' + _id, {
+        await FetchAPIPost('/api/todos/updateById/' + _id, {
           date: date,
           goals: goals,
           smile: happy,
@@ -190,7 +189,7 @@ function Todo({ move, onCreate, onToggle, onDelete, date, userId }) {
         if (obj.id === key) return { ...obj, check: false };
         return obj;
       });
-      let res = await FetchAPIPost('/api/todos/updateById/' + _id, {
+      await FetchAPIPost('/api/todos/updateById/' + _id, {
         date: date,
         goals: newState,
         smile: false,
@@ -211,7 +210,7 @@ function Todo({ move, onCreate, onToggle, onDelete, date, userId }) {
         setHappy(true);
         checkSmile = true;
       }
-      let res = await FetchAPIPost('/api/todos/updateById/' + _id, {
+      await FetchAPIPost('/api/todos/updateById/' + _id, {
         date: date,
         goals: newState,
         smile: checkSmile,
@@ -288,7 +287,7 @@ function Todo({ move, onCreate, onToggle, onDelete, date, userId }) {
               </div>
             ))
           : goals.map((value, key) => (
-              <div className="checkboxButton">
+              <div key={key} className="checkboxButton">
                 {value.check ? (
                   <CheckBoxRoundedIcon
                     className="checkbox"

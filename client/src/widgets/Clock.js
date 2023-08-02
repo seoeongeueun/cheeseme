@@ -92,32 +92,32 @@ function Clock({ move, userId }) {
       let d = new Date();
       setDate(d);
       setNyDate(
-        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * -4)
+        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * -4),
       );
       setKorDate(
-        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * +9)
+        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * +9),
       );
       setBeiDate(
-        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * +8)
+        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * +8),
       );
       setVanDate(
-        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * -8)
+        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * -8),
       );
       setParDate(
-        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * +1)
+        new Date(d.getTime() + d.getTimezoneOffset() * 60000 + 3600000 * +1),
       );
     }, 10000);
     return () => clearInterval(intervalId);
   }, []);
 
   const change = async () => {
-    let res = await FetchAPIPost('/api/clock/update/' + userId, {
+    await FetchAPIPost('/api/clock/update/' + userId, {
       show: show,
     });
   };
 
   const add = async () => {
-    let res = await FetchAPIPost('/api/clock/add/' + userId, {
+    await FetchAPIPost('/api/clock/add/' + userId, {
       show: [true, false, false, false, false, false],
     });
     setShow([true, false, false, false, false, false]);

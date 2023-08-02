@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Right from '../components/Right.js';
 import { setFriendId } from '../modules/viewFriend.js';

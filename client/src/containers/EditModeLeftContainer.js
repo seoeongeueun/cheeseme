@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleLeft } from '../modules/editMode';
 import { currentPositions } from '../modules/positionsList';
@@ -28,7 +28,7 @@ function EditModeLeftContainer() {
   const onChangeStickers = (stickers) => dispatch(currentStickers(stickers));
   const onEdit = useCallback(
     (id, x, y) => dispatch(editSticker(id, x, y)),
-    [dispatch]
+    [dispatch],
   );
 
   return (

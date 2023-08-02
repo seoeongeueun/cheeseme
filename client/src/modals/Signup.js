@@ -1,12 +1,6 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { FetchAPIPost, FetchApiDelete, FetchApiGet } from '../utils/api.js';
+import { FetchAPIPost } from '../utils/api.js';
 import axios from 'axios';
 
 export default function Signup(props) {
@@ -17,10 +11,8 @@ export default function Signup(props) {
   const [checkPw, setCheckPw] = React.useState('');
   //notMatch || notUnique || noPw || noPwCheck || noName || shortPw || success || noEmail || notUniqueEmail
   const [errorType, setErrorType] = React.useState('');
-  const [foundUser, setFoundUser] = React.useState(false);
-  const [foundEmail, setFoundEmail] = React.useState(false);
+  const [foundEmail] = React.useState(false);
   const [send, setSend] = React.useState(false);
-  const [checked, setChecked] = React.useState(false);
   const instance = axios.create({
     baseURL:
       process.env.NODE_ENV !== 'production'
@@ -52,7 +44,7 @@ export default function Signup(props) {
   }, [pw, checkPw]);
 
   const addUser = async () => {
-    let res = await FetchAPIPost('/api/users/add', {
+    await FetchAPIPost('/api/users/add', {
       name: username,
       email: email,
       password: pw,
@@ -97,10 +89,6 @@ export default function Signup(props) {
   }, [send]);
 
   React.useEffect(() => {}, [foundEmail]);
-
-  const handleClickOpen = (name) => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);

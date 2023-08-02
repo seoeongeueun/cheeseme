@@ -1,18 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import { FetchAPIPostLogin } from '../utils/api.js';
-import axios from 'axios';
 
 export default function LoginModal(props) {
   const [open, setOpen] = useState(true);
   const [username, setUsername] = useState('');
   const [pw, setPw] = useState('');
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-
-  const handleClickOpen = (name) => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -26,7 +20,6 @@ export default function LoginModal(props) {
     });
     if (res.loginSuccess) {
       console.log('Login Success');
-      setSuccess(true);
       setError(false);
       localStorage.setItem('token', res.userId);
       props.onCurrentUserChange(res.userId);

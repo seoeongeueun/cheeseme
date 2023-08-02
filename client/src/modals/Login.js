@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import Happy from '../icons/happy.png';
 import Signup from './Signup.js';
@@ -87,7 +87,6 @@ function Login({
                 onCurrentNameChange(null);
                 onSetFriendId('');
                 localStorage.removeItem('token');
-              } else {
               }
             })
             .catch((err) => {

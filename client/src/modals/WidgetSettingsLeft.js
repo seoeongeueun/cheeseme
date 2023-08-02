@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react';
-import { FetchAPIPost, FetchApiDelete } from '../utils/api.js';
+import { FetchAPIPost } from '../utils/api.js';
 import axios from 'axios';
 
 function WidgetSettingsLeft(props) {
-  const [todo, setTodo] = useState(props.todo);
-  const [calendar, setCalendar] = useState(props.calendar);
-  const [notes, setNotes] = useState(props.notes);
-  const [ddayCounter, setDdayCounter] = useState(props.ddayCounter);
-  const [reminder, setReminder] = useState(props.reminder);
-  const [clock, setClock] = useState(props.clock);
   const [positions, setPositions] = useState([]);
   const instance = axios.create({
     baseURL:
@@ -31,13 +25,13 @@ function WidgetSettingsLeft(props) {
           }
         })
         .catch((err) => {
-          console.log('Error loading positions: ', props.userId);
+          console.log(err, 'Error loading positions: ', props.userId);
         });
     }
   }, [props.userId]);
 
   const update = async () => {
-    let res = await FetchAPIPost('/api/users/update/' + props.userId, {
+    await FetchAPIPost('/api/users/update/' + props.userId, {
       positions: positions,
     });
   };
@@ -50,7 +44,6 @@ function WidgetSettingsLeft(props) {
 
   const handleTodoClick = async (value) => {
     if (value) {
-      setTodo(true);
       props.setTodo(true);
       if (positions) {
         const newState = positions.map((p) => {
@@ -62,7 +55,6 @@ function WidgetSettingsLeft(props) {
         setPositions(newState);
       }
     } else {
-      setTodo(false);
       props.setTodo(false);
       if (positions) {
         const newState = positions.map((p) => {
@@ -78,7 +70,6 @@ function WidgetSettingsLeft(props) {
 
   const handleCalendarClick = async (value) => {
     if (value) {
-      setCalendar(true);
       props.setCalendar(true);
       if (positions) {
         const newState = positions.map((p) => {
@@ -90,7 +81,6 @@ function WidgetSettingsLeft(props) {
         setPositions(newState);
       }
     } else {
-      setCalendar(false);
       props.setCalendar(false);
       if (positions) {
         const newState = positions.map((p) => {
@@ -106,7 +96,6 @@ function WidgetSettingsLeft(props) {
 
   const handleNotesClick = async (value) => {
     if (value) {
-      setNotes(true);
       props.setNotes(true);
       if (positions) {
         const newState = positions.map((p) => {
@@ -118,7 +107,6 @@ function WidgetSettingsLeft(props) {
         setPositions(newState);
       }
     } else {
-      setNotes(false);
       props.setNotes(false);
       if (positions) {
         const newState = positions.map((p) => {
@@ -134,7 +122,6 @@ function WidgetSettingsLeft(props) {
 
   const handleDdayCounterClick = async (value) => {
     if (value) {
-      setDdayCounter(true);
       props.setDdayCounter(true);
       if (positions) {
         const newState = positions.map((p) => {
@@ -146,7 +133,6 @@ function WidgetSettingsLeft(props) {
         setPositions(newState);
       }
     } else {
-      setDdayCounter(false);
       props.setDdayCounter(false);
       if (positions) {
         const newState = positions.map((p) => {
@@ -162,7 +148,6 @@ function WidgetSettingsLeft(props) {
 
   const handleReminderClick = async (value) => {
     if (value) {
-      setReminder(true);
       props.setReminder(true);
       if (positions) {
         const newState = positions.map((p) => {
@@ -174,7 +159,6 @@ function WidgetSettingsLeft(props) {
         setPositions(newState);
       }
     } else {
-      setReminder(false);
       props.setReminder(false);
       if (positions) {
         const newState = positions.map((p) => {
@@ -190,7 +174,6 @@ function WidgetSettingsLeft(props) {
 
   const handleClockClick = async (value) => {
     if (value) {
-      setClock(true);
       props.setClock(true);
       if (positions) {
         const newState = positions.map((p) => {
@@ -202,7 +185,6 @@ function WidgetSettingsLeft(props) {
         setPositions(newState);
       }
     } else {
-      setClock(false);
       props.setClock(false);
       if (positions) {
         const newState = positions.map((p) => {

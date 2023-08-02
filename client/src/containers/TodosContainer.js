@@ -16,7 +16,7 @@ function TodosContainer(props) {
   const onDelete = useCallback((id) => dispatch(deleteGoal(id)), [dispatch]);
   const onEdit = useCallback(
     (id, text) => dispatch(editGoal(id, text)),
-    [dispatch]
+    [dispatch],
   );
 
   return (

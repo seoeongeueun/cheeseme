@@ -1,11 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Notes from '../widgets/Notes';
 import { editNote, createNote } from '../modules/notes';
 
 function NotesContainer(props) {
-  const { date, text } = useSelector((state) => ({
-    date: state.notes.date,
+  const { text } = useSelector((state) => ({
     text: state.notes.text,
   }));
 

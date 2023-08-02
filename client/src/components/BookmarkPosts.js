@@ -1,13 +1,11 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import Highlighter from 'react-highlight-words';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { changeDate } from '../modules/datePick';
 import GridLines from 'react-gridlines';
 
 function BookmarkPosts(props) {
   const [foundPosts, setFoundPosts] = useState([]);
-  const [clicked, setClicked] = useState();
   const colorCode = [
     'rgba(253, 223, 126, 0.3)',
     'rgba(103, 235, 250, 0.3)',
@@ -57,7 +55,6 @@ function BookmarkPosts(props) {
 
   const handleClick = (date) => {
     console.log(date);
-    setClicked(date);
     onChangeDate(date);
     props.setOpenBookmark(false);
     props.onSetFriendId('');
@@ -82,6 +79,7 @@ function BookmarkPosts(props) {
             {foundPosts?.length > 0 ? (
               foundPosts.map((p, index) => (
                 <div
+                  key={index}
                   className="foundSearchItem"
                   onClick={() => handleClick(p.date)}
                 >

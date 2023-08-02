@@ -18,15 +18,15 @@ function RemindersContainer(props) {
   const onCreate = (title, detail) => dispatch(addReminder(title, detail));
   const onToggle = useCallback(
     (_id) => dispatch(toggleReminder(_id)),
-    [dispatch]
+    [dispatch],
   );
   const onDelete = useCallback(
     (_id) => dispatch(deleteReminder(_id)),
-    [dispatch]
+    [dispatch],
   );
   const onEdit = useCallback(
     (_id, title, detail) => dispatch(editReminder(_id, title, detail)),
-    [dispatch]
+    [dispatch],
   );
 
   return (

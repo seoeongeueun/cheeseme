@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { FetchAPIPost } from '../utils/api.js';
 import axios from 'axios';
 
@@ -58,12 +52,6 @@ export default function AddFriend({ name, setAddFriend, friends, notis }) {
       updateNotis();
     }
   }, [error]);
-
-  const handleClickOpen = (name) => {
-    setOpen(true);
-    setError(false);
-    setAddFriend(false);
-  };
 
   const handleClose = () => {
     setOpen(false);
