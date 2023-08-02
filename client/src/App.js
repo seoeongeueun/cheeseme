@@ -45,26 +45,31 @@ function App() {
   const [positions, setPositions] = useState([]);
   const inputRef = useRef(null);
   const instance = axios.create({
-    baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/' : "https://cheese-me.fly.dev/",
+    baseURL:
+      process.env.NODE_ENV !== 'production'
+        ? 'http://localhost:8080/'
+        : 'https://cheese-me.fly.dev/',
   });
 
-  const { userId } = useSelector(state => ({
+  const { userId } = useSelector((state) => ({
     userId: state.loginInfo.userId,
   }));
-  
+
   const dispatch = useDispatch();
-  const onChangeFriends = friends => dispatch(currentFriends(friends));
-  const onChangeNotis = notis => dispatch(currentNotis(notis));
-  const onChangePositions = positions => dispatch(currentPositions(positions));
-  const onCurrentUserChange = id => dispatch(currentUser(id));
-  const onSetFriendId = friendId => dispatch(setFriendId(friendId));
-  const onCurrentNameChange = name => dispatch(currentName(name));
-  const onChangeStickers = stickers => dispatch(currentStickers(stickers));
+  const onChangeFriends = (friends) => dispatch(currentFriends(friends));
+  const onChangeNotis = (notis) => dispatch(currentNotis(notis));
+  const onChangePositions = (positions) =>
+    dispatch(currentPositions(positions));
+  const onCurrentUserChange = (id) => dispatch(currentUser(id));
+  const onSetFriendId = (friendId) => dispatch(setFriendId(friendId));
+  const onCurrentNameChange = (name) => dispatch(currentName(name));
+  const onChangeStickers = (stickers) => dispatch(currentStickers(stickers));
 
   useEffect(() => {
-    instance.get('/checkCookie', {
-      withCredentials: true
-    })
+    instance
+      .get('/checkCookie', {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res?.data === false) {
           onCurrentUserChange(null);
@@ -74,48 +79,52 @@ function App() {
           localStorage.removeItem('token');
           console.log('cookie expired');
           return;
-        } 
-        else {
+        } else {
           onCurrentUserChange(localStorage.getItem('token'));
           onSetFriendId('');
         }
       })
-    .catch( (err) => {
-      console.log('Error: ', err);
-    })
+      .catch((err) => {
+        console.log('Error: ', err);
+      });
   }, []);
 
   useEffect(() => {
     if (userId) {
-      instance.get('/api/users/find/' + userId, {
-          withCredentials: true
-      })
+      instance
+        .get('/api/users/find/' + userId, {
+          withCredentials: true,
+        })
         .then((res) => {
           const n = res?.data;
           if (n) {
             onChangeNotis(n.notifications);
             onChangeFriends(n.friends);
-            onChangePositions(n.positions?.length === 0 ? [{name: 'cal', x: 0, y: 0, show: true},
-              {name: 'dday', x: 0, y: 0, show: true},
-              {name: 'note', x: 0, y: 0, show: true},
-              {name: 'todo', x: 0, y: 0, show: true},
-              {name: 'reminder', x: 0, y: 0, show: true},
-              {name: 'clock', x: 0, y: 0, show: true}] : n.positions);
+            onChangePositions(
+              n.positions?.length === 0
+                ? [
+                    { name: 'cal', x: 0, y: 0, show: true },
+                    { name: 'dday', x: 0, y: 0, show: true },
+                    { name: 'note', x: 0, y: 0, show: true },
+                    { name: 'todo', x: 0, y: 0, show: true },
+                    { name: 'reminder', x: 0, y: 0, show: true },
+                    { name: 'clock', x: 0, y: 0, show: true },
+                  ]
+                : n.positions
+            );
             onCurrentNameChange(n.name);
             onChangeStickers(n.stickers?.length <= 0 ? [] : n.stickers);
           }
         })
-        .catch( (err) => {
-            console.log('Error loading note');
-        })
+        .catch((err) => {
+          console.log('Error loading note');
+        });
     }
-  }, [userId])
+  }, [userId]);
 
   useEffect(() => {
-    noti?.map(n => (
-      n.done === false && setUnread(true)
-    ));
-  }, [noti])
+    noti?.map((n) => n.done === false && setUnread(true));
+  }, [noti]);
 
   useEffect(() => {
     if (showAccount) {
@@ -141,44 +150,93 @@ function App() {
 
   const handleClick = () => {
     setKeyword(inputRef.current.value);
-    setSearch(true)
-  }
+    setSearch(true);
+  };
 
   return (
     <div className="container">
       <header>
-        <div className='mainHeader'>
-          <div className='fill'/>
-          <div className='title'>
+        <div className="mainHeader">
+          <div className="fill" />
+          <div className="title">
             <a href="/">CheeseMe</a>
             <div className="searchbar">
-              <input ref={inputRef} type="text" id="searchWord" name="searchWord" placeholder="Search"/>
-              <button onClick={handleClick}><SearchRoundedIcon sx={{fontSize: "21px"}} /></button>
+              <input
+                ref={inputRef}
+                type="text"
+                id="searchWord"
+                name="searchWord"
+                placeholder="Search"
+              />
+              <button onClick={handleClick}>
+                <SearchRoundedIcon sx={{ fontSize: '21px' }} />
+              </button>
             </div>
           </div>
-          <div className='mainMenu'>
-            <div className='headerButtonSet'>
-              {showNoti ? <button onClick={() => setShowNoti(false)}><NotificationsNoneTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
-              : unRead ? <button onClick={() => setShowNoti(true)}><NotificationImportantIcon sx={{fontSize: '2rem'}}/></button>
-                : <button onClick={() => setShowNoti(true)}><NotificationsNoneOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-              {showNoti && <NotiContainer/>}
+          <div className="mainMenu">
+            <div className="headerButtonSet">
+              {showNoti ? (
+                <button onClick={() => setShowNoti(false)}>
+                  <NotificationsNoneTwoToneIcon
+                    sx={{ fontSize: '2rem', color: '#F9D876' }}
+                  />
+                </button>
+              ) : unRead ? (
+                <button onClick={() => setShowNoti(true)}>
+                  <NotificationImportantIcon sx={{ fontSize: '2rem' }} />
+                </button>
+              ) : (
+                <button onClick={() => setShowNoti(true)}>
+                  <NotificationsNoneOutlinedIcon sx={{ fontSize: '2rem' }} />
+                </button>
+              )}
+              {showNoti && <NotiContainer />}
             </div>
-            <div className='headerButtonSet'>
-              {showFriend ? <button onClick={() => setShowFriend(false)}><AddReactionTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
-              : <button onClick={() => setShowFriend(true)}><AddReactionOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-              {showFriend && <FriendContainer/>}
+            <div className="headerButtonSet">
+              {showFriend ? (
+                <button onClick={() => setShowFriend(false)}>
+                  <AddReactionTwoToneIcon
+                    sx={{ fontSize: '2rem', color: '#F9D876' }}
+                  />
+                </button>
+              ) : (
+                <button onClick={() => setShowFriend(true)}>
+                  <AddReactionOutlinedIcon sx={{ fontSize: '2rem' }} />
+                </button>
+              )}
+              {showFriend && <FriendContainer />}
             </div>
-            <div className='headerButtonSet'>
-              {showAccount ? <button onClick={() => setShowAccount(false)}><AccountCircleTwoToneIcon sx={{fontSize: '2rem', color: '#F9D876'}}/></button>
-              : <button onClick={() => setShowAccount(true)}><AccountCircleOutlinedIcon sx={{fontSize: '2rem'}}/></button>}
-              {showAccount && <LoginContainer/>}
+            <div className="headerButtonSet">
+              {showAccount ? (
+                <button onClick={() => setShowAccount(false)}>
+                  <AccountCircleTwoToneIcon
+                    sx={{ fontSize: '2rem', color: '#F9D876' }}
+                  />
+                </button>
+              ) : (
+                <button onClick={() => setShowAccount(true)}>
+                  <AccountCircleOutlinedIcon sx={{ fontSize: '2rem' }} />
+                </button>
+              )}
+              {showAccount && <LoginContainer />}
             </div>
           </div>
         </div>
-        {!userId && <div className='warning'>
-          <WarningIcon sx={{fontSize: '2.3rem', color: '#f73939', marginRight: '0.5rem'}}/>
-          <span>Guest Mode: Your progress will not be saved. Please log in to start using CheeseMe!</span>
-        </div>}
+        {!userId && (
+          <div className="warning">
+            <WarningIcon
+              sx={{
+                fontSize: '2.3rem',
+                color: '#f73939',
+                marginRight: '0.5rem',
+              }}
+            />
+            <span>
+              Guest Mode: Your progress will not be saved. Please log in to
+              start using CheeseMe!
+            </span>
+          </div>
+        )}
       </header>
 
       <main>
@@ -190,8 +248,14 @@ function App() {
               <img src={BigCheese} alt='bigCheese' style={{width: '10rem', height: '10rem'}}/>
               <span>Login Required</span>
             </div>} */}
-            {search ? <SearchResultLeftContainer keyword={keyword} setSearch={setSearch}/> 
-            : <EditModeLeftContainer/>}
+          {search ? (
+            <SearchResultLeftContainer
+              keyword={keyword}
+              setSearch={setSearch}
+            />
+          ) : (
+            <EditModeLeftContainer />
+          )}
         </div>
         <div className="mainRight">
           {/* {userId ?
@@ -201,8 +265,14 @@ function App() {
               <img src={SmallCheese} alt='smallCheese' style={{width: '10rem', height: '10rem'}}/>
               <span>Login Required</span>
             </div>} */}
-            {search ? <SearchResultRightContainer keyword={keyword} setSearch={setSearch}/>
-            : <RightContainer/>}
+          {search ? (
+            <SearchResultRightContainer
+              keyword={keyword}
+              setSearch={setSearch}
+            />
+          ) : (
+            <RightContainer />
+          )}
         </div>
       </main>
     </div>

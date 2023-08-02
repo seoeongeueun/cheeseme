@@ -12,17 +12,17 @@ import viewFriend from './viewFriend';
 import stickers from './stickers';
 
 const rootReducer = combineReducers({
-    goals,
-    editMode,
-    notes,
-    datePick,
-    loginInfo,
-    friendsList,
-    notisList,
-    nameInfo,
-    positionsList,
-    viewFriend,
-    stickers
+  goals,
+  editMode,
+  notes,
+  datePick,
+  loginInfo,
+  friendsList,
+  notisList,
+  nameInfo,
+  positionsList,
+  viewFriend,
+  stickers,
 });
 
 export default rootReducer;

@@ -1,5 +1,12 @@
-import React from 'react'
-import { Dialog, AppBar, Toolbar, IconButton, Typography, Slide } from '@mui/material';
+import React from 'react';
+import {
+  Dialog,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Slide,
+} from '@mui/material';
 import { withStyles } from '@mui/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -22,27 +29,27 @@ const styles = {
     maxWidth: '100%',
     maxHeight: '100%',
   },
-}
+};
 
 function Transition(props) {
-  return <Slide direction="up" {...props} />
+  return <Slide direction="up" {...props} />;
 }
 
 class ImgDialog extends React.Component {
   state = {
     open: false,
-  }
+  };
 
   handleClickOpen = () => {
-    this.setState({ open: true })
-  }
+    this.setState({ open: true });
+  };
 
   handleClose = () => {
-    this.setState({ open: false })
-  }
+    this.setState({ open: false });
+  };
 
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     return (
       <Dialog
         fullScreen
@@ -74,8 +81,8 @@ class ImgDialog extends React.Component {
           </div>
         </div>
       </Dialog>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(ImgDialog)
+export default withStyles(styles)(ImgDialog);
